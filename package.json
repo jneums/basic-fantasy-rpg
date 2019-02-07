@@ -1,29 +1,27 @@
 {
-  "name": "phaser-project-template-es6",
-  "version": "1.0.0",
-  "description": "Phaser 3 starter template with ES6 and webpack.",
-  "homepage": "https://github.com/yandeu/phaser-project-template-es6#readme",
+  "name": "rpg wip",
+  "version": "0.0.1",
+  "description": "Game based on open source RPG rulebook",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack/webpack.dev.js",
-    "build": "webpack --config webpack/webpack.prod.js"
+    "build": "webpack --config webpack/webpack.prod.js",
+    "test": "mocha --compilers js:@babel/register"
   },
   "keywords": [
     "Phaser",
     "Phaser 3",
     "Phaser3",
     "html5 game",
-    "TypeScript",
-    "webpack",
-    "starter"
+    "webpack"
   ],
   "author": {
-    "name": "Yannick",
-    "url": "https://github.com/yandeu"
+    "name": "Jesse",
+    "url": "https://github.com/Jesse989"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yandeu/phaser-project-template-es6.git"
+    "url": "https://github.com/Jesse989/basic-fantasy-rpg"
   },
   "license": "MIT",
   "devDependencies": {
@@ -33,8 +31,10 @@
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^2.1.0",
     "html-webpack-plugin": "^3.2.0",
     "imagemin-webpack-plugin": "^2.4.1",
+    "style-loader": "^0.23.1",
     "webpack": "^4.29.2",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
