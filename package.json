@@ -1,5 +1,5 @@
 {
-  "name": "rpg wip",
+  "name": "rpg-wip",
   "version": "0.0.1",
   "description": "Game based on open source RPG rulebook",
   "main": "index.js",

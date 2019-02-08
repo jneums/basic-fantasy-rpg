@@ -1,5 +1,5 @@
 // helper functions for character creation.
-import getRandomIntInclusive from './getRandomIntInclusive';
+import { getRandomIntInclusive } from './randomNumberUtilities';
 // takes char object, minimum and maximum
 // range for random numbers
 // no return

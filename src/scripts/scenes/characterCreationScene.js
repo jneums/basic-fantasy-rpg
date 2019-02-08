@@ -1,6 +1,10 @@
 import Character from '../objects/character';
 import * as characterCreator from '../characterCreator';
 import { meleeAttack } from '../abilities';
+import rollDice from '../dice';
+import { corpseDisposal } from '../utilities';
+import { Fighter, MagicUser, Cleric, Thief } from '../classTemplates';
+import { getWeaponByName } from '../items';
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -8,50 +12,28 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    // testing chacterCreator lib.
-    let a = createFighter(this, 'charlie');
-    let b = createFighter(this, 'tina');
-    do {
-      meleeAttack(a, b, 'right');
-      meleeAttack(b, a, 'right');
-    } while (a.getHp() > 0 && b.getHp() > 0)
+    this.charlie = new Fighter(this, 'charlie');
+    this.tina = new MagicUser(this, 'tina');
+    this.leslie = new Cleric(this, 'leslie');
+    this.mancy = new Thief(this, 'mancy');
+
+    this.boss = new MagicUser(this, 'monstrum');
+    this.boss.setHp(250);
+    this.boss.setTeam('boss')
+    const bossWeapon = getWeaponByName('foam-sword');
+    this.boss.setRightHand(bossWeapon)
+
+    this.charlie.setTeam('red');
+    this.tina.setTeam('red');
+    this.leslie.setTeam('red');
+    this.mancy.setTeam('red');
   }
 
   update() {
+    this.children.list.forEach(child => child.update());
+    const theDead = corpseDisposal(this);
+    if (theDead.length !== 0) {
+      theDead.forEach(dead => console.log(dead.getName() + ' died'))
+    };
   }
 }
-
-function createFighter(context, name) {
-  let a = new Character(context);
-  a.setName(name)
-  a.setRightHand(testWeapons[0])
-  a.setHp(20);
-  characterCreator.randomizeAllStats(a);
-  console.log(`weapons: ${a.getRightHand().name}, ${a.getLeftHand().name}`)
-  return a;
-}
-
-
-const testWeapons = [
-  {
-    name: 'great-axe',
-    price: '14gp',
-    size: 'L',
-    weight: 15,
-    dmg: { min: 1, max: 10 }
-  },
-  {
-    name: 'dagger',
-    price: '2gp',
-    size: 'S',
-    weight: 1,
-    dmg: { min: 1, max: 4 }
-  },
-  {
-    name: 'hand-axe',
-    price: '4gp',
-    size: 'S',
-    weight: 5,
-    dmg: { min: 1, max: 6 }
-  }
-]
