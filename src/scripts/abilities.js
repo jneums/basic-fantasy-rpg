@@ -1,24 +1,57 @@
 import { getRandomIntInclusive } from './randomNumberUtilities';
 import selectDie from './dice';
-
-
+import { resetSpellTimer, checkSwingTimer, checkForTwoHandWeapon } from './utilities';
+import meleeAutoAttackHitTable from './hitTables';
 /**
  * castHealingSpell
  *
+ * @param  {character} character casting heal
  * @param  {character} target to be healed
  * @param  {object} spell
  * @returns {number} heal value
  */
-function castHealingSpell(target = {}, spell = {}) {
-  const { name, range, speed, healing } = spell;
-  const d6 = selectDie(6);
-  const healValue = d6(1) + 1;
+function castHealingSpell(character = {}, target = {}, spell = {}) {
+  const { name, range, speed, die } = spell;
+  const healValue = determineDieValue(die);
   const targetOldHp = target.getHp();
   const targetNewHp = targetOldHp + healValue;
   target.setHp(targetNewHp)
-  console.log(`healed ${target.getName()} for ${healValue}`)
+  const newTimers = resetSpellTimer(character, name);
   return healValue;
 }
+
+
+/**
+ * determineDieValue - parse die info into number
+ *
+ * @param  {object} dieInfo from object
+ * @returns {number} value
+ */
+function determineDieValue(dieInfo = {}) {
+  const die = selectDie(dieInfo.sides);
+  const value = die(dieInfo.quantity) + dieInfo.bonus;
+  return value;
+}
+
+
+/**
+ * castDamageSpell
+ *
+ * @param  {character} character casting spell
+ * @param  {character} target of spell
+ * @param  {object} spell causing damage
+ * @returns {number} damage value
+ */
+function castDamageSpell(character = {}, target = {}, spell = {}) {
+  const { name, range, speed, die } = spell;
+  const damageValue = determineDieValue(die);
+  const targetOldHp = target.getHp();
+  const targetNewHp = targetOldHp - damageValue;
+  target.setHp(targetNewHp);
+  const newTimers = resetSpellTimer(character, name);
+  return damageValue;
+}
+
 /**
  * meleeAttack
  *
@@ -28,24 +61,44 @@ function castHealingSpell(target = {}, spell = {}) {
  * @returns {void}
  */
 function meleeAttack(attacker = {}, defender = {}, hand = '') {
-  if (hitCheck(attacker, defender, 'melee')) {
-    const weaponMin = hand === 'left'
-      ? attacker.getLeftHand().dmg.min
-      : attacker.getRightHand().dmg.min;
-    const weaponMax = hand === 'left'
-      ? attacker.getLeftHand().dmg.max
-      : attacker.getRightHand().dmg.max;
-    const weaponDmg = getRandomIntInclusive(weaponMin, weaponMax);
-    // get attack bonus from strength
-    const strengthBonus = getStatBonus(attacker, 'str');
-    const totalDmg = (weaponDmg + strengthBonus > 0) ? weaponDmg + strengthBonus : 1;
-    const defenderStartingHp = defender.getHp();
-    const defenderEndingHp = defenderStartingHp - totalDmg;
-    console.log(`${attacker.getName()} hits ${defender.getName()} for ${totalDmg} melee dmg, ${defender.getName()} went from ${defenderStartingHp}, to ${defenderEndingHp} hps`)
-    defender.setHp(defenderEndingHp);
+  let dieInfo = {};
+  if (hand === 'right') {
+    attacker.setSwingTimerRightHand(0);
+    dieInfo = attacker.getRightHand().die;
   }
+  if (hand === 'left') {
+    attacker.setSwingTimerLeftHand(0);
+    dieInfo = attacker.getLeftHand().die;
+  }
+  const attackStatus = meleeAutoAttackHitTable(attacker, defender, 'right');
+  // this is for a right handed attack
+  const weaponDmg = determineDieValue(dieInfo);
+  // get attack bonus from strength
+  const strengthBonus = getStatBonus(attacker, 'str');
+  const totalDmg = (weaponDmg + strengthBonus > 0) ? weaponDmg + strengthBonus : 1;
+  const defenderStartingHp = defender.getHp();
+  if (attackStatus === 'hit') {
+    defender.setHp(defenderStartingHp - totalDmg);
+  } else if (attackStatus === 'crit') {
+    defender.setHp(defenderStartingHp - (totalDmg * 2))
+  }
+  console.log(`${attacker.getName()} does: ${totalDmg} with ${hand} hand`);
 }
 
+
+/**
+ * meleeAutoAttack
+ *
+ * @param  {character} character attacking
+ * @returns {void} wrapper for meleeAtack
+ */
+function meleeAutoAttack(character = {}, target = {}) {
+  const canAttackWithRightHand = checkSwingTimer(character, 'right');
+  if (canAttackWithRightHand) meleeAttack(character, target, 'right');
+  const canAttackWithLeftHand = checkSwingTimer(character, 'left');
+  const usingTwoHandWeapon = checkForTwoHandWeapon(character);
+  if (canAttackWithLeftHand && !usingTwoHandWeapon) meleeAttack(character, target, 'left');
+}
 
 /**
  * rangedAttack
@@ -56,19 +109,18 @@ function meleeAttack(attacker = {}, defender = {}, hand = '') {
  */
 function rangedAttack(attacker = {}, defender = {}) {
   if (hitCheck(attacker, defender, 'ranged')) {
-    const weaponMin = attacker.getRightHand().dmg.min;
-    const weaponMax = attacker.getRightHand().dmg.max;
-    const weaponDmg = getRandomIntInclusive(weaponMin, weaponMax);
+    const dieInfo = attacker.getLeftHand().die;
+    const weaponDmg = determineDieValue(dieInfo);
     // add dex bonus (or penalty)
     const dexterityBonus = getStatBonus(attacker, 'dex');
     const totalDmg = (weaponDmg + dexterityBonus > 0) ? weaponDmg + dexterityBonus : 1;
     const defenderStartingHp = defender.getHp();
     const defenderEndingHp = defenderStartingHp - totalDmg;
-    console.log(`${attacker.getName()} hits ${defender.getName()} for ${totalDmg} ranged dmg, ${defender.getName()} went from ${defenderStartingHp}, to ${defenderEndingHp} hps`)
+    attacker.setSwingTimerRightHand(0);
+
     defender.setHp(defenderEndingHp);
   }
 }
-
 
 /**
  * hitCheck - hit check for attacks
@@ -81,18 +133,16 @@ function rangedAttack(attacker = {}, defender = {}) {
 function hitCheck(attacker = {}, defender = {}, type = "") {
   const d20 = selectDie(20);
   let random = d20(1);
-  let attackBonus = attacker.getAb();
-  let attackerStr = attacker.getStr();
-  let attackerDex = attacker.getDex();
-  let defendersAc = defender.getAc();
+  let attackerStr = attacker.getStrength();
+  let attackerDex = attacker.getAgility();
+  let defendersAc = defender.getArmorRating();
   if (type === 'melee') {
-    return (random + attackBonus + attackerStr >= defendersAc);
+    return (random + attackerStr >= defendersAc);
   }
   if (type === 'ranged') {
-    return (random + attackBonus + attackerDex >= defendersAc);
+    return (random + attackerDex >= defendersAc);
   }
 }
-
 
 /**
  * getStatBonus
@@ -104,28 +154,24 @@ function hitCheck(attacker = {}, defender = {}, type = "") {
 function getStatBonus(character = {}, stat = '') {
   let statValue = 0;
   switch(stat) {
-    case 'str':
-      statValue = character.getStr();
+    case 'strength':
+      statValue = character.getStrength();
       break;
-    case 'dex':
-      statValue = character.getDex();
+    case 'agility':
+      statValue = character.getAgility();
       break;
-    case 'con':
-      statValue = character.getCon();
+    case 'intellect':
+      statValue = character.getIntellect();
       break;
-    case 'int':
-      statValue = character.getInt();
+    case 'stamina':
+      statValue = character.getStamina();
       break;
-    case 'wis':
-      statValue = character.getWis();
-      break;
-    case 'cha':
-      statValue = character.getCha();
+    case 'spirit':
+      statValue = character.getSpirit();
       break;
     default:
       return 0;
   }
-
 
   switch(true) {
     case (statValue > 17):
@@ -145,4 +191,11 @@ function getStatBonus(character = {}, stat = '') {
   }
 }
 
-export { meleeAttack, rangedAttack, getStatBonus, castHealingSpell };
+export {
+  meleeAttack,
+  rangedAttack,
+  getStatBonus,
+  castHealingSpell,
+  castDamageSpell,
+  meleeAutoAttack
+};

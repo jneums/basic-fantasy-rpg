@@ -1,9 +1,5 @@
-import Character from '../objects/character';
-import * as characterCreator from '../characterCreator';
-import { meleeAttack } from '../abilities';
-import rollDice from '../dice';
 import { corpseDisposal } from '../utilities';
-import { Fighter, MagicUser, Cleric, Thief } from '../classTemplates';
+import { Warrior, Mage, Priest, Rogue } from '../classTemplates';
 import { getWeaponByName } from '../items';
 
 export default class MainScene extends Phaser.Scene {
@@ -12,13 +8,14 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.charlie = new Fighter(this, 'charlie');
-    this.tina = new MagicUser(this, 'tina');
-    this.leslie = new Cleric(this, 'leslie');
-    this.mancy = new Thief(this, 'mancy');
+    this.charlie = new Warrior(this, 'charlie');
+    this.tina = new Mage(this, 'tina');
+    this.leslie = new Priest(this, 'leslie');
+    // this.mancy = new Rogue(this, 'mancy');
 
-    this.boss = new MagicUser(this, 'monstrum');
+    this.boss = new Warrior(this, 'monstrum');
     this.boss.setHp(250);
+    this.boss.setStrength(12);
     this.boss.setTeam('boss')
     const bossWeapon = getWeaponByName('foam-sword');
     this.boss.setRightHand(bossWeapon)
@@ -26,11 +23,12 @@ export default class MainScene extends Phaser.Scene {
     this.charlie.setTeam('red');
     this.tina.setTeam('red');
     this.leslie.setTeam('red');
-    this.mancy.setTeam('red');
+    // this.mancy.setTeam('red');
   }
 
   update() {
-    this.children.list.forEach(child => child.update());
+    this.children.list.forEach(child => child.update())
+
     const theDead = corpseDisposal(this);
     if (theDead.length !== 0) {
       theDead.forEach(dead => console.log(dead.getName() + ' died'))
