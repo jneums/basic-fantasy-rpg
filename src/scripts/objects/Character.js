@@ -149,6 +149,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     let hp = 0;
     let movementSpeed = 0;
     let team = '';
+    let globalCooldown = 0;
     let swingTimerMainHand = 0;
     let swingTimerOffHand = 0;
     let spellTimers = [];
@@ -519,6 +520,15 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     */
     this.getSwingTimerOffHand = function() {
       return swingTimerOffHand;
+    }
+
+    /**
+     * getGlobalCooldown
+     *
+     * @returns {number} global cooldown
+     */
+    this.getGlobalCooldown = function() {
+      return globalCooldown;
     }
 
     /**
@@ -953,6 +963,16 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     */
     this.setSwingTimerOffHand = function(newSwingTimerOffHand) {
       swingTimerOffHand = newSwingTimerOffHand;
+    }
+
+    /**
+     * setGlobalCooldown
+     *
+     * @param  {number} newGlobalCooldown
+     * @returns {void}
+     */
+    this.setGlobalCooldown = function(newGlobalCooldown) {
+      globalCooldown = newGlobalCooldown;
     }
 
     /**

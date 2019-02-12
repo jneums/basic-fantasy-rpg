@@ -1,15 +1,13 @@
-import { meleeAutoAttack, rangedAttack, castHealingSpell } from '../meleeAbilities';
+import { meleeAutoAttack, castDamageSpell } from '../globalAbilities/meleeAttack';
 import {
   getClosestEnemy,
   getLowestHealthAlly,
-  updateSwingTimer,
-  updateSpellTimers,
   scanForEnemies,
   scanForAllies,
   rangeCheck,
-  checkSwingTimer,
-  checkSpellTimer
-} from '../utilities';
+} from '../utilities/utilities';
+import { checkSwingTimer, updateSwingTimers } from '../utilities/meleeTimers';
+import { checkSpellTimer, updateSpellTimers } from '../utilities/spellTimers';
 import { getPriestSpellByName } from '../spellbooks/priestSpells';
 
 /**
@@ -20,7 +18,7 @@ import { getPriestSpellByName } from '../spellbooks/priestSpells';
  */
 export default function PriestAI() {
   const update = function() {
-    const newSwingTimer = updateSwingTimer(this);
+    const newSwingTimer = updateSwingTimers(this);
     const newSpellTimers = updateSpellTimers(this);
     const allies = scanForAllies(this);
 

@@ -1,15 +1,13 @@
-import { meleeAutoAttack, rangedAttack, castDamageSpell } from '../meleeAbilities';
+import { meleeAutoAttack, castDamageSpell } from '../globalAbilities/meleeAttack';
 import {
   getClosestEnemy,
   getLowestHealthAlly,
-  updateSwingTimer,
-  updateSpellTimers,
   scanForEnemies,
   scanForAllies,
   rangeCheck,
-  checkSwingTimer,
-  checkSpellTimer
-} from '../utilities';
+} from '../utilities/utilities';
+import { checkSwingTimer, updateSwingTimers } from '../utilities/meleeTimers';
+import { checkSpellTimer, updateSpellTimers } from '../utilities/spellTimers';
 import { getMageSpellByName } from '../spellbooks/mageSpells';
 
 /**
@@ -20,7 +18,7 @@ import { getMageSpellByName } from '../spellbooks/mageSpells';
  */
 export default function MageAI() {
   const update = function() {
-    const newSwingTimer = updateSwingTimer(this);
+    const newSwingTimer = updateSwingTimers(this);
     const newSpellTimers = updateSpellTimers(this);
     const allies = scanForAllies(this);
 

@@ -1,4 +1,4 @@
-import { getRandomIntInclusive } from './randomNumberUtilities';
+import { getRandomIntInclusive } from './utilities/randomNumberUtilities';
 
 
 /**

@@ -1,5 +1,5 @@
 import Character from '../Character';
-import { getRandomCoordsOnCanvas } from '../../randomNumberUtilities';
+import { getRandomCoordsOnCanvas } from '../../utilities/randomNumberUtilities';
 import { getWeaponByName } from '../../weapons';
 import { getArmorByName } from '../../armor';
 import priestAI from '../../AI/priestAI';

@@ -1,13 +1,16 @@
-import { meleeAutoAttack, rangedAttack } from '../meleeAbilities';
+import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
 import { heroicStrike } from '../classAbilities/warriorAbilities';
 import {
   getClosestEnemy,
-  updateSwingTimer,
   scanForEnemies,
   rangeCheck,
-  checkSwingTimer,
   checkForTwoHandWeapon
-} from '../utilities';
+} from '../utilities/utilities';
+import {
+  updateSwingTimers,
+  checkSwingTimer
+} from '../utilities/meleeTimers';
+
 
 /**
  * WarriorAI - warrior script
@@ -20,7 +23,7 @@ export default function WarriorAI() {
   const rageDumpValue = 20;
   const update = function() {
     const rage = this.getRage();
-    const newSwingTimer = updateSwingTimer(this);
+    const newSwingTimer = updateSwingTimers(this);
     const enemies = scanForEnemies(this);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);

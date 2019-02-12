@@ -1,4 +1,4 @@
-import { corpseDisposal } from '../utilities';
+import { corpseDisposal } from '../utilities/utilities';
 import Warrior from '../objects/classTemplates/Warrior';
 import Rogue from '../objects/classTemplates/Rogue';
 import Priest from '../objects/classTemplates/Priest';

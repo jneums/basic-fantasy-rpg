@@ -1,12 +1,15 @@
-import { meleeAutoAttack, rangedAttack } from '../meleeAbilities';
+import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
 import {
   getClosestEnemy,
-  updateSwingTimer,
   scanForEnemies,
   rangeCheck,
-  checkSwingTimer,
   checkForTwoHandWeapon
-} from '../utilities';
+} from '../utilities/utilities';
+import {
+  updateSwingTimers,
+  checkSwingTimer
+} from '../utilities/meleeTimers';
+
 
 /**
  * RogueAI - rogue script
@@ -16,7 +19,7 @@ import {
  */
 export default function RogueAI() {
   const update = function() {
-    const newSwingTimer = updateSwingTimer(this);
+    const newSwingTimer = updateSwingTimers(this);
     const enemies = scanForEnemies(this);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);
