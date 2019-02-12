@@ -1,29 +1,22 @@
-import { meleeAutoAttack, rangedAttack, castHealingSpell } from '../meleeAbilities';
+import { meleeAutoAttack, rangedAttack } from '../meleeAbilities';
 import {
   getClosestEnemy,
-  getLowestHealthAlly,
   updateSwingTimer,
-  updateSpellTimers,
   scanForEnemies,
-  scanForAllies,
   rangeCheck,
   checkSwingTimer,
-  checkSpellTimer
+  checkForTwoHandWeapon
 } from '../utilities';
-import { getPriestSpellByName } from '../spellbooks/priestSpells';
 
 /**
- * PriestAI - priest script
+ * RogueAI - rogue script
  *
  * @param  {Character} character reference
  * @returns {function} update function
  */
-export default function PriestAI() {
+export default function RogueAI() {
   const update = function() {
     const newSwingTimer = updateSwingTimer(this);
-    const newSpellTimers = updateSpellTimers(this);
-    const allies = scanForAllies(this);
-
     const enemies = scanForEnemies(this);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);

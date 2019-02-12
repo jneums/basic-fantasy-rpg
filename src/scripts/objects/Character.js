@@ -64,21 +64,22 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // is (your your current level * 5), which means at level 60,
     // your Weapon Skill will cap at 300.
     let weaponSkills = {
-      daggers: 5,
-      fistWeapons: 5,
-      oneHandedAxes: 5,
-      oneHandedMaces: 5,
-      oneHandedSwords: 5,
-      polearms: 5,
-      staves: 5,
-      twoHandedAxes: 5,
-      twoHandedMaces: 5,
-      twoHandedSwords: 5,
-      bows: 5,
-      crossbows: 5,
-      guns: 5,
+      dagger: 5,
+      fistWeapon: 5,
+      oneHandedAxe: 5,
+      oneHandedMace: 5,
+      oneHandedSword: 5,
+      polearm: 5,
+      staff: 5,
+      twoHandedAxe: 5,
+      twoHandedMace: 5,
+      twoHandedSword: 5,
+      bow: 5,
+      crossbow: 5,
+      gun: 5,
       thrown: 5,
-      wands: 5
+      wands: 5,
+      unarmed: 5
     }
     let armorSkills = {
       cloth: 0,
@@ -121,7 +122,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     let defenseRating = 5;
     // Armor reduces how much Physical damage you
     // take when a player or NPC hits you.
-    let armorRating = 11;
+    let armorRating = 0;
     // Block is the ability of a shield to absorb incoming Physical damage,
     // in addition to its Armor rating. When a Paladin, Warrior or Shaman
     // have a Shield equipped, they gain a chance to Block
@@ -139,36 +140,38 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     let parryRating = 0;
     let agilityToDodgeRatio = 0;
     let agilityToCritRatio = 0;
+    let strengthToAttackPowerRatio = 0;
+    let agilityToAttackPowerRatio = 0;
 
-    let equipment = [];
+    let inventory = [];
     let spellbook = [];
     let money = 0;
     let hp = 0;
     let movementSpeed = 0;
     let team = '';
-    let swingTimerLeftHand = 0;
-    let swingTimerRightHand = 0;
+    let swingTimerMainHand = 0;
+    let swingTimerOffHand = 0;
     let spellTimers = [];
+    let combatLog = [];
 
-    let leftHand = {
-      name: 'fist',
-      price: '4gp',
-      size: 'S',
-      speed: 1,
-      weight: 5,
-      type: 'unarmed',
-      die: { sides: 1, quantity: 1, bonus: 0 },
-    };
-
-    let rightHand = {
-      name: 'fist',
-      price: '4gp',
-      size: 'S',
-      speed: 1,
-      weight: 5,
-      type: 'unarmed',
-      die: { sides: 1, quantity: 1, bonus: 0 },
-    };
+    let equipped = {
+      mainHand: {},
+      offHand: {},
+      ammo: {},
+      head: {},
+      neck: {},
+      shoulder: {},
+      back: {},
+      chest: {},
+      tabard: {},
+      wrist: {},
+      hands: {},
+      belt: {},
+      legs: {},
+      feet: {},
+      trinket1: {},
+      trinket2: {}
+    }
 
     /**
      * getName
@@ -447,12 +450,12 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     /**
-     * getEquipment
+     * getInventory
      *
      * @returns {array}  characters items
      */
-    this.getEquipment = function() {
-      return equipment;
+    this.getInventory = function() {
+      return inventory;
     }
 
     /**
@@ -501,39 +504,30 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     /**
-    * getSwingTimerLeftHand
+    * getSwingTimerMainHand
     *
-    * @returns {number} left hand cooldown
+    * @returns {number} main hand cooldown
     */
-    this.getSwingTimerLeftHand = function() {
-      return swingTimerLeftHand;
+    this.getSwingTimerMainHand = function() {
+      return swingTimerMainHand;
     }
 
     /**
-    * getSwingTimerRightHand
+    * getSwingTimerOffHand
     *
-    * @returns {number} right hand cooldown
+    * @returns {number} off hand cooldown
     */
-    this.getSwingTimerRightHand = function() {
-      return swingTimerRightHand;
+    this.getSwingTimerOffHand = function() {
+      return swingTimerOffHand;
     }
 
     /**
-     * getLeftHand
+     * getEquipped
      *
-     * @returns {object}  equipped in characters left hand
+     * @returns {object}  equipped
      */
-    this.getLeftHand = function() {
-      return leftHand;
-    }
-
-    /**
-     * getRightHand
-     *
-     * @returns {object}  equipped in characters right hand
-     */
-    this.getRightHand = function() {
-      return rightHand;
+    this.getEquipped = function() {
+      return equipped;
     }
 
     /**
@@ -543,6 +537,15 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
      */
     this.getSpellTimers = function() {
       return spellTimers;
+    }
+
+    /**
+     * getCombatLog
+     *
+     * @returns {array} of combat objects
+     */
+    this.getCombatLog = function() {
+      return combatLog;
     }
 
     /**
@@ -561,6 +564,24 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
      */
     this.getAgilityToCritRatio = function() {
       return agilityToCritRatio;
+    }
+
+    /**
+     * getStrengthToAttackPowerRatio
+     *
+     * @returns {number}
+     */
+    this.getStrengthToAttackPowerRatio = function() {
+      return strengthToAttackPowerRatio;
+    }
+
+    /**
+     * getAgilityToAttackPowerRatio
+     *
+     * @returns {number}
+     */
+    this.getAgilityToAttackPowerRatio = function() {
+      return agilityToAttackPowerRatio;
     }
 
     /**
@@ -855,13 +876,13 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     /**
-     * setEquipment
+     * setInventory
      *
-     * @param  {array} newEquipment
+     * @param  {array} newInventory
      * @returns {void}
      */
-    this.setEquipment = function(newEquipment) {
-      equipment = newEquipment;
+    this.setInventory = function(newInventory) {
+      inventory = newInventory;
     }
 
     /**
@@ -915,43 +936,33 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     /**
-    * setSwingTimerLeftHand
+    * setSwingTimerMainHand
     *
-    * @param  {number} newSwingTimerLeftHand
+    * @param  {number} newSwingTimerMainHand
     * @returns {void}
     */
-    this.setSwingTimerLeftHand = function(newSwingTimerLeftHand) {
-      swingTimerLeftHand = newSwingTimerLeftHand;
+    this.setSwingTimerMainHand = function(newSwingTimerMainHand) {
+      swingTimerMainHand = newSwingTimerMainHand;
     }
 
     /**
-    * setSwingTimerRightHand
+    * setSwingTimerOffHand
     *
-    * @param  {number} newSwingTimerRightHand
+    * @param  {number} newSwingTimerOffHand
     * @returns {void}
     */
-    this.setSwingTimerRightHand = function(newSwingTimerRightHand) {
-      swingTimerRightHand = newSwingTimerRightHand;
+    this.setSwingTimerOffHand = function(newSwingTimerOffHand) {
+      swingTimerOffHand = newSwingTimerOffHand;
     }
 
     /**
-     * setLeftHand - object in left hand
+     * setEquipped
      *
-     * @param  {object} newLeftHand
+     * @param  {object} equipped
      * @returns {void}
      */
-    this.setLeftHand = function(newLeftHand) {
-      leftHand = newLeftHand;
-    }
-
-    /**
-     * setRightHand - object in right hand
-     *
-     * @param  {object} newRightHand
-     * @returns {void}
-     */
-    this.setRightHand = function(newRightHand) {
-      rightHand = newRightHand;
+    this.setEquipped = function(newEquipped) {
+      equipped = newEquipped;
     }
 
     /**
@@ -962,6 +973,16 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
      */
     this.setSpellTimers = function(newSpellTimers) {
       spellTimers = newSpellTimers;
+    }
+
+    /**
+     * setCombatLog
+     *
+     * @param  {array} newCombatLog
+     * @returns {void}
+     */
+    this.setCombatLog = function(newCombatLog) {
+      combatLog = newCombatLog;
     }
 
 
@@ -984,6 +1005,26 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
      */
     this.setAgilityToCritRatio = function(newAgilityToCritRatio) {
       agilityToCritRatio = newAgilityToCritRatio;
+    }
+
+    /**
+     * setStrengthToAttackPowerRatio
+     *
+     * @param  {number} newStrengthToAttackPowerRatio description
+     * @returns {void}                               description
+     */
+    this.setStrengthToAttackPowerRatio = function(newStrengthToAttackPowerRatio) {
+      strengthToAttackPowerRatio = newStrengthToAttackPowerRatio;
+    }
+
+    /**
+     * setAgilityToAttackPowerRatio
+     *
+     * @param  {number} newAgilityToAttackPowerRatio description
+     * @returns {void}                               description
+     */
+    this.setAgilityToAttackPowerRatio = function(newAgilityToAttackPowerRatio) {
+      agilityToAttackPowerRatio = newAgilityToAttackPowerRatio;
     }
   }
 }

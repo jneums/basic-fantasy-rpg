@@ -1,15 +1,17 @@
-import selectDie from './dice';
+import { selectDie } from './dice';
 /**
  * getCurrentWeaponSkill
  *
- * @param  {character} character to check
+ * @param  {Character} character to check
  * @param  {string} hand to check
  * @returns {number} weapon skill
  */
 function getCurrentWeaponSkill(character = {}, hand = '') {
-  const weaponType = (hand === 'left')
-    ? character.getLeftHand().type
-    : character.getRightHand().type;
+  const mainHandType = character.getEquipped().mainHand.type;
+  const offHandType = character.getEquipped().offHand.type;
+  const weaponType = (hand === 'main')
+    ? mainHandType
+    : offHandType;
 
   return character.getWeaponSkills()[weaponType];
 }
@@ -17,8 +19,8 @@ function getCurrentWeaponSkill(character = {}, hand = '') {
 /**
  * calculateMissChance
  *
- * @param  {character} attacker
- * @param  {character} target
+ * @param  {Character} attacker
+ * @param  {Character} target
  * @returns {number} miss chance
  */
 function calculateMissChance(attacker = {}, target = {}, hand = '') {
@@ -54,8 +56,8 @@ function getStatFromRaceBonus(character = {}) {
 /**
  * calculateDodgeChance
  *
- * @param  {character} attacker
- * @param  {character} target
+ * @param  {Character} attacker
+ * @param  {Character} target
  * @param  {string} hand attacking with
  * @returns {number} dodge chance
  */
@@ -84,8 +86,8 @@ function calculateDodgeChance(attacker = {}, target = {}, hand = '') {
 /**
  * calculateParryChance
  *
- * @param  {character} attacker
- * @param  {character} target
+ * @param  {Character} attacker
+ * @param  {Character} target
  * @param  {string} hand attacking with
  * @returns {number} parry chance
  */
@@ -110,15 +112,15 @@ function calculateParryChance(attacker = {}, target = {}, hand = '') {
 /**
  * calculateBlockChance
  *
- * @param  {character} attacker
- * @param  {character} target
+ * @param  {Character} attacker
+ * @param  {Character} target
  * @param  {string} hand
  * @returns {number}
  */
 function calculateBlockChance(attacker = {}, target = {}, hand = '') {
   // cant block from behind
   // cant attack without Shield
-  const targetOffHandType = target.getLeftHand().type;
+  const targetOffHandType = target.getEquipped().offHand.type;
   if (targetOffHandType !== 'shield') return 0;
   // amount blocked determined by blockValue
   // worsened by targets blockRating, defense
@@ -137,7 +139,7 @@ function calculateBlockChance(attacker = {}, target = {}, hand = '') {
 /**
  * calculateCritChance
  *
- * @param  {character} attacker
+ * @param  {Character} attacker
  * @returns {number} crit chance
  */
 function calculateCritChance(attacker = {}) {

@@ -17,9 +17,9 @@ function corpseDisposal(scene = {}) {
 /**
  * getClosestEnemy
  *
- * @param  {character} character performing the search
+ * @param  {Character} character performing the search
  * @param  {array} enemies character array
- * @returns {character} reference to closest enemy
+ * @returns {Character} reference to closest enemy
  */
 function getClosestEnemy(character = {}, enemies = []) {
   const myCoords = [ character.x, character.y];
@@ -40,9 +40,9 @@ function getClosestEnemy(character = {}, enemies = []) {
 /**
  * getLowestHealthAlly
  *
- * @param  {character} character performing the search
+ * @param  {Character} character performing the search
  * @param  {array} allies character array
- * @returns {character} lowest health ally
+ * @returns {Character} lowest health ally
  */
 function getLowestHealthAlly(character = {}, allies = []) {
   const allyArray = allies.concat([]);
@@ -54,7 +54,7 @@ function getLowestHealthAlly(character = {}, allies = []) {
 /**
  * scanForEnemies
  *
- * @param  {character} character who performs scan
+ * @param  {Character} character who performs scan
  * @returns {array} array of visible enemies
  */
 function scanForEnemies(character = {}) {
@@ -65,7 +65,7 @@ function scanForEnemies(character = {}) {
 /**
  * scanForAllies
  *
- * @param  {character} character who performs scan
+ * @param  {Character} character who performs scan
  * @returns {array} array of visible allies
  */
 function scanForAllies(character = {}) {
@@ -76,23 +76,23 @@ function scanForAllies(character = {}) {
 /**
  * updateSwingTimer - run on character update
  *
- * @param  {character} character to update
+ * @param  {Character} character to update
  * @returns {void}
  */
 function updateSwingTimer(character = {}) {
-  const swingTimerLeftHand = character.getSwingTimerLeftHand();
-  const swingTimerRightHand = character.getSwingTimerRightHand();
-  const newSwingTimerLeftHand = swingTimerLeftHand + 1;
-  const newSwingTimerRightHand = swingTimerRightHand + 1;
-  character.setSwingTimerLeftHand(newSwingTimerLeftHand);
-  character.setSwingTimerRightHand(newSwingTimerRightHand);
+  const swingTimerMainHand = character.getSwingTimerMainHand();
+  const swingTimerOffHand = character.getSwingTimerOffHand();
+  const newSwingTimerMainHand = swingTimerMainHand + 1;
+  const newSwingTimerOffHand = swingTimerOffHand + 1;
+  character.setSwingTimerMainHand(newSwingTimerMainHand);
+  character.setSwingTimerOffHand(newSwingTimerOffHand);
 }
 
 /**
  * rangeCheck - is target close enough
  *
- * @param  {character} character performing range check
- * @param  {character} target is wihin distance?
+ * @param  {Character} character performing range check
+ * @param  {Character} target is wihin distance?
  * @param  {number} distance to check
  * @returns {bool} whether or not target is in distance
  */
@@ -109,17 +109,19 @@ function rangeCheck(character = {}, target = {}, distance = 0) {
 /**
  * checkSwingTimer
  *
- * @param  {character} character to check
+ * @param  {Character} character to check
  * @param  {string} hand to use
  * @returns {bool} can attack or not
  */
 function checkSwingTimer(character = {}, hand = '') {
-  const swingTimer = (hand === 'right')
-    ? character.getSwingTimerRightHand()
-    : character.getSwingTimerLeftHand();
-  const weaponSpeed = (hand === 'right')
-    ? character.getRightHand().speed
-    : character.getLeftHand().speed;
+  const mainHandSpeed = character.getEquipped().mainHand.speed;
+  const offHandSpeed = character.getEquipped().offHand.speed;
+  const swingTimer = (hand === 'main')
+    ? character.getSwingTimerMainHand()
+    : character.getSwingTimerOffHand();
+  const weaponSpeed = (hand === 'main')
+    ? mainHandSpeed
+    : offHandSpeed;
   const weaponSpeedToFrames = weaponSpeed * 60;
   return (swingTimer > weaponSpeedToFrames);
 }
@@ -128,7 +130,7 @@ function checkSwingTimer(character = {}, hand = '') {
 /**
  * checkSpellTimer
  *
- * @param  {character} character owning spell
+ * @param  {Character} character owning spell
  * @param  {object} spell to check
  * @returns {bool} true if can be cast
  */
@@ -143,7 +145,7 @@ function checkSpellTimer(character = {}, spell = {}) {
 /**
  * resetSpellTimer
  *
- * @param  {character} character who owns timer
+ * @param  {Character} character who owns timer
  * @param  {string} spell name of spell
  * @returns {object} new timer object
  */
@@ -159,7 +161,7 @@ function resetSpellTimer(character = {}, spell = '') {
 /**
  * updateSpellTimers - increment each timer
  *
- * @param  {character} character
+ * @param  {Character} character
  * @returns {array} of spell timers
  */
 function updateSpellTimers(character = {}) {
@@ -177,13 +179,27 @@ function updateSpellTimers(character = {}) {
 /**
  * checkForTwoHandWeapon
  *
- * @param  {character} character to check
+ * @param  {Character} character to check
  * @returns {bool} true if using 2h
  */
 function checkForTwoHandWeapon(character = {}) {
-  const weaponType = character.getRightHand().type;
-  const twoHandWeaponTypes = ['twoHandedAxes', 'twoHandedMaces', 'twoHandedSwords', 'polearms', 'staves'];
-  return twoHandWeaponTypes.includes(weaponType);
+  const weaponSlot = character.getEquipped().mainHand.slot;
+  return weaponSlot === 'two-hand';
+}
+
+/**
+ * resetSwingTimer - resets timer to zero
+ *
+ * @param  {Character} attacker
+ * @param  {string} hand to reset
+ * @returns {void}
+ */
+function resetSwingTimer(attacker = {}, hand = '') {
+  if (hand === 'main') {
+    attacker.setSwingTimerMainHand(0);
+  } else if (hand === 'off') {
+    attacker.setSwingTimerOffHand(0);
+  }
 }
 
 export {
@@ -198,5 +214,6 @@ export {
   rangeCheck,
   checkSwingTimer,
   checkSpellTimer,
-  checkForTwoHandWeapon
+  checkForTwoHandWeapon,
+  resetSwingTimer
 };

@@ -1,6 +1,8 @@
 import { corpseDisposal } from '../utilities';
-import { Warrior, Mage, Priest, Rogue } from '../classTemplates';
-import { getWeaponByName } from '../items';
+import Warrior from '../objects/classTemplates/Warrior';
+import Rogue from '../objects/classTemplates/Rogue';
+import Priest from '../objects/classTemplates/Priest';
+import Mage from '../objects/classTemplates/Mage';
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -9,20 +11,13 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
     this.charlie = new Warrior(this, 'charlie');
-    this.tina = new Mage(this, 'tina');
     this.leslie = new Priest(this, 'leslie');
-    // this.mancy = new Rogue(this, 'mancy');
+    this.mancy = new Rogue(this, 'mancy');
+    this.tina = new Mage(this, 'tina');
 
-    this.boss = new Warrior(this, 'monstrum');
-    this.boss.setHp(250);
-    this.boss.setStrength(12);
-    this.boss.setTeam('boss')
-    const bossWeapon = getWeaponByName('foam-sword');
-    this.boss.setRightHand(bossWeapon)
-
-    this.charlie.setTeam('red');
-    this.tina.setTeam('red');
-    this.leslie.setTeam('red');
+    // this.charlie.setTeam('red');
+    // this.tina.setTeam('red');
+    // this.leslie.setTeam('red');
     // this.mancy.setTeam('red');
   }
 

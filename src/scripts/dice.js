@@ -26,5 +26,4 @@ function selectDie(sides = 6) {
   }
 }
 
-
-export default selectDie;
+export { selectDie };

@@ -1,4 +1,5 @@
-import { meleeAutoAttack, rangedAttack } from '../abilities';
+import { meleeAutoAttack, rangedAttack } from '../meleeAbilities';
+import { heroicStrike } from '../classAbilities/warriorAbilities';
 import {
   getClosestEnemy,
   updateSwingTimer,
@@ -11,19 +12,23 @@ import {
 /**
  * WarriorAI - warrior script
  *
- * @param  {character} character reference
+ * @param  {Character} character reference
  * @returns {function} update function
  */
 export default function WarriorAI() {
+  const meleeRange = 50;
+  const rageDumpValue = 20;
   const update = function() {
+    const rage = this.getRage();
     const newSwingTimer = updateSwingTimer(this);
     const enemies = scanForEnemies(this);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);
     const target = getClosestEnemy(this, enemies);
-    const canReachTarget = rangeCheck(this, target, 60);
-    if (canReachTarget) {
+    const canMelee = rangeCheck(this, target, meleeRange);
+    if (canMelee) {
       this.setVelocity(0, 0);
+      if (rage > rageDumpValue) heroicStrike(this, target);
       meleeAutoAttack(this, target);
     } else {
       this.scene.physics.moveToObject(this, target);
