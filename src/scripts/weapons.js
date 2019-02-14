@@ -29,6 +29,21 @@ const weapons = [
     levelRequirement: 1
   },
   {
+    name: 'Short Sword',
+    ilvl: 3,
+    sellPrice: 10,
+    slot: 'one-hand',
+    type: 'sword',
+    speed: 2.4,
+    durability: 18,
+    repairCost: 20,
+    damage: { min: 2, max: 6 },
+    disenchant: 'no',
+    icon: '',
+    droppedBy: '',
+    levelRequirement: 1
+  },
+  {
     name: 'Deadman Dagger',
     ilvl: 3,
     sellPrice: 10,

@@ -19,26 +19,29 @@ export default class Mage extends Character {
     this.setAgilityToDodgeRatio(19.444);
 
     // mages start with bonus to intellect:
-    const baseIntellect = this.getIntellect();
+    const baseIntellect = this.stat.getIntellect();
     const mageIntellectBonus = 3;
     this.setIntellect(baseIntellect + mageIntellectBonus);
     // and spirit:
-    const baseSpirit = this.getSpirit();
+    const baseSpirit = this.stat.getSpirit();
     const mageSpiritBonus = 2;
     this.setSpirit(baseSpirit + mageSpiritBonus);
 
     // starting equipment
-    const equipped = this.getEquipped();
+    const equipped = this.equipment.getEquipped();
     equipped.mainHand = getWeaponByName("Crooked Staff");
     equipped.chest = getArmorByName("Apprentice's Robe");
     equipped.legs = getArmorByName("Apprentice's Pants");
     equipped.feet = getArmorByName("Apprentice's Boots");
-    this.setEquipped(equipped);
+    this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.getStamina() * 10;
+    const startingHp = this.stat.getStamina() * 10;
     this.setHp(startingHp);
 
     this.update = mageAI();
+    this.classUpdate = function() {
+
+    }
   }
 }

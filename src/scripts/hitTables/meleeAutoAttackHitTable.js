@@ -6,12 +6,6 @@ import {
   calculateCritChance,
   calculateMissChance
 } from '../utilities/calculators';
-import { getCurrentWeaponSkill } from '../utilities/weaponUtilities';
-import {
-  getStatFromEquippedItems,
-  getStatFromRaceBonus,
-  getStatFromTalents
-} from '../utilities/statUtilities';
 
 export default function meleeAutoAttackHitTable(attacker = {}, target = {}, hand ='') {
   const d100 = selectDie(100);

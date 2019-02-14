@@ -3,6 +3,7 @@ import { getRandomCoordsOnCanvas } from '../../utilities/randomNumberUtilities';
 import { getWeaponByName } from '../../weapons';
 import { getArmorByName } from '../../armor';
 import rogueAI from '../../AI/rogueAI';
+import gainAbility from '../../leveling/gainAbility';
 
 /**
  *
@@ -20,32 +21,38 @@ export default class Rogue extends Character {
     this.setAgilityToCritRatio(29);
     this.setStrengthToAttackPowerRatio(1);
     this.setAgilityToAttackPowerRatio(1);
+    // rogues start with dodge and block abilities:
+    gainAbility(this, 'dodge');
+    gainAbility(this, 'dual-wield');
 
     // rogues start with bonus to strength:
-    const baseStrength = this.getStrength();
+    const baseStrength = this.stat.getStrength();
     const rogueStrengthBonus = 1;
     this.setStrength(baseStrength + rogueStrengthBonus);
     // and agility:
-    const baseAgility = this.getAgility();
+    const baseAgility = this.stat.getAgility();
     const rogueAgilityBonus = 3;
     this.setAgility(baseAgility + rogueAgilityBonus);
     // and stamina:
-    const baseStamina = this.getStamina();
+    const baseStamina = this.stat.getStamina();
     const rogueStaminaBonus = 1;
     this.setStamina(baseStamina + rogueStaminaBonus);
 
     // starting equipment
-    const equipped = this.getEquipped();
+    const equipped = this.equipment.getEquipped();
     equipped.mainHand = getWeaponByName("Deadman Dagger");
     equipped.chest = getArmorByName("Footpad's Vest");
     equipped.legs = getArmorByName("Footpad's Pants");
     equipped.feet = getArmorByName("Footpad's Shoes");
-    this.setEquipped(equipped);
+    this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.getStamina() * 10;
+    const startingHp = this.stat.getStamina() * 10;
     this.setHp(startingHp);
 
     this.update = rogueAI();
+    this.classUpdate = function() {
+
+    }
   }
 }

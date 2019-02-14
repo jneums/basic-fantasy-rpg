@@ -1,13 +1,4 @@
 import { meleeAutoAttack, castDamageSpell } from '../globalAbilities/meleeAttack';
-import {
-  getClosestEnemy,
-  getLowestHealthAlly,
-  scanForEnemies,
-  scanForAllies,
-  rangeCheck,
-} from '../utilities/utilities';
-import { checkSwingTimer, updateSwingTimers } from '../utilities/meleeTimers';
-import { checkSpellTimer, updateSpellTimers } from '../utilities/spellTimers';
 import { getMageSpellByName } from '../spellbooks/mageSpells';
 
 /**
@@ -18,15 +9,15 @@ import { getMageSpellByName } from '../spellbooks/mageSpells';
  */
 export default function MageAI() {
   const update = function() {
-    const newSwingTimer = updateSwingTimers(this);
-    const newSpellTimers = updateSpellTimers(this);
-    const allies = scanForAllies(this);
+    const newSwingTimer = this.timer.updateSwingTimers();
+    const newSpellTimers = this.updateSpellTimers();
+    const allies = this.target.scanForAllies();
 
-    const enemies = scanForEnemies(this);
+    const enemies = this.target.scanForEnemies(500);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);
-    const target = getClosestEnemy(this, enemies);
-    const canReachTarget = rangeCheck(this, target, 60);
+    const target = this.target.getClosestEnemy(enemies);
+    const canReachTarget = this.targetangeCheck(target, 60);
     if (canReachTarget) {
       this.setVelocity(0, 0);
       meleeAutoAttack(this, target);

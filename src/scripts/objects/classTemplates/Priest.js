@@ -19,26 +19,29 @@ export default class Priest extends Character {
     this.setAgilityToDodgeRatio(20);
 
     // prists start with a bonus to intellect:
-    const baseIntellect = this.getIntellect();
+    const baseIntellect = this.stat.getIntellect();
     const priestIntellectBonus = 2;
     this.setIntellect(baseIntellect + priestIntellectBonus);
     // and spirit:
-    const baseSpirit = this.getSpirit();
+    const baseSpirit = this.stat.getSpirit();
     const priestSpiritBonus = 3;
     this.setSpirit(baseSpirit + priestSpiritBonus);
 
     // starting equipment
-    const equipped = this.getEquipped();
+    const equipped = this.equipment.getEquipped();
     equipped.mainHand = getWeaponByName("Crooked Staff");
     equipped.chest = getArmorByName("Apprentice's Robe");
     equipped.legs = getArmorByName("Apprentice's Pants");
     equipped.feet = getArmorByName("Apprentice's Boots");
-    this.setEquipped(equipped);
+    this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.getStamina() * 10;
+    const startingHp = this.stat.getStamina() * 10;
     this.setHp(startingHp);
 
     this.update = priestAI();
+    this.classUpdate = function() {
+
+    }
   }
 }

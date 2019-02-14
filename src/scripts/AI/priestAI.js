@@ -1,13 +1,4 @@
 import { meleeAutoAttack, castDamageSpell } from '../globalAbilities/meleeAttack';
-import {
-  getClosestEnemy,
-  getLowestHealthAlly,
-  scanForEnemies,
-  scanForAllies,
-  rangeCheck,
-} from '../utilities/utilities';
-import { checkSwingTimer, updateSwingTimers } from '../utilities/meleeTimers';
-import { checkSpellTimer, updateSpellTimers } from '../utilities/spellTimers';
 import { getPriestSpellByName } from '../spellbooks/priestSpells';
 
 /**
@@ -18,15 +9,15 @@ import { getPriestSpellByName } from '../spellbooks/priestSpells';
  */
 export default function PriestAI() {
   const update = function() {
-    const newSwingTimer = updateSwingTimers(this);
-    const newSpellTimers = updateSpellTimers(this);
-    const allies = scanForAllies(this);
+    const newSwingTimer = this.timer.updateSwingTimers();
+    const newSpellTimers = this.timer.updateSpellTimers();
+    const allies = this.target.scanForAllies();
 
-    const enemies = scanForEnemies(this);
+    const enemies = this.target.scanForEnemies(500);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);
-    const target = getClosestEnemy(this, enemies);
-    const canReachTarget = rangeCheck(this, target, 60);
+    const target = this.target.getClosestEnemy(enemies);
+    const canReachTarget = this.target.angeCheck(target, 60);
     if (canReachTarget) {
       this.setVelocity(0, 0);
       meleeAutoAttack(this, target);
