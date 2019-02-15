@@ -1,5 +1,4 @@
 import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
-import heroicStrike from '../warriorAbilities/heroicStrike';
 
 /**
  * PlayerUpdate - update() to run on player
@@ -49,15 +48,17 @@ function standGuard(character = {}) {
  */
 function moveToMoveTarget(character = {}) {
   // step 1: move to the move target regardless
+  const speed = character.movement.getMovementSpeed();
   const currentPosition = [character.x, character.y];
   const moveTargetCoords = character.movement.getMoveTargetCoords();
   const isMoveTargetWithinDistance = Phaser.Math.Distance.Between(
     currentPosition[0], currentPosition[1],
     moveTargetCoords[0], moveTargetCoords[1]
-  ) < 1;
+  ) < 50;
   if (isMoveTargetWithinDistance) {
+    character.movement.setMovementSpeed(80)
     return character.setVelocity(0, 0);
   } else {
-    return character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1]);
+    return character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);
   }
 }

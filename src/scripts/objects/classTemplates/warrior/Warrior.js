@@ -22,6 +22,7 @@ export default class Warrior extends Character {
     this.movement.setMoveTargetCoords(this.coords)
     this.setName(name);
     this.setCharacterClass('warrior');
+    this.stat.setCriticalChance(.25);
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);
@@ -52,17 +53,9 @@ export default class Warrior extends Character {
     this.rage = new RageMechanic(this);
 
 
-    this.update = warriorAI();
+    this.AI = warriorAI();
     this.classUpdate = function() {
-      // class specific update:
-      // warrior:
-      this.timer.updateSwingTimers();
-      // if in combat:
-      if(this.combat.isInCombat()) {
-
-      } else {
-        this.rage.rageDecay()
-      }
+      if(!this.combat.isInCombat()) this.rage.rageDecay();
     };
   }
 }

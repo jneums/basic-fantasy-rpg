@@ -1,5 +1,4 @@
-import { meleeAutoAttack, castDamageSpell } from '../globalAbilities/meleeAttack';
-import { getPriestSpellByName } from '../spellbooks/priestSpells';
+import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
 
 /**
  * PriestAI - priest script
@@ -8,7 +7,7 @@ import { getPriestSpellByName } from '../spellbooks/priestSpells';
  * @returns {function} update function
  */
 export default function PriestAI() {
-  const update = function() {
+  const AI = function() {
     const newSwingTimer = this.timer.updateSwingTimers();
     const newSpellTimers = this.timer.updateSpellTimers();
     const allies = this.target.scanForAllies();
@@ -25,5 +24,5 @@ export default function PriestAI() {
       this.scene.physics.moveToObject(this, target);
     }
   }
-  return update;
+  return AI;
 }

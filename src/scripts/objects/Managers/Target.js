@@ -41,7 +41,7 @@ export default class Target {
     }
 
     /**
-     * scanForEnemies
+     * scanForEnemies - alive only
      *
      * @param  {Character} character who performs scan
      * @param  {number} range max distance to scan
@@ -52,7 +52,8 @@ export default class Target {
         child.getTeam() !== character.getTeam());
       const enemiesInRange = allEnemies.filter(enemy =>
           this.rangeCheck(enemy, range));
-      return enemiesInRange;
+      const aliveEnemies = enemiesInRange.filter(enemy => !enemy.combat.isDead())
+      return aliveEnemies;
     }
 
     /**

@@ -1,5 +1,4 @@
-import { meleeAutoAttack, castDamageSpell } from '../globalAbilities/meleeAttack';
-import { getMageSpellByName } from '../spellbooks/mageSpells';
+import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
 
 /**
  * MagicUserAI - npc magic user script
@@ -8,7 +7,7 @@ import { getMageSpellByName } from '../spellbooks/mageSpells';
  * @returns {function} update function
  */
 export default function MageAI() {
-  const update = function() {
+  const AI = function() {
     const newSwingTimer = this.timer.updateSwingTimers();
     const newSpellTimers = this.updateSpellTimers();
     const allies = this.target.scanForAllies();
@@ -25,5 +24,5 @@ export default function MageAI() {
       this.scene.physics.moveToObject(this, target);
     }
   }
-  return update;
+  return AI;
 }

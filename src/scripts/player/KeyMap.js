@@ -1,11 +1,11 @@
 export default class KeyMap {
   constructor(character) {
-    let one = character.ability.heroicStrike;
-    let two = character.combat.setAutoAttackToggle;
-    let three = '';
-    let four = '';
-    let five = '';
-    let six = '';
+    let one = character.ability.charge;
+    let two = character.ability.rend;
+    let three = character.ability.heroicStrike;
+    let four = character.combat.setAutoAttackToggle;
+    let five = character.ability.battleShout;
+    let six = character.ability.thunderClap;
     let seven = '';
     let eight = '';
     let nine = '';
@@ -16,6 +16,22 @@ export default class KeyMap {
 
     this.executeTwo = function() {
       two.call(character)
+    }
+
+    this.executeThree = function() {
+      three.call(character)
+    }
+
+    this.executeFour = function() {
+      four.call(character)
+    }
+
+    this.executeFive = function() {
+      five.call(character)
+    }
+
+    this.executeSix = function() {
+      six.call(character)
     }
 
     this.getOne = function() {

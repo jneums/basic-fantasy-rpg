@@ -7,25 +7,15 @@
  * @returns {number} dodge chance
  */
 function calculateDodgeChance(attacker = {}, target = {}, hand = '') {
-  const targetBaseDodge = target.stat.getDodgeRating();
-  const targetAgility = target.stat.getAgility();
-  const targetEquippedAgi = target.equipment.getStatFromEquipped('agility');
-  const targetAgiToDodgeRatio = target.stat.getAgilityToDodgeRatio();
-  const targetDodgeFromAgi = (targetAgility + targetEquippedAgi) / targetAgiToDodgeRatio * .01
-  const targetTalentDodgeBonus = target.stat.getStatFromTalents();
-  const targetRaceBonus = target.stat.getStatFromRace();
-  const targetDefenseSkill = target.stat.getDefenseRating();
-
+  const totalDodge = target.stat.getDodgeRating();
+  const defenseSkill = target.stat.getDefenseRating();
   // mitigated by attacker weapon skill
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
 
   const dodgeChance =
-    (targetBaseDodge + targetDodgeFromAgi
-      + targetTalentDodgeBonus + targetRaceBonus
-      + ((targetDefenseSkill - attackerWeaponSkill) * .04));
+    (totalDodge + ((defenseSkill - attackerWeaponSkill) * .04));
   return dodgeChance;
 }
-
 
 /**
  * calculateParryChance
@@ -63,7 +53,7 @@ function calculateParryChance(attacker = {}, target = {}, hand = '') {
  */
 function calculateBlockChance(attacker = {}, target = {}, hand = '') {
   // cant block from behind
-  // cant attack without Shield
+  // cant block without Shield
   const targetOffHandType = target.equipment.getEquipped().offHand.type;
   if (targetOffHandType !== 'shield') return 0;
   // amount blocked determined by blockValue
@@ -88,13 +78,12 @@ function calculateBlockChance(attacker = {}, target = {}, hand = '') {
  */
 function calculateCritChance(attacker = {}) {
   // characters crit chance
-  const attackerCritChance = attacker.stat.getCriticalChance();
-  const attackerAgility = attacker.stat.getAgility();
-  const attackerAgiFromItems = attacker.equipment.getStatFromEquipped('agility');
-  const attackerAgiCritRatio = attacker.stat.getAgilityToCritRatio();
-  const attackerCritFromAgi = (attackerAgility + attackerAgiFromItems) / attackerAgiCritRatio * .01;
-  if (attackerAgiCritRatio) return attackerCritChance  + attackerCritFromAgi;
-  else return attackerCritChance;
+  const critChance = attacker.stat.getCriticalChance();
+  const totalAgility = attacker.stat.getTotalAgility();
+  const agiCritRatio = attacker.stat.getAgilityToCritRatio();
+  if (agiCritRatio) return critChance;
+  const total = (totalAgility / agiCritRatio) * .01;
+  return total;
 }
 
 /**

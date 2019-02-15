@@ -8,10 +8,9 @@ import { meleeAutoAttack } from '../../globalAbilities/meleeAttack';
  */
 export default function KoboldMinerAI() {
   const meleeRange = 50;
-  const update = function() {
-    const newSwingTimer = this.timer.updateSwingTimers();
+  const AI = function() {
     const enemies = this.target.scanForEnemies(200);
-    // if no enemies within scan distance, stop
+    // if no enemies within scan distance, patrol
     if (!enemies.length) return this.setVelocity(0, 0);
     const target = this.target.getClosestEnemy(enemies);
     const canMelee = this.target.rangeCheck(target, meleeRange);
@@ -22,5 +21,5 @@ export default function KoboldMinerAI() {
       this.scene.physics.moveToObject(this, target);
     }
   }
-  return update;
+  return AI;
 }

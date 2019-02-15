@@ -31,10 +31,9 @@ export default class KoboldMiner extends Character {
     const startingHp = this.stat.getStamina() * 10;
     this.stat.setHp(startingHp);
 
-    this.update = koboldMinerAI();
+    this.AI = koboldMinerAI();
     this.classUpdate = function() {
 
     }
-
   }
 }

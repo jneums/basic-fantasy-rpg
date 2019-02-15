@@ -7,6 +7,8 @@ import Movement from './Managers/Movement';
 import Equipment from './Managers/Equipment';
 import Lvl from './Managers/Level';
 import Target from './Managers/Target';
+import Threat from './Managers/Threat';
+import Buffs from './Managers/Buffs';
 
 
 export default class Character extends Phaser.Physics.Arcade.Sprite {
@@ -27,10 +29,11 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.equipment = new Equipment(this);
     this.lvl = new Lvl(this, 1);
     this.target = new Target(this);
+    this.threat = new Threat(this);
+    this.buffs = new Buffs(this);
 
     //  Input Event listeners
     this.on('pointerover', function () {
-      console.log(`${this.getName()}, hp: ${this.stat.getHp()}`);
     });
     this.on('pointerout', function () {
     });

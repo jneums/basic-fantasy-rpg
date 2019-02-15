@@ -20,8 +20,14 @@ export default class Equipment {
       trinket2: {}
     }
 
+
+    /**
+     * isDualWielding - checks to see if currently dual wielding
+     *
+     * @returns {type}  description
+     */
     this.isDualWielding = function() {
-      const hasDualWield = character.ability.getSpellbook().includes('dual-wield');
+      const hasDualWield = character.ability.getAbilities().includes('dual-wield');
       const hasWeaponInOffhand = this.getEquipped().offHand.damage;
       if (hasDualWield && hasWeaponInOffhand) return true;
       else return false;
@@ -39,7 +45,6 @@ export default class Equipment {
       const weaponType = (hand === 'main')
         ? mainHandType
         : offHandType;
-
       return character.skills.getWeaponSkills()[weaponType];
     }
 
@@ -66,8 +71,8 @@ export default class Equipment {
      * @returns {number}
      */
     this.getWeaponSpeed = function(hand = '') {
-      const mainHandSpeed = this.getEquipped().mainHand.speed;
-      const offHandSpeed = this.getEquipped().offHand.speed;
+      const mainHandSpeed = equipped.mainHand.speed;
+      const offHandSpeed = equipped.offHand.speed;
       const weaponSpeed = (hand === 'main')
         ? mainHandSpeed
         : offHandSpeed;
@@ -85,13 +90,13 @@ export default class Equipment {
     }
 
     /**
-     * getStatFromEquipped - equipped
+     * statBonus - equipped
      *
      * @param  {Character} character
      * @param  {string} stat e.g. 'armor', 'stamina', etc...
      * @returns {number} total of stat equipped
      */
-    this.getStatFromEquipped = function(stat = '') {
+    this.statBonus = function(stat = '') {
       let total = 0;
       const equipped = this.getEquipped();
       for (let item in equipped) {
@@ -121,6 +126,5 @@ export default class Equipment {
       equipped = newEquipped;
     }
 
-    // methods for calculating stats from gear
   }
 }

@@ -1,6 +1,3 @@
-import { getRandomIntInclusive } from './utilities/randomNumberUtilities';
-
-
 /**
  * selectDie - pick how many sides
  *
@@ -20,7 +17,7 @@ function selectDie(sides = 6) {
   return function(quantity = 1) {
     let total = 0;
     while (quantity--) {
-      total += getRandomIntInclusive(min, max);
+      total += Phaser.Math.Between(min, max)
     }
     return total;
   }

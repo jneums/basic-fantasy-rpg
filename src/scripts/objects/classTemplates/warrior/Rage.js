@@ -2,6 +2,22 @@ export default class RageMechanic {
   constructor(character) {
     let rage = 0;
 
+
+    this.rageTransaction = function(cost = 0) {
+      // calculate if enough rage
+      const rageCost = cost;
+      const oldRage = this.getRage();
+      if (oldRage - rageCost < 0) {
+        console.log('Not enough rage');
+        return false;
+      } else {
+        // if so, deduct rage cost
+        const newRage = oldRage - rageCost;
+        this.setRage(newRage);
+        return true;
+      }
+    }
+
     /**
      * getRage
      *
@@ -20,7 +36,6 @@ export default class RageMechanic {
     this.setRage = function(newRage) {
       rage = newRage;
     }
-
 
     /**
      * processRage - update players rage

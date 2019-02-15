@@ -9,7 +9,7 @@ import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
 export default function WarriorAI() {
   const meleeRange = 50;
   const rageDumpValue = 20;
-  const update = function() {
+  const AI = function() {
     const rage = this.rage.getRage();
     const enemies = this.target.scanForEnemies(500);
     // if no enemies, stop
@@ -24,5 +24,5 @@ export default function WarriorAI() {
       this.scene.physics.moveToObject(this, target);
     }
   }
-  return update;
+  return AI;
 }

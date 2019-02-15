@@ -1,5 +1,4 @@
 import meleeAutoAttackHitTable from '../hitTables/meleeAutoAttackHitTable';
-import { getRandomIntInclusive } from '../utilities/randomNumberUtilities';
 
 /**
  * meleeAttack
@@ -13,14 +12,14 @@ function meleeAttack(attacker = {}, target = {}, hand = '', type = '') {
   attacker.timer.resetSwingTimer(hand);
   const weaponsDamageRange = attacker.equipment.getWeaponDmg(hand);
   const attackStatus = meleeAutoAttackHitTable(attacker, target, hand);
-  let weaponDmg = getRandomIntInclusive(weaponsDamageRange.min, weaponsDamageRange.max);
+  let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
   if (hand === 'off') weaponDmg /= 2;
   const damageAmount = weaponDmg + attacker.stat.getAttackPowerBonus(hand);
   const targetStartingHp = target.stat.getHp();
   const combatObject = attacker.combat.buildMeleeCombatObject(
     target,
     attackStatus,
-    'melee',
+    type,
     damageAmount,
     hand
   );

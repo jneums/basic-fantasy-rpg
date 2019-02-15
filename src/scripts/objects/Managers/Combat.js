@@ -1,36 +1,42 @@
 export default class Combat {
   constructor(character) {
+
+    // array of combat objects
     let combatLog = [];
+    // que an event to land on next auto attack
     let onNextAttack = '';
+    // should auto attack or not
     let autoAttackToggle = true;
-    // [{ name: 'charlie', threat: 120 }, { name: 'kobold', threat: 20 }]
-    let threatTable = [];
+    // attack speed modifier
+    let speed = 1;
 
-    this.getThreatTable = function() {
-      return threatTable;
+    /**
+     * attackSpd - use to set swing timers
+     *
+     * @returns {type}  description
+     */
+    this.attackSpd = function() {
+      return speed;
     }
 
-    this.setThreatTable = function(newThreatTable) {
-      threatTable = newThreatTable;
+    /**
+     * setattackSpd - default at 100%
+     *
+     * @param  {number} newSpeed percent
+     * @returns {void}
+     */
+    this.setAttackSpd = function(newSpeed = 1) {
+      speed = newSpeed;
     }
 
-    this.updateTargetThreatTable = function(target = {}, combatObject = {}) {
-      // scan my table for enemy entry.
-      const threat = combatObject.damageAmount + combatObject.threatAmount;
-      const oldTable = target.combat.getThreatTable()
-      const myName = character.getName();
-
-      // get previous threat
-      const oldEntry = oldTable.filter(entry => entry.name === myName)[0];
-      const newTable = oldTable.filter(entry => entry.name !== myName);
-
-      let newEntry = { name: myName, threat: threat };
-      if (oldEntry) {
-        newEntry.threat += oldEntry.threat;
-      }
-      target.combat.setThreatTable(newTable.concat([newEntry]))
+    /**
+     * isStunned - used by update loop
+     *
+     * @returns {type}  description
+     */
+    this.isStunned = function() {
+      return character.buffs.has('stun');
     }
-
     /**
      * attackerClassUpdate - specific reactions for causing dmg
      *
@@ -42,20 +48,21 @@ export default class Combat {
       switch(attackerClass) {
         case 'warrior':
           const onNextAttack = character.combat.getOnNextAttack();
-          if (onNextAttack === 'heroicStrike') {
-            newCombatObject.damageAmount += 11;
-            newCombatObject.threatAmount += 20;
-            const oldRage = character.rage.getRage();
-            const rageCost = 15;
-            const newRage = oldRage - rageCost;
-            character.rage.setRage(newRage)
-            const newOnNextAttack = '';
-            character.combat.setOnNextAttack(newOnNextAttack);
-            return newCombatObject;
-          } else if (!onNextAttack){
+          if (newCombatObject.type === 'autoAttack') {
+            if (onNextAttack === 'heroicStrike') {
+              newCombatObject.damageAmount += 11;
+              newCombatObject.bonusThreat += 20;
+              const oldRage = character.rage.getRage();
+              const rageCost = 15;
+              const newRage = oldRage - rageCost;
+              character.rage.setRage(newRage)
+              const newOnNextAttack = '';
+              character.combat.setOnNextAttack(newOnNextAttack);
+              return newCombatObject;
+            }
             character.rage.processRage(newCombatObject, 'attacker');
-            return newCombatObject;
           }
+          return newCombatObject;
         default:
           return newCombatObject;
       }
@@ -92,7 +99,7 @@ export default class Combat {
       newCombatObject = this.targetClassUpdate(newCombatObject);
       character.combat.pushCombatObjectToLog(newCombatObject);
       target.combat.pushCombatObjectToLog(newCombatObject);
-      character.combat.updateTargetThreatTable(target, newCombatObject)
+      character.threat.updateTargetThreatTable(target, newCombatObject)
       character.combat.processDamageFromCombatObject(target, newCombatObject);
     }
 
@@ -136,9 +143,10 @@ export default class Combat {
         target: target.getName(),
         status: status,
         type: type,
+        range: 'melee',
         damageType: 'physical',
         damageAmount: damageAmount,
-        threatAmount: 0,
+        bonusThreat: 0,
         mitigationAmount: 0,
         hand: hand,
         time: Date.now()  // add time from Phaser?
@@ -211,7 +219,7 @@ export default class Combat {
       const enemies = character.target.scanForEnemies(100);
       enemies.forEach(enemy => {
         // get threat table
-        const threatTable = enemy.combat.getThreatTable();
+        const threatTable = enemy.threat.getThreatTable();
         // search threat table for mention of self
         threatTable.forEach(entry => {
           if (entry.name === myName) result = true;
@@ -286,6 +294,5 @@ export default class Combat {
     this.setAutoAttackToggle = function() {
       autoAttackToggle = !autoAttackToggle;
     }
-
   }
 }

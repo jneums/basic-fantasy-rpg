@@ -1,25 +1,25 @@
 export default class MobAbilities {
   constructor(character) {
-    let spellbook = [];
+    let abilities = [];
 
     /**
-    * getSpellbook
+    * getAbilities
     *
-    * @returns {array}  characters spells
+    * @returns {array}  characters abilities
     */
-    this.getSpellbook = function() {
-      return spellbook;
+    this.getAbilities = function() {
+      return abilities;
     }
 
 
     /**
-    * setSpellbook - spells character knows
+    * setAbilities - abilities character knows
     *
-    * @param  {array} newSpellbook
+    * @param  {array} newAbilities
     * @returns {void}
     */
-    this.setSpellbook = function(newSpellbook) {
-      spellbook = newSpellbook;
+    this.setAbilities = function(newAbilities) {
+      abilities = newAbilities;
     }
   }
 }

@@ -18,6 +18,7 @@ export default class Skills {
       wands: 5,
       unarmed: 5
     }
+
     let armorSkills = {
       cloth: 0,
       leather: 0,

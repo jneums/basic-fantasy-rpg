@@ -3,7 +3,6 @@ import { getRandomCoordsOnCanvas } from '../../utilities/randomNumberUtilities';
 import { getWeaponByName } from '../../weapons';
 import { getArmorByName } from '../../armor';
 import rogueAI from '../../AI/rogueAI';
-import gainAbility from '../../leveling/gainAbility';
 
 /**
  *
@@ -21,9 +20,6 @@ export default class Rogue extends Character {
     this.setAgilityToCritRatio(29);
     this.setStrengthToAttackPowerRatio(1);
     this.setAgilityToAttackPowerRatio(1);
-    // rogues start with dodge and block abilities:
-    gainAbility(this, 'dodge');
-    gainAbility(this, 'dual-wield');
 
     // rogues start with bonus to strength:
     const baseStrength = this.stat.getStrength();
@@ -50,7 +46,7 @@ export default class Rogue extends Character {
     const startingHp = this.stat.getStamina() * 10;
     this.setHp(startingHp);
 
-    this.update = rogueAI();
+    this.AI = rogueAI();
     this.classUpdate = function() {
 
     }

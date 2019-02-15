@@ -1,8 +1,9 @@
 export default class Movement {
   constructor(character, x, y) {
-    let movementSpeed = 0;
+    // how fast you move. default is 100
+    let movementSpeed = 100;
 
-    // movement
+    // where to move to
     let moveTargetCoords = [x, y];
 
     /**

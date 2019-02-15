@@ -1,5 +1,3 @@
-
-
 /**
  * getWeaponByName
  *
@@ -14,11 +12,27 @@ export { getWeaponByName };
 
 const weapons = [
   {
+    name: 'Sword of a million truths',
+    agility: 100,
+    ilvl: 30000000,
+    sellPrice: 13,
+    slot: 'two-hand',
+    type: 'twoHandedSword',
+    speed: 3.2,
+    durability: 25,
+    repairCost: 20,
+    damage: { min: 40, max: 60 },
+    disenchant: 'no',
+    icon: '',
+    droppedBy: 'Scarlet Convert',
+    levelRequirement: 1
+  },
+  {
     name: 'Tarnished Bastard Sword',
     ilvl: 3,
     sellPrice: 13,
     slot: 'two-hand',
-    type: 'sword',
+    type: 'twoHandedSword',
     speed: 3.2,
     durability: 25,
     repairCost: 20,
@@ -33,7 +47,7 @@ const weapons = [
     ilvl: 3,
     sellPrice: 10,
     slot: 'one-hand',
-    type: 'sword',
+    type: 'oneHandedSword',
     speed: 2.4,
     durability: 18,
     repairCost: 20,

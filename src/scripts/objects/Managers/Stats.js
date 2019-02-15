@@ -1,84 +1,24 @@
 export default class Stat {
   constructor(character = {}, {strength, agility, intellect, stamina, spirit}) {
     let hp = 0;
-    // Armor Penetration was best known as a valuable stat in
-    // Wrath of the Lich King, but the mechanic first started as an
-    // obscure one on a handful of items in Classic WoW.
-    let armorPenetration = 0;
-    // Attack speed affects how frequently your characters will auto-attack.
-    // For classes such as Rogues that generate a fair amount of
-    // damage through white auto-attacks, Attack Speed is important.
-    let attackSpeed = 0;
-    // Attack Power increases your base melee damage-per-second (DPS)
-    // by 1 point for every 14 Attack Power.
-    // You can gain Attack Power with either Strength or Agility, depending
-    // on your class, or with raw Attack Power as a stat
-    // provided by certain pieces of gear.
     let attackPower = 0;
-    // Critical Strike Chance increases your chance to strike a critical
-    // hit with weapon-based attacks on an enemy.
-    // A critical hit deals double its normal damage.
     let criticalChance = 0;
-    // All attacks have a chance to miss an enemy of a similar or higher level.
-    // Hit chance is a stat that exists to mitigate and eventually nullify this.
-    // The amount of Hit Chance needed to not miss any attacks is called the "Hit Cap".
     let hitChance = 0;
-    // Weapon Skill is a display of how proficient you are with a weapon type.
-    // Each weapon type has its own skill-up, and the level cap
-    // is (your your current level * 5), which means at level 60,
-    // your Weapon Skill will cap at 300.
-    // Spell Power increases the damage of all your offensive spells.
     let spellPower = 0;
-    // Healing Power increases how much your healing spells will heal your target.
     let healingPower = 0;
-    // Spell Critical Strike increases your chance to strike a
-    // critical hit with spells. A critical spell hit deals 150% of
-    // a spell's normal damage.
     let spellCriticalChance = 0;
-    // All spells have a chance to miss an enemy of similar or
-    // higher level. Spell Hit Chance mitigates and eventually nullifies this.
-    // The amount of Spell Hit needed to not miss any spells is called
-    // the "Spell Hit Cap".
     let spellHitChance = 0;
-    // This stat will regenerate a certain amount of Mana every 5 seconds.
     let manaPer5 = 0;
-    // Spell Penetration reduces the target's resistances to your spells.
-    // It works differently from Spell Hit, as it only works on targets
-    // with resistances and will not reduce a target's resistance below zero.
-    let spellPenetration = 0;
-    // Defense is an attribute that helps prevent Physical damage
-    // by reducing the chance to be hit or critically hit.
     let defenseRating = 5;
-    // Armor reduces how much Physical damage you
-    // take when a player or NPC hits you.
     let armorRating = 0;
-    // Block is the ability of a shield to absorb incoming Physical damage,
-    // in addition to its Armor rating. When a Paladin, Warrior or Shaman
-    // have a Shield equipped, they gain a chance to Block
-    // incoming Physical attacks.
     let blockRating = 0;
-    // Block Value increases the amount of damage
-    // mitigated per blocked attack.
     let blockValue = 0;
-    // Dodge increases the chance to completely avoid a Physical attack.
     let dodgeRating = 0;
-    // Parry increases the chance to completely
-    // mitigate a Physical attack. A successful Parry nullifies the
-    // attack dealt, but also reduce the swing timer of the
-    // enemy's next attack.
     let parryRating = 0;
-    // There are five types of resistances in Classic: Fire Resistance,
-    // Frost Resistance, Arcane Resistance, Nature Resistance
-    // and Shadow Resistance.
-    let resistances = {
-      fire: 0,
-      frost: 0,
-      arcane: 0,
-      nature: 0,
-      shadow: 0
-    }
 
     // combat stats
+    // these are set from constructor when
+    // classs is chosen
     let agilityToDodgeRatio = 0;
     let agilityToCritRatio = 0;
     let strengthToAttackPowerRatio = 0;
@@ -92,7 +32,7 @@ export default class Stat {
     this.getStatFromRace = function() {
       return 0;
     }
-    
+
     /**
      * getAPFromStr - combat helper
      *
@@ -102,7 +42,7 @@ export default class Stat {
     this.getAPFromStr = function() {
       const strength = this.getStrength();
       // add str bonus from talents, items, buffs
-      const strFromEquipped = character.equipment.getStatFromEquipped('strength');
+      const strFromEquipped = character.equipment.statBonus('strength');
       const totalStr = strength + strFromEquipped;
       const strToAPR
         = this.getStrengthToAttackPowerRatio();
@@ -116,10 +56,7 @@ export default class Stat {
      * @returns {number} class specific
      */
     this.getAPFromAgi = function() {
-      const agility = character.stat.getAgility();
-      // add agi bonus from talents, items, buffs
-      const agiFromEquipped = character.equipment.getStatFromEquipped('agility');
-      const totalAgi = agility + agiFromEquipped;
+      const totalAgi = character.stat.getTotalAgility();
       const agiToAPR
         = this.getAgilityToAttackPowerRatio();
       const apFromAgi = (agiToAPR) ? totalAgi / agiToAPR : 0;
@@ -136,9 +73,10 @@ export default class Stat {
       // base stats
       const apFromStr = this.getAPFromStr();
       const apFromAgi = this.getAPFromAgi();
-      const apFromEquipped = character.equipment.getStatFromEquipped('attackPower');
-      // add ap bonus from talents, items, buffs
-      const attackPower =  apFromStr + apFromAgi + apFromEquipped;
+      const apFromBuffs = character.buffs.statBonus('attackPower');
+      const apFromEquipped = character.equipment.statBonus('attackPower');
+      // add ap bonus from buffs, equipped, talents
+      const attackPower =  apFromStr + apFromAgi + apFromBuffs + apFromEquipped;
       // 14ap / 1dps
       const dpsIncrease = attackPower / 14;
       const attackPowerBonus = character.equipment.getWeaponSpeed(hand) * dpsIncrease;
@@ -153,13 +91,23 @@ export default class Stat {
      */
     this.armorMitigationPercent = function(target = {}) {
       // get base armor, armor from items, talents etc.
-      const armor = target.stat.getArmorRating();
-      // everyone gets 2 armor per agi
-      const armorFromAgility = target.stat.getAgility() * 2;
-      const armorFromItems = target.equipment.getStatFromEquipped('armor');
+      const totalArmor = target.stat.totalArmor();
       const attackerLevel = character.lvl.getLevel();
-      const dmgMitigated = armor / (armor + 400 + 85 * attackerLevel);
+      const dmgMitigated = totalArmor / (totalArmor + 400 + 85 * attackerLevel);
       return dmgMitigated;
+    }
+
+    /**
+     * totalArmor - from buffs, agi, and items
+     *
+     * @returns {number}
+     */
+    this.totalArmor = function() {
+      const armorFromBuffs = character.buffs.statBonus('armor');
+      // everyone gets 2 armor per agi
+      const armorFromAgility = character.stat.getTotalAgility() * 2;
+      const armorFromItems = character.equipment.statBonus('armor');
+      return armorFromBuffs + armorFromAgility + armorFromItems;
     }
 
     /**
@@ -181,14 +129,25 @@ export default class Stat {
     }
 
     /**
-     * getAgility
+     * getTotalAgility - base, gear, and buffs
      *
-     * @returns {number}  character agility
+     * @returns {number} total agility
+     */
+    this.getTotalAgility = function() {
+      const baseAgility = agility;
+      const gearAgility = character.equipment.statBonus('agility');
+      const buffAgility = character.buffs.statBonus('agility');
+      return baseAgility + gearAgility + buffAgility;
+    }
+
+    /**
+     * getAgility - base agility
+     *
+     * @returns {type}  description
      */
     this.getAgility = function() {
       return agility;
     }
-
     /**
     * getIntellect
     *
@@ -364,7 +323,14 @@ export default class Stat {
      * @returns {number}
      */
     this.getDodgeRating = function() {
-      return dodgeRating;
+      const baseDodge = dodgeRating;
+      const totalAgi = character.stat.getTotalAgility();
+      const agilityToDodgeRatio = this.getAgilityToDodgeRatio();
+      const targetDodgeFromAgi = (totalAgi / agilityToDodgeRatio) * .01
+      const targetRaceBonus = this.getStatFromRace();
+      const targetTalentDodgeBonus = this.getStatFromTalents();
+
+      return baseDodge + targetDodgeFromAgi + targetRaceBonus + targetTalentDodgeBonus;
     }
 
     /**

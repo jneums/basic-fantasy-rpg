@@ -39,7 +39,7 @@ export default class Priest extends Character {
     const startingHp = this.stat.getStamina() * 10;
     this.setHp(startingHp);
 
-    this.update = priestAI();
+    this.AI = priestAI();
     this.classUpdate = function() {
 
     }

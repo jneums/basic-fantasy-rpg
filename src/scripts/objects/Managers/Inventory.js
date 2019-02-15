@@ -31,7 +31,6 @@ export default class Inventory {
       money = newMoney;
     }
 
-
     /**
      * setInventory
      *

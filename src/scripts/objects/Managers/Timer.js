@@ -3,68 +3,71 @@ export default class Timer {
     let globalCooldown = 0;
     let swingTimerMainHand = 0;
     let swingTimerOffHand = 0;
-    let spellTimers = [];
+    let abilityTimers = [];
     let corpseTimer = 0;
 
 
 
     /**
-     * checkSpellTimer
+     * checkAbilityTimer
      *
-     * @param  {object} spell to check
+     * @param  {object} ability to check
      * @returns {bool} true if can be cast
      */
-    this.checkSpellTimer = function(spell = {}) {
-      const spellTimer = this.getSpellTimers()
-        .filter(a => a.name === spell.name)[0].time;
+    this.checkAbilityTimer = function(ability = {}) {
+      const abilityTimer = this.getAbilityTimers()
+        .filter(a => a.name === ability.name)[0].time;
       const spellSpeed = spell.speed;
       const spellSpeedToFrames = spellSpeed * 60;
       return (spellTimer > spellSpeedToFrames);
     }
 
     /**
-     * updateSpellTimers - increment each timer
+     * updateAbilityTimers - increment each timer
      *
-     * @returns {array} of spell timers
+     * @returns {array} of ability timers
      */
-    this.updateSpellTimers = function() {
-      const oldSpellTimers = this.getSpellTimers();
-      const newSpellTimers = oldSpellTimers.map((timer) => {
+    this.updateAbilityTimers = function() {
+      const oldAbilityTimers = this.getAbilityTimers();
+      const newAbilityTimers = oldAbilityTimers.map((timer) => {
         const newTime = timer.time + 1;
         const newTimer = Object.assign({}, { name: timer.name, time: newTime });
         return newTimer;
       })
-      this.setSpellTimers(newSpellTimers);
-      return newSpellTimers;
+      this.setAbilityTimers(newAbilityTimers);
+      return newAbilityTimers;
     }
 
     /**
-     * resetSpellTimer
+     * resetAbilityTimer
      *
-     * @param  {string} spell name of spell
+     * @param  {string} ability name of ability
      * @returns {object} new timer object
      */
-    this.resetSpellTimer = function(spell = '') {
-      const oldSpellTimers = this.getSpellTimers();
-      const newTimer = Object.assign({}, { name: spell, time: 0 });
-      const newSpellTimers = oldSpellTimers.filter(a => a.name !== spell);
-      newSpellTimers.push(newTimer);
-      this.setSpellTimers(newSpellTimers);
+    this.resetAbilityTimer = function(ability = '') {
+      const oldAbilityTimers = this.getAbilityTimers();
+      const newTimer = Object.assign({}, { name: ability, time: 0 });
+      const newAbilityTimers = oldAbilityTimers.filter(a => a.name !== ability);
+      newAbilityTimers.push(newTimer);
+      this.setAbilityTimers(newAbilityTimers);
       return newTimer;
     }
 
     /**
-     * resetSwingTimer - resets timer to zero
+     * resetSwingTimer - resets timer to weapon speed
      *
      * @param  {Character} attacker
      * @param  {string} hand to reset
      * @returns {void}
      */
     this.resetSwingTimer = function(hand = '') {
+      const spdModifier = character.combat.attackSpd();
       if (hand === 'main') {
-        this.setSwingTimerMainHand(0);
+        const mainHandSpeed = character.equipment.getWeaponSpeed('main');
+        this.setSwingTimerMainHand(spdModifier * mainHandSpeed * 60);
       } else if (hand === 'off') {
-        this.setSwingTimerOffHand(0);
+        const offHandSpeed = character.equipment.getWeaponSpeed('off');
+        this.setSwingTimerOffHand(spdModifier * offHandSpeed * 60);
       }
     }
 
@@ -76,16 +79,15 @@ export default class Timer {
      * @returns {bool} can attack or not
      */
     this.checkSwingTimer = function(hand = '') {
-      const mainHandSpeed = character.equipment.getEquipped().mainHand.speed;
-      const offHandSpeed = character.equipment.getEquipped().offHand.speed;
+      const mainHandSpeed = character.equipment.getWeaponSpeed('main');
+      const offHandSpeed = character.equipment.getWeaponSpeed('off');
       const swingTimer = (hand === 'main')
         ? this.getSwingTimerMainHand()
         : this.getSwingTimerOffHand();
       const weaponSpeed = (hand === 'main')
         ? mainHandSpeed
         : offHandSpeed;
-      const weaponSpeedToFrames = weaponSpeed * 60;
-      return (swingTimer > weaponSpeedToFrames);
+      return (swingTimer === 0);
     }
 
     /**
@@ -97,8 +99,12 @@ export default class Timer {
     this.updateSwingTimers = function() {
       const swingTimerMainHand = this.getSwingTimerMainHand();
       const swingTimerOffHand = this.getSwingTimerOffHand();
-      const newSwingTimerMainHand = swingTimerMainHand + 1;
-      const newSwingTimerOffHand = swingTimerOffHand + 1;
+      const newSwingTimerMainHand = (swingTimerMainHand - 1 > 0)
+        ? swingTimerMainHand - 1
+        : 0;
+      const newSwingTimerOffHand = (swingTimerOffHand - 1 > 0)
+        ? swingTimerOffHand - 1
+        : 0;
       this.setSwingTimerMainHand(newSwingTimerMainHand);
       this.setSwingTimerOffHand(newSwingTimerOffHand);
     }

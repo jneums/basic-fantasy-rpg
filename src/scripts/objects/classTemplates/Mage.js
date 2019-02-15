@@ -39,7 +39,7 @@ export default class Mage extends Character {
     const startingHp = this.stat.getStamina() * 10;
     this.setHp(startingHp);
 
-    this.update = mageAI();
+    this.AI = mageAI();
     this.classUpdate = function() {
 
     }

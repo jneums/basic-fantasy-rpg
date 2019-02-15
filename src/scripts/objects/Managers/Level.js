@@ -2,6 +2,7 @@ export default class Lvl {
   constructor(character, level = 1) {
     // level 1 - 60;
 
+    // xp, gain xp to level up
     let xp = 0;
 
     /**
@@ -14,12 +15,12 @@ export default class Lvl {
     }
 
     /**
-     * getExperience
+     * getXp
      *
      * @returns {number} character experience
      */
-    this.getExperience = function() {
-      return experience;
+    this.getXp = function() {
+      return xp;
     }
 
     /**
@@ -34,13 +35,13 @@ export default class Lvl {
 
 
     /**
-     * setExperience
+     * setXp
      *
-     * @param  {number} newExperience
+     * @param  {number} newXp
      * @returns {void}
      */
-    this.setExperience = function(newExperience) {
-      level = newExperience;
+    this.setXp = function(newXp) {
+      xp = newXp;
     }
   }
 }

@@ -7,7 +7,7 @@ import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
  * @returns {function} update function
  */
 export default function RogueAI() {
-  const update = function() {
+  const AI = function() {
     const newSwingTimer = this.timer.updateSwingTimers();
     const enemies = this.target.scanForEnemies(500);
     // if no enemies, stop
@@ -21,5 +21,5 @@ export default function RogueAI() {
       this.scene.physics.moveToObject(this, target);
     }
   }
-  return update;
+  return AI;
 }
