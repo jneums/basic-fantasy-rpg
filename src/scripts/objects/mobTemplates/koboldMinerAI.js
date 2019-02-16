@@ -5,7 +5,7 @@
  * @returns {function} update function
  */
 export default function KoboldMinerAI() {
-  const meleeRange = 60;
+  const meleeRange = 50;
   const AI = function() {
     const enemies = this.target.scanForEnemies(200);
     // if no enemies within scan distance, patrol

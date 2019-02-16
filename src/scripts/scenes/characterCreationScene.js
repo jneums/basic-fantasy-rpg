@@ -5,9 +5,9 @@ import Mage from '../objects/classTemplates/Mage';
 import KoboldMiner from '../objects/mobTemplates/KoboldMiner';
 import playerInput from '../player/playerInput';
 import playerUpdate from '../player/playerUpdate';
-import updateUI from '../../updates/updateUI';
-import updateLiveCharacters from '../../updates/updateLiveCharacters';
-import updateDeadCharacters from '../../updates/updateDeadCharacters';
+import updateUI from '../updates/updateUI';
+import updateLiveCharacters from '../updates/updateLiveCharacters';
+import updateDeadCharacters from '../updates/updateDeadCharacters';
 
 export default class CharacterCreationScene extends Phaser.Scene {
   constructor() {
@@ -22,11 +22,21 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // allow for listening to input
     this.player.AI = playerUpdate();
     playerInput(this.player);
+    const mob = new KoboldMiner(this);
+    this.characters.add(mob);
 
-    for (let i = 0; i < 2; i++) {
-      const mob = new KoboldMiner(this);
-      this.characters.add(mob);
-    }
+    const timer = this.time.addEvent({
+        delay: 30000,                // ms
+        callback: () => {
+          for (let i = 0; i < 1; i++) {
+            const mob = new KoboldMiner(this);
+            this.characters.add(mob);
+          }
+        },
+        //args: [],
+        callbackScope: this,
+        repeat: 4
+    });
 
     this.inventoryText = this.add.text(10, 420, '', {fontFamily: 'Arial', fontSize: 18, color: '#000000'})
 

@@ -8,37 +8,24 @@ export default class KeyMap {
     let five = character.ability.battleShout;
     let six = character.ability.thunderClap;
     let seven = character.ability.hamstring;
-    let eight = character.inventory.use;
+    let eight = '';
     let nine = '';
 
     this.executeOne = function() {
       one.call(character)
     }
 
-    this.executeInventoryOne = function() {
-      inventory.call(character.inventory, 0)
-    }
-
     this.executeTwo = function() {
       two.call(character)
-    }
-
-    this.executeInventoryTwo = function() {
-      inventory.call(character, 1)
     }
 
     this.executeThree = function() {
       three.call(character)
     }
 
-    this.executeInventoryThree = function() {
-      inventory.call(character.inventory, 2)
-    }
-
     this.executeFour = function() {
       four.call(character)
     }
-
     this.executeFive = function() {
       five.call(character)
     }
@@ -57,6 +44,42 @@ export default class KeyMap {
 
     this.executeNine = function() {
       nine.call(character)
+    }
+
+    this.executeInventoryOne = function() {
+      inventory.call(character.inventory, 0)
+    }
+
+    this.executeInventoryTwo = function() {
+      inventory.call(character, 1)
+    }
+
+    this.executeInventoryThree = function() {
+      inventory.call(character.inventory, 2)
+    }
+
+    this.executeInventoryFour = function() {
+      inventory.call(character.inventory, 3)
+    }
+
+    this.executeInventoryFive = function() {
+      inventory.call(character.inventory, 4)
+    }
+
+    this.executeInventorySix = function() {
+      inventory.call(character.inventory, 5)
+    }
+
+    this.executeInventorySeven = function() {
+      inventory.call(character.inventory, 6)
+    }
+
+    this.executeInventoryEight = function() {
+      inventory.call(character.inventory, 7)
+    }
+
+    this.executeInventoryNine = function() {
+      inventory.call(character.inventory, 8)
     }
 
     this.getOne = function() {

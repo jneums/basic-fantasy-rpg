@@ -2,36 +2,14 @@ export default class Inventory {
   constructor(character) {
     let capacity = 12;
     let money = 0;
-    let inventory = [
-      {
-        name: 'Tough Jerky',
-        ilvl: 1,
-        cost: 25,
-        sellPrice: 1,
-        type: 'consumable',
-        quantity: 20,
-        maxStack: 20,
-        icon: '',
-        droppedBy: '',
-        action: 'eat'
-      },
-      {
-        name: 'Short Sword',
-        ilvl: 3,
-        sellPrice: 10,
-        slot: 'mainHand',
-        type: 'oneHandedSword',
-        speed: 2.4,
-        durability: 18,
-        repairCost: 20,
-        damage: { min: 2, max: 6 },
-        disenchant: 'no',
-        icon: '',
-        droppedBy: '',
-        levelRequirement: 1,
-      },
-    ];
+    let inventory = [];
 
+    /**
+     * use - varies, depending on type
+     *
+     * @param  {number} index
+     * @returns {void}
+     */
     this.use = function(index = 0) {
       if (!inventory[index]) return;
       const item = inventory[index];
@@ -43,7 +21,7 @@ export default class Inventory {
         if (item.quantity === 0) {
           inventory.splice(index, 1);
         }
-      } else if (item.type === 'questItem') {
+      } else if (item.type === 'questItem' || item.type === 'crafting') {
         console.log("I can't use that");
       } else {
         character.equipment.equip(item);
@@ -51,6 +29,12 @@ export default class Inventory {
       }
     }
 
+    /**
+     * add - item to inventory
+     *
+     * @param  {object} gear item
+     * @returns {void}
+     */
     this.add = function(gear = 0) {
       // if space available in existing stack
       const sameStacks = inventory.filter(stack => stack.name === gear.name)
@@ -60,10 +44,8 @@ export default class Inventory {
             return addedToExisting += 1;
           }
         }, 0);
-
-      if (sameStacks) {
-        return;
-      } else {
+      // not added to stack, so give its own slot
+      if (!sameStacks) {
         if (inventory.length < capacity) {
           inventory.push(gear);
         } else return console.log("Inventory is full")

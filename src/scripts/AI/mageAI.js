@@ -14,7 +14,7 @@ export default function MageAI() {
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);
     const target = this.target.getClosestEnemy(enemies);
-    const canReachTarget = this.targetangeCheck(target, 60);
+    const canReachTarget = this.target.rangeCheck(target, 50);
     if (canReachTarget) {
       this.setVelocity(0, 0);
       this.combat.meleeAutoAttack(target);

@@ -5,7 +5,7 @@
  * @returns {function} update function
  */
 export default function WarriorAI() {
-  const meleeRange = 60;
+  const meleeRange = 50;
   const rageDumpValue = 20;
   const AI = function() {
     const rage = this.rage.getRage();

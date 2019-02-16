@@ -21,6 +21,7 @@ const consumables = [
     maxStack: 20,
     icon: '',
     levelRequirement: 1,
+    action: 'eat'
   },
   {
     name: 'Refreshing Spring Water',
@@ -32,5 +33,6 @@ const consumables = [
     maxStack: 20,
     icon: 'inv_drink_07',
     levelRequirement: 5,
+    action: 'drink'
   },
 ]

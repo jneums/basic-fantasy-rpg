@@ -7,9 +7,9 @@ export default function createLoot(name = '') {
   if (name === 'kobold-miner') {
     const random = Phaser.Math.Between(0, 101);
     switch (true) {
-      case (random < 55):
+      case (random < 35):
         return getItemByName('Gold Dust');
-      case (random < 81):
+      case (random < 51):
         return getItemByName('Large Candle');
       case (random < 85):
         return getConsumableByName('Tough Jerky');

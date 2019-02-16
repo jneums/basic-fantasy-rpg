@@ -6,7 +6,7 @@
  * @returns {function} update function
  */
 export default function PlayerUpdate() {
-  const meleeRange = 60;
+  const meleeRange = 50;
 
   const update = function() {
     moveToMoveTarget(this);
@@ -24,7 +24,7 @@ export default function PlayerUpdate() {
  * @returns {type}                description
  */
 function standGuard(character = {}) {
-  const range = 60;
+  const range = 50;
   const target = character.target.getCurrentTarget();
   if (target) {
     const inRange = character.target.rangeCheck(target, range);
@@ -51,7 +51,7 @@ function moveToMoveTarget(character = {}) {
   const isMoveTargetWithinDistance = Phaser.Math.Distance.Between(
     currentPosition[0], currentPosition[1],
     moveTargetCoords[0], moveTargetCoords[1]
-  ) < 60;
+  ) < 50;
   if (isMoveTargetWithinDistance) {
     character.movement.setMovementSpeed(60);
     return character.setVelocity(0, 0);
