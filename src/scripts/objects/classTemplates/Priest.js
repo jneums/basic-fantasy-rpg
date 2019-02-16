@@ -19,11 +19,11 @@ export default class Priest extends Character {
     this.setAgilityToDodgeRatio(20);
 
     // prists start with a bonus to intellect:
-    const baseIntellect = this.stat.getIntellect();
+    const baseIntellect = this.stat.baseIntellect();
     const priestIntellectBonus = 2;
     this.setIntellect(baseIntellect + priestIntellectBonus);
     // and spirit:
-    const baseSpirit = this.stat.getSpirit();
+    const baseSpirit = this.stat.baseSpirit();
     const priestSpiritBonus = 3;
     this.setSpirit(baseSpirit + priestSpiritBonus);
 
@@ -36,7 +36,7 @@ export default class Priest extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.stat.getStamina() * 10;
+    const startingHp = this.stat.baseStamina() * 10;
     this.setHp(startingHp);
 
     this.AI = priestAI();

@@ -7,8 +7,8 @@
  * @returns {number} dodge chance
  */
 function calculateDodgeChance(attacker = {}, target = {}, hand = '') {
-  const totalDodge = target.stat.getDodgeRating();
-  const defenseSkill = target.stat.getDefenseRating();
+  const totalDodge = target.stat.dodge();
+  const defenseSkill = target.stat.baseDef();
   // mitigated by attacker weapon skill
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
 
@@ -35,11 +35,11 @@ function calculateParryChance(attacker = {}, target = {}, hand = '') {
     case 'warlock':
       return 0;
   }
-  const targetParryRating = target.stat.getParryRating();
-  const targetParryTalents = attacker.stat.getStatFromTalents();
-  const targetDefenseRating = target.stat.getDefenseRating();
+  const tarbaseParry = target.stat.baseParry();
+  const targetParryTalents = attacker.stat.statFromTalents();
+  const tarbaseDef = target.stat.baseDef();
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
-  return .05 + targetParryRating + targetParryTalents + ((targetDefenseRating - attackerWeaponSkill) * .04);
+  return .05 + tarbaseParry + targetParryTalents + ((tarbaseDef - attackerWeaponSkill) * .04);
 }
 
 
@@ -58,14 +58,14 @@ function calculateBlockChance(attacker = {}, target = {}, hand = '') {
   if (targetOffHandType !== 'shield') return 0;
   // amount blocked determined by blockValue
   // worsened by targets blockRating, defense
-  const targetDefenseRating = target.stat.getDefenseRating();
+  const tarbaseDef = target.stat.baseDef();
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
 
-  const targetBlockRating = target.stat.getBlockRating();
-  const targetBlockRatingTalents = target.stat.getStatFromTalents();
+  const tarbaseBlockR = target.stat.baseBlockR();
+  const tarbaseBlockRTalents = target.stat.statFromTalents('block');
   const base = .05;
-  const blockChance = (base + targetBlockRating + targetBlockRatingTalents
-    + ((targetDefenseRating - attackerWeaponSkill) * .04));
+  const blockChance = (base + tarbaseBlockR + tarbaseBlockRTalents
+    + ((tarbaseDef - attackerWeaponSkill) * .04));
   return blockChance;
 }
 
@@ -78,9 +78,9 @@ function calculateBlockChance(attacker = {}, target = {}, hand = '') {
  */
 function calculateCritChance(attacker = {}) {
   // characters crit chance
-  const critChance = attacker.stat.getCriticalChance();
-  const totalAgility = attacker.stat.getTotalAgility();
-  const agiCritRatio = attacker.stat.getAgilityToCritRatio();
+  const critChance = attacker.stat.crit();
+  const totalAgility = attacker.stat.agility();
+  const agiCritRatio = attacker.stat.agiCritR();
   if (agiCritRatio) return critChance;
   const total = (totalAgility / agiCritRatio) * .01;
   return total;
@@ -97,16 +97,16 @@ function calculateMissChance(attacker = {}, target = {}, hand = '') {
   // based on weapon skill
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
   // mitigated by attacker hit rating
-  const attackerHitRating = attacker.stat.getHitChance();
+  const attackerHitRating = attacker.stat.baseHit();
   // worsened by target defense rating
-  const targetDefenseRating = target.stat.getDefenseRating();
+  const tarbaseDef = target.stat.baseDef();
   const base = (attacker.equipment.isDualWielding()) ? .24 : .05;
   let missChance = 0;
-  if (targetDefenseRating - attackerWeaponSkill <= 10) {
-    missChance = base + (targetDefenseRating - attackerWeaponSkill) * .001;
+  if (tarbaseDef - attackerWeaponSkill <= 10) {
+    missChance = base + (tarbaseDef - attackerWeaponSkill) * .001;
   } else {
     // base should be .06 here
-    missChance = base + (targetDefenseRating - attackerWeaponSkill - 10) * .004;
+    missChance = base + (tarbaseDef - attackerWeaponSkill - 10) * .004;
   }
 
   return missChance;

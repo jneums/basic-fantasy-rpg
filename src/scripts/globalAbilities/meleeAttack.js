@@ -14,8 +14,8 @@ function meleeAttack(attacker = {}, target = {}, hand = '', type = '') {
   const attackStatus = meleeAutoAttackHitTable(attacker, target, hand);
   let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
   if (hand === 'off') weaponDmg /= 2;
-  const damageAmount = weaponDmg + attacker.stat.getAttackPowerBonus(hand);
-  const targetStartingHp = target.stat.getHp();
+  const damageAmount = weaponDmg + attacker.stat.APBonus(hand);
+  const targetStartingHp = target.stat.hp();
   const combatObject = attacker.combat.buildMeleeCombatObject(
     target,
     attackStatus,

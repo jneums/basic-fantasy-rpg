@@ -56,7 +56,7 @@ function moveToMoveTarget(character = {}) {
     moveTargetCoords[0], moveTargetCoords[1]
   ) < 50;
   if (isMoveTargetWithinDistance) {
-    character.movement.setMovementSpeed(80)
+    character.movement.setMovementSpeed(60)
     return character.setVelocity(0, 0);
   } else {
     return character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);

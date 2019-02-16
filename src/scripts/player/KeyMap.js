@@ -1,25 +1,38 @@
 export default class KeyMap {
   constructor(character) {
+    let inventory = character.inventory.use
     let one = character.ability.charge;
     let two = character.ability.rend;
     let three = character.ability.heroicStrike;
     let four = character.combat.setAutoAttackToggle;
     let five = character.ability.battleShout;
     let six = character.ability.thunderClap;
-    let seven = '';
-    let eight = '';
+    let seven = character.ability.hamstring;
+    let eight = character.inventory.use;
     let nine = '';
 
     this.executeOne = function() {
       one.call(character)
     }
 
+    this.executeInventoryOne = function() {
+      inventory.call(character.inventory, 0)
+    }
+
     this.executeTwo = function() {
       two.call(character)
     }
 
+    this.executeInventoryTwo = function() {
+      inventory.call(character, 1)
+    }
+
     this.executeThree = function() {
       three.call(character)
+    }
+
+    this.executeInventoryThree = function() {
+      inventory.call(character.inventory, 2)
     }
 
     this.executeFour = function() {
@@ -32,6 +45,18 @@ export default class KeyMap {
 
     this.executeSix = function() {
       six.call(character)
+    }
+
+    this.executeSeven = function() {
+      seven.call(character)
+    }
+
+    this.executeEight = function() {
+      eight.call(character)
+    }
+
+    this.executeNine = function() {
+      nine.call(character)
     }
 
     this.getOne = function() {

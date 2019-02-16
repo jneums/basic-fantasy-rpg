@@ -17,21 +17,27 @@ export default class CharacterCreationScene extends Phaser.Scene {
   create() {
     this.characters = this.add.group();
 
-    this.charlie = new Warrior(this, 'charlie');
-    this.characters.add(this.charlie);
+    this.player = new Warrior(this, 'player');
+    this.characters.add(this.player);
     // allow for listening to input
-    this.charlie.AI = playerUpdate();
-    playerInput(this.charlie);
+    this.player.AI = playerUpdate();
+    playerInput(this.player);
 
     for (let i = 0; i < 3; i++) {
       const mob = new KoboldMiner(this, 'kobold');
       this.characters.add(mob);
     }
 
+    this.inventoryText = this.add.text(10, 420, '', {fontFamily: 'Arial', fontSize: 18, color: '#000000'})
+
+
+
     this.hpText = this.add.text(10, 10, '0', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
     this.rageText = this.add.text(10, 50, '0', { fontFamily: 'Arial', fontSize: 32, color: '#ff0000' });
     this.mySwingTimer = this.add.text(10, 90, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
     this.myBuffs = this.add.text(10, 110, '', { fontFamily: 'Arial', fontSize: 16, color: '#0000ff' });
+    this.myStats = this.add.text(10, 220, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' })
+
     this.enemyHpText = this.add.text(260, 10, '', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
     this.enemySwingTimer = this.add.text(260, 90, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
     this.enemyBuffs = this.add.text(260, 110, '', { fontFamily: 'Arial', fontSize: 16, color: '#0000ff' });

@@ -20,7 +20,7 @@ export default class KoboldMiner extends Character {
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);
-    this.stat.setStrengthToAttackPowerRatio(.5)
+    this.stat.setStrAPR(.5)
 
     // starting equipment
     const equipped = this.equipment.getEquipped();
@@ -28,7 +28,7 @@ export default class KoboldMiner extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.stat.getStamina() * 10;
+    const startingHp = this.stat.baseStamina() * 10;
     this.stat.setHp(startingHp);
 
     this.AI = koboldMinerAI();

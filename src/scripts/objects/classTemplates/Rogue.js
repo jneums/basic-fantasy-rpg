@@ -18,11 +18,11 @@ export default class Rogue extends Character {
     this.setDodgeRating(0);
     this.setAgilityToDodgeRatio(14);
     this.setAgilityToCritRatio(29);
-    this.setStrengthToAttackPowerRatio(1);
+    this.setstrAPR(1);
     this.setAgilityToAttackPowerRatio(1);
 
     // rogues start with bonus to strength:
-    const baseStrength = this.stat.getStrength();
+    const baseStrength = this.stat.baseStrength();
     const rogueStrengthBonus = 1;
     this.setStrength(baseStrength + rogueStrengthBonus);
     // and agility:
@@ -30,7 +30,7 @@ export default class Rogue extends Character {
     const rogueAgilityBonus = 3;
     this.setAgility(baseAgility + rogueAgilityBonus);
     // and stamina:
-    const baseStamina = this.stat.getStamina();
+    const baseStamina = this.stat.baseStamina();
     const rogueStaminaBonus = 1;
     this.setStamina(baseStamina + rogueStaminaBonus);
 
@@ -43,7 +43,7 @@ export default class Rogue extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.stat.getStamina() * 10;
+    const startingHp = this.stat.baseStamina() * 10;
     this.setHp(startingHp);
 
     this.AI = rogueAI();

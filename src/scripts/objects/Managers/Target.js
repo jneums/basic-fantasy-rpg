@@ -35,7 +35,7 @@ export default class Target {
      */
     this.getLowestHealthAlly = function(allies = []) {
       const allyArray = allies.concat([]);
-      allyArray.sort((a, b) => a.stat.getHp() - b.stat.getHp());
+      allyArray.sort((a, b) => a.stat.hp() - b.stat.hp());
       const lowestHealthAlly = allyArray[0];
       return lowestHealthAlly;
     }

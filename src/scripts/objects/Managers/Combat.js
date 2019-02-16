@@ -8,15 +8,32 @@ export default class Combat {
     // should auto attack or not
     let autoAttackToggle = true;
     // attack speed modifier
-    let speed = 1;
+    let attackSpeed = 1;
 
     /**
-     * attackSpd - use to set swing timers
+     * attackSpd - total, used for swing timers
      *
-     * @returns {type}  description
+     * @returns {number} modifier for swing time
      */
     this.attackSpd = function() {
-      return speed;
+      const base = this.baseAttackSpd();
+      const equipped = character.equipment.statBonus('attackSpeed')
+        ? character.equipment.statBonus('attackSpeed')
+        : 1;
+      const buffs = character.buffs.statBonus('attackSpeed')
+        ? character.buffs.statBonus('attackSpeed')
+        : 1;
+      // const talents = character.talents.statBonus('attackSpeed');
+      return base * equipped * buffs;
+    }
+
+    /**
+     * baseAttackSpd - used to calculate total
+     *
+     * @returns {number}  modifier
+     */
+    this.baseAttackSpd = function() {
+      return attackSpeed;
     }
 
     /**
@@ -26,7 +43,7 @@ export default class Combat {
      * @returns {void}
      */
     this.setAttackSpd = function(newSpeed = 1) {
-      speed = newSpeed;
+      attackSpeed = newSpeed;
     }
 
     /**
@@ -37,6 +54,7 @@ export default class Combat {
     this.isStunned = function() {
       return character.buffs.has('stun');
     }
+
     /**
      * attackerClassUpdate - specific reactions for causing dmg
      *
@@ -78,7 +96,8 @@ export default class Combat {
       const targetClass = character.getCharacterClass();
       switch(targetClass) {
         case 'warrior':
-          character.rage.processRage(newCombatObject, 'target');
+          if (newCombatObject.type !== 'heal')
+            character.rage.processRage(newCombatObject, 'target');
           return newCombatObject;
         default:
           return newCombatObject;
@@ -112,11 +131,14 @@ export default class Combat {
      */
     this.processDamageFromCombatObject = function(target = {}, combatObject = {} ) {
       const damage = combatObject.damageAmount;
-      const oldHp = target.stat.getHp();
+      const oldHp = target.stat.hp();
+      const maxHp = target.stat.maxHp();
       if (oldHp - damage < 0) {
         // target died
         target.stat.setHp(0);
         character.target.setCurrentTarget(undefined);
+      } else if (oldHp - damage > maxHp) {
+        target.stat.setHp(maxHp);
       } else {
         target.stat.setHp(oldHp - damage);
       }
@@ -152,7 +174,7 @@ export default class Combat {
         time: Date.now()  // add time from Phaser?
       }
       const mitigatedByArmor = damageAmount * character.stat.armorMitigationPercent(target);
-      const blockValue = target.stat.getBlockValue();
+      const blockValue = target.stat.baseBlockV();
       switch(status) {
         case 'miss':
           result.status = 'miss';
@@ -216,7 +238,7 @@ export default class Combat {
       const myName = character.getName();
       let result = false;
       // get list of enemies in area
-      const enemies = character.target.scanForEnemies(100);
+      const enemies = character.target.scanForEnemies(500);
       enemies.forEach(enemy => {
         // get threat table
         const threatTable = enemy.threat.getThreatTable();
@@ -235,7 +257,7 @@ export default class Combat {
      * @returns {bool}
      */
     this.isDead = function() {
-      return character.stat.getHp() <= 0;
+      return character.stat.hp() <= 0;
     }
 
     /**

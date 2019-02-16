@@ -22,18 +22,18 @@ export default class Warrior extends Character {
     this.movement.setMoveTargetCoords(this.coords)
     this.setName(name);
     this.setCharacterClass('warrior');
-    this.stat.setCriticalChance(.25);
+    this.stat.setCrit(.05);
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);
-    this.stat.setStrengthToAttackPowerRatio(.5)
+    this.stat.setStrAPR(.5)
 
     // warriors start with bonus to strength:
-    const baseStrength = this.stat.getStrength();
+    const baseStrength = this.stat.baseStrength();
     const warriorStrengthBonus = 3;
     this.stat.setStrength(baseStrength + warriorStrengthBonus);
     // and bonus to stamina:
-    const baseStamina = this.stat.getStamina();
+    const baseStamina = this.stat.baseStamina();
     const warriorStaminaBonus = 2;
     this.stat.setStamina(baseStamina + warriorStaminaBonus);
 
@@ -46,7 +46,7 @@ export default class Warrior extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.stat.getStamina() * 10;
+    const startingHp = this.stat.baseStamina() * 10;
     this.stat.setHp(startingHp);
 
     // rage system

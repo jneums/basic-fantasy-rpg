@@ -20,6 +20,16 @@ export default class Equipment {
       trinket2: {}
     }
 
+    this.equip = function(gear = {}) {
+      // add to specific slot
+      const slot = gear.slot;
+      const replacedGear = equipped[slot];
+      equipped[slot] = gear;
+      // if it replaced a piece, put that piece in inventory
+      if (replacedGear) {
+        character.inventory.add(replacedGear);
+      }
+    }
 
     /**
      * isDualWielding - checks to see if currently dual wielding

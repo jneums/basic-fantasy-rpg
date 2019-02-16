@@ -1,6 +1,7 @@
 export default function updateDeadCharacters(scene = {}) {
   scene.characters.children.entries.forEach(child => {
     if (child.combat.isDead()) {
+      child.setVelocity(0, 0);
       // dump threat table
       child.threat.setThreatTable([]);
       // dump buffs

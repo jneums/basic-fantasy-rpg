@@ -2,11 +2,11 @@ export default class Stat {
   constructor(character = {}, {strength, agility, intellect, stamina, spirit}) {
     let hp = 0;
     let attackPower = 0;
-    let criticalChance = 0;
+    let crit = 0;
     let hitChance = 0;
     let spellPower = 0;
     let healingPower = 0;
-    let spellCriticalChance = 0;
+    let spellcrit = 0;
     let spellHitChance = 0;
     let manaPer5 = 0;
     let defenseRating = 5;
@@ -21,58 +21,71 @@ export default class Stat {
     // classs is chosen
     let agilityToDodgeRatio = 0;
     let agilityToCritRatio = 0;
-    let strengthToAttackPowerRatio = 0;
+    let strAPR = 0;
     let agilityToAttackPowerRatio = 0;
 
 
-    this.getStatFromTalents = function() {
+    this.statFromTalents = function() {
       return 0;
     }
 
-    this.getStatFromRace = function() {
+    this.statFromRace = function() {
       return 0;
+    }
+
+
+    /**
+     * maxHp - maximum allowed hitpoints
+     *
+     * @returns {number}
+     */
+    this.maxHp = function() {
+      const maxStam = this.stamina();
+      return maxStam * 10;
     }
 
     /**
-     * getAPFromStr - combat helper
+     * APFromStr - combat helper
+     * attack power per point of strength
      *
      * @param  {Character} character attacker
      * @returns {number} class specific
      */
-    this.getAPFromStr = function() {
-      const strength = this.getStrength();
+    this.APFromStr = function() {
+      const strength = this.baseStrength();
       // add str bonus from talents, items, buffs
       const strFromEquipped = character.equipment.statBonus('strength');
       const totalStr = strength + strFromEquipped;
       const strToAPR
-        = this.getStrengthToAttackPowerRatio();
+        = this.strAPR();
       const apFromStr = (strToAPR) ? totalStr / strToAPR : 0;
       return apFromStr;
     }
 
     /**
-     * getAPFromAgi - combat helper
+     * APFromAgi - combat helper
+     * attack power per point of agility
      *
      * @returns {number} class specific
      */
-    this.getAPFromAgi = function() {
-      const totalAgi = character.stat.getTotalAgility();
+    this.APFromAgi = function() {
+      const totalAgi = character.stat.agility();
       const agiToAPR
-        = this.getAgilityToAttackPowerRatio();
+        = this.agiAPR();
       const apFromAgi = (agiToAPR) ? totalAgi / agiToAPR : 0;
       return apFromAgi;
     }
 
     /**
-     * getAttackPowerBonus
+     * APBonus - how much to add to each swing
      *
      * @param  {string} hand for weaponSpeed
      * @returns {number} bonus damage
      */
-    this.getAttackPowerBonus = function(hand = '') {
+    this.APBonus = function(hand = '') {
       // base stats
-      const apFromStr = this.getAPFromStr();
-      const apFromAgi = this.getAPFromAgi();
+      const apFromStr = this.APFromStr();
+      const apFromAgi = this.APFromAgi();
       const apFromBuffs = character.buffs.statBonus('attackPower');
       const apFromEquipped = character.equipment.statBonus('attackPower');
       // add ap bonus from buffs, equipped, talents
@@ -84,7 +97,8 @@ export default class Stat {
     }
 
     /**
-     * armorMitigationPercent
+     * armorMitigationPercent -
+     * how much of the dmg is subtracted
      *
      * @param  {Character} target
      * @returns {number} % mitigated
@@ -105,35 +119,47 @@ export default class Stat {
     this.totalArmor = function() {
       const armorFromBuffs = character.buffs.statBonus('armor');
       // everyone gets 2 armor per agi
-      const armorFromAgility = character.stat.getTotalAgility() * 2;
+      const armorFromAgility = character.stat.agility() * 2;
       const armorFromItems = character.equipment.statBonus('armor');
       return armorFromBuffs + armorFromAgility + armorFromItems;
     }
 
     /**
-     * getHp
+     * hp
      *
      * @returns {number}  characters health points
      */
-    this.getHp = function() {
+    this.hp = function() {
       return hp;
     }
 
     /**
-     * getStrength
+     * strength - base, gear, and buffs
+     *
+     * @returns {number} total strength
+     */
+    this.strength = function() {
+      const baseStrength = strength;
+      const gearStrength = character.equipment.statBonus('strength');
+      const buffStrength = character.buffs.statBonus('strength');
+      return baseStrength + gearStrength + buffStrength;
+    }
+
+    /**
+     * baseStrength
      *
      * @returns {number} character strength
      */
-    this.getStrength = function() {
+    this.baseStrength = function() {
       return strength;
     }
 
     /**
-     * getTotalAgility - base, gear, and buffs
+     * agility - base, gear, and buffs
      *
      * @returns {number} total agility
      */
-    this.getTotalAgility = function() {
+    this.agility = function() {
       const baseAgility = agility;
       const gearAgility = character.equipment.statBonus('agility');
       const buffAgility = character.buffs.statBonus('agility');
@@ -145,110 +171,161 @@ export default class Stat {
      *
      * @returns {type}  description
      */
-    this.getAgility = function() {
+    this.baseAgility = function() {
       return agility;
     }
+
     /**
-    * getIntellect
+     * intellect - base, gear, and buffs
+     *
+     * @returns {number} total Intellect
+     */
+    this.intellect = function() {
+      const baseIntellect = intellect;
+      const gearIntellect = character.equipment.statBonus('intellect');
+      const buffIntellect = character.buffs.statBonus('intellect');
+      return baseIntellect + gearIntellect + buffIntellect;
+    }
+
+    /**
+    * baseIntellect
     *
     * @returns {number}  character intellect
     */
-    this.getIntellect = function() {
+    this.baseIntellect = function() {
       return intellect;
     }
 
+
     /**
-     * getStamina
+     * total combined stamina - base, gear, and buffs
+     *
+     * @returns {number} total agility
+     */
+    this.stamina = function() {
+      const baseStamina = stamina;
+      const gearStamina = character.equipment.statBonus('stamina');
+      const buffStamina = character.buffs.statBonus('stamina');
+      return baseStamina + gearStamina + buffStamina;
+    }
+    /**
+     * base stamina
      *
      * @returns {number}  character stamina
      */
-    this.getStamina = function() {
+    this.baseStamina = function() {
       return stamina;
     }
 
+
     /**
-     * getSpirit
+     * spirit - base, gear, and buffs
+     *
+     * @returns {number} total Spirit
+     */
+    this.spirit = function() {
+      const baseSpirit = spirit;
+      const gearSpirit = character.equipment.statBonus('spirit');
+      const buffSpirit = character.buffs.statBonus('spirit');
+      return baseSpirit + gearSpirit + buffSpirit;
+    }
+
+    /**
+     * baseSpirit
      *
      * @returns {number}  character spirit
      */
-    this.getSpirit = function() {
+    this.baseSpirit = function() {
       return spirit;
     }
 
     /**
-    * getArmorPenetration
-    *
-    * @returns {number} armor penetration
-    */
-    this.getArmorPenetration = function() {
-      return armorPenetration;
-    }
-
-    /**
-    * getAttackSpeed
+    * attackSpeed
     *
     * @returns {number}  attack speed
     */
-    this.getAttackSpeed = function() {
+    this.attackSpeed = function() {
       return attackSpeed;
     }
 
+    /**
+     * attackPower - base, gear, and buffs
+     *
+     * @returns {number} total ap
+     */
+    this.attackPower = function() {
+      const baseAP = attackPower;
+      const gearAP = character.equipment.statBonus('attackPower');
+      const buffAP = character.buffs.statBonus('attackPower');
+      return baseAP + gearAP + buffAP;
+    }
 
     /**
-     * getAttackPower
+     * baseAttackPower
      *
      * @returns {number}
      */
-    this.getAttackPower = function() {
+    this.baseAttackPower = function() {
       return attackPower;
     }
 
+    /**
+     * crit - base, gear, and buffs
+     *
+     * @returns {number} total crit
+     */
+    this.crit = function() {
+      const baseCrit = crit;
+      const gearCrit = character.equipment.statBonus('crit');
+      const buffCrit = character.buffs.statBonus('crit');
+      return baseCrit + gearCrit + buffCrit;
+    }
 
     /**
-     * getCriticalChance
+     * baseCrit
      *
      * @returns {number}
      */
-    this.getCriticalChance = function() {
-      return criticalChance;
+    this.baseCrit = function() {
+      return crit;
     }
 
 
     /**
-     * getHitChance
+     * baseHit
      *
      * @returns {number}
      */
-    this.getHitChance = function() {
+    this.baseHit = function() {
       return hitChance;
     }
     /**
-     * getSpellPower
+     * baseSpellPower
      *
      * @returns {number}
      */
-    this.getSpellPower = function() {
+    this.baseSpellPower = function() {
       return spellPower;
     }
 
 
     /**
-     * getHealingPower
+     * baseHealingPower
      *
      * @returns {number}
      */
-    this.getHealingPower = function() {
+    this.baseHealingPower = function() {
       return healingPower;
     }
 
 
     /**
-     * getSpellCriticalChance
+     * getSpellcrit
      *
      * @returns {number}
      */
-    this.getSpellCriticalChance = function() {
-      return spellCriticalChance;
+    this.getSpellcrit = function() {
+      return spellcrit;
     }
 
 
@@ -282,108 +359,109 @@ export default class Stat {
     }
 
     /**
-     * getDefenseRating
+     * baseDef
      *
      * @returns {number}
      */
-    this.getDefenseRating = function() {
+    this.baseDef = function() {
       return defenseRating;
     }
 
     /**
-    * getArmorRating
+    * baseArmor
     *
     * @returns {number}  characters armor class
     */
-    this.getArmorRating = function() {
+    this.baseArmor = function() {
       return armorRating;
     }
 
     /**
-     * getBlockRating
+     * baseBlockR
      *
      * @returns {number}
      */
-    this.getBlockRating = function() {
+    this.baseBlockR = function() {
       return blockRating;
     }
 
     /**
-     * getBlockValue
+     * baseBlockV
      *
      * @returns {number}
      */
-    this.getBlockValue = function() {
+    this.baseBlockV = function() {
       return blockValue;
     }
 
     /**
-     * getDodgeRating
+     * dodge
      *
      * @returns {number}
      */
-    this.getDodgeRating = function() {
+    this.dodge = function() {
       const baseDodge = dodgeRating;
-      const totalAgi = character.stat.getTotalAgility();
-      const agilityToDodgeRatio = this.getAgilityToDodgeRatio();
+      const totalAgi = character.stat.agility();
+      const agilityToDodgeRatio = this.agiDodgeRatio();
       const targetDodgeFromAgi = (totalAgi / agilityToDodgeRatio) * .01
-      const targetRaceBonus = this.getStatFromRace();
-      const targetTalentDodgeBonus = this.getStatFromTalents();
+      const targetRaceBonus = this.statFromRace();
+      const targetTalentDodgeBonus = this.statFromTalents();
 
       return baseDodge + targetDodgeFromAgi + targetRaceBonus + targetTalentDodgeBonus;
     }
 
     /**
-     * getParryRating
+     * baseParry
      *
      * @returns {number}
      */
-    this.getParryRating = function() {
+    this.baseParry = function() {
       return parryRating;
     }
 
     /**
-     * getAgilityToDodgeRatio
+     * agiDodgeRatio
      *
      * @returns {number}
      */
-    this.getAgilityToDodgeRatio = function() {
+    this.agiDodgeRatio = function() {
       return agilityToDodgeRatio;
     }
 
     /**
-     * getAgilityToCritRatio
-     *
+     * agiCritR
+     * agility to crit ratio
      * @returns {number}
      */
-    this.getAgilityToCritRatio = function() {
+    this.agiCritR = function() {
       return agilityToCritRatio;
     }
 
     /**
-     * getStrengthToAttackPowerRatio
-     *
+     * strAPR
+     * strength to attack power ratio
      * @returns {number}
      */
-    this.getStrengthToAttackPowerRatio = function() {
-      return strengthToAttackPowerRatio;
+    this.strAPR = function() {
+      return strAPR;
     }
 
     /**
-     * getAgilityToAttackPowerRatio
+     * agiAPR
+     * agility to attack power ratio
      *
      * @returns {number}
      */
-    this.getAgilityToAttackPowerRatio = function() {
+    this.agiAPR = function() {
       return agilityToAttackPowerRatio;
     }
 
     /**
-     * getResistances
+     * baseResistances
      *
      * @returns {object} { shadow: 0, arcane: 1, etc. }
      */
-    this.getResistances = function() {
+    this.baseResistances = function() {
       return resistances;
     }
 
@@ -398,7 +476,7 @@ export default class Stat {
     }
 
     /**
-     * setStrength
+     * setStrength - base
      *
      * @param  {number} newStrength
      * @returns {void}
@@ -446,15 +524,6 @@ export default class Stat {
     this.setSpirit = function(newSpirit) {
       spirit = newSpirit;
     }
-    /**
-    * setArmorPenetration
-    *
-    * @param  {number} newArmorPenetration
-    * @returns {void}
-    */
-    this.setArmorPen = function(newArmorPenetration) {
-      armorPenetration = newArmorPenetration;
-    }
 
     /**
     * setAttackSpeed
@@ -477,13 +546,13 @@ export default class Stat {
     }
 
     /**
-     * setCriticalChance
+     * setCrit
      *
-     * @param  {number} newCriticalChance
+     * @param  {number} newCrit
      * @returns {void}
      */
-    this.setCriticalChance = function(newCriticalChance) {
-      criticalChance = newCriticalChance;
+    this.setCrit = function(newCrit) {
+      crit = newCrit;
     }
 
     /**
@@ -517,13 +586,13 @@ export default class Stat {
     }
 
     /**
-     * setSpellCriticalChance
+     * setSpellCrit
      *
-     * @param  {number} newSpellCriticalChance
+     * @param  {number} newSpellCrit
      * @returns {void}
      */
-    this.setSpellCriticalChance = function(newSpellCriticalChance) {
-      spellCriticalChance = newSpellCriticalChance;
+    this.setSpellCrit = function(newSpellCrit) {
+      spellCrit = newSpellCrit;
     }
 
     /**
@@ -637,13 +706,13 @@ export default class Stat {
     }
 
     /**
-     * setStrengthToAttackPowerRatio
+     * setStrAPR
      *
-     * @param  {number} newStrengthToAttackPowerRatio description
+     * @param  {number} newStrAPR description
      * @returns {void}                               description
      */
-    this.setStrengthToAttackPowerRatio = function(newStrengthToAttackPowerRatio) {
-      strengthToAttackPowerRatio = newStrengthToAttackPowerRatio;
+    this.setStrAPR = function(newStrAPR) {
+      strAPR = newStrAPR;
     }
 
     /**

@@ -1,6 +1,6 @@
 export default class WarriorAbilities {
   constructor(character) {
-    let abilities = ['dodge', 'block', 'parry', 'heroicStrike'];
+    let abilities = ['dodge', 'block', 'parry'];
 
     /**
     * getAbilities
@@ -72,7 +72,7 @@ export default class WarriorAbilities {
       const enoughRage = oldRage >= rageCost;
       const onNextAttack = character.combat.getOnNextAttack();
       if (onNextAttack === 'heroicStrike') return;
-      if (!enoughRage) return console.log("not enough rage");
+      if (!enoughRage) return console.log("I need more rage");
       const newOnNextAttack = 'heroicStrike';
       character.combat.setOnNextAttack(newOnNextAttack)
     }
@@ -133,9 +133,6 @@ export default class WarriorAbilities {
       // target
       const target = character.target.getCurrentTarget();
       if (!target) return console.log('You need a target');
-      // does target have rend already?
-      const hasRend = target.buffs.has('rend');
-      if (hasRend) return console.log('Target already has rend');
       if (character.rage.rageTransaction(rageCost)) {
         // build combatObject
         const myName = character.getName();
@@ -161,7 +158,10 @@ export default class WarriorAbilities {
           combatObject: combatObject,
           attacker: character
         }
-        target.buffs.add(debuff);
+        if (target.buffs.has('rend'))
+          target.buffs.replace(debuff);
+        else
+          target.buffs.add(debuff);
       }
     }
 
@@ -175,8 +175,6 @@ export default class WarriorAbilities {
      * damage is physical and is mitigated by
      * the armor of the opponent.
      * cannot be cast while silenced.
-     * dealt Nature damage when the game was first released.
-     * This was quickly changed.
      *
      * level: 1
      *
@@ -217,12 +215,13 @@ export default class WarriorAbilities {
               hand: 'main',
               time: Date.now()
             }
+            // send object to be used
             character.combat.processCombatObject(enemy, combatObject);
             const debuff = {
               name: 'thunderClap',
               duration: time * 60,
               statObject: {
-                speed: 1.1
+                attackSpeed: 1.1
               },
               attacker: character
             }
@@ -249,6 +248,40 @@ export default class WarriorAbilities {
     this.hamstring = function() {
       const dmg = 5;
       const rageCost = 10;
+      const time = 15;
+      const target = character.target.getCurrentTarget();
+      if (!target) return console.log('You need a target');
+      if (character.rage.rageTransaction(rageCost)) {
+        const combatObject = {
+          attacker: character.getName(),
+          target: target,
+          status: 'hit',
+          type: 'special',
+          range: 'melee',
+          damageType: 'physical',
+          damageAmount: 5,
+          bonusThreat: 0,
+          mitigationAmount: 0,
+          hand: 'main',
+          time: Date.now()
+        }
+        // send object to be used
+        character.combat.processCombatObject(target, combatObject);
+      }
+      // create combat object for 5 dmg, send it to be processed
+      const debuff = {
+        name: 'hamstring',
+        duration: time * 60,
+        statObject: {
+          moveSpeed: .6
+        },
+        attacker: character
+      }
+      // create debuff for * .6 movement speed, send it to buff
+      if (target.buffs.has('hamstring'))
+        target.buffs.replace(debuff);
+      else
+        target.buffs.add(debuff);
     }
   }
 }

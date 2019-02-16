@@ -9,6 +9,7 @@ import Lvl from './Managers/Level';
 import Target from './Managers/Target';
 import Threat from './Managers/Threat';
 import Buffs from './Managers/Buffs';
+import Consumables from './Managers/Consumables';
 
 
 export default class Character extends Phaser.Physics.Arcade.Sprite {
@@ -23,7 +24,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.skills = new Skills(this);
     this.equipment = new Equipment(this);
     this.timer = new Timer(this);
-    this.inventory = new Inventory(this);
+    this.consumables = new Consumables(this);
     this.combat = new Combat(this);
     this.movement = new Movement(this, x, y);
     this.equipment = new Equipment(this);
@@ -31,6 +32,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.target = new Target(this);
     this.threat = new Threat(this);
     this.buffs = new Buffs(this);
+    this.inventory = new Inventory(this);
 
     //  Input Event listeners
     this.on('pointerover', function () {

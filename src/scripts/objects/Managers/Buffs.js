@@ -29,17 +29,20 @@ export default class Buffs {
 
     this.statBonus = function(stat = '') {
       const activeBuffs = this.getBuffs();
-      const totalStat = activeBuffs.reduce((sum, buff) => {
-        if (buff.statObject) {
+      const totalStat = activeBuffs.filter(buff => buff.statObject)
+        .reduce((sum, buff) => {
           if (!buff.statObject[stat]) return 0;
           return sum + buff.statObject[stat];
-        }
-        else return 0;
-      }, 0)
-      return totalStat;
+
+        }, 0)
+        return totalStat;
     }
 
     this.update = function() {
+      // old coords, for channeling check
+      const oldX = character.x;
+      const oldY = character.y;
+
       const oldBuffs = this.getBuffs();
       if (oldBuffs) {
         const newBuffs = oldBuffs.filter(buff => buff.duration > 0)
@@ -53,15 +56,16 @@ export default class Buffs {
         })
         this.setBuffs(newBuffs);
         newBuffs.forEach(buff => {
+          // if not in same place as last time
+          // set buff time to zero
+          if (buff.channel) {
+            if (character.body.velocity.x && character.body.velocity.y) {
+              buff.duration = 0;
+            }
+          }
           if (buff.combatObject) {
             const attacker = buff.attacker;
             attacker.combat.processCombatObject(character, buff.combatObject);
-          }
-          if (buff.statObject) {
-            if (buff.statObject['speed']){
-              const newSpeed = buff.statObject['speed'];
-              character.combat.setAttackSpd(newSpeed);
-            }
           }
         })
       }
