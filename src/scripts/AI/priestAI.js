@@ -1,5 +1,3 @@
-import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
-
 /**
  * PriestAI - priest script
  *
@@ -19,7 +17,7 @@ export default function PriestAI() {
     const canReachTarget = this.target.angeCheck(target, 60);
     if (canReachTarget) {
       this.setVelocity(0, 0);
-      meleeAutoAttack(this, target);
+      this.combat.meleeAutoAttack(target);
     } else {
       this.scene.physics.moveToObject(this, target);
     }

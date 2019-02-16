@@ -4,7 +4,7 @@ export default function updateUI(scene = {}) {
   let iText = 'Inventory: \n'
   playerInventory.forEach((item, i) => {
     const qty = (item.quantity) ? ': ' + item.quantity : ''
-    iText += ((i + 1) + ': ' + item.name + qty + '\n')
+    iText += ('shift+' + (i + 1) + ': ' + item.name + qty + '\n')
   }, scene)
   scene.inventoryText.setText(iText);
 

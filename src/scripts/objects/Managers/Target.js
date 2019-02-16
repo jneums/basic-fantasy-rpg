@@ -49,7 +49,7 @@ export default class Target {
      */
     this.scanForEnemies = function(range = 0) {
       const allEnemies = character.scene.characters.children.entries.filter(child =>
-        child.getTeam() !== character.getTeam());
+        child.team() !== character.team());
       const enemiesInRange = allEnemies.filter(enemy =>
           this.rangeCheck(enemy, range));
       const aliveEnemies = enemiesInRange.filter(enemy => !enemy.combat.isDead())
@@ -63,7 +63,7 @@ export default class Target {
      */
     this.scanForAllies = function() {
       return character.scene.characters.children.entries.filter(child =>
-        child.getTeam() === character.getTeam())
+        child.team() === character.team())
     }
 
     /**

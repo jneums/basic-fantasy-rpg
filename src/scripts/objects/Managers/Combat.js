@@ -1,3 +1,5 @@
+import meleeAutoAttackHitTable from '../../hitTables/meleeAutoAttackHitTable';
+
 export default class Combat {
   constructor(character) {
 
@@ -9,6 +11,56 @@ export default class Combat {
     let autoAttackToggle = true;
     // attack speed modifier
     let attackSpeed = 1;
+
+
+    /**
+     * meleeAttack
+     *
+     * @param  {Character} target
+     * @param  {string} hand left or right
+     * @returns {object} damage information
+     */
+    this.meleeAttack = function(target = {}, hand = '', type = '') {
+      character.timer.resetSwingTimer(hand);
+      const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
+      const attackStatus = meleeAutoAttackHitTable(character, target, hand);
+      let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
+      if (hand === 'off') weaponDmg /= 2;
+      const damageAmount = weaponDmg + character.stat.APBonus(hand);
+      const targetStartingHp = target.stat.hp();
+      const combatObject = this.buildMeleeCombatObject(
+        target,
+        attackStatus,
+        type,
+        damageAmount,
+        hand
+      );
+      this.processCombatObject(target, combatObject);
+      return combatObject;
+    }
+
+
+
+    /**
+     * meleeAutoAttack - wrapper for melee attack.
+     * checks each hand swing timer,
+     * checks to see if two handed weapon is being used.
+     *
+     * @param  {Character} character attacking
+     * @returns {void}
+     */
+    this.meleeAutoAttack = function(target = {}) {
+      const isTargetDead = this.isDead();
+      if (isTargetDead) return;
+      const canAttackWithMainHand = character.timer.checkSwingTimer('main');
+      if (canAttackWithMainHand) this.meleeAttack(target, 'main', 'autoAttack');
+      const canAttackWithOffHand = character.timer.checkSwingTimer('off');
+      // if offhand has damage key, must be a weapon.
+      if (canAttackWithOffHand && character.equipment.isDualWielding()) {
+        meleeAttack(character, target, 'off', 'autoAttack');
+      }
+    }
+
 
     /**
      * attackSpd - total, used for swing timers
@@ -65,6 +117,7 @@ export default class Combat {
       const attackerClass = character.getCharacterClass();
       switch(attackerClass) {
         case 'warrior':
+          // add heroic strike onto next melee hit
           const onNextAttack = character.combat.getOnNextAttack();
           if (newCombatObject.type === 'autoAttack') {
             if (onNextAttack === 'heroicStrike') {
@@ -78,6 +131,7 @@ export default class Combat {
               character.combat.setOnNextAttack(newOnNextAttack);
               return newCombatObject;
             }
+            // generate rage on auto attacks, not on specials
             character.rage.processRage(newCombatObject, 'attacker');
           }
           return newCombatObject;
@@ -96,6 +150,7 @@ export default class Combat {
       const targetClass = character.getCharacterClass();
       switch(targetClass) {
         case 'warrior':
+          // dont gain rage from being healed
           if (newCombatObject.type !== 'heal')
             character.rage.processRage(newCombatObject, 'target');
           return newCombatObject;
@@ -112,13 +167,21 @@ export default class Combat {
      * @returns {void}
      */
     this.processCombatObject = function(target = {}, combatObject = {}) {
+      // if player is not tapped,
+      const owner = target.tapped();
+      if (!owner) {
+        target.setTapped(character);
+      }
       let newCombatObject = Object.assign({}, combatObject);
-      // perform changes on attacker
+      // give combatants a chance to modify the combat object
       newCombatObject = this.attackerClassUpdate(newCombatObject);
       newCombatObject = this.targetClassUpdate(newCombatObject);
+      // add object to the combat logs
       character.combat.pushCombatObjectToLog(newCombatObject);
       target.combat.pushCombatObjectToLog(newCombatObject);
-      character.threat.updateTargetThreatTable(target, newCombatObject)
+      // update threat table
+      character.threat.updateTargetThreatTable(target, newCombatObject);
+      // take dmg according to the final combat object
       character.combat.processDamageFromCombatObject(target, newCombatObject);
     }
 
@@ -283,7 +346,7 @@ export default class Combat {
      *
      * @returns {bool}
      */
-    this.getAutoAttackToggle = function() {
+    this.autoAttack = function() {
       return autoAttackToggle;
     }
 
@@ -313,7 +376,7 @@ export default class Combat {
      *
      * @returns {void}
      */
-    this.setAutoAttackToggle = function() {
+    this.setAutoAttack = function() {
       autoAttackToggle = !autoAttackToggle;
     }
   }

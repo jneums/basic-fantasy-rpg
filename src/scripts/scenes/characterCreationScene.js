@@ -23,8 +23,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.player.AI = playerUpdate();
     playerInput(this.player);
 
-    for (let i = 0; i < 3; i++) {
-      const mob = new KoboldMiner(this, 'kobold');
+    for (let i = 0; i < 2; i++) {
+      const mob = new KoboldMiner(this);
       this.characters.add(mob);
     }
 

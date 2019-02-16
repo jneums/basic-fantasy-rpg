@@ -1,5 +1,3 @@
-import { meleeAutoAttack } from '../../globalAbilities/meleeAttack';
-
 /**
  * KoboldMinerAI - warrior script
  *
@@ -7,12 +5,8 @@ import { meleeAutoAttack } from '../../globalAbilities/meleeAttack';
  * @returns {function} update function
  */
 export default function KoboldMinerAI() {
-  const meleeRange = 50;
+  const meleeRange = 60;
   const AI = function() {
-    const moveModifier = this.buffs.statBonus('moveSpeed')
-      ? this.buffs.statBonus('moveSpeed')
-      : 1;
-    const moveSpeed = this.movement.getMovementSpeed() * moveModifier;
     const enemies = this.target.scanForEnemies(200);
     // if no enemies within scan distance, patrol
     if (!enemies.length) return this.setVelocity(0, 0);
@@ -20,8 +14,12 @@ export default function KoboldMinerAI() {
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
       this.setVelocity(0, 0);
-      meleeAutoAttack(this, target);
+      this.combat.meleeAutoAttack(target);
     } else {
+      const moveModifier = this.buffs.statBonus('moveSpeed')
+      ? this.buffs.statBonus('moveSpeed')
+      : 1;
+      const moveSpeed = this.movement.getMovementSpeed() * moveModifier;
       this.scene.physics.moveToObject(this, target, moveSpeed);
     }
   }

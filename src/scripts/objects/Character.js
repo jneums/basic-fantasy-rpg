@@ -11,7 +11,6 @@ import Threat from './Managers/Threat';
 import Buffs from './Managers/Buffs';
 import Consumables from './Managers/Consumables';
 
-
 export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x = 0, y = 0) {
     super(scene, x, y, 'no-texture')
@@ -34,10 +33,22 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.buffs = new Buffs(this);
     this.inventory = new Inventory(this);
 
+
     //  Input Event listeners
-    this.on('pointerover', function () {
+    this.on('pointerdown', function () {
+      if (this.combat.isDead() && (tapped && this.target.rangeCheck(tapped, 70))) {
+        // if there is no loot, return
+        if (!loot) return;
+        // give some loot to tapped (person who killed this)
+        const lootTarget = tapped;
+        tapped.inventory.add(loot);
+        loot = undefined;
+      }
+      scene.player.target.setCurrentTarget(this);
+
     });
-    this.on('pointerout', function () {
+
+    this.on('pointerdown', function () {
     });
 
     // character name
@@ -48,6 +59,11 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     let characterClass = '';
     // 'horder', 'alliance', 'monster'
     let team = '';
+    // person the kill belongs to:
+    let tapped = undefined;
+
+    // generate loot:
+    let loot = undefined;
 
     /**
      * getName
@@ -77,12 +93,30 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     /**
-    * getTeam
+    * team
     *
     * @returns {string}  characters team
     */
-    this.getTeam = function() {
+    this.team = function() {
       return team;
+    }
+
+    /**
+     * tapped - who owns loot and xp
+     *
+     * @returns {Character}
+     */
+    this.tapped = function() {
+      return tapped;
+    }
+
+    /**
+     * loot - return loot object
+     *
+     * @returns {object} or undefined, if no loot     
+     */
+    this.loot = function() {
+      return loot;
     }
 
     /**
@@ -123,6 +157,20 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     */
     this.setTeam = function(newTeam) {
       team = newTeam;
+    }
+
+    /**
+     * setTapped
+     *
+     * @param  {Character} newTapped
+     * @returns {void}
+     */
+    this.setTapped = function(newTapped) {
+      tapped = newTapped;
+    }
+
+    this.setLoot = function(newLoot) {
+      loot = newLoot;
     }
   }
 }

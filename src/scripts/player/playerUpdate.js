@@ -1,5 +1,3 @@
-import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
-
 /**
  * PlayerUpdate - update() to run on player
  * controlled character.
@@ -8,11 +6,9 @@ import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
  * @returns {function} update function
  */
 export default function PlayerUpdate() {
-  const meleeRange = 50;
+  const meleeRange = 60;
 
   const update = function() {
-    const rage = this.rage.getRage();
-    // go out of combat
     moveToMoveTarget(this);
     standGuard(this);
   }
@@ -28,16 +24,17 @@ export default function PlayerUpdate() {
  * @returns {type}                description
  */
 function standGuard(character = {}) {
-  // step 2: if at move target, check melee range for enemies
-  const enemies = character.target.scanForEnemies(50);
-  if (enemies.length) {
-    // step 2a: if enemies, set target and start autoattacking
-    const target = character.target.getClosestEnemy(enemies);
-    character.target.setCurrentTarget(target);
-    if (character.combat.getAutoAttackToggle()) {
-      meleeAutoAttack(character, target);
-    }
-  };
+  const range = 60;
+  const target = character.target.getCurrentTarget();
+  if (target) {
+    const inRange = character.target.rangeCheck(target, range);
+    const targetIsEnemy = (character.team() !== target.team());
+    if (inRange && targetIsEnemy) {
+      if (character.combat.autoAttack()) {
+        character.combat.meleeAutoAttack(target);
+      }
+    };
+  }
 }
 
 /**
@@ -54,9 +51,9 @@ function moveToMoveTarget(character = {}) {
   const isMoveTargetWithinDistance = Phaser.Math.Distance.Between(
     currentPosition[0], currentPosition[1],
     moveTargetCoords[0], moveTargetCoords[1]
-  ) < 50;
+  ) < 60;
   if (isMoveTargetWithinDistance) {
-    character.movement.setMovementSpeed(60)
+    character.movement.setMovementSpeed(60);
     return character.setVelocity(0, 0);
   } else {
     return character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);

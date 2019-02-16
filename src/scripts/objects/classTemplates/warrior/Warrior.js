@@ -1,7 +1,7 @@
 import Character from '../../Character';
 import { getRandomCoordsOnCanvas } from '../../../utilities/randomNumberUtilities';
-import { getWeaponByName } from '../../../weapons';
-import { getArmorByName } from '../../../armor';
+import { getWeaponByName } from '../../../loot/weapons';
+import { getArmorByName } from '../../../loot/armor';
 import warriorAI from '../../../AI/warriorAI';
 import RageMechanic from './Rage';
 import WarriorAbilities from './WarriorAbilities';

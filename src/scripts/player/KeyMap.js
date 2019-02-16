@@ -4,7 +4,7 @@ export default class KeyMap {
     let one = character.ability.charge;
     let two = character.ability.rend;
     let three = character.ability.heroicStrike;
-    let four = character.combat.setAutoAttackToggle;
+    let four = character.combat.setAutoAttack;
     let five = character.ability.battleShout;
     let six = character.ability.thunderClap;
     let seven = character.ability.hamstring;

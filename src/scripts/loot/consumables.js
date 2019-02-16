@@ -17,9 +17,20 @@ const consumables = [
     cost: 25,
     sellPrice: 1,
     type: 'consumable',
+    quantity: 1,
     maxStack: 20,
     icon: '',
-    droppedBy: '',
-    ability: 
+    levelRequirement: 1,
+  },
+  {
+    name: 'Refreshing Spring Water',
+    ilvl: 1,
+    cost: 25,
+    sellPrice: 1,
+    type: 'consumable',
+    quantity: 1,
+    maxStack: 20,
+    icon: 'inv_drink_07',
+    levelRequirement: 5,
   },
 ]

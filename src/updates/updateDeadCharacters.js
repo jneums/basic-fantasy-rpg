@@ -8,7 +8,7 @@ export default function updateDeadCharacters(scene = {}) {
       child.buffs.setBuffs([]);
       // increment corpse dissapear time
       const oldTimer = child.timer.getCorpseTimer();
-      const newTimer = oldTimer + 1;
+      const newTimer = (child.loot()) ? oldTimer + 1 : oldTimer + 3;
       child.timer.setCorpseTimer(newTimer);
       // if timer is over 1800, destroy the sprite
       if (newTimer > 1800) {

@@ -1,9 +1,10 @@
 import Character from '../Character';
 import { getRandomCoordsOnCanvas } from '../../utilities/randomNumberUtilities';
-import { getWeaponByName } from '../../weapons';
-import { getArmorByName } from '../../armor';
+import { getWeaponByName } from '../../loot/weapons';
+import { getArmorByName } from '../../loot/armor';
 import koboldMinerAI from './koboldMinerAI';
 import MobAbilities from './MobAbilities';
+import createLoot from '../../loot/createLoot';
 
 /**
  *
@@ -30,6 +31,10 @@ export default class KoboldMiner extends Character {
     // starting hp
     const startingHp = this.stat.baseStamina() * 10;
     this.stat.setHp(startingHp);
+
+    // starting loot
+    const loot = createLoot(name);
+    this.setLoot(loot);
 
     this.AI = koboldMinerAI();
     this.classUpdate = function() {

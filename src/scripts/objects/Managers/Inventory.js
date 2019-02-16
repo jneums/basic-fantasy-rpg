@@ -13,7 +13,7 @@ export default class Inventory {
         maxStack: 20,
         icon: '',
         droppedBy: '',
-        ability: character.consumables.eat
+        action: 'eat'
       },
       {
         name: 'Short Sword',
@@ -37,10 +37,14 @@ export default class Inventory {
       const item = inventory[index];
       if (item.type === 'consumable') {
         --item.quantity;
-        item.ability.call(character);
+        if (item.action === 'eat') {
+          character.consumables.eat();
+        }
         if (item.quantity === 0) {
           inventory.splice(index, 1);
         }
+      } else if (item.type === 'questItem') {
+        console.log("I can't use that");
       } else {
         character.equipment.equip(item);
         inventory.splice(index, 1);
@@ -48,9 +52,22 @@ export default class Inventory {
     }
 
     this.add = function(gear = 0) {
-      if (inventory.length < capacity) {
-        inventory.push(gear);
-      } else return console.log("Inventory is full")
+      // if space available in existing stack
+      const sameStacks = inventory.filter(stack => stack.name === gear.name)
+        .reduce((addedToExisting, stack) => {
+          if (stack.quantity < stack.maxStack) {
+            stack.quantity += 1;
+            return addedToExisting += 1;
+          }
+        }, 0);
+
+      if (sameStacks) {
+        return;
+      } else {
+        if (inventory.length < capacity) {
+          inventory.push(gear);
+        } else return console.log("Inventory is full")
+      }
     }
 
     /**

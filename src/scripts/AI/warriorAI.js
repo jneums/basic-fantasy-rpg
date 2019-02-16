@@ -1,5 +1,3 @@
-import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
-
 /**
  * WarriorAI - warrior script
  *
@@ -7,7 +5,7 @@ import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
  * @returns {function} update function
  */
 export default function WarriorAI() {
-  const meleeRange = 50;
+  const meleeRange = 60;
   const rageDumpValue = 20;
   const AI = function() {
     const rage = this.rage.getRage();
@@ -19,7 +17,7 @@ export default function WarriorAI() {
     if (canMelee) {
       this.setVelocity(0, 0);
       if (rage > rageDumpValue) this.ability.heroicStrike();
-      meleeAutoAttack(this, target);
+      this.combat.meleeAutoAttack(target);
     } else {
       this.scene.physics.moveToObject(this, target);
     }

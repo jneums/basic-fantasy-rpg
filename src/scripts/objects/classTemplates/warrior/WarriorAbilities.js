@@ -89,9 +89,10 @@ export default class WarriorAbilities {
      */
     this.charge = function() {
       const range = 400;
-      const targets = character.target.scanForEnemies(range);
-      const target = character.target.getClosestEnemy(targets);
-      if (!target) return console.log('You need to get closer')
+      const target = character.target.getCurrentTarget();
+      if (!target) return console.log('I dont have a target!');
+      const inRange = character.target.rangeCheck(target, range)
+      if (!inRange) return console.log('You need to get closer')
       if (!character.combat.isInCombat()) {
         const combatObject = {
           attacker: character.getName(),

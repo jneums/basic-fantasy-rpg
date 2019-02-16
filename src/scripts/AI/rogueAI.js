@@ -1,5 +1,3 @@
-import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
-
 /**
  * RogueAI - rogue script
  *
@@ -16,7 +14,7 @@ export default function RogueAI() {
     const canReachTarget = this.target.rangeCheck(target, 60);
     if (canReachTarget) {
       this.setVelocity(0, 0);
-      meleeAutoAttack(this, target);
+      this.combat.meleeAutoAttack(target);
     } else {
       this.scene.physics.moveToObject(this, target);
     }

@@ -1,5 +1,3 @@
-import { meleeAutoAttack } from '../globalAbilities/meleeAttack';
-
 /**
  * MagicUserAI - npc magic user script
  *
@@ -19,7 +17,7 @@ export default function MageAI() {
     const canReachTarget = this.targetangeCheck(target, 60);
     if (canReachTarget) {
       this.setVelocity(0, 0);
-      meleeAutoAttack(this, target);
+      this.combat.meleeAutoAttack(target);
     } else {
       this.scene.physics.moveToObject(this, target);
     }
