@@ -28,7 +28,7 @@ export default class Priest extends Character {
     this.setSpirit(baseSpirit + priestSpiritBonus);
 
     // starting equipment
-    const equipped = this.equipment.getEquipped();
+    const equipped = this.equipment.equipped();
     equipped.mainHand = getWeaponByName("Crooked Staff");
     equipped.chest = getArmorByName("Apprentice's Robe");
     equipped.legs = getArmorByName("Apprentice's Pants");

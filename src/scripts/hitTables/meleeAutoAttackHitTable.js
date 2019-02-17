@@ -20,7 +20,7 @@ export default function meleeAutoAttackHitTable(attacker = {}, target = {}, hand
   const criticalHitChance = blockChance + calculateCritChance(attacker);
 
   // TODO: only for mobs attacking players
-  // const crushingBlowChance;
+  const crushingBlowChance = criticalHitChance + 0;
 
   switch(true) {
     case (random < missChance):
@@ -35,6 +35,8 @@ export default function meleeAutoAttackHitTable(attacker = {}, target = {}, hand
       return 'blocked';
     case (random < criticalHitChance):
       return 'crit';
+    case (random < crushingBlowChance):
+      return 'crushing';
     default:
       return 'hit';
   }

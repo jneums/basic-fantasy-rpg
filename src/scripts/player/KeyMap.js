@@ -1,15 +1,15 @@
 export default class KeyMap {
   constructor(character) {
     let inventory = character.inventory.use
-    let one = character.ability.charge;
-    let two = character.ability.rend;
-    let three = character.ability.heroicStrike;
-    let four = character.combat.setAutoAttack;
-    let five = character.ability.battleShout;
-    let six = character.ability.thunderClap;
-    let seven = character.ability.hamstring;
-    let eight = '';
-    let nine = '';
+    let one = character.combat.setAutoAttack;
+    let two = undefined;
+    let three = undefined;
+    let four = undefined;
+    let five = undefined;
+    let six = undefined;
+    let seven = undefined;
+    let eight = undefined;
+    let nine = undefined;
 
     this.executeOne = function() {
       one.call(character)

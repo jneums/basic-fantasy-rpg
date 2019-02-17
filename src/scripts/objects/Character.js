@@ -19,6 +19,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.setInteractive();
 
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};
+    
     this.stat = new Stat(this, humanStartingStats);
     this.skills = new Skills(this);
     this.equipment = new Equipment(this);
@@ -113,7 +114,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     /**
      * loot - return loot object
      *
-     * @returns {object} or undefined, if no loot     
+     * @returns {object} or undefined, if no loot
      */
     this.loot = function() {
       return loot;

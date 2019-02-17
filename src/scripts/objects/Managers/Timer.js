@@ -3,6 +3,7 @@ export default class Timer {
     let globalCooldown = 0;
     let swingTimerMainHand = 0;
     let swingTimerOffHand = 0;
+    let swingTimerRanged = 0;
     let abilityTimers = [];
     let corpseTimer = 0;
 
@@ -68,26 +69,27 @@ export default class Timer {
       } else if (hand === 'off') {
         const offHandSpeed = character.equipment.getWeaponSpeed('off');
         this.setSwingTimerOffHand(spdModifier * offHandSpeed * 60);
+      } else if (hand === 'ranged') {
+        const rangedSpeed = character.equipment.getWeaponSpeed('ranged');
+        this.setSwingTimerRanged(spdModifier * rangedSpeed * 60);
       }
     }
 
     /**
      * checkSwingTimer
      *
-     * @param  {Character} character to check
-     * @param  {string} hand to use
+     * @param  {string} hand slot to check
      * @returns {bool} can attack or not
      */
     this.checkSwingTimer = function(hand = '') {
-      const mainHandSpeed = character.equipment.getWeaponSpeed('main');
-      const offHandSpeed = character.equipment.getWeaponSpeed('off');
-      const swingTimer = (hand === 'main')
-        ? this.getSwingTimerMainHand()
-        : this.getSwingTimerOffHand();
-      const weaponSpeed = (hand === 'main')
-        ? mainHandSpeed
-        : offHandSpeed;
-      return (swingTimer === 0);
+      switch(hand) {
+        case 'main':
+          return this.getSwingTimerMainHand() === 0;
+        case 'off':
+          return this.getSwingTimerOffHand() === 0;
+        case 'ranged':
+          return this.getSwingTimerRanged() === 0;
+      }
     }
 
     /**
@@ -99,14 +101,19 @@ export default class Timer {
     this.updateSwingTimers = function() {
       const swingTimerMainHand = this.getSwingTimerMainHand();
       const swingTimerOffHand = this.getSwingTimerOffHand();
+      const swingTimerRanged = this.getSwingTimerRanged();
       const newSwingTimerMainHand = (swingTimerMainHand - 1 > 0)
         ? swingTimerMainHand - 1
         : 0;
       const newSwingTimerOffHand = (swingTimerOffHand - 1 > 0)
         ? swingTimerOffHand - 1
         : 0;
+      const newSwingTimerRanged = (swingTimerRanged - 1 > 0)
+        ? swingTimerRanged - 1
+        : 0;
       this.setSwingTimerMainHand(newSwingTimerMainHand);
       this.setSwingTimerOffHand(newSwingTimerOffHand);
+      this.setSwingTimerRanged(newSwingTimerRanged);
     }
 
     /**
@@ -137,6 +144,15 @@ export default class Timer {
     */
     this.getSwingTimerOffHand = function() {
       return swingTimerOffHand;
+    }
+
+    /**
+     * getSwingTimerRanged
+     *
+     * @returns {number}  ranged cooldown
+     */
+    this.getSwingTimerRanged = function() {
+      return swingTimerRanged;
     }
 
     /**
@@ -184,6 +200,16 @@ export default class Timer {
     */
     this.setSwingTimerOffHand = function(newSwingTimerOffHand) {
       swingTimerOffHand = newSwingTimerOffHand;
+    }
+
+    /**
+     * setSwingTimerRanged
+     *
+     * @param  {number} newSwingTimerRanged
+     * @returns {void}
+     */
+    this.setSwingTimerRanged = function(newSwingTimerRanged) {
+      swingTimerRanged = newSwingTimerRanged;
     }
 
     /**

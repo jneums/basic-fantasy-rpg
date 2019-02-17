@@ -24,7 +24,7 @@ export default class KoboldMiner extends Character {
     this.stat.setStrAPR(.5)
 
     // starting equipment
-    const equipped = this.equipment.getEquipped();
+    const equipped = this.equipment.equipped();
     equipped.mainHand = getWeaponByName("Deadman Dagger");
     this.equipment.setEquipped(equipped);
 

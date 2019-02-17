@@ -35,7 +35,7 @@ export default class Rogue extends Character {
     this.setStamina(baseStamina + rogueStaminaBonus);
 
     // starting equipment
-    const equipped = this.equipment.getEquipped();
+    const equipped = this.equipment.equipped();
     equipped.mainHand = getWeaponByName("Deadman Dagger");
     equipped.chest = getArmorByName("Footpad's Vest");
     equipped.legs = getArmorByName("Footpad's Pants");

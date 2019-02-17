@@ -43,7 +43,7 @@ export default class WarriorAbilities {
         }
       }
 
-      if (character.rage.rageTransaction(10)) {
+      if (character.rage.spendRage(10)) {
         // push it to each of the allies in 20 yards
         if (alliesInRange.length !== 0) {
           alliesInRange.forEach(ally => {
@@ -68,7 +68,7 @@ export default class WarriorAbilities {
      */
     this.heroicStrike = function() {
       const rageCost = 15;
-      const oldRage = character.rage.getRage();
+      const oldRage = character.rage.rage();
       const enoughRage = oldRage >= rageCost;
       const onNextAttack = character.combat.getOnNextAttack();
       if (onNextAttack === 'heroicStrike') return;
@@ -89,11 +89,11 @@ export default class WarriorAbilities {
      */
     this.charge = function() {
       const range = 400;
-      const target = character.target.getCurrentTarget();
+      const target = character.target.get.currentTarget();
       if (!target) return console.log('I dont have a target!');
       const inRange = character.target.rangeCheck(target, range)
       if (!inRange) return console.log('You need to get closer')
-      if (!character.combat.isInCombat()) {
+      if (!character.combat.inCombat()) {
         const combatObject = {
           attacker: character.getName(),
           target: target.getName(),
@@ -113,7 +113,7 @@ export default class WarriorAbilities {
           combatObject: combatObject,
           attacker: character
         });
-        character.rage.rageTransaction(-9)
+        character.rage.spendRage(-9)
         character.movement.setMoveTargetCoords([target.x, target.y])
         character.movement.setMovementSpeed(1000)
       } else console.log("You can't do that while in combat")
@@ -132,9 +132,9 @@ export default class WarriorAbilities {
     this.rend = function() {
       const rageCost = 10;
       // target
-      const target = character.target.getCurrentTarget();
+      const target = character.target.get.currentTarget();
       if (!target) return console.log('You need a target');
-      if (character.rage.rageTransaction(rageCost)) {
+      if (character.rage.spendRage(rageCost)) {
         // build combatObject
         const myName = character.getName();
         const time = 9;
@@ -190,7 +190,7 @@ export default class WarriorAbilities {
       const range = 80;
       const time = 10;
       // rage check
-      if (character.rage.rageTransaction(rageCost)) {
+      if (character.rage.spendRage(rageCost)) {
         // scan for enemies
         const enemiesInRange = character.target.scanForEnemies(range);
         const closest = enemiesInRange.slice(0, 4);
@@ -250,9 +250,9 @@ export default class WarriorAbilities {
       const dmg = 5;
       const rageCost = 10;
       const time = 15;
-      const target = character.target.getCurrentTarget();
+      const target = character.target.get.currentTarget();
       if (!target) return console.log('You need a target');
-      if (character.rage.rageTransaction(rageCost)) {
+      if (character.rage.spendRage(rageCost)) {
         const combatObject = {
           attacker: character.getName(),
           target: target,

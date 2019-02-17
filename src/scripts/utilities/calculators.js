@@ -54,7 +54,7 @@ function calculateParryChance(attacker = {}, target = {}, hand = '') {
 function calculateBlockChance(attacker = {}, target = {}, hand = '') {
   // cant block from behind
   // cant block without Shield
-  const targetOffHandType = target.equipment.getEquipped().offHand.type;
+  const targetOffHandType = target.equipment.equipped().offHand.type;
   if (targetOffHandType !== 'shield') return 0;
   // amount blocked determined by blockValue
   // worsened by targets blockRating, defense

@@ -8,7 +8,7 @@ export default function WarriorAI() {
   const meleeRange = 50;
   const rageDumpValue = 20;
   const AI = function() {
-    const rage = this.rage.getRage();
+    const rage = this.rage.rage();
     const enemies = this.target.scanForEnemies(500);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);

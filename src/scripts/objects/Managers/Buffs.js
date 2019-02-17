@@ -1,32 +1,70 @@
 export default class Buffs {
   constructor(character) {
+    // array of buffs/debuffs
     let buffs = [];
 
+    /**
+     * getBuffs
+     *
+     * @returns {array} list of all active buffs
+     */
     this.getBuffs = function() {
       return buffs;
     }
 
+    /**
+     * setBuffs - replace all buffs
+     *
+     * @param  {array} newBuffs
+     * @returns {void}
+     */
     this.setBuffs = function(newBuffs) {
       buffs = newBuffs;
     }
 
+    /**
+     * add - create new buff array
+     * with new element
+     *
+     * @param  {object} newBuff object
+     * @returns {void}
+     */
     this.add = function(newBuff) {
-      const oldBuffs = this.getBuffs();
-      const newBuffs = oldBuffs.concat([newBuff]);
+      const newBuffs = this.getBuffs().concat([newBuff]);
       this.setBuffs(newBuffs);
     }
 
+    /**
+     * replace - use instead of add,
+     * refreshes buff
+     *
+     * @param  {object} newBuff
+     * @returns {void}
+     */
     this.replace = function(newBuff) {
-      const oldBuffs = this.getBuffs().filter(buff => buff.name !== newBuff.name);
-      const newBuffs = oldBuffs.concat([newBuff]);
+      const newBuffs = this.getBuffs()
+        .filter(buff => buff.name !== newBuff.name)
+        .concat([newBuff]);
       this.setBuffs(newBuffs);
     }
 
+    /**
+     * has - use to check for buff in array
+     *
+     * @param  {string} name of buff
+     * @returns {bool}
+     */
     this.has = function(name = '') {
       const buff = this.getBuffs().filter(buff => buff.name === name)[0];
       return !(buff === undefined);
     }
 
+    /**
+     * statBonus - from buffs
+     *
+     * @param  {string} stat to check for
+     * @returns {number} sum of given stat
+     */
     this.statBonus = function(stat = '') {
       const activeBuffs = this.getBuffs();
       const totalStat = activeBuffs.filter(buff => buff.statObject)
@@ -38,11 +76,13 @@ export default class Buffs {
         return totalStat;
     }
 
+    /**
+     * update - increments timers and sends
+     * dmg/heal objects to combat manager
+     *
+     * @returns {void}  description
+     */
     this.update = function() {
-      // old coords, for channeling check
-      const oldX = character.x;
-      const oldY = character.y;
-
       const oldBuffs = this.getBuffs();
       if (oldBuffs) {
         const newBuffs = oldBuffs.filter(buff => buff.duration > 0)
@@ -56,13 +96,14 @@ export default class Buffs {
         })
         this.setBuffs(newBuffs);
         newBuffs.forEach(buff => {
-          // if not in same place as last time
-          // set buff time to zero
+          // if buff is channeled
           if (buff.channel) {
+            // check for velocity, if so then kill buff
             if (character.body.velocity.x && character.body.velocity.y) {
               buff.duration = 0;
             }
           }
+          // if buff has a combat object
           if (buff.combatObject) {
             const attacker = buff.attacker;
             attacker.combat.processCombatObject(character, buff.combatObject);

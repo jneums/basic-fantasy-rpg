@@ -84,11 +84,11 @@ export default class Target {
     }
 
     /**
-     * getCurrentTarget
+     * currentTarget
      *
      * @returns {Character} target reference
      */
-    this.getCurrentTarget = function() {
+    this.currentTarget = function() {
       return currentTarget;
     }
 

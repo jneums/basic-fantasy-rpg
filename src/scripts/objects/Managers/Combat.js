@@ -9,9 +9,10 @@ export default class Combat {
     let onNextAttack = '';
     // should auto attack or not
     let autoAttackToggle = true;
+    // should auto shoot or not
+    let autoShootToggle = true;
     // attack speed modifier
     let attackSpeed = 1;
-
 
     /**
      * meleeAttack
@@ -22,24 +23,23 @@ export default class Combat {
      */
     this.meleeAttack = function(target = {}, hand = '', type = '') {
       character.timer.resetSwingTimer(hand);
-      const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
       const attackStatus = meleeAutoAttackHitTable(character, target, hand);
+      const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
       let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
       if (hand === 'off') weaponDmg /= 2;
       const damageAmount = weaponDmg + character.stat.APBonus(hand);
-      const targetStartingHp = target.stat.hp();
-      const combatObject = this.buildMeleeCombatObject(
+      const combatObject = this.buildCombatObject(
         target,
         attackStatus,
-        type,
+        'autoAttack',
+        'melee',
+        'physical',
         damageAmount,
         hand
       );
       this.processCombatObject(target, combatObject);
       return combatObject;
     }
-
-
 
     /**
      * meleeAutoAttack - wrapper for melee attack.
@@ -50,14 +50,14 @@ export default class Combat {
      * @returns {void}
      */
     this.meleeAutoAttack = function(target = {}) {
-      const isTargetDead = this.isDead();
-      if (isTargetDead) return;
-      const canAttackWithMainHand = character.timer.checkSwingTimer('main');
-      if (canAttackWithMainHand) this.meleeAttack(target, 'main', 'autoAttack');
-      const canAttackWithOffHand = character.timer.checkSwingTimer('off');
-      // if offhand has damage key, must be a weapon.
-      if (canAttackWithOffHand && character.equipment.isDualWielding()) {
-        meleeAttack(character, target, 'off', 'autoAttack');
+      if (!target.combat.isDead()) {
+        const canAttackWithMainHand = character.timer.checkSwingTimer('main');
+        if (canAttackWithMainHand) this.meleeAttack(target, 'main', 'autoAttack');
+        const canAttackWithOffHand = character.timer.checkSwingTimer('off');
+        // if offhand has damage key, must be a weapon.
+        if (canAttackWithOffHand && character.equipment.isDualWielding()) {
+          meleeAttack(character, target, 'off', 'autoAttack');
+        }
       }
     }
 
@@ -89,7 +89,7 @@ export default class Combat {
     }
 
     /**
-     * setattackSpd - default at 100%
+     * setAttackSpd - default at 100%
      *
      * @param  {number} newSpeed percent
      * @returns {void}
@@ -101,7 +101,7 @@ export default class Combat {
     /**
      * isStunned - used by update loop
      *
-     * @returns {type}  description
+     * @returns {bool}
      */
     this.isStunned = function() {
       return character.buffs.has('stun');
@@ -123,7 +123,7 @@ export default class Combat {
             if (onNextAttack === 'heroicStrike') {
               newCombatObject.damageAmount += 11;
               newCombatObject.bonusThreat += 20;
-              const oldRage = character.rage.getRage();
+              const oldRage = character.rage.rage();
               const rageCost = 15;
               const newRage = oldRage - rageCost;
               character.rage.setRage(newRage)
@@ -199,7 +199,7 @@ export default class Combat {
       if (oldHp - damage < 0) {
         // target died
         target.stat.setHp(0);
-        character.target.setCurrentTarget(undefined);
+        character.target.set.currentTarget(undefined);
       } else if (oldHp - damage > maxHp) {
         target.stat.setHp(maxHp);
       } else {
@@ -213,6 +213,7 @@ export default class Combat {
      * @param  {Character} target
      * @param  {string} status e.g. 'hit', 'miss', 'crit'
      * @param  {string} type e.g. 'melee', 'ranged'
+     * @param  {string} range e.g. 'melee', 'ranged'
      * @param  {number} damageAmount
      * @param  {number} mitigationAmount
      * @param  {string} hand
@@ -221,15 +222,23 @@ export default class Combat {
      * {attacker: "monstrum", target: "leslie", status: "hit",
      *  type: "melee", damageType: "physical", …}
      */
-    this.buildMeleeCombatObject = function(target = {}, status = '', type = '', damageAmount = 0, hand = '') {
+    this.buildCombatObject = function(
+      target = {},
+      status = '',
+      type = '',
+      range = '',
+      damageType = '',
+      damageAmount = 0,
+      hand = ''
+    ) {
       // destructure
       let result = {
         attacker: character.getName(),
         target: target.getName(),
         status: status,
-        type: type,
-        range: 'melee',
-        damageType: 'physical',
+        type: type, // physical, spell, dot, heal
+        range: range,
+        damageType: damageType, // physical, frost, holy
         damageAmount: damageAmount,
         bonusThreat: 0,
         mitigationAmount: 0,
@@ -243,37 +252,45 @@ export default class Combat {
           result.status = 'miss';
           result.damageAmount = 0;
           result.mitigationAmount = damageAmount;
-          return result;
+        return result;
         case 'dodge':
           result.status = 'dodge';
           result.damageAmount = 0;
           result.mitigationAmount = damageAmount;
-          return result;
+        return result;
         case 'parry':
           result.status = 'parry';
           result.damageAmount = 0;
           result.mitigationAmount = damageAmount;
-          return result;
+        return result;
         case 'glancing':
           result.status = 'glancing';
           result.mitigationAmount = damageAmount * .3;
           result.damageAmount = damageAmount * .7;
-          return result;
+        return result;
         case 'blocked':
           result.status = 'blocked';
           result.mitigationAmount = blockValue; // get block from stats/items/talents as well!
           result.damageAmount = damageAmount - blockValue;
-          return result;
+        return result;
         case 'crit':
           result.status = 'crit';
-          result.damageAmount = (damageAmount * 2) - mitigatedByArmor;
-          result.mitigationAmount = mitigatedByArmor;
-          return result;
+          if (result.type === 'wand') {
+            result.damageAmount = (damageAmount * 2);
+          } else {
+            result.damageAmount = (damageAmount * 2) - mitigatedByArmor;
+            result.mitigationAmount = mitigatedByArmor;
+          }
+        return result;
         case 'hit':
           result.status = 'hit';
-          result.damageAmount = damageAmount - mitigatedByArmor;
-          result.mitigationAmount = mitigatedByArmor;
-          return result;
+          if (result.type === 'wand') {
+            result.damageAmount = damageAmount;
+          } else {
+            result.damageAmount = damageAmount - mitigatedByArmor;
+            result.mitigationAmount = mitigatedByArmor;
+          }
+        return result;
       }
     }
 
@@ -293,11 +310,11 @@ export default class Combat {
     }
 
     /**
-    * isInCombat - flag
+    * inCombat - flag
     *
     * @returns {bool} true = in combat
     */
-    this.isInCombat = function() {
+    this.inCombat = function() {
       const myName = character.getName();
       let result = false;
       // get list of enemies in area
@@ -351,6 +368,15 @@ export default class Combat {
     }
 
     /**
+     * getAutoShootToggle
+     *
+     * @returns {bool}
+     */
+    this.autoShoot = function() {
+      return autoShootToggle;
+    }
+
+    /**
      * setCombatLog
      *
      * @param  {array} newCombatLog
@@ -371,13 +397,23 @@ export default class Combat {
     }
 
     /**
-     * setAutoAttackToggle - switch auto attack on
+     * setAutoAttack - switch auto attack on
      * or off
      *
      * @returns {void}
      */
     this.setAutoAttack = function() {
       autoAttackToggle = !autoAttackToggle;
+    }
+
+    /**
+     * setAutoShoot - switch auto shoot on
+     * or off
+     *
+     * @returns {void}
+     */
+    this.setAutoShoot = function() {
+      autoShootToggle = !autoShootToggle;
     }
   }
 }

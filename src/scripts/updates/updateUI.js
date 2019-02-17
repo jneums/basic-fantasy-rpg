@@ -13,24 +13,31 @@ export default function updateUI(scene = {}) {
   scene.myStats.setText(myStatText);
   let myBuffText = '';
   scene.player.buffs.getBuffs().forEach(buff => myBuffText += buff.name + ' : ' + Math.round(buff.duration/60) + '\n');
-  scene.hpText.setText(Math.floor(scene.player.stat.hp()))
-  scene.rageText.setText(Math.floor(scene.player.rage.getRage()))
+  // show resources:
+  if (scene.player.getCharacterClass() === 'warrior') {
+    scene.resourceText.setText(Math.floor(scene.player.rage.rage()));
+  } else if (scene.player.getCharacterClass() === 'mage') {
+    scene.resourceText.setText(Math.floor(scene.player.mana.mana()));
+  }
+  scene.hpText.setText(Math.floor(scene.player.stat.hp()));
   scene.myBuffs.setText(myBuffText);
   const mySwingTimerText = scene.player.timer.getSwingTimerMainHand() / 60;
   const myWeaponTimer = scene.player.equipment.getWeaponSpeed('main');
   scene.mySwingTimer.setText((mySwingTimerText).toFixed(2));
 
-  if (scene.player.target.getCurrentTarget() !== undefined) {
-    const enemySwing = scene.player.target.getCurrentTarget().timer.getSwingTimerMainHand() / 60;
-    const enemyWeapon = scene.player.target.getCurrentTarget().equipment.getWeaponSpeed('main');
+  if (scene.player.target.currentTarget() !== undefined) {
+    const enemySwing = scene.player.target.currentTarget().timer.getSwingTimerMainHand() / 60;
+    const enemyWeapon = scene.player.target.currentTarget().equipment.getWeaponSpeed('main');
     scene.enemySwingTimer.setText((enemySwing).toFixed(2));
     let buffText = '';
-    scene.enemyHpText.setText(Math.floor(scene.player.target.getCurrentTarget().stat.hp()))
-    scene.player.target.getCurrentTarget().buffs.getBuffs().forEach(buff => buffText += buff.name + ' : ' + Math.round(buff.duration/60) + '\n');
+    scene.enemyNameText.setText(scene.player.target.currentTarget().getName())
+    scene.enemyHpText.setText(Math.floor(scene.player.target.currentTarget().stat.hp()))
+    scene.player.target.currentTarget().buffs.getBuffs().forEach(buff => buffText += buff.name + ' : ' + Math.round(buff.duration/60) + '\n');
     scene.enemyBuffs.setText(buffText);
   } else {
     scene.enemyHpText.setText('');
     scene.enemyBuffs.setText('');
     scene.enemySwingTimer.setText('');
+    scene.enemyNameText.setText('');
   }
 }

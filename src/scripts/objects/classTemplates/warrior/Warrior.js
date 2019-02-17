@@ -13,13 +13,28 @@ import KeyMap from '../../../player/KeyMap';
 export default class Warrior extends Character {
   constructor(scene = {}, name = 'warrior') {
     super(scene)
+    // warrior specific abilities
     this.ability = new WarriorAbilities(this);
-    this.keyMap = new KeyMap(this);
 
+    // config keymap for warrior abilities
+    this.keyMap = new KeyMap(this);
+    this.keyMap.setTwo(this.ability.charge);
+    this.keyMap.setThree(this.ability.rend);
+    this.keyMap.setFour(this.ability.heroicStrike);
+    this.keyMap.setFive(this.combat.setAutoAttack);
+    this.keyMap.setSix(this.ability.battleShout);
+    this.keyMap.setSeven(this.ability.thunderClap);
+    this.keyMap.setEight(this.ability.hamstring);
+
+    // faction
     this.setTeam(name);
+
+    // placement on the map
     this.coords = getRandomCoordsOnCanvas(scene.scale.width, scene.scale.height);
     this.setPosition(this.coords[0], this.coords[1])
     this.movement.setMoveTargetCoords(this.coords)
+
+    // name and class specific stats
     this.setName(name);
     this.setCharacterClass('warrior');
     this.stat.setCrit(.05);
@@ -32,13 +47,14 @@ export default class Warrior extends Character {
     const baseStrength = this.stat.baseStrength();
     const warriorStrengthBonus = 3;
     this.stat.setStrength(baseStrength + warriorStrengthBonus);
+
     // and bonus to stamina:
     const baseStamina = this.stat.baseStamina();
     const warriorStaminaBonus = 2;
     this.stat.setStamina(baseStamina + warriorStaminaBonus);
 
     // starting equipment
-    const equipped = this.equipment.getEquipped();
+    const equipped = this.equipment.equipped();
     equipped.mainHand = getWeaponByName("Tarnished Bastard Sword");
     equipped.chest = getArmorByName("Recruit's Vest");
     equipped.legs = getArmorByName("Recruit's Pants");
@@ -46,16 +62,20 @@ export default class Warrior extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
+    const warriorHp = 20;
     const startingHp = this.stat.baseStamina() * 10;
-    this.stat.setHp(startingHp);
+    this.stat.setHp(startingHp + warriorHp);
 
     // rage system
     this.rage = new RageMechanic(this);
 
-
+    // ai system
     this.AI = warriorAI();
+
+    // class specific updates e.g. rage, mana, energy
     this.classUpdate = function() {
-      if(!this.combat.isInCombat()) this.rage.rageDecay();
+      // after 5 seconds start regen hp according to spirit
+      if(!this.combat.inCombat()) this.rage.rageDecay();
     };
   }
 }

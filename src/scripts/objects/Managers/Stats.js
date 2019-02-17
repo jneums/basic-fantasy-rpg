@@ -6,8 +6,8 @@ export default class Stat {
     let hitChance = 0;
     let spellPower = 0;
     let healingPower = 0;
-    let spellcrit = 0;
-    let spellHitChance = 0;
+    let spellCrit = 0;
+    let spellHit = 0;
     let manaPer5 = 0;
     let defenseRating = 5;
     let armorRating = 0;
@@ -257,6 +257,7 @@ export default class Stat {
       const baseAP = attackPower;
       const gearAP = character.equipment.statBonus('attackPower');
       const buffAP = character.buffs.statBonus('attackPower');
+      // talents
       return baseAP + gearAP + buffAP;
     }
 
@@ -278,6 +279,7 @@ export default class Stat {
       const baseCrit = crit;
       const gearCrit = character.equipment.statBonus('crit');
       const buffCrit = character.buffs.statBonus('crit');
+      // talents
       return baseCrit + gearCrit + buffCrit;
     }
 
@@ -318,9 +320,21 @@ export default class Stat {
       return healingPower;
     }
 
+    /**
+     * spellCrit - total
+     *
+     * @returns {number}
+     */
+    this.spellCrit = function() {
+      const base = spellCrit;
+      const gear = character.equipment.statBonus('spellCrit');
+      const buff = character.buffs.statBonus('spellCrit');
+      // talents too
+      return base + gear + buff;
+    }
 
     /**
-     * getSpellcrit
+     * getSpellcrit - base spell crit
      *
      * @returns {number}
      */
@@ -330,12 +344,12 @@ export default class Stat {
 
 
     /**
-     * getSpellHitChance
+     * getspellHit
      *
      * @returns {number}
      */
-    this.getSpellHitChance = function() {
-      return spellHitChance;
+    this.getspellHit = function() {
+      return spellHit;
     }
 
 
@@ -596,13 +610,13 @@ export default class Stat {
     }
 
     /**
-     * setSpellHitChance
+     * setspellHit
      *
-     * @param  {number} newSpellHitChance
+     * @param  {number} newspellHit
      * @returns {void}
      */
-    this.setSpellHitChance = function(newSpellHitChance) {
-      spellHitChance = newSpellHitChance;
+    this.setspellHit = function(newspellHit) {
+      spellHit = newspellHit;
     }
 
     /**

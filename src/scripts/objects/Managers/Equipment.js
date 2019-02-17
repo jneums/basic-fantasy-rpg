@@ -26,7 +26,7 @@ export default class Equipment {
       const replacedGear = equipped[slot];
       equipped[slot] = gear;
       // if it replaced a piece, put that piece in inventory
-      if (replacedGear) {
+      if (replacedGear.name) {
         character.inventory.add(replacedGear);
       }
     }
@@ -38,7 +38,7 @@ export default class Equipment {
      */
     this.isDualWielding = function() {
       const hasDualWield = character.ability.getAbilities().includes('dual-wield');
-      const hasWeaponInOffhand = this.getEquipped().offHand.damage;
+      const hasWeaponInOffhand = this.equipped().offHand.damage;
       if (hasDualWield && hasWeaponInOffhand) return true;
       else return false;
     }
@@ -50,8 +50,8 @@ export default class Equipment {
      * @returns {number} weapon skill
      */
     this.getCurrentWeaponSkill = function(hand = '') {
-      const mainHandType = this.getEquipped().mainHand.type;
-      const offHandType = this.getEquipped().offHand.type;
+      const mainHandType = this.equipped().mainHand.type;
+      const offHandType = this.equipped().offHand.type;
       const weaponType = (hand === 'main')
         ? mainHandType
         : offHandType;
@@ -66,8 +66,8 @@ export default class Equipment {
      * @returns {object} dmg object: { min: 1, max: 2 }
      */
     this.getWeaponDmg = function(hand = '') {
-      const mainHandWpnDmg = this.getEquipped().mainHand.damage;
-      const offHandWpnDmg= this.getEquipped().offHand.damage;
+      const mainHandWpnDmg = this.equipped().mainHand.damage;
+      const offHandWpnDmg= this.equipped().offHand.damage;
       const weaponDamage = (hand === 'main')
         ? mainHandWpnDmg
         : offHandWpnDmg;
@@ -81,12 +81,14 @@ export default class Equipment {
      * @returns {number}
      */
     this.getWeaponSpeed = function(hand = '') {
-      const mainHandSpeed = equipped.mainHand.speed;
-      const offHandSpeed = equipped.offHand.speed;
-      const weaponSpeed = (hand === 'main')
-        ? mainHandSpeed
-        : offHandSpeed;
-      return weaponSpeed;
+      switch(hand) {
+        case 'main':
+        return equipped.mainHand.speed;
+        case 'off':
+        return equipped.offHand.speed;
+        case 'ranged':
+        return equipped.ranged.speed;
+      }
     }
 
     /**
@@ -95,7 +97,7 @@ export default class Equipment {
      * @returns {bool} true if using 2h
      */
     this.checkForTwoHandWeapon = function() {
-      const weaponSlot = this.getEquipped().mainHand.slot;
+      const weaponSlot = this.equipped().mainHand.slot;
       return weaponSlot === 'two-hand';
     }
 
@@ -108,7 +110,7 @@ export default class Equipment {
      */
     this.statBonus = function(stat = '') {
       let total = 0;
-      const equipped = this.getEquipped();
+      const equipped = this.equipped();
       for (let item in equipped) {
         if (equipped[item][stat]) {
           total += equipped[item][stat];
@@ -118,11 +120,11 @@ export default class Equipment {
     }
 
     /**
-     * getEquipped
+     * equipped
      *
      * @returns {object}
      */
-    this.getEquipped = function() {
+    this.equipped = function() {
       return equipped;
     }
 

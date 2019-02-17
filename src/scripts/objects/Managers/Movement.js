@@ -6,6 +6,9 @@ export default class Movement {
     // where to move to
     let moveTargetCoords = [x, y];
 
+    this.stop = function() {
+      moveTargetCoords = [character.x, character.y];
+    }
     /**
     * getMovementSpeed
     *

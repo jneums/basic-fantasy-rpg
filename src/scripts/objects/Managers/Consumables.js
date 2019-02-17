@@ -13,7 +13,7 @@ export default class Consumables {
     this.eat = function(foodLevel = 1) {
       // channeled, so movement will break it
       // out of combat only:
-      if (character.combat.isInCombat()) return console.log('You are in combat')
+      if (character.combat.inCombat()) return console.log('You are in combat')
       // hp gained depends on the foodLevel
       const healing = 4;
       // create buff

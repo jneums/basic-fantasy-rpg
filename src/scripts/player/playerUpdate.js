@@ -6,8 +6,6 @@
  * @returns {function} update function
  */
 export default function PlayerUpdate() {
-  const meleeRange = 50;
-
   const update = function() {
     moveToMoveTarget(this);
     standGuard(this);
@@ -25,7 +23,7 @@ export default function PlayerUpdate() {
  */
 function standGuard(character = {}) {
   const range = 50;
-  const target = character.target.getCurrentTarget();
+  const target = character.target.currentTarget();
   if (target) {
     const inRange = character.target.rangeCheck(target, range);
     const targetIsEnemy = (character.team() !== target.team());

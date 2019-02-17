@@ -3,27 +3,24 @@ export default class RageMechanic {
     let rage = 0;
 
 
-    this.rageTransaction = function(cost = 0) {
+    this.spendRage = function(cost = 0) {
       // calculate if enough rage
-      const rageCost = cost;
-      const oldRage = this.getRage();
-      if (oldRage - rageCost < 0) {
+      if (this.rage() - cost < 0) {
         console.log('Not enough rage');
         return false;
       } else {
         // if so, deduct rage cost
-        const newRage = oldRage - rageCost;
-        this.setRage(newRage);
+        this.setRage(this.rage() - cost);
         return true;
       }
     }
 
     /**
-     * getRage
+     * rage
      *
      * @returns {number} current amount of rage
      */
-    this.getRage = function() {
+    this.rage = function() {
       return rage;
     }
 
@@ -47,7 +44,7 @@ export default class RageMechanic {
      */
     this.processRage = function(combatObject = {}, role = '') {
       let rageGain = 0;
-      const oldRage = this.getRage();
+      const oldRage = this.rage();
       const level = character.lvl.getLevel();
       const rageConversion = 0.0091107836 * (level * level) + (3.225598133 * level) + 4.2652911;
       const dmgAmt = combatObject.damageAmount;
@@ -75,10 +72,8 @@ export default class RageMechanic {
      * @returns {void}
      */
     this.rageDecay = function() {
-      const oldRage = this.getRage();
-      if (oldRage > 1) {
-        const newRage = oldRage - 1/60;
-        this.setRage(newRage);
+      if (this.rage() > 1) {
+        this.setRage(oldRage - 1/60);
       }
     }
   }
