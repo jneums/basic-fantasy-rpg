@@ -47,7 +47,7 @@ export default class RageMechanic {
       const oldRage = this.rage();
       const level = character.lvl.getLevel();
       const rageConversion = 0.0091107836 * (level * level) + (3.225598133 * level) + 4.2652911;
-      const dmgAmt = combatObject.damageAmount;
+      const dmgAmt = combatObject.amount;
       const hand = combatObject.hand;
       const weaponSpeed = (hand === 'main')
         ? character.equipment.getWeaponSpeed('main')
@@ -73,7 +73,7 @@ export default class RageMechanic {
      */
     this.rageDecay = function() {
       if (this.rage() > 1) {
-        this.setRage(oldRage - 1/60);
+        this.setRage(this.rage() - 1/60);
       }
     }
   }

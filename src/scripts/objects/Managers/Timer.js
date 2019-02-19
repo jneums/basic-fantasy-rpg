@@ -1,6 +1,8 @@
 export default class Timer {
   constructor(character) {
     let globalCooldown = 0;
+    let castTimer = 0;
+    let spell = 0;
     let swingTimerMainHand = 0;
     let swingTimerOffHand = 0;
     let swingTimerRanged = 0;
@@ -8,6 +10,23 @@ export default class Timer {
     let corpseTimer = 0;
 
 
+    /**
+     * castTimer - tracks current spell cast
+     *
+     * @returns {number} frames
+     */
+    this.castTimer = function() {
+      return castTimer;
+    }
+
+    /**
+     * spell - currently being cast
+     *
+     * @returns {object}  { name: 'water', castTime: 300, cast: fn() }
+     */
+    this.spell = function() {
+      return spell;
+    }
 
     /**
      * checkAbilityTimer
@@ -129,6 +148,27 @@ export default class Timer {
     }
 
     /**
+     * updateCastTimer - used by player updater to keep
+     * track of spell casting and staying still while casting
+     *
+     * @returns {void} executes callback after casting time
+     */
+    this.updateCastTimer = function() {
+      if (!this.spell()) return;
+      if (character.body.velocity.x || character.body.velocity.y) {
+        return this.setSpell(0);
+      }
+      const oldCastTimer = this.castTimer();
+      const newCastTimer = oldCastTimer - 1;
+      if (!newCastTimer) {
+        this.spell().cast();
+        this.setSpell(0);
+      } else {
+        this.setCastTimer(newCastTimer);
+      }
+    }
+
+    /**
     * getSwingTimerMainHand
     *
     * @returns {number} main hand cooldown
@@ -222,6 +262,10 @@ export default class Timer {
       globalCooldown = newGlobalCooldown;
     }
 
+    this.setCastTimer = function(newCastTimer) {
+      castTimer = newCastTimer;
+    }
+
     /**
      * setSpellTimers
      *
@@ -240,6 +284,19 @@ export default class Timer {
      */
     this.setCorpseTimer = function(newCorpseTimer) {
       corpseTimer = newCorpseTimer;
+    }
+
+    /**
+     * setSpell - initialize a spell cast,
+     * starting the count down, and syncing the
+     * spell object.
+     *
+     * @param  {object} spellObject
+     * @returns {void}                  
+     */
+    this.setSpell = function(spellObject) {
+      this.setCastTimer(spellObject.castTime);
+      spell = spellObject;
     }
 
   }

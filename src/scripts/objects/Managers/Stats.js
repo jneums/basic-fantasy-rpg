@@ -1,11 +1,12 @@
 export default class Stat {
   constructor(character = {}, {strength, agility, intellect, stamina, spirit}) {
     let hp = 0;
+    let baseHp = 0;
     let attackPower = 0;
     let crit = 0;
     let hitChance = 0;
-    let spellPower = 0;
-    let healingPower = 0;
+    let spellPower = 100;
+    let healingPower = 100;
     let spellCrit = 0;
     let spellHit = 0;
     let manaPer5 = 0;
@@ -40,8 +41,16 @@ export default class Stat {
      * @returns {number}
      */
     this.maxHp = function() {
-      const maxStam = this.stamina();
-      return maxStam * 10;
+      const hpFromStam = this.stamina() * 10;
+      return baseHp + hpFromStam;
+    }
+
+    this.baseHp = function() {
+      return baseHp;
+    }
+
+    this.setBaseHp = function(hp) {
+      baseHp = hp;
     }
 
     /**
@@ -308,6 +317,14 @@ export default class Stat {
      */
     this.baseSpellPower = function() {
       return spellPower;
+    }
+
+    this.spellPower = function() {
+      const base = spellPower;
+      const gear = character.equipment.statBonus('spellPower');
+      const buff = character.buffs.statBonus('spellPower');
+      // talents
+      return base + gear + buff;
     }
 
 

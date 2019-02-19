@@ -7,15 +7,21 @@
 export default function KoboldMinerAI() {
   const meleeRange = 50;
   const AI = function() {
+    // scan for enemies for body pull
     const enemies = this.target.scanForEnemies(200);
-    // if no enemies within scan distance, patrol
-    if (!enemies.length) return this.setVelocity(0, 0);
-    const target = this.target.getClosestEnemy(enemies);
+    // scan for enemies by threat table (pulled by attack)
+    const target = this.threat.highestThreat()
+      ? this.threat.highestThreat()
+      : this.target.getClosestEnemy(enemies);
+    // if no target in range and no aggro, wait
+    if (!target) return this.setVelocity(0, 0);
+    // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
       this.setVelocity(0, 0);
       this.combat.meleeAutoAttack(target);
     } else {
+      // change this to total moveSpeed
       const moveModifier = this.buffs.statBonus('moveSpeed')
       ? this.buffs.statBonus('moveSpeed')
       : 1;

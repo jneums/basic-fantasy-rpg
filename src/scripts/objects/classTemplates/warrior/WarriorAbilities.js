@@ -89,7 +89,7 @@ export default class WarriorAbilities {
      */
     this.charge = function() {
       const range = 400;
-      const target = character.target.get.currentTarget();
+      const target = character.target.currentTarget();
       if (!target) return console.log('I dont have a target!');
       const inRange = character.target.rangeCheck(target, range)
       if (!inRange) return console.log('You need to get closer')
@@ -101,7 +101,7 @@ export default class WarriorAbilities {
           type: 'stun',
           range: 'melee',
           damageType: 'physical',
-          damageAmount: 0,
+          amount: 0,
           bonusThreat: 1,
           mitigationAmount: 0,
           hand: 'main',
@@ -110,7 +110,8 @@ export default class WarriorAbilities {
         target.buffs.add({
           name: 'stun',
           duration: 100,
-          combatObject: combatObject,
+          interval: 100,
+          combatObject,
           attacker: character
         });
         character.rage.spendRage(-9)
@@ -132,13 +133,13 @@ export default class WarriorAbilities {
     this.rend = function() {
       const rageCost = 10;
       // target
-      const target = character.target.get.currentTarget();
+      const target = character.target.currentTarget();
       if (!target) return console.log('You need a target');
       if (character.rage.spendRage(rageCost)) {
         // build combatObject
         const myName = character.getName();
         const time = 9;
-        const dmgTick = (1/60) * (15/9);
+        const dmgTick = 15;
         const combatObject = {
           attacker: character.getName(),
           target: target.getName(),
@@ -146,7 +147,7 @@ export default class WarriorAbilities {
           type: 'dot',
           range: 'melee',
           damageType: 'physical',
-          damageAmount: dmgTick,
+          amount: dmgTick,
           bonusThreat: 0,
           mitigationAmount: 0,
           hand: 'main',
@@ -156,7 +157,8 @@ export default class WarriorAbilities {
         const debuff = {
           name: 'rend',
           duration: time * 60,
-          combatObject: combatObject,
+          interval: 300,
+          combatObject,
           attacker: character
         }
         if (target.buffs.has('rend'))
@@ -205,12 +207,12 @@ export default class WarriorAbilities {
             // make combat object
             const combatObject = {
               attacker: character.getName(),
-              target: target,
+              target,
               status: 'hit',
               type: 'special',
               range: 'melee',
               damageType: 'physical',
-              damageAmount: 10,
+              amount: 10,
               bonusThreat: 10 * .75,
               mitigationAmount: mAmount,
               hand: 'main',
@@ -250,17 +252,17 @@ export default class WarriorAbilities {
       const dmg = 5;
       const rageCost = 10;
       const time = 15;
-      const target = character.target.get.currentTarget();
+      const target = character.target.currentTarget();
       if (!target) return console.log('You need a target');
       if (character.rage.spendRage(rageCost)) {
         const combatObject = {
           attacker: character.getName(),
-          target: target,
+          target,
           status: 'hit',
           type: 'special',
           range: 'melee',
           damageType: 'physical',
-          damageAmount: 5,
+          amount: 5,
           bonusThreat: 0,
           mitigationAmount: 0,
           hand: 'main',

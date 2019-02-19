@@ -1,7 +1,7 @@
 export default class ManaMechanic {
   constructor(character) {
     // total in mana pool
-    let mana = 120;
+    let mana = 0;
 
     /**
      * mana - get current amount
@@ -10,6 +10,12 @@ export default class ManaMechanic {
      */
     this.mana = function() {
       return mana;
+    }
+
+    this.maxMana = function() {
+      // get total intellect
+      const totalInt = character.stat.intellect();
+      return totalInt * 15;
     }
 
     /**

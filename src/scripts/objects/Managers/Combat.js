@@ -27,14 +27,14 @@ export default class Combat {
       const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
       let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
       if (hand === 'off') weaponDmg /= 2;
-      const damageAmount = weaponDmg + character.stat.APBonus(hand);
+      const amount = weaponDmg + character.stat.APBonus(hand);
       const combatObject = this.buildCombatObject(
         target,
         attackStatus,
         'autoAttack',
         'melee',
         'physical',
-        damageAmount,
+        amount,
         hand
       );
       this.processCombatObject(target, combatObject);
@@ -121,7 +121,7 @@ export default class Combat {
           const onNextAttack = character.combat.getOnNextAttack();
           if (newCombatObject.type === 'autoAttack') {
             if (onNextAttack === 'heroicStrike') {
-              newCombatObject.damageAmount += 11;
+              newCombatObject.amount += 11;
               newCombatObject.bonusThreat += 20;
               const oldRage = character.rage.rage();
               const rageCost = 15;
@@ -182,28 +182,39 @@ export default class Combat {
       // update threat table
       character.threat.updateTargetThreatTable(target, newCombatObject);
       // take dmg according to the final combat object
-      character.combat.processDamageFromCombatObject(target, newCombatObject);
+      character.combat.updateAmount(target, newCombatObject);
     }
 
     /**
-     * processDamageFromCombatObject
+     * updateAmount - increment or decrement amount on
+     * combat object
      *
      * @param  {Character} character
      * @param  {object} combatObject
      * @returns {void}
      */
-    this.processDamageFromCombatObject = function(target = {}, combatObject = {} ) {
-      const damage = combatObject.damageAmount;
-      const oldHp = target.stat.hp();
-      const maxHp = target.stat.maxHp();
-      if (oldHp - damage < 0) {
-        // target died
-        target.stat.setHp(0);
-        character.target.set.currentTarget(undefined);
-      } else if (oldHp - damage > maxHp) {
-        target.stat.setHp(maxHp);
+    this.updateAmount = function(target = {}, combatObject = {} ) {
+      const amount = combatObject.amount;
+      if (combatObject.type === 'drink') {
+        const oldMana = target.mana.mana();
+        const maxMana = target.mana.maxMana();
+        if (oldMana - amount > maxMana) {
+          target.mana.setMana(maxMana);
+        } else {
+          target.mana.setMana(oldMana - amount);
+        }
       } else {
-        target.stat.setHp(oldHp - damage);
+        const oldHp = target.stat.hp();
+        const maxHp = target.stat.maxHp();
+        if (oldHp - amount < 0) {
+          // target died
+          target.stat.setHp(0);
+          character.target.setCurrentTarget(undefined);
+        } else if (oldHp - amount > maxHp) {
+          target.stat.setHp(maxHp);
+        } else {
+          target.stat.setHp(oldHp - amount);
+        }
       }
     }
 
@@ -214,7 +225,7 @@ export default class Combat {
      * @param  {string} status e.g. 'hit', 'miss', 'crit'
      * @param  {string} type e.g. 'melee', 'ranged'
      * @param  {string} range e.g. 'melee', 'ranged'
-     * @param  {number} damageAmount
+     * @param  {number} amount
      * @param  {number} mitigationAmount
      * @param  {string} hand
      * @param  {number} time
@@ -228,7 +239,7 @@ export default class Combat {
       type = '',
       range = '',
       damageType = '',
-      damageAmount = 0,
+      amount = 0,
       hand = ''
     ) {
       // destructure
@@ -239,55 +250,55 @@ export default class Combat {
         type: type, // physical, spell, dot, heal
         range: range,
         damageType: damageType, // physical, frost, holy
-        damageAmount: damageAmount,
+        amount: amount,
         bonusThreat: 0,
         mitigationAmount: 0,
         hand: hand,
         time: Date.now()  // add time from Phaser?
       }
-      const mitigatedByArmor = damageAmount * character.stat.armorMitigationPercent(target);
+      const mitigatedByArmor = amount * character.stat.armorMitigationPercent(target);
       const blockValue = target.stat.baseBlockV();
       switch(status) {
         case 'miss':
           result.status = 'miss';
-          result.damageAmount = 0;
-          result.mitigationAmount = damageAmount;
+          result.amount = 0;
+          result.mitigationAmount = amount;
         return result;
         case 'dodge':
           result.status = 'dodge';
-          result.damageAmount = 0;
-          result.mitigationAmount = damageAmount;
+          result.amount = 0;
+          result.mitigationAmount = amount;
         return result;
         case 'parry':
           result.status = 'parry';
-          result.damageAmount = 0;
-          result.mitigationAmount = damageAmount;
+          result.amount = 0;
+          result.mitigationAmount = amount;
         return result;
         case 'glancing':
           result.status = 'glancing';
-          result.mitigationAmount = damageAmount * .3;
-          result.damageAmount = damageAmount * .7;
+          result.mitigationAmount = amount * .3;
+          result.amount = amount * .7;
         return result;
         case 'blocked':
           result.status = 'blocked';
           result.mitigationAmount = blockValue; // get block from stats/items/talents as well!
-          result.damageAmount = damageAmount - blockValue;
+          result.amount = amount - blockValue;
         return result;
         case 'crit':
           result.status = 'crit';
           if (result.type === 'wand') {
-            result.damageAmount = (damageAmount * 2);
+            result.amount = (amount * 2);
           } else {
-            result.damageAmount = (damageAmount * 2) - mitigatedByArmor;
+            result.amount = (amount * 2) - mitigatedByArmor;
             result.mitigationAmount = mitigatedByArmor;
           }
         return result;
         case 'hit':
           result.status = 'hit';
           if (result.type === 'wand') {
-            result.damageAmount = damageAmount;
+            result.amount = amount;
           } else {
-            result.damageAmount = damageAmount - mitigatedByArmor;
+            result.amount = amount - mitigatedByArmor;
             result.mitigationAmount = mitigatedByArmor;
           }
         return result;
@@ -324,7 +335,7 @@ export default class Combat {
         const threatTable = enemy.threat.getThreatTable();
         // search threat table for mention of self
         threatTable.forEach(entry => {
-          if (entry.name === myName) result = true;
+          if (entry.character.getName() === entry.character.getName()) result = true;
         })
       })
       // if not on any, return false

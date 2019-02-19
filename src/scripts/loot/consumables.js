@@ -35,4 +35,28 @@ const consumables = [
     levelRequirement: 5,
     action: 'drink'
   },
+  {
+    name: 'Conjured Water',
+    ilvl: 1,
+    cost: undefined,
+    sellPrice: undefined,
+    type: 'consumable',
+    quantity: 2,
+    maxStack: 20,
+    icon: 'inv_drink_07',
+    levelRequirement: 5,
+    action: 'drink'
+  },
+  {
+    name: 'Conjured Food',
+    ilvl: 1,
+    cost: undefined,
+    sellPrice: undefined,
+    type: 'consumable',
+    quantity: 2,
+    maxStack: 20,
+    icon: 'inv_food_07',
+    levelRequirement: 5,
+    action: 'eat'
+  },
 ]

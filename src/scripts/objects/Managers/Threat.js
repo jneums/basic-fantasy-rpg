@@ -1,6 +1,6 @@
 export default class Threat {
   constructor(character) {
-    // [{ name: 'charlie', threat: 120 }, { name: 'kobold', threat: 20 }]
+    // [{ character: {}, threat: 120 }, { character: {}, threat: 20 }]
     let threatTable = [];
 
     /**
@@ -23,6 +23,22 @@ export default class Threat {
     }
 
     /**
+     * highestThreat - sort threat table and
+     * return character reference with the highest
+     * threat
+     *
+     * @returns {Character}
+     */
+    this.highestThreat = function() {
+      if (threatTable.length) {
+        // return first entry in sorted threatTable
+        return threatTable.sort((a, b) => {
+          b.threat - a.threat;
+        })[0].character;
+      }
+    }
+
+    /**
      * updateTargetThreatTable
      *
      * @param  {Character} target 's table to update
@@ -30,17 +46,13 @@ export default class Threat {
      * @returns {void}
      */
     this.updateTargetThreatTable = function(target = {}, combatObject = {}) {
-
-      // scan my table for enemy entry.
-      const threat = combatObject.damageAmount + combatObject.bonusThreat;
+      const threat = combatObject.amount + combatObject.bonusThreat;
       const oldTable = target.threat.getThreatTable()
-      const myName = character.getName();
 
-      // get previous threat
-      const oldEntry = oldTable.filter(entry => entry.name === myName)[0];
-      const newTable = oldTable.filter(entry => entry.name !== myName);
+      const oldEntry = oldTable.filter(entry => entry.character.getName() === character.getName())[0];
+      const newTable = oldTable.filter(entry => entry.character.getName() !== character.getName());
 
-      let newEntry = { name: myName, threat: threat };
+      let newEntry = { character: character, threat: threat };
       if (oldEntry) {
         newEntry.threat += oldEntry.threat;
       }

@@ -15,16 +15,17 @@ export default class Warrior extends Character {
     super(scene)
     // warrior specific abilities
     this.ability = new WarriorAbilities(this);
+    this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
 
     // config keymap for warrior abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.charge);
     this.keyMap.setThree(this.ability.rend);
     this.keyMap.setFour(this.ability.heroicStrike);
-    this.keyMap.setFive(this.combat.setAutoAttack);
-    this.keyMap.setSix(this.ability.battleShout);
-    this.keyMap.setSeven(this.ability.thunderClap);
-    this.keyMap.setEight(this.ability.hamstring);
+    this.keyMap.setFive(this.ability.battleShout);
+    this.keyMap.setSix(this.ability.thunderClap);
+    this.keyMap.setSeven(this.ability.hamstring);
+    this.keyMap.setEight('');
 
     // faction
     this.setTeam(name);

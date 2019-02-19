@@ -1,14 +1,16 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
+import { getConsumableByName } from '../../../loot/consumables';
 
 export default class MageAbilities {
   constructor(character) {
     let abilities = ['shoot'];
 
     /**
-     * shoot - attack with an equipped wand
+     * Shoot - attack with an equipped wand
      *
-     * requires: wand
-     * cast time: .5 second
+     * level: 1
+     *
+     * requires: level 1, wand
      *
      * @returns {void}
      */
@@ -30,7 +32,7 @@ export default class MageAbilities {
         character.movement.stop();
         character.timer.resetSwingTimer('ranged');
         // get weapon dmg roll
-        const damageAmount = Phaser.Math.Between(wand.damage.min, wand.damage.max);
+        const amount = Phaser.Math.Between(wand.damage.min, wand.damage.max);
         // build spell combat object
         const attackStatus = spellHitTable(character, target);
         // process combat object
@@ -40,46 +42,154 @@ export default class MageAbilities {
           wand,
           'ranged',
           wand.type,
-          damageAmount
+          amount
         );
         character.combat.processCombatObject(target, combatObject);
-        return combatObject;
       } return console.log("I'll have to get closer")
     }
 
     /**
-     * shootAutoAttack - wrapper for shoot attack.
-     * checks ranged swing timer,
+     * Arcane Intellect -
      *
-     * @param  {Character} target
+     * level: 1
+     *
+     * requires: level 1
+     *
      * @returns {void}
      */
-    this.shootAutoAttack = function(target = {}) {
-      if (!target.combat.isDead()) {
-
+    this.arcaneIntellect = function() {
+      const target = character.target.currentTarget();
+      const manaCost = 60;
+      const range = 300;
+      // create a buff object.
+      // range check
+      if (!character.target.rangeCheck(target, range)) return console.log('I have to get closer')
+      const buff = {
+        name: 'arcaneIntellect',
+        duration: 1800 * 60,
+        statObject: {
+          intellect: 2
+        }
+      }
+      // is target friendly:
+      if (target.team() === character.team()) {
+        // increases the target's Intellect by 2 for 30 min.
+        if (character.mana.spendMana(manaCost)) {
+          if (target.buffs.has('arcaneIntellect'))
+            target.buffs.replace(buff);
+          else
+            target.buffs.add(buff);
+        }
       }
     }
 
-    this.arcaneIntellect = function() {
-      // ncreases the target's Intellect by 2 for 30 min.
-      // requires leve 1
-    }
-
+    /**
+     * Conjure Water - Conjures 2 bottle of water, providing
+     * the mage and his allies with something to drink.
+     *
+     * level: 1
+     *
+     * requires: level 4
+     *
+     * @returns {void}
+     */
     this.conjureWater = function() {
-      // [Conjure Water]	4	1Silver	Conjures 2 bottles of water, providing the mage and his allies with something to drink.
-      // Conjured items disappear if logged out for more than 15 minutes.
-      // requires level 4
+      character.timer.setCastTimer(0);
+      const castTime = 3 * 60; //seconds
+      const manaCost = 60;
+      if (character.mana.mana() - manaCost > 0) {
+        const cast = {
+          name: 'Conjure Water',
+          castTime,
+          cast: () => {
+            character.mana.spendMana(manaCost);
+            character.inventory.add(getConsumableByName("Conjured Water"))
+          }
+        }
+        character.timer.setSpell(cast);
+      }
     }
 
+    /**
+     * Conjure Food - Conjures 2 bottle of food, providing
+     * the mage and his allies with something to eat.
+     *
+     * level: 1
+     *
+     * requires: level 4
+     *
+     * @returns {void}
+     */
     this.conjureFood = function() {
-      // Conjures 2 muffins, providing the mage and his allies with something to eat.
-      // Conjured items disappear if logged out for more than 15 minutes.
-      // requires level 6
+      const castTime = 3 * 60; //seconds * frames
+      const manaCost = 60;
+      if (character.mana.mana() - manaCost > 0) {
+        const cast = {
+          name: 'Conjure Food',
+          castTime,
+          cast: () => {
+            character.mana.spendMana(manaCost);
+            character.inventory.add(getConsumableByName("Conjured Food"))
+          }
+        }
+        character.timer.setSpell(cast);
+      }
     }
 
+    /**
+     * Arcane Missiles -
+     *
+     * level: 1
+     *
+     * requires: level 8
+     *
+     * @returns {void}
+     */
     this.arcaneMissiles = function() {
-      // Launches Arcane Missiles at the enemy, causing 24 Arcane damage each second for 3 sec.
-      // requires level 8
+      // check for cooldown: fix timer to work with spells
+      // const canCast = character.timer.checkAbilityTimer('arcaneMissiles');
+      // if (!canCast) return;
+
+      // check if there is a target
+      const target = character.target.currentTarget();
+      if (!target) return console.log("I need a target");
+
+      // check that target isnt friendly
+      if (target.team() === character.team()) return console.log("I cant do that")
+
+      // check if target is in range
+      const range = 300;
+      const inRange = character.target.rangeCheck(target, range);
+      if (!inRange) return console.log("I need to get closer");
+
+      // check mana
+      const manaCost = 85;
+      const paidMana = character.mana.spendMana(manaCost);
+      if (!paidMana) return;
+
+      // channeled, .132 is spell coefficient
+      const dmgTick = .132 * character.stat.spellPower();
+      // create buff item:
+      const combatObject = {
+        attacker: character.getName(),
+        target: target.getName(),
+        status: 'hit',
+        type: 'magic',
+        range: 'ranged',
+        damageType: 'arcane',
+        amount: dmgTick,
+        bonusThreat: 0,
+        mitigationAmount: 0,
+        hand: 'main',
+        time: Date.now()
+      }
+      target.buffs.add({
+        name: 'arcaneMissiles',
+        duration: 300,
+        interval: 100,
+        combatObject,
+        attacker: character
+      });
     }
 
     this.polymorph = function() {

@@ -15,16 +15,16 @@ export default class Mage extends Character {
     super(scene);
     // mage specific abilities
     this.ability = new MageAbilities(this);
-
+    this.keys = ['auto attack', 'wand', 'arcane intellect', 'conjure water', 'conjure food', 'arcane missiles']
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.shoot);
-    // this.keyMap.setThree(this.ability.rend);
-    // this.keyMap.setFour(this.ability.heroicStrike);
-    // this.keyMap.setFive(this.combat.setAutoAttack);
-    // this.keyMap.setSix(this.ability.battleShout);
-    // this.keyMap.setSeven(this.ability.thunderClap);
-    // this.keyMap.setEight(this.ability.hamstring);
+    this.keyMap.setThree(this.ability.arcaneIntellect);
+    this.keyMap.setFour(this.ability.conjureWater);
+    this.keyMap.setFive(this.ability.conjureFood);
+    this.keyMap.setSix(this.ability.arcaneMissiles);
+    // this.keyMap.setSeven();
+    // this.keyMap.setEight();
 
     // set faction
     this.setTeam(name);
@@ -60,12 +60,15 @@ export default class Mage extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const mageHp = 31;
+    const mageBaseHp = 31;
+    this.stat.setBaseHp(mageBaseHp);
     const startingHp = this.stat.baseStamina() * 10;
-    this.stat.setHp(startingHp + mageHp);
+    this.stat.setHp(startingHp + mageBaseHp);
 
     // mana system
     this.mana = new ManaMechanic(this);
+    const maxMana = this.mana.maxMana();
+    this.mana.setMana(maxMana);
 
     // ai system
     this.AI = mageAI();

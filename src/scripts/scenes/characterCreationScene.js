@@ -19,8 +19,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
   create() {
     // group to hold all characters
     this.characters = this.add.group();
-    // player controlled character
-    this.player = new Mage(this, 'player');
+    // player controlled character, warrior or mage are playable so far
+    this.player = new Warrior(this, 'player');
     this.characters.add(this.player);
     // needs some health restoring food for testing
     this.player.inventory.add(getConsumableByName('Tough Jerky'));
@@ -62,7 +62,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.enemySwingTimer = this.add.text(260, 90, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
     this.enemyBuffs = this.add.text(260, 110, '', { fontFamily: 'Arial', fontSize: 16, color: '#0000ff' });
     this.keyMapText = this.add.text(10, 680, '', { fontFamily: 'Arial', fontSize: 26, color: '#000000' });
-    this.keyMapText.setText("Keys: 1: Charge, 2: Rend, 3: Heroic Strke, 4: Auto On/Off, 5: Battle Shout, 6: Thunder Clap, 7: Hamstring")
+    const keysText = this.player.keys.map((key, i) => i + 1 + ': ' + key).join(" | ")
+    this.keyMapText.setText(keysText)
 
   }
 

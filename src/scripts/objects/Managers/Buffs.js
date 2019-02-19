@@ -105,8 +105,11 @@ export default class Buffs {
           }
           // if buff has a combat object
           if (buff.combatObject) {
-            const attacker = buff.attacker;
-            attacker.combat.processCombatObject(character, buff.combatObject);
+            // check for interval, if ready then fire
+            if (buff.duration % buff.interval === 0) {
+              const attacker = buff.attacker;
+              attacker.combat.processCombatObject(character, buff.combatObject);
+            }
           }
         })
       }
