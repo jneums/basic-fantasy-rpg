@@ -11,12 +11,15 @@ import updateDeadCharacters from '../updates/updateDeadCharacters';
 import { getConsumableByName } from '../loot/consumables';
 import { getWeaponByName } from '../loot/weapons';
 
+
 export default class CharacterCreationScene extends Phaser.Scene {
   constructor() {
     super({ key: 'CharacterCreationScene' })
   }
 
   create() {
+    // create socket.io object:
+    this.socket = io();
     // group to hold all characters
     this.characters = this.add.group();
     // player controlled character, warrior or mage are playable so far

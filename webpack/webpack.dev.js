@@ -6,7 +6,13 @@ const dev = {
   devtool: 'inline-source-map',
   devServer: {
     open: true,
-    noInfo: true
+    noInfo: true,
+    proxy: {
+      '/socket.io': {
+          target: 'http://localhost:8081',
+          ws: true
+      }
+    },
   }
 }
 
