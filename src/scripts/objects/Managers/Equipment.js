@@ -1,5 +1,18 @@
+
+/**
+ * Equipment Manager - Tracks and updates equipment
+ * currently being worn by the character.
+ * Also interacts heavily with Stats Manager to provide
+ * relevant stat augmentation caused by equipped items.
+ *
+ *
+ * work on having object placeholders, if they are not used the
+ * methods for reducing equipped into stat bonus's will fail.
+ * 
+ */
 export default class Equipment {
   constructor(character) {
+    // currently being used by the character:
     let equipped = {
       mainHand: {},
       offHand: {},
@@ -20,6 +33,14 @@ export default class Equipment {
       trinket2: {}
     }
 
+    /**
+     * equip - take an item from character inventory
+     * and put it into slot indicated on item's object.
+     *
+     *
+     * @param  {object} gear
+     * @returns {void}
+     */
     this.equip = function(gear = {}) {
       // add to specific slot
       const slot = gear.slot;

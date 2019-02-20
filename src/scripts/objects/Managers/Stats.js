@@ -1,31 +1,51 @@
+
+/**
+ * Stat Manager - Handles all of the stats
+ * relevant for a RPG Character. The stat manager
+ * provides an API the other managers use when
+ * deciding which values to use.
+ *
+ * the constructor can be used with a 'race' object, since each
+ * race has slightly different starting stats.
+ */
 export default class Stat {
   constructor(character = {}, {strength, agility, intellect, stamina, spirit}) {
+    // health points. When they reach 0, character is dead.
     let hp = 0;
+    // base health points. changes based on race and character class.
+    // used to determine hp pool, only changes at creation and level ups.
     let baseHp = 0;
+    // attack power determines how hard a character hits.
     let attackPower = 0;
     let crit = 0;
     let hitChance = 0;
+    // determines how hard spells hit.
     let spellPower = 100;
+    // determines how hard healing spells heal.
     let healingPower = 100;
     let spellCrit = 0;
     let spellHit = 0;
     let manaPer5 = 0;
     let defenseRating = 5;
+    // mitigation for physical attacks.
     let armorRating = 0;
+    // what percent of physical attacks (except not from behind) will be blocked.
     let blockRating = 0;
+    // how much the block will actually mitigate when a block occurs.
     let blockValue = 0;
     let dodgeRating = 0;
     let parryRating = 0;
 
     // combat stats
     // these are set from constructor when
-    // classs is chosen
+    // class is chosen
     let agilityToDodgeRatio = 0;
     let agilityToCritRatio = 0;
     let strAPR = 0;
     let agilityToAttackPowerRatio = 0;
 
-
+    // place holder methods, will be replaced when
+    // talents are races are implemented.
     this.statFromTalents = function() {
       return 0;
     }
@@ -36,7 +56,8 @@ export default class Stat {
 
 
     /**
-     * maxHp - maximum allowed hitpoints
+     * maxHp - maximum allowed hitpoints, referenced when
+     * performing health gains so as not to overflow.
      *
      * @returns {number}
      */
@@ -45,10 +66,22 @@ export default class Stat {
       return baseHp + hpFromStam;
     }
 
+    /**
+     * baseHp - used to set overall hp:
+     * (baseHp + all stamina bonus * 10)
+     *
+     * @returns {number} hitpoints
+     */
     this.baseHp = function() {
       return baseHp;
     }
 
+    /**
+     * setBaseHp
+     *
+     * @param  {number} hp
+     * @returns {void}
+     */
     this.setBaseHp = function(hp) {
       baseHp = hp;
     }
@@ -56,32 +89,30 @@ export default class Stat {
     /**
      * APFromStr - combat helper
      * attack power per point of strength
+     * each class has a different ratio.
      *
      * @param  {Character} character attacker
      * @returns {number} class specific
      */
     this.APFromStr = function() {
-      const strength = this.baseStrength();
-      // add str bonus from talents, items, buffs
-      const strFromEquipped = character.equipment.statBonus('strength');
-      const totalStr = strength + strFromEquipped;
-      const strToAPR
-        = this.strAPR();
-      const apFromStr = (strToAPR) ? totalStr / strToAPR : 0;
+      // get total strength (base + equipped + talents)
+      const totalStr = this.strength()
+      // if ratio is not zero (otherwise will throw NaN, cant divide by zero)
+      const apFromStr = (this.strAPR()) ? totalStr / this.strAPR() : 0;
       return apFromStr;
     }
 
     /**
      * APFromAgi - combat helper
      * attack power per point of agility
+     * each class has different ratio.
      *
      * @returns {number} class specific
      */
     this.APFromAgi = function() {
-      const totalAgi = character.stat.agility();
-      const agiToAPR
-        = this.agiAPR();
-      const apFromAgi = (agiToAPR) ? totalAgi / agiToAPR : 0;
+      const totalAgi = this.agility();
+      // if ratio is not zero (otherwise will throw NaN, cant divide by zero)
+      const apFromAgi = (this.agiAPR()) ? totalAgi / this.agiAPR() : 0;
       return apFromAgi;
     }
 
@@ -128,7 +159,7 @@ export default class Stat {
     this.totalArmor = function() {
       const armorFromBuffs = character.buffs.statBonus('armor');
       // everyone gets 2 armor per agi
-      const armorFromAgility = character.stat.agility() * 2;
+      const armorFromAgility = this.agility() * 2;
       const armorFromItems = character.equipment.statBonus('armor');
       return armorFromBuffs + armorFromAgility + armorFromItems;
     }
@@ -432,7 +463,7 @@ export default class Stat {
      */
     this.dodge = function() {
       const baseDodge = dodgeRating;
-      const totalAgi = character.stat.agility();
+      const totalAgi = this.agility();
       const agilityToDodgeRatio = this.agiDodgeRatio();
       const targetDodgeFromAgi = (totalAgi / agilityToDodgeRatio) * .01
       const targetRaceBonus = this.statFromRace();
@@ -749,8 +780,8 @@ export default class Stat {
     /**
      * setAgilityToAttackPowerRatio
      *
-     * @param  {number} newAgilityToAttackPowerRatio description
-     * @returns {void}                               description
+     * @param  {number} newAgilityToAttackPowerRatio 
+     * @returns {void}
      */
     this.setAgilityToAttackPowerRatio = function(newAgilityToAttackPowerRatio) {
       agilityToAttackPowerRatio = newAgilityToAttackPowerRatio;

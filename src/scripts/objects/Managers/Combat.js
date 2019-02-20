@@ -22,12 +22,19 @@ export default class Combat {
      * @returns {object} damage information
      */
     this.meleeAttack = function(target = {}, hand = '', type = '') {
+      // reset timer right away:
       character.timer.resetSwingTimer(hand);
+      // get the attack status roll, e.g. 'hit', 'miss', 'crit'...
       const attackStatus = meleeAutoAttackHitTable(character, target, hand);
+      // get the range for the random roll, e.g. { min: 2, max: 5 }
       const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
+      // random number between the above range
       let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
+      // offhand attacks hit for half as much:
       if (hand === 'off') weaponDmg /= 2;
+      // formula for auto attack damage:
       const amount = weaponDmg + character.stat.APBonus(hand);
+      // build combatObject, used to describe the outcome of the swing
       const combatObject = this.buildCombatObject(
         target,
         attackStatus,
@@ -37,7 +44,9 @@ export default class Combat {
         amount,
         hand
       );
+      // send combatObject to be used:
       this.processCombatObject(target, combatObject);
+      // return for debugging
       return combatObject;
     }
 
@@ -119,17 +128,21 @@ export default class Combat {
         case 'warrior':
           // add heroic strike onto next melee hit
           const onNextAttack = character.combat.getOnNextAttack();
+          // on each auto attack:
           if (newCombatObject.type === 'autoAttack') {
+            // except if the next auto attack has a heroic strike
             if (onNextAttack === 'heroicStrike') {
-              newCombatObject.amount += 11;
-              newCombatObject.bonusThreat += 20;
-              const oldRage = character.rage.rage();
-              const rageCost = 15;
-              const newRage = oldRage - rageCost;
-              character.rage.setRage(newRage)
-              const newOnNextAttack = '';
-              character.combat.setOnNextAttack(newOnNextAttack);
-              return newCombatObject;
+              // spend rage, if there is not enough, dont do anything
+              if (character.rage.spendRage(15)) {
+                // heroic strike deals increased threat, and 11
+                // extra damage:
+                newCombatObject.amount += 11;
+                newCombatObject.bonusThreat += 20;
+                // reset, so nextAttack doenst trigger
+                const newOnNextAttack = '';
+                character.combat.setOnNextAttack(newOnNextAttack);
+                return newCombatObject;
+              }
             }
             // generate rage on auto attacks, not on specials
             character.rage.processRage(newCombatObject, 'attacker');
@@ -160,7 +173,7 @@ export default class Combat {
     }
 
     /**
-     * processCombatObject - take dmg,to log, add rage, etc.
+     * processCombatObject - take dmg,to log, add rage, threat table, etc.
      *
      * @param  {Character} target
      * @param  {object} combatObject
@@ -186,8 +199,8 @@ export default class Combat {
     }
 
     /**
-     * updateAmount - increment or decrement amount on
-     * combat object
+     * updateAmount - modify health and mana for the amount the
+     * combat object states
      *
      * @param  {Character} character
      * @param  {object} combatObject
@@ -195,9 +208,11 @@ export default class Combat {
      */
     this.updateAmount = function(target = {}, combatObject = {} ) {
       const amount = combatObject.amount;
-      if (combatObject.type === 'drink') {
+      // dont try and restore mana if character doesnt use it
+      if (combatObject.type === 'drink' && target.mana) {
         const oldMana = target.mana.mana();
         const maxMana = target.mana.maxMana();
+        // make sure there are no overflows
         if (oldMana - amount > maxMana) {
           target.mana.setMana(maxMana);
         } else {
@@ -242,7 +257,8 @@ export default class Combat {
       amount = 0,
       hand = ''
     ) {
-      // destructure
+      // destructure, find a better way to organize this method,
+      // split it up into smaller chuncks.
       let result = {
         attacker: character.getName(),
         target: target.getName(),
@@ -306,7 +322,8 @@ export default class Combat {
     }
 
     /**
-     * pushCombatObjectToLog
+     * pushCombatObjectToLog - add to the combat log of
+     * the character calling
      *
      * @param  {Character} character
      * @param  {object} combatObject
@@ -321,7 +338,9 @@ export default class Combat {
     }
 
     /**
-    * inCombat - flag
+    * inCombat - based on threat tables.
+    * if threat tables are not working, this will
+    * not work either.
     *
     * @returns {bool} true = in combat
     */
@@ -332,7 +351,7 @@ export default class Combat {
       const enemies = character.target.scanForEnemies(500);
       enemies.forEach(enemy => {
         // get threat table
-        const threatTable = enemy.threat.getThreatTable();
+        const threatTable = enemy.threat.threatTable();
         // search threat table for mention of self
         threatTable.forEach(entry => {
           if (entry.character.getName() === entry.character.getName()) result = true;

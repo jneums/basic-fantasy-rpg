@@ -1,15 +1,23 @@
+
+/**
+ * Consumables Manager - In charge of providing
+ * each character with the eat and drink abilities.
+ * Also creates the buff and combat objects which
+ * get consumed to provide the specific changes to
+ * the characters state.
+ */
 export default class Consumables {
   constructor(character) {
-    let abilities = ['eat', 'drink'];
 
-    this.abilities = function() {
-      return abilities;
-    }
-
-    this.setAbilities = function(newAbilities) {
-      abilities = newAbilities;
-    }
-
+    /**
+     * eat - consume food and gain hit points
+     * during the process. Must be stationary,
+     * and heal increments in intervals instead of
+     * a steady stream.
+     *
+     * @param  {number} foodLevel determines how much hp to gain
+     * @returns {void}
+     */
     this.eat = function(foodLevel = 1) {
       // channeled, so movement will break it
       // out of combat only:
@@ -17,11 +25,11 @@ export default class Consumables {
       // hp gained depends on the foodLevel
       const healing = 19;
       // create buff
-      // buff manager needs to know about channeling
+      // buff manager knows about channeling: set flag to true
       const buff = {
         name: 'eating',
-        duration: 30 * 60,
-        interval: 300,
+        duration: 30 * 60, // 30 secs * 60 fps update time
+        interval: 180,
         channel: true,
         combatObject: {
           attacker: character.getName(),
@@ -38,12 +46,21 @@ export default class Consumables {
         },
         attacker: character
       }
+      // check if already has, if so replace it instead
+      // of adding another one
       if (character.buffs.has('eating'))
         character.buffs.replace(buff);
       else
         character.buffs.add(buff);
     }
 
+    /**
+     * drink - consume water in exchange for
+     * mana regeneration. Must be stationary.
+     *
+     * @param  {number} waterLevel, determines amount of regen
+     * @returns {void}
+     */
     this.drink = function(waterLevel = 1) {
       // channeled, so movement will break it
       // out of combat only:
@@ -55,7 +72,7 @@ export default class Consumables {
       const buff = {
         name: 'drinking',
         duration: 30 * 60,
-        interval: 300,
+        interval: 180,
         channel: true,
         combatObject: {
           attacker: character.getName(),
@@ -72,6 +89,7 @@ export default class Consumables {
         },
         attacker: character
       }
+      // replace instead of adding duplicate:
       if (character.buffs.has('drinking'))
         character.buffs.replace(buff);
       else

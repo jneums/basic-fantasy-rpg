@@ -1,8 +1,15 @@
 export default class RageMechanic {
   constructor(character) {
+    // pool from 0 - 100:
     let rage = 0;
 
 
+    /**
+     * spendRage - use to pay for rage abilities
+     *
+     * @param  {number} cost how much rage
+     * @returns {bool} was succesful
+     */
     this.spendRage = function(cost = 0) {
       // calculate if enough rage
       if (this.rage() - cost < 0) {
@@ -43,13 +50,15 @@ export default class RageMechanic {
      * @returns {void}
      */
     this.processRage = function(combatObject = {}, role = '') {
+      // dont process rage from eating food
+      if (combatObject.type === 'eat') return;
       let rageGain = 0;
       const oldRage = this.rage();
+      // equation to determine how much rage is gained
       const level = character.lvl.getLevel();
       const rageConversion = 0.0091107836 * (level * level) + (3.225598133 * level) + 4.2652911;
       const dmgAmt = combatObject.amount;
-      const hand = combatObject.hand;
-      const weaponSpeed = (hand === 'main')
+      const weaponSpeed = (combatObject.hand === 'main')
         ? character.equipment.getWeaponSpeed('main')
         : character.equipment.getWeaponSpeed('off');
       const hitFactor = calculateHitFactor(combatObject);
@@ -82,6 +91,7 @@ export default class RageMechanic {
 /**
  * calculateHitFactor - used for rage calculation
  *
+ * @private
  * @param  {object} combatObject info about attack
  * @returns {number} used in rage formula
  */

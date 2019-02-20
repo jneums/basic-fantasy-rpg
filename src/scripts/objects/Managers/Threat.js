@@ -4,11 +4,11 @@ export default class Threat {
     let threatTable = [];
 
     /**
-     * getThreatTable
+     * threatTable
      *
      * @returns {array}
      */
-    this.getThreatTable = function() {
+    this.threatTable = function() {
       return threatTable;
     }
 
@@ -47,7 +47,7 @@ export default class Threat {
      */
     this.updateTargetThreatTable = function(target = {}, combatObject = {}) {
       const threat = combatObject.amount + combatObject.bonusThreat;
-      const oldTable = target.threat.getThreatTable()
+      const oldTable = target.threat.threatTable()
 
       const oldEntry = oldTable.filter(entry => entry.character.getName() === character.getName())[0];
       const newTable = oldTable.filter(entry => entry.character.getName() !== character.getName());

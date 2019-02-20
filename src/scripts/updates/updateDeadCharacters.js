@@ -2,6 +2,8 @@ export default function updateDeadCharacters(scene = {}) {
   scene.characters.children.entries.forEach(child => {
     if (child.combat.isDead()) {
       child.setVelocity(0, 0);
+      // reward xp: everyone on the threat table wins!
+      child.threat.threatTable().forEach(entry => entry.character.lvl.gainXP(100))
       // dump threat table
       child.threat.setThreatTable([]);
       // dump buffs

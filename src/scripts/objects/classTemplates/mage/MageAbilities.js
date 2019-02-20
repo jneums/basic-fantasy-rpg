@@ -45,7 +45,7 @@ export default class MageAbilities {
           amount
         );
         character.combat.processCombatObject(target, combatObject);
-      } return console.log("I'll have to get closer")
+      } else return console.log(target, "I'll have to get closer")
     }
 
     /**
@@ -187,6 +187,7 @@ export default class MageAbilities {
         name: 'arcaneMissiles',
         duration: 300,
         interval: 100,
+        channel: true,
         combatObject,
         attacker: character
       });

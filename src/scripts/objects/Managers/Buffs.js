@@ -1,3 +1,10 @@
+
+/**
+ * Buff Manager: collects and updates temporary
+ * changes to characters stats. sends combatObjects
+ * to the Combat Manager, and provides the Stat manager
+ * with stat bonuses provided from buffs.
+ */
 export default class Buffs {
   constructor(character) {
     // array of buffs/debuffs
@@ -66,6 +73,8 @@ export default class Buffs {
      * @returns {number} sum of given stat
      */
     this.statBonus = function(stat = '') {
+      // keep this from returning 'undefined', will start throwing
+      // errors in all the stat related functions (pretty much all of the functions)
       const activeBuffs = this.getBuffs();
       const totalStat = activeBuffs.filter(buff => buff.statObject)
         .reduce((sum, buff) => {
@@ -85,6 +94,7 @@ export default class Buffs {
     this.update = function() {
       const oldBuffs = this.getBuffs();
       if (oldBuffs) {
+        // immutable way to update timers:
         const newBuffs = oldBuffs.filter(buff => buff.duration > 0)
           .map(buff => {
             const oldBuff = buff;
@@ -98,7 +108,8 @@ export default class Buffs {
         newBuffs.forEach(buff => {
           // if buff is channeled
           if (buff.channel) {
-            // check for velocity, if so then kill buff
+            // check for velocity, if so then channeling has been broken,
+            // so kill buff
             if (character.body.velocity.x && character.body.velocity.y) {
               buff.duration = 0;
             }
@@ -106,6 +117,8 @@ export default class Buffs {
           // if buff has a combat object
           if (buff.combatObject) {
             // check for interval, if ready then fire
+            // use the interval for timing combatObject creation
+            // and execution throughout the duration of the buff
             if (buff.duration % buff.interval === 0) {
               const attacker = buff.attacker;
               attacker.combat.processCombatObject(character, buff.combatObject);

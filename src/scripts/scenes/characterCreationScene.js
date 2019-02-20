@@ -46,7 +46,7 @@ export default class CharacterCreationScene extends Phaser.Scene {
         },
         //args: [],
         callbackScope: this,
-        repeat: 4
+        repeat: -1
     });
 
     // ui stuff, used for debugging right now

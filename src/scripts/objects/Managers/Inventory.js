@@ -1,31 +1,51 @@
+
+/**
+ * Inventory Manager - Takes care of items that are looted,
+ * or taken off equipment manager. Also tracks money amount.
+ */
 export default class Inventory {
   constructor(character) {
+    // how many spaces in bag:
     let capacity = 12;
+    // how many copper pieces:
     let money = 0;
+    // inventory, holds ${capacity} elements:
     let inventory = [];
 
     /**
-     * use - varies, depending on type
+     * use - chooses the correct action based
+     * on what the item indicates.
+     * e.g. food items say 'eat' on them
      *
      * @param  {number} index
      * @returns {void}
      */
     this.use = function(index = 0) {
+      // if no item in that spot:
       if (!inventory[index]) return;
+      // otherwise:
       const item = inventory[index];
+      // if item is a 'consumable':
       if (item.type === 'consumable') {
+        // reduce quantity by one:
         --item.quantity;
+        // and perform the appropriate action:
+        // either eat or drink.
         if (item.action === 'eat') {
           character.consumables.eat();
         } else if (item.action === 'drink') {
           character.consumables.drink();
         }
+        // check and see if it was the last one,
+        // if so take the empty stack out of inventory.
         if (item.quantity === 0) {
           inventory.splice(index, 1);
         }
+        // if it is a quest item or crafting item, it cant be consumed or equipped:
       } else if (item.type === 'questItem' || item.type === 'crafting') {
         console.log("I can't use that");
       } else {
+        // if it gets to here, it must be an equippable item.
         character.equipment.equip(item);
         inventory.splice(index, 1);
       }
