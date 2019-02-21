@@ -1,7 +1,7 @@
 
 /**
  * Movement Manager - Sets movement speed and
- * target coordinates. 
+ * target coordinates.
  */
 export default class Movement {
   constructor(character, x, y) {

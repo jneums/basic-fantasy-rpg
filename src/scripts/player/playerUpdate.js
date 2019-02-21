@@ -7,6 +7,9 @@
  */
 export default function PlayerUpdate() {
   const update = function() {
+    if (this.body.velocity.x && this.body.velocity.y) {
+      this.scene.socket.emit('playerMovement', { x: this.x, y: this.y })
+    }
     moveToMoveTarget(this);
     standGuard(this);
   }

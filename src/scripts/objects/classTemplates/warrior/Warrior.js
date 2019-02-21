@@ -11,8 +11,8 @@ import KeyMap from '../../../player/KeyMap';
  *
  */
 export default class Warrior extends Character {
-  constructor(scene = {}, name = 'warrior') {
-    super(scene)
+  constructor(scene = {}, x = 0, y = 0, name = 'warrior') {
+    super(scene, x, y)
     // warrior specific abilities
     this.ability = new WarriorAbilities(this);
     this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
@@ -28,12 +28,11 @@ export default class Warrior extends Character {
     this.keyMap.setEight('');
 
     // faction
-    this.setTeam(name);
+    this.setTeam('alliance');
 
     // placement on the map
-    this.coords = getRandomCoordsOnCanvas(scene.scale.width, scene.scale.height);
-    this.setPosition(this.coords[0], this.coords[1])
-    this.movement.setMoveTargetCoords(this.coords)
+    this.setPosition(x, y);
+    this.movement.setMoveTargetCoords([x, y]);
 
     // name and class specific stats
     this.setName(name);
