@@ -4,6 +4,7 @@ import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
 import warriorAI from '../../../AI/warriorAI';
 import RageMechanic from './Rage';
+import RageBar from '../../Managers/RageBar';
 import WarriorAbilities from './WarriorAbilities';
 import KeyMap from '../../../player/KeyMap';
 
@@ -14,6 +15,7 @@ export default class Warrior extends Character {
   constructor(scene = {}, x = 0, y = 0, name = 'warrior') {
     super(scene, x, y)
     // warrior specific abilities
+    this.playerWeapon = scene.add.sprite(x, y, 'sword-walk');
     this.ability = new WarriorAbilities(this);
     this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
 
@@ -31,7 +33,6 @@ export default class Warrior extends Character {
     this.setTeam('alliance');
 
     // placement on the map
-    this.setPosition(x, y);
     this.movement.setMoveTargetCoords([x, y]);
 
     // name and class specific stats
@@ -62,18 +63,20 @@ export default class Warrior extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const warriorHp = 20;
-    const startingHp = this.stat.baseStamina() * 10;
-    this.stat.setHp(startingHp + warriorHp);
+    this.stat.setBaseHp(20);
+    const startingHp = (this.stat.baseStamina() * 10) + this.stat.baseHp();
+    this.stat.setHp(startingHp);
 
     // rage system
     this.rage = new RageMechanic(this);
+    this.rageBar = new RageBar(scene, x - 8, y - 12);
 
     // ai system
     this.AI = warriorAI();
 
     // class specific updates e.g. rage, mana, energy
     this.classUpdate = function() {
+
       // after 5 seconds start regen hp according to spirit
       if(!this.combat.inCombat()) this.rage.rageDecay();
     };

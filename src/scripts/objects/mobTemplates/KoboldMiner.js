@@ -10,12 +10,10 @@ import createLoot from '../../loot/createLoot';
  *
  */
 export default class KoboldMiner extends Character {
-  constructor(scene = {}, name = 'kobold-miner') {
-    super(scene)
+  constructor(scene = {}, x = 0, y = 0) {
+    super(scene, x, y)
     this.ability = new MobAbilities(this);
     this.setTeam('mob');
-    this.coords = getRandomCoordsOnCanvas(scene.scale.width, scene.scale.height);
-    this.setPosition(this.coords[0], this.coords[1])
     this.setName(name);
     this.setCharacterClass('mob');
     this.stat.setDodgeRating(0);
@@ -38,7 +36,38 @@ export default class KoboldMiner extends Character {
 
     this.AI = koboldMinerAI();
     this.classUpdate = function() {
+      if (this.stat.hp() > this.stat.maxHp() * .75) {
+        this.setTexture('kobold', 0);
+      } else if (this.stat.hp() > this.stat.maxHp() * .50) {
+        this.setTexture('kobold', 1);
+      } else if (this.stat.hp() > this.stat.maxHp() * .25) {
+        this.setTexture('kobold', 2);
+      } else if (this.stat.hp() >= 1) {
+        this.setTexture('kobold', 3);
+      }
+    }
 
+    this.die = function() {
+      {
+        const x = this.x + 2;
+        const y = this.y + 4;
+        this.setTexture('kobold', 4);
+        const sign = (this.flipX) ? -1 : 1;
+        scene.tweens.add({
+          targets: this,
+          x,
+          y,
+          scaleX: 1,
+          scaleY: 1,
+          angle: 90 * sign,
+          _ease: 'Sine.easeInOut',
+          ease: 'Power2',
+          duration: 500,
+          repeat: 0,
+          yoyo: false,
+          hold: 300,
+        });
+      }
     }
   }
 }

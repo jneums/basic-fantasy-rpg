@@ -11,85 +11,86 @@ import updateDeadCharacters from '../updates/updateDeadCharacters';
 import { getConsumableByName } from '../loot/consumables';
 import { getWeaponByName } from '../loot/weapons';
 
-function addPlayer(scene = {}, playerObject = {}) {
-  // player controlled character, warrior or mage are playable so far
-  scene.player = new Warrior(scene, playerObject.x, playerObject.y, playerObject.playerId);
-  scene.characters.add(scene.player);
 
-  // allow for listening to input
-  scene.player.AI = playerUpdate();
-  playerInput(scene.player);
 
-  const keysText = scene.player.keys.map((key, i) => i + 1 + ': ' + key).join(" | ")
-  scene.keyMapText.setText(keysText)
-}
-
-function addOtherPlayers(scene = {}, playerObject = {}) {
-  // player controlled character, warrior or mage are playable so far
-  const otherPlayer = new Warrior(scene, playerObject.x, playerObject.y, playerObject.playerId);
-  scene.characters.add(otherPlayer);
-}
 
 export default class CharacterCreationScene extends Phaser.Scene {
   constructor() {
     super({ key: 'CharacterCreationScene' })
   }
+  preload() {
 
+  }
   create() {
-    // create socket.io object:
-    this.socket = io();
+    this.anims.create({
+      key: 'player-walk',
+      frames: this.anims.generateFrameNumbers('player', {start: 0, end: 2}),
+      frameRate: 7,
+      yoyo: false,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'stab',
+      frames: this.anims.generateFrameNumbers('sword-stab', {frames: [4, 3, 2, 1, 0]}),
+      frameRate: 25,
+      yoyo: false,
+      repeat: 0,
+    })
+    this.anims.create({
+      key: 'sword-walk',
+      frames: this.anims.generateFrameNumbers('sword-walk', {frames: [0,1]}),
+      frameRate: 5,
+      yoyo: false,
+      repeat: -1,
+    })
+    this.anims.create({
+      key: 'small-red',
+      frames: this.anims.generateFrameNumbers('small-red', {frames: [0,1, 1, 0, 0, 0]}),
+      frameRate: 2,
+      yoyo: false,
+      repeat: -1,
+    })
+
+    const map = this.make.tilemap({ key: 'map' })
+    const floor = map.addTilesetImage('dungeon', 'v4')
+    const colliderLayer = map.createStaticLayer("colliders", floor, 0, 0)
+    const floorLayer = map.createStaticLayer("floor", floor, 0, 0)
+    const wallLayer = map.createStaticLayer("walls", floor, 0, 0)
+    const specials = map.createStaticLayer("specials", floor, 0, 0)
+    colliderLayer.setCollisionByProperty({ collides: true });
+    wallLayer.setCollisionByProperty({ collides: true });
+    specials.setCollisionByProperty({ collides: true });
     // group to hold all characters
     this.characters = this.add.group();
-    this.socket.on('currentPlayers', (players) => {
-      Object.keys(players).forEach((id) => {
-        if (players[id].playerId === this.socket.id) {
-          addPlayer(this, players[id]);
-        } else {
-          addOtherPlayers(this, players[id]);
-        }
-      })
-    })
-    
-    this.socket.on('newPlayer', (playerInfo) => {
-      addOtherPlayers(this, playerInfo);
-    })
+    this.physics.add.collider(this.characters, wallLayer);
+    this.physics.add.collider(this.characters, specials);
+    this.physics.add.collider(this.characters, colliderLayer);
+    this.physics.add.collider(this.characters, this.characters);
 
-    this.socket.on('playerMoved', (playerInfo) => {
-      this.characters.getChildren().forEach(child => {
-        if (playerInfo.playerId === child.getName()) {
-          child.setPosition(playerInfo.x, playerInfo.y);
-        }
-      })
+    map.getObjectLayer('spawns').objects.forEach(spawnPoint => {
+      let npc;
+      if (spawnPoint.type === 'kobold-miner') {
+        npc = new KoboldMiner(this, spawnPoint.x, spawnPoint.y);
+      }
+      npc.setTexture('characters', 161).setOrigin(.5).setSize(24, 16);
+      this.characters.add(npc);
     })
 
-    this.socket.on('disconnect', (playerId) => {
-      this.characters.getChildren().forEach((otherPlayer) => {
-        if (playerId === otherPlayer.getName()) {
-          otherPlayer.destroy();
-        }
-      })
-    })
+    this.player = new Warrior(this, 60, 110);
+    this.player.setTexture('player', 0).setOrigin(.5).setSize(24, 16)
+    this.player.inventory.add(getConsumableByName('Tough Jerky'))
+    this.player.inventory.add(getConsumableByName('Tough Jerky'))
+    this.player.inventory.add(getConsumableByName('Tough Jerky'))
+    this.player.AI = playerUpdate();
+    playerInput(this.player);
 
-
-    // ui stuff, used for debugging right now
-    this.inventoryText = this.add.text(10, 420, '', {fontFamily: 'Arial', fontSize: 18, color: '#000000'})
-    this.hpText = this.add.text(10, 20, '0', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
-    this.resourceText = this.add.text(10, 50, '0', { fontFamily: 'Arial', fontSize: 32, color: '#ff0000' });
-    this.mySwingTimer = this.add.text(10, 90, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
-    this.myBuffs = this.add.text(10, 110, '', { fontFamily: 'Arial', fontSize: 16, color: '#0000ff' });
-    this.myStats = this.add.text(10, 220, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' })
-
-    this.enemyNameText = this.add.text(260, 2, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' })
-    this.enemyHpText = this.add.text(260, 20, '', { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
-    this.enemySwingTimer = this.add.text(260, 90, '', { fontFamily: 'Arial', fontSize: 16, color: '#000000' });
-    this.enemyBuffs = this.add.text(260, 110, '', { fontFamily: 'Arial', fontSize: 16, color: '#0000ff' });
-    this.keyMapText = this.add.text(10, 680, '', { fontFamily: 'Arial', fontSize: 26, color: '#000000' });
-
+    this.cameras.main.startFollow(this.player)
+    this.cameras.main.setZoom(4)
+    this.characters.add(this.player)
 
   }
 
   update() {
-    if (!this.player) return;
     // update managers:
     updateUI(this);
     updateLiveCharacters(this);

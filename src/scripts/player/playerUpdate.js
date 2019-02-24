@@ -7,8 +7,20 @@
  */
 export default function PlayerUpdate() {
   const update = function() {
-    if (this.body.velocity.x && this.body.velocity.y) {
-      this.scene.socket.emit('playerMovement', { x: this.x, y: this.y })
+    this.playerWeapon.x = this.x;
+    this.playerWeapon.y = this.y - 4;
+    if (this.buffs.has('eating')) {
+      this.playerWeapon.x = this.x;
+      this.playerWeapon.y = this.y + 2;
+      this.playerWeapon.anims.play('small-red', true)
+    } else if (this.body.velocity.x || this.body.velocity.y) {
+      this.anims.play('player-walk', true)
+      this.playerWeapon.anims.play('sword-walk', true)
+    } else {
+      this.anims.stop('player-walk')
+      this.playerWeapon.anims.stop('sword-walk')
+      this.setTexture('player', 0);
+      this.playerWeapon.setTexture('sword-walk', 0);
     }
     moveToMoveTarget(this);
     standGuard(this);
@@ -52,11 +64,13 @@ function moveToMoveTarget(character = {}) {
   const isMoveTargetWithinDistance = Phaser.Math.Distance.Between(
     currentPosition[0], currentPosition[1],
     moveTargetCoords[0], moveTargetCoords[1]
-  ) < 50;
+  ) < 10;
   if (isMoveTargetWithinDistance) {
-    character.movement.setMovementSpeed(60);
-    return character.setVelocity(0, 0);
+    character.movement.setMovementSpeed(40);
+    character.setVelocity(0, 0);
+    return false;
   } else {
-    return character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);
+    character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);
+    return true;
   }
 }

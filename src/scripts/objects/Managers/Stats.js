@@ -534,6 +534,10 @@ export default class Stat {
      * @returns {void}
      */
     this.setHp = function(newHp) {
+      if (newHp === 0) {
+        character.die();
+      }
+      character.healthBar.set(newHp);
       hp = newHp;
     }
 
@@ -780,7 +784,7 @@ export default class Stat {
     /**
      * setAgilityToAttackPowerRatio
      *
-     * @param  {number} newAgilityToAttackPowerRatio 
+     * @param  {number} newAgilityToAttackPowerRatio
      * @returns {void}
      */
     this.setAgilityToAttackPowerRatio = function(newAgilityToAttackPowerRatio) {

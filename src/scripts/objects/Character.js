@@ -10,16 +10,17 @@ import Target from './Managers/Target';
 import Threat from './Managers/Threat';
 import Buffs from './Managers/Buffs';
 import Consumables from './Managers/Consumables';
+import HealthBar from './Managers/HealthBar';
 
 export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x = 0, y = 0) {
-    super(scene, x, y, 'no-texture')
+    super(scene, x, y)
     scene.add.existing(this)
     scene.physics.add.existing(this)
     this.setInteractive();
 
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};
-    
+
     this.stat = new Stat(this, humanStartingStats);
     this.skills = new Skills(this);
     this.equipment = new Equipment(this);
@@ -33,10 +34,28 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.threat = new Threat(this);
     this.buffs = new Buffs(this);
     this.inventory = new Inventory(this);
+    this.healthBar = new HealthBar(scene, x, y, this.stat.maxHp())
 
-
+    this.updateBars = function() {
+      if (this.combat.isDead()) {
+        this.healthBar.destroy();
+        if (this.rage) {
+          this.rageBar.destroy();
+        }
+      }
+      this.healthBar.p = 14 / (this.stat.maxHp());
+      this.healthBar.x = this.x - 8;
+      this.healthBar.y = this.y - 20;
+      this.healthBar.draw();
+      if (!this.rage) return;
+      this.rageBar.set(this.rage.rage());
+      this.rageBar.x = this.x - 8;
+      this.rageBar.y = this.y - 16;
+      this.rageBar.draw();
+    }
     //  Input Event listeners
     this.on('pointerdown', function () {
+      scene.player.target.setCurrentTarget(this);
       if (this.combat.isDead() && (tapped && this.target.rangeCheck(tapped, 70))) {
         // if there is no loot, return
         if (!loot) return;
@@ -45,8 +64,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
         tapped.inventory.add(loot);
         loot = undefined;
       }
-      scene.player.target.setCurrentTarget(this);
-
     });
 
     this.on('pointerdown', function () {

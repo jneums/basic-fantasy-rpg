@@ -5,10 +5,10 @@
  * @returns {function} update function
  */
 export default function KoboldMinerAI() {
-  const meleeRange = 50;
+  const meleeRange = 25;
   const AI = function() {
     // scan for enemies for body pull
-    const enemies = this.target.scanForEnemies(200);
+    const enemies = this.target.scanForEnemies(75);
     // scan for enemies by threat table (pulled by attack)
     const target = this.threat.highestThreat()
       ? this.threat.highestThreat()

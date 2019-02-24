@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "phaser": "^3.16.1",
-    "socket.io": "^2.2.0"
+    "phaser": "^3.16.1"
   }
 }

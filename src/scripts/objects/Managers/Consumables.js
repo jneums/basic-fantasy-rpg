@@ -23,7 +23,7 @@ export default class Consumables {
       // out of combat only:
       if (character.combat.inCombat()) return console.log('You are in combat')
       // hp gained depends on the foodLevel
-      const healing = 19;
+      const healing = 29;
       // create buff
       // buff manager knows about channeling: set flag to true
       const buff = {
@@ -66,7 +66,7 @@ export default class Consumables {
       // out of combat only:
       if (character.combat.inCombat()) return console.log('You are in combat')
       // mana gained depends on the water Level
-      const regen = 19;
+      const regen = 29;
       // create buff
       // buff manager needs to know about channeling
       const buff = {

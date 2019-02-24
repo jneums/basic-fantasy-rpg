@@ -9,7 +9,8 @@ const DEFAULT_WIDTH = 1280
 const DEFAULT_HEIGHT = 720
 
 const config = {
-  backgroundColor: '#ffffff',
+  backgroundColor: '#1c1117',
+  pixelArt: true,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.DOM.CENTER_BOTH,
@@ -20,7 +21,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      debug: false,
       gravity: { y: 0 }
     }
   }

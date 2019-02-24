@@ -88,36 +88,34 @@ export default class WarriorAbilities {
      * @returns {void}
      */
     this.charge = function() {
-      const range = 400;
+      const range = 60;
       const target = character.target.currentTarget();
       if (!target) return console.log('I dont have a target!');
       const inRange = character.target.rangeCheck(target, range)
-      if (!inRange) return console.log('You need to get closer')
-      if (!character.combat.inCombat()) {
-        const combatObject = {
-          attacker: character.getName(),
-          target: target.getName(),
-          status: 'hit',
-          type: 'stun',
-          range: 'melee',
-          damageType: 'physical',
-          amount: 0,
-          bonusThreat: 1,
-          mitigationAmount: 0,
-          hand: 'main',
-          time: Date.now()
-        }
-        target.buffs.add({
-          name: 'stun',
-          duration: 100,
-          interval: 100,
-          combatObject,
-          attacker: character
-        });
-        character.rage.spendRage(-9)
-        character.movement.setMoveTargetCoords([target.x, target.y])
-        character.movement.setMovementSpeed(1000)
-      } else console.log("You can't do that while in combat")
+      if (inRange) return console.log('You are too close')
+      const combatObject = {
+        attacker: character.getName(),
+        target: target.getName(),
+        status: 'hit',
+        type: 'stun',
+        range: 'melee',
+        damageType: 'physical',
+        amount: 0,
+        bonusThreat: 1,
+        mitigationAmount: 0,
+        hand: 'main',
+        time: Date.now()
+      }
+      target.buffs.add({
+        name: 'stun',
+        duration: 100,
+        interval: 100,
+        combatObject,
+        attacker: character
+      });
+      character.rage.spendRage(-9)
+      character.movement.setMoveTargetCoords([target.x, target.y])
+      character.movement.setMovementSpeed(500)
     }
 
     /**
