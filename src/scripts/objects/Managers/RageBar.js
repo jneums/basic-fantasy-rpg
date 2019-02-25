@@ -18,14 +18,15 @@ export default class RageBar {
     {
         this.value = amount;
 
-        if (this.value === -1.123)
-        {
-            this.bar.destroy();
-        }
 
         this.draw();
 
         return (this.value === 0);
+    }
+
+    destroy ()
+    {
+      this.bar.destroy();
     }
 
     draw ()

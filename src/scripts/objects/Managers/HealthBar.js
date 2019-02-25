@@ -18,14 +18,14 @@ export default class HealthBar {
     {
         this.value = amount;
 
-        if (this.value === 0)
-        {
-            this.bar.destroy();
-        }
-
         this.draw();
 
         return (this.value === 0);
+    }
+
+    destroy ()
+    {
+      this.bar.destroy();
     }
 
     draw ()

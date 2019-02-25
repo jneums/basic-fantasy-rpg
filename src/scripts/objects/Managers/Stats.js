@@ -535,9 +535,6 @@ export default class Stat {
      */
     this.setHp = function(newHp) {
       hp = newHp;
-      if (newHp === 0) {
-        character.die();
-      }
       character.healthBar.set(newHp);
     }
 

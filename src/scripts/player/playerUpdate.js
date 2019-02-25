@@ -1,4 +1,3 @@
-import playAnims from './playAnims';
 import standGuard from './standGuard';
 import moveToMoveTarget from './moveToMoveTarget';
 
@@ -11,7 +10,6 @@ import moveToMoveTarget from './moveToMoveTarget';
  */
 export default function PlayerUpdate() {
   const update = function() {
-    playAnims(this);
     standGuard(this);
     moveToMoveTarget(this);
   }

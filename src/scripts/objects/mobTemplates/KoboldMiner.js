@@ -4,6 +4,8 @@ import { getArmorByName } from '../../loot/armor';
 import koboldMinerAI from './koboldMinerAI';
 import MobAbilities from './MobAbilities';
 import createLoot from '../../loot/createLoot';
+import Anims from '../Managers/Anims';
+
 
 /**
  *
@@ -12,6 +14,8 @@ export default class KoboldMiner extends Character {
   constructor(scene = {}, x = 0, y = 0) {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
+    this.animations = new Anims(this, 'orc-mask-run', 'orc-mask-combat', '', 'orc-mask-idle', 'orc-mask-die');
+
     this.setTeam('mob');
     this.setName('kobold-miner');
     this.setCharacterClass('mob');
@@ -19,6 +23,7 @@ export default class KoboldMiner extends Character {
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);
     this.stat.setStrAPR(.5)
+
 
     // starting equipment
     const equipped = this.equipment.equipped();
@@ -36,38 +41,11 @@ export default class KoboldMiner extends Character {
     this.AI = koboldMinerAI();
     this.classUpdate = function() {
       // block in case update runs extra tick before
-      // switching to dead update:
-      if(this.combat.isDead()) return;
-      if (this.buffs.has('rend')) {
-        this.anchorBlood.anims.play('blood-spray', true);
-      } else {
-        this.anchorBlood.setTexture();
-      }
-      if (this.buffs.has('thunderClap')) {
-        this.anchorSnow.anims.play('snow', true);
-      } else {
-        this.anchorSnow.setTexture();
-      }
-      if (this.body.velocity.x || this.body.velocity.y) {
-      } else {
-
-      }
-      if (this.stat.hp() > this.stat.maxHp() * .75) {
-        this.setTexture('kobold', 0);
-      } else if (this.stat.hp() > this.stat.maxHp() * .50) {
-        this.setTexture('kobold', 1);
-      } else if (this.stat.hp() > this.stat.maxHp() * .25) {
-        this.setTexture('kobold', 2);
-      } else if (this.stat.hp() >= 1) {
-        this.setTexture('kobold', 3);
-      }
     }
 
     this.die = function() {
       {
         this.body.enable = false;
-        this.anchorBlood.destroy();
-        this.anchorSnow.destroy();
         const x = this.x + 2;
         const y = this.y + 4;
         this.setTexture('kobold', 4);

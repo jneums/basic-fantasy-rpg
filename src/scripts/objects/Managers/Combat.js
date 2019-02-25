@@ -22,10 +22,6 @@ export default class Combat {
      * @returns {object} damage information
      */
     this.meleeAttack = function(target = {}, hand = '', type = '') {
-      // is target in front or behind of character:
-      const flip = Math.sign(target.x - character.x) * 1;
-      // turn to face target:
-      character.movement.setMoveTargetCoords([character.x + flip, character.y]);
       // reset timer right away:
       character.timer.resetSwingTimer(hand);
       // get the attack status roll, e.g. 'hit', 'miss', 'crit'...
@@ -227,6 +223,7 @@ export default class Combat {
         const maxHp = target.stat.maxHp();
         if (oldHp - amount < 0) {
           // target died
+          target.animations.die();
           target.stat.setHp(0);
           character.target.setCurrentTarget(undefined);
         } else if (oldHp - amount > maxHp) {

@@ -1,6 +1,6 @@
 export default function mapCreator(scene = {}) {
   const map = scene.make.tilemap({ key: 'map' })
-  const floor = map.addTilesetImage('dungeon', 'v4')
+  const floor = map.addTilesetImage('dungeon', 'v4', 16, 16, 1, 2)
   const colliderLayer = map.createStaticLayer("colliders", floor, 0, 0)
   const floorLayer = map.createStaticLayer("floor", floor, 0, 0)
   const wallLayer = map.createStaticLayer("walls", floor, 0, 0)

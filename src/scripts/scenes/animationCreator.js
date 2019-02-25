@@ -1,32 +1,56 @@
 export default function animationCreator(scene = {}) {
   scene.anims.create({
-    key: 'player-walk',
-    frames: scene.anims.generateFrameNumbers('player', {frames: [0, 1, 0, 2]}),
-    frameRate: 7,
+    key: 'barbarian-run',
+    frames: scene.anims.generateFrameNumbers('barbarian-run', {start: 0, end: 4}),
+    duration: 500,
     yoyo: false,
     repeat: -1
   })
   scene.anims.create({
-    key: 'player-idle',
-    frames: scene.anims.generateFrameNumbers('player-idle', {frames: [0, 1, 2]}),
+    key: 'barbarian-idle',
+    frames: scene.anims.generateFrameNumbers('barbarian-idle', {start: 0, end: 4}),
     frameRate: 6,
     yoyo: true,
     repeat: -1,
-    repeatDelay: 3000
+    repeatDelay: 2900
   })
   scene.anims.create({
-    key: 'stab',
-    frames: scene.anims.generateFrameNumbers('sword-stab', {frames: [4, 3, 2, 1, 0]}),
-    frameRate: 25,
+    key: 'barbarian-die',
+    frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
+    frameRate: 6,
     yoyo: false,
     repeat: 0,
   })
   scene.anims.create({
-    key: 'sword-walk',
-    frames: scene.anims.generateFrameNumbers('sword-walk', {frames: [0,1]}),
-    frameRate: 5,
+    key: 'orc-mask-run',
+    frames: scene.anims.generateFrameNumbers('orc-mask-run', {start: 0, end: 4}),
+    duration: 500,
     yoyo: false,
     repeat: -1,
+  })
+  scene.anims.create({
+    key: 'orc-mask-combat',
+    frames: scene.anims.generateFrameNumbers('orc-mask-combat', {start: 0, end: 4}),
+    frameRate: 4,
+    yoyo: false,
+    repeat: -1,
+    repeatDelay: 500
+  })
+
+  scene.anims.create({
+    key: 'orc-mask-idle',
+    frames: scene.anims.generateFrameNumbers('orc-mask-idle', {start: 0, end: 3}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3200
+  })
+  scene.anims.create({
+    key: 'orc-mask-die',
+    frames: scene.anims.generateFrameNumbers('orc-mask-die', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
   })
   scene.anims.create({
     key: 'orc-sword',
@@ -39,20 +63,6 @@ export default function animationCreator(scene = {}) {
     key: 'small-red',
     frames: scene.anims.generateFrameNumbers('small-red', {frames: [0,1, 1, 0, 0, 0]}),
     frameRate: 2,
-    yoyo: false,
-    repeat: -1,
-  })
-  scene.anims.create({
-    key: 'blood-spray',
-    frames: scene.anims.generateFrameNumbers('blood', {start: 0, end: 4}),
-    frameRate: 5,
-    yoyo: false,
-    repeat: -1,
-  })
-  scene.anims.create({
-    key: 'snow',
-    frames: scene.anims.generateFrameNumbers('snow', {start: 0, end: 4}),
-    frameRate: 5,
     yoyo: false,
     repeat: -1,
   })

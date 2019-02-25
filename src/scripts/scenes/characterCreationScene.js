@@ -31,12 +31,12 @@ export default class CharacterCreationScene extends Phaser.Scene {
       if (spawnPoint.type === 'kobold-miner') {
         npc = new KoboldMiner(this, spawnPoint.x, spawnPoint.y);
       }
-      npc.setTexture('characters', 161).setOrigin(.5).setSize(28, 16);
+      npc.setTexture('orc-mask-idle', 0).setOrigin(.5).setSize(22, 16);
       this.characters.add(npc);
     })
 
     this.player = new Warrior(this, 60, 110);
-    this.player.setTexture('player', 0).setOrigin(.5).setSize(28, 16)
+    this.player.setTexture('barbarian-run', 0).setSize(22, 16);
     this.player.inventory.add(getConsumableByName('Tough Jerky'))
     this.player.inventory.add(getConsumableByName('Tough Jerky'))
     this.player.inventory.add(getConsumableByName('Tough Jerky'))

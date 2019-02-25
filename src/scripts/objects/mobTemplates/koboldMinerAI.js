@@ -16,11 +16,15 @@ export default function KoboldMinerAI() {
       ? this.threat.highestThreat()
       : this.target.getClosestEnemy(enemies);
     // if no target in range and no aggro, wait
-    if (!target) return this.setVelocity(0, 0);
+    if (!target) {
+      this.animations.idle();
+      return this.setVelocity(0, 0);
+    }
     // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
       this.setVelocity(0, 0);
+      this.animations.combat();
       this.combat.meleeAutoAttack(target);
     } else {
       // change this to total moveSpeed
@@ -28,7 +32,8 @@ export default function KoboldMinerAI() {
       ? this.buffs.statBonus('moveSpeed')
       : 1;
       const moveSpeed = this.movement.getMovementSpeed() * moveModifier;
-      this.movement.setMoveTargetCoords([target.x, target.y])
+      this.movement.setMoveTargetCoords([target.x, target.y]);
+      this.animations.run();
       this.scene.physics.moveToObject(this, target, moveSpeed);
     }
   }

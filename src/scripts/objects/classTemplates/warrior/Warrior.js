@@ -7,6 +7,7 @@ import RageMechanic from './Rage';
 import RageBar from '../../Managers/RageBar';
 import WarriorAbilities from './WarriorAbilities';
 import KeyMap from '../../../player/KeyMap';
+import Anims from '../../Managers/Anims';
 
 /**
  *
@@ -17,7 +18,7 @@ export default class Warrior extends Character {
     // warrior specific abilities
     this.ability = new WarriorAbilities(this);
     this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
-
+    this.animations = new Anims(this, 'barbarian-run', 'barbarian-stab', 'smallRed', 'barbarian-idle', 'barbarian-die');
     // config keymap for warrior abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.charge);
@@ -75,7 +76,6 @@ export default class Warrior extends Character {
 
     // class specific updates e.g. rage, mana, energy
     this.classUpdate = function() {
-
       // after 5 seconds start regen hp according to spirit
       if(!this.combat.inCombat()) this.rage.rageDecay();
     };

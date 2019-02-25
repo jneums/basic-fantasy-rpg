@@ -28,5 +28,6 @@ export default function actionPointerDown(pointer, player = {}) {
   } else {
     // if no target was clicked, move to that spot instead
     player.movement.setMoveTargetCoords([pointer.worldX, pointer.worldY]);
+    player.animations.run();
   }
 }

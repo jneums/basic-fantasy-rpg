@@ -14,6 +14,7 @@ export default function moveToMoveTarget(character = {}) {
     moveTargetCoords[0], moveTargetCoords[1]
   ) < 5;
   if (isMoveTargetWithinDistance) {
+    character.animations.idle();
     character.movement.setMovementSpeed(40);
     character.setVelocity(0, 0);
     return false;
