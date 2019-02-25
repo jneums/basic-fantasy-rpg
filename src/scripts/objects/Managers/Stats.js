@@ -534,11 +534,11 @@ export default class Stat {
      * @returns {void}
      */
     this.setHp = function(newHp) {
+      hp = newHp;
       if (newHp === 0) {
         character.die();
       }
       character.healthBar.set(newHp);
-      hp = newHp;
     }
 
     /**

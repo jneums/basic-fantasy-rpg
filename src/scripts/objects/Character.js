@@ -18,9 +18,19 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this)
     scene.physics.add.existing(this)
     this.setInteractive();
+    // hands:
+    this.mainHand = scene.physics.add.sprite(this.x + 8, this.y + 2, 'warrior-hand');
+    this.offHand = scene.physics.add.sprite(this.x - 8, this.y + 2, 'warrior-hand')
+
+    // animation anchors: decide on main types!
+    this.anchorBlood = scene.add.sprite(x, y);
+    this.anchorBlood.setSize(32, 32).setOrigin(.5).depth = 1001;
+    this.anchorSnow = scene.add.sprite(x, y);
+    this.anchorSnow.setSize(32, 32).setOrigin(.5).depth = 1000;
 
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};
 
+    // managers to track and change state:
     this.stat = new Stat(this, humanStartingStats);
     this.skills = new Skills(this);
     this.equipment = new Equipment(this);
@@ -36,6 +46,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.inventory = new Inventory(this);
     this.healthBar = new HealthBar(scene, x, y, this.stat.maxHp())
 
+    // method to keep bars up to date:
     this.updateBars = function() {
       if (this.combat.isDead()) {
         this.healthBar.destroy();
@@ -53,21 +64,23 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       this.rageBar.y = this.y - 16;
       this.rageBar.draw();
     }
-    //  Input Event listeners
-    this.on('pointerdown', function () {
-      scene.player.target.setCurrentTarget(this);
-      if (this.combat.isDead() && (tapped && this.target.rangeCheck(tapped, 70))) {
-        // if there is no loot, return
-        if (!loot) return;
-        // give some loot to tapped (person who killed this)
-        const lootTarget = tapped;
-        tapped.inventory.add(loot);
-        loot = undefined;
-      }
-    });
 
-    this.on('pointerdown', function () {
-    });
+    // seperate animation updater:
+    // used for animations that persist through
+    // stuns etc.
+    this.updateAnimations = function() {
+
+      this.anchorBlood.x = this.x;
+      this.anchorBlood.y = this.y;
+      this.anchorSnow.x = this.x;
+      this.anchorSnow.y = this.y;
+
+      this.mainHand.x = this.x + 8
+      this.mainHand.y = this.y + 2;
+      this.offHand.x = this.x - 8;
+      this.offHand.y = this.y - 2;
+    }
+
 
     // character name
     let name = '';

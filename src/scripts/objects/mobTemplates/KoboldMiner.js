@@ -1,5 +1,4 @@
 import Character from '../Character';
-import { getRandomCoordsOnCanvas } from '../../utilities/randomNumberUtilities';
 import { getWeaponByName } from '../../loot/weapons';
 import { getArmorByName } from '../../loot/armor';
 import koboldMinerAI from './koboldMinerAI';
@@ -14,7 +13,7 @@ export default class KoboldMiner extends Character {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
     this.setTeam('mob');
-    this.setName(name);
+    this.setName('kobold-miner');
     this.setCharacterClass('mob');
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
@@ -31,11 +30,28 @@ export default class KoboldMiner extends Character {
     this.stat.setHp(startingHp);
 
     // starting loot
-    const loot = createLoot(name);
+    const loot = createLoot(this.getName());
     this.setLoot(loot);
 
     this.AI = koboldMinerAI();
     this.classUpdate = function() {
+      // block in case update runs extra tick before
+      // switching to dead update:
+      if(this.combat.isDead()) return;
+      if (this.buffs.has('rend')) {
+        this.anchorBlood.anims.play('blood-spray', true);
+      } else {
+        this.anchorBlood.setTexture();
+      }
+      if (this.buffs.has('thunderClap')) {
+        this.anchorSnow.anims.play('snow', true);
+      } else {
+        this.anchorSnow.setTexture();
+      }
+      if (this.body.velocity.x || this.body.velocity.y) {
+      } else {
+
+      }
       if (this.stat.hp() > this.stat.maxHp() * .75) {
         this.setTexture('kobold', 0);
       } else if (this.stat.hp() > this.stat.maxHp() * .50) {
@@ -49,6 +65,9 @@ export default class KoboldMiner extends Character {
 
     this.die = function() {
       {
+        this.body.enable = false;
+        this.anchorBlood.destroy();
+        this.anchorSnow.destroy();
         const x = this.x + 2;
         const y = this.y + 4;
         this.setTexture('kobold', 4);

@@ -1,25 +1,41 @@
+import actionPointerDown from './actionPointerDown';
+import inventoryPointerDown from './inventoryPointerDown';
+
 export default function playerInput(player = {}) {
-  /**
-   * pointer movement, sets moveTargetCoords
-   */
+  let inventoryToggle = false;
+
   player.scene.input.on('pointerdown', (pointer) => {
-    const oldMoveTargetCoords = player.movement.getMoveTargetCoords();
-    const newMoveTargetCoords = [pointer.worldX, pointer.worldY]
-    player.movement.setMoveTargetCoords(newMoveTargetCoords);
+    if (inventoryToggle) {
+      inventoryPointerDown(pointer, player);
+    } else {
+      actionPointerDown(pointer, player);
+    }
   })
 
   /**
-   * link to something important
+   * toggle inventory
    */
   player.scene.input.keyboard.on('keyup_SPACE', (event) => {
-    console.log(event);
+    inventoryToggle = !inventoryToggle;
+    if (inventoryToggle) {
+      // add and setup the inventory camera:
+      player.scene.minimap = player.scene.cameras.add(220, 32, 840, 586)
+        .setZoom(4).setName('mini');
+      player.scene.minimap.setBackgroundColor(0xccaa44);
+      player.scene.minimap.scrollX = -268;
+      player.scene.minimap.scrollY = 131;
+    } else {
+      // remove inventory cam:
+      player.scene.cameras.remove(player.scene.minimap);
+    }
   })
-  player.scene.input.keyboard.on('keydown_SHIFT', (event) => {
 
+  player.scene.input.keyboard.on('keydown_SHIFT', (event) => {
+    // enables shift combo keys to register.
   })
 
   /**
-   * attempt to perform ability linked to key: 1
+   * perform ability linked to key: 1
    */
   player.scene.input.keyboard.on('keyup_ONE', (event) => {
     if (event.shiftKey) {
@@ -31,7 +47,7 @@ export default function playerInput(player = {}) {
 
 
   /**
-   * attempt to perform ability linked to key: 2
+   * perform ability linked to key: 2
    */
   player.scene.input.keyboard.on('keyup_TWO', (event) => {
     if (event.shiftKey) {
@@ -41,7 +57,7 @@ export default function playerInput(player = {}) {
     }  })
 
   /**
-   * attempt to perform ability linked to key: 3
+   * perform ability linked to key: 3
    */
   player.scene.input.keyboard.on('keyup_THREE', (event) => {
     if (event.shiftKey) {
@@ -51,7 +67,7 @@ export default function playerInput(player = {}) {
     }  })
 
   /**
-   * attempt to perform ability linked to key: 4
+   * perform ability linked to key: 4
    */
   player.scene.input.keyboard.on('keyup_FOUR', (event) => {
     if (event.shiftKey) {
@@ -62,7 +78,7 @@ export default function playerInput(player = {}) {
   })
 
   /**
-   * attempt to perform ability linked to key: 5
+   * perform ability linked to key: 5
    */
   player.scene.input.keyboard.on('keyup_FIVE', (event) => {
     if (event.shiftKey) {
@@ -73,7 +89,7 @@ export default function playerInput(player = {}) {
   })
 
   /**
-   * attempt to perform ability linked to key: 6
+   * perform ability linked to key: 6
    */
   player.scene.input.keyboard.on('keyup_SIX', (event) => {
     if (event.shiftKey) {
@@ -83,7 +99,7 @@ export default function playerInput(player = {}) {
     }  })
 
   /**
-   * attempt to perform ability linked to key: 7
+   * perform ability linked to key: 7
    */
   player.scene.input.keyboard.on('keyup_SEVEN', (event) => {
     if (event.shiftKey) {
@@ -93,7 +109,7 @@ export default function playerInput(player = {}) {
     }  })
 
   /**
-   * attempt to perform ability linked to key: 8
+   * perform ability linked to key: 8
    */
   player.scene.input.keyboard.on('keyup_EIGHT', (event) => {
     if (event.shiftKey) {
@@ -103,7 +119,7 @@ export default function playerInput(player = {}) {
     }  })
 
   /**
-   * attempt to perform ability linked to key: 9
+   * perform ability linked to key: 9
    */
   player.scene.input.keyboard.on('keyup_NINE', (event) => {
     if (event.shiftKey) {

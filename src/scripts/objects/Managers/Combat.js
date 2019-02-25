@@ -22,21 +22,10 @@ export default class Combat {
      * @returns {object} damage information
      */
     this.meleeAttack = function(target = {}, hand = '', type = '') {
-      if (character.team() !== 'mob') {
-        const sign = (character.flipX) ? 1 : -1;
-        character.scene.tweens.add({
-          targets: character.playerWeapon,
-          scaleX: 1,
-          scaleY: 1,
-          angle: 360 * sign,
-          _ease: 'Sine.easeOut',
-          ease: 'Power2',
-          duration: 300,
-          repeat: 0,
-          yoyo: false,
-        });
-      }
-
+      // is target in front or behind of character:
+      const flip = Math.sign(target.x - character.x) * 1;
+      // turn to face target:
+      character.movement.setMoveTargetCoords([character.x + flip, character.y]);
       // reset timer right away:
       character.timer.resetSwingTimer(hand);
       // get the attack status roll, e.g. 'hit', 'miss', 'crit'...
@@ -61,7 +50,7 @@ export default class Combat {
       );
       // send combatObject to be used:
       this.processCombatObject(target, combatObject);
-      // return for debugging
+      // return object for debugging
       return combatObject;
     }
 

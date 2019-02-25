@@ -4,7 +4,6 @@ export default class Target {
     let previousTarget;
     let focusTarget;
 
-
     /**
      * getClosestEnemy
      *
@@ -118,18 +117,14 @@ export default class Target {
      * @returns {void}
      */
     this.setCurrentTarget = function(newTarget) {
+      previousTarget = currentTarget;
+      if (currentTarget) {
+        currentTarget.clearTint();
+      }
+      if (newTarget) {
+        newTarget.setTint('0xffaaaa')
+      }
       currentTarget = newTarget;
-    }
-
-
-    /**
-     * setPreviousTarget
-     *
-     * @param  {Character} newTarget
-     * @returns {void}
-     */
-    this.setPreviousTarget = function(newTarget) {
-      previousTarget = newTarget;
     }
 
 

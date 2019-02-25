@@ -49,15 +49,6 @@ export default class Movement {
      * @returns {void}
      */
     this.setMoveTargetCoords = function(newMoveTargetCoords) {
-      if (newMoveTargetCoords[0] > character.x) {
-        character.flipX = true;
-        if (character.playerWeapon)
-          character.playerWeapon.flipX = false;
-      } else {
-        character.flipX = false;
-        if (character.playerWeapon)
-          character.playerWeapon.flipX = true;
-      }
       moveTargetCoords = newMoveTargetCoords;
     }
   }

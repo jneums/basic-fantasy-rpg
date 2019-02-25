@@ -1,4 +1,3 @@
-import { selectDie } from '../dice';
 import {
   calculateDodgeChance,
   calculateParryChance,
@@ -7,9 +6,21 @@ import {
   calculateMissChance
 } from '../utilities/calculators';
 
+
+/**
+ * meleeAutoAttackHitTable - calculate the status
+ * of an attack.
+ *
+ * @param  {Character} attacker stats to use
+ * @param  {Character} target stats to use
+ * @param  {string} hand 'main' or 'off'
+ * @returns {string} 'miss', 'dodge', 'parry',
+ * 'glancing', 'blocked', 'crit', 'crushing', or 'hit'.
+ */
 export default function meleeAutoAttackHitTable(attacker = {}, target = {}, hand ='') {
-  const d100 = selectDie(100);
-  const random = d100(1) * .01;
+
+  // stack each value on top of each other for switch statement:
+  const random = Phaser.Math.Between(0, 100) * .01;
   const missChance = calculateMissChance(attacker, target, hand);
   const dodgeChance = missChance + calculateDodgeChance(attacker, target, hand);
   const parryChance = dodgeChance + calculateParryChance(attacker, target, hand);

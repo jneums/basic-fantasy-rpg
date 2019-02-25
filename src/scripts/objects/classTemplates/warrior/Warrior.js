@@ -15,7 +15,6 @@ export default class Warrior extends Character {
   constructor(scene = {}, x = 0, y = 0, name = 'warrior') {
     super(scene, x, y)
     // warrior specific abilities
-    this.playerWeapon = scene.add.sprite(x, y, 'sword-walk');
     this.ability = new WarriorAbilities(this);
     this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
 

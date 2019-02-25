@@ -5,8 +5,10 @@
  * @returns {function} update function
  */
 export default function KoboldMinerAI() {
-  const meleeRange = 25;
+  const meleeRange = 30;
   const AI = function() {
+    if (this.combat.isDead()) return;
+
     // scan for enemies for body pull
     const enemies = this.target.scanForEnemies(75);
     // scan for enemies by threat table (pulled by attack)
@@ -26,6 +28,7 @@ export default function KoboldMinerAI() {
       ? this.buffs.statBonus('moveSpeed')
       : 1;
       const moveSpeed = this.movement.getMovementSpeed() * moveModifier;
+      this.movement.setMoveTargetCoords([target.x, target.y])
       this.scene.physics.moveToObject(this, target, moveSpeed);
     }
   }
