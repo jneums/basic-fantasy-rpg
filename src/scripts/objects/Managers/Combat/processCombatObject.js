@@ -27,7 +27,8 @@ export default function processCombatObject (attacker = {}, target = {}, combatO
   // create floating text:
   const text = new FloatingText(attacker.scene, {
       text: -1 * Math.round(newCombatObject.amount),
-      animation: "physics",
+      size: Math.abs(Math.round(newCombatObject.amount)) / 10,
+      animation: "up",
       parentObj: target,
       combatObject: newCombatObject,
       side: (attacker.flipX) ? -1: 1

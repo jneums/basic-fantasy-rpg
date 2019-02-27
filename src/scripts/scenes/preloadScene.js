@@ -52,6 +52,10 @@ export default class PreloadScene extends Phaser.Scene {
       './assets/anims/orc_mask_die_spritesheet.png',
       { frameWidth: 16, frameHeight: 16 }
     )
+    this.load.spritesheet('orc-mask-stun',
+      './assets/anims/orc_mask_stun_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    )
     this.load.image('v4', './assets/map/0x72_16x16DungeonTileset_extruded.v4.png')
 
     this.load.spritesheet('orc-sword',

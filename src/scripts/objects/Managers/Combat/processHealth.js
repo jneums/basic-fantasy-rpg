@@ -24,7 +24,6 @@
     const maxHp = target.stat.maxHp();
     if (oldHp - amount < 0) {
       // target died
-      target.animations.die();
       target.stat.setHp(0);
       character.target.setCurrentTarget(undefined);
     } else if (oldHp - amount > maxHp) {

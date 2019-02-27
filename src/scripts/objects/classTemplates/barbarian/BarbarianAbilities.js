@@ -41,7 +41,7 @@ export default class BarbarianAbilities {
         name: 'battleShout',
         duration: 120 * 60,
         statObject: {
-          attackPower: 15
+          attackPower: 25
         }
       }
 
@@ -94,6 +94,7 @@ export default class BarbarianAbilities {
       const duration = 3;
       const target = character.target.currentTarget();
       if (!target) return console.log('I dont have a target!');
+      if (target.combat.isDead()) return console.log("I can't attack that")
       const inRange = character.target.rangeCheck(target, range)
       if (inRange) return console.log('You are too close')
       const combatObject = {
@@ -228,7 +229,7 @@ export default class BarbarianAbilities {
               name: 'thunderClap',
               duration: time * 60,
               statObject: {
-                attackSpeed: 1.1
+                attackSpeed: 2
               },
               attacker: character
             }

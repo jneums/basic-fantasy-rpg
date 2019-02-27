@@ -39,6 +39,10 @@ export default class Anims {
     this.die = function() {
       character.anims.play(characterType + '-die', true);
     }
+
+    this.stun = function() {
+      character.anims.play(characterType + '-stun', true);
+    }
   }
 
 }

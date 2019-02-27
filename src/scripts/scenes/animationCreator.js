@@ -81,6 +81,13 @@ export default function animationCreator(scene = {}) {
     repeat: 0,
   })
   scene.anims.create({
+    key: 'orc-mask-stun',
+    frames: scene.anims.generateFrameNumbers('orc-mask-stun', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
+  })
+  scene.anims.create({
     key: 'orc-sword-idle',
     frames: scene.anims.generateFrameNumbers('orc-sword-idle', {frames: [2, 1, 0]}),
     frameRate: 4,

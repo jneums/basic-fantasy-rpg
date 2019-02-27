@@ -1,4 +1,4 @@
-function textColor (combatObject = {}) {
+function _textColor (combatObject = {}) {
   switch (combatObject.type) {
     case 'dot':
       return 0xd04648;
@@ -35,27 +35,25 @@ export default function createFloatingText(scene = {}, options = {}) {
   const _rotation = options.rotation || false;
   // parent object reference:
   const _parentObj = options.parentObj || null;
-  // size:
-  const _width = options.width || "auto";
-  const _height = options.height || "auto";
   // which animation to use:
-  const _animation = options.animation || "explode"; // explode, smoke, custom, directional: up, down, left, right, fade, physics
+  const _animation = options.animation || "up"; // explode, smoke, custom, directional: up, down, left, right, fade, physics
   // how far to move during animation:
   const _distance = options.distance || 40;
   // tween type:
   const _easing = options.easing || Phaser.Math.Easing.Quintic.Out;
   // how long to stay:
-  const _timeToLive = options.timeToLive || 600; // in ms
+  const _timeToLive = options.timeToLive || 5000; // in ms
   // whether or not to move with the camera:
   const _fixedToCamera = options.fixedToCamera || false;
   const _combatObject = options.combatObject;
   const _side = options.side;
 
   // set color:
-  const _color = textColor(_combatObject);
+  const _color = _textColor(_combatObject);
+  const _size = 4 + options.size;
 
   // create the element
-  let _obj = scene.add.bitmapText(0, 0, 'font', _text, 6).setTint(_color);
+  let _obj = scene.add.bitmapText(0, 0, 'font', _text, _size).setTint(_color);
   //_obj.anchor.setTo(_spriteAnchor);
 
   // adjust rotation:

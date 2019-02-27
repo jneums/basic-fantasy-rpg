@@ -20,6 +20,7 @@ export default function updateLiveCharacters(scene = {}) {
 
       if (child.combat.isStunned()) {
         // cant move, timers dont move, and
+        child.animations.stun();
         // ai is not running:
         child.setVelocity(0, 0);
       } else {
