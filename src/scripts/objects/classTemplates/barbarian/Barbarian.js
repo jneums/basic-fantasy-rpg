@@ -2,24 +2,24 @@ import Character from '../../Character';
 import { getRandomCoordsOnCanvas } from '../../../utilities/randomNumberUtilities';
 import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
-import warriorAI from '../../../AI/warriorAI';
+import barbarianAI from '../../../AI/barbarianAI';
 import RageMechanic from './Rage';
 import RageBar from '../../Managers/RageBar';
-import WarriorAbilities from './WarriorAbilities';
+import BarbarianAbilities from './BarbarianAbilities';
 import KeyMap from '../../../player/KeyMap';
 import Anims from '../../Managers/Anims';
 
 /**
  *
  */
-export default class Warrior extends Character {
-  constructor(scene = {}, x = 0, y = 0, name = 'warrior') {
+export default class Barbarian extends Character {
+  constructor(scene = {}, x = 0, y = 0, name = 'barbarian') {
     super(scene, x, y)
-    // warrior specific abilities
-    this.ability = new WarriorAbilities(this);
+    // barbarian specific abilities
+    this.ability = new BarbarianAbilities(this);
     this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
     this.animations = new Anims(this, 'barbarian', 'barbarian');
-    // config keymap for warrior abilities
+    // config keymap for barbarian abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.charge);
     this.keyMap.setThree(this.ability.rend);
@@ -37,22 +37,22 @@ export default class Warrior extends Character {
 
     // name and class specific stats
     this.setName(name);
-    this.setCharacterClass('warrior');
+    this.setCharacterClass('barbarian');
     this.stat.setCrit(.05);
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);
     this.stat.setStrAPR(.5)
 
-    // warriors start with bonus to strength:
+    // barbarians start with bonus to strength:
     const baseStrength = this.stat.baseStrength();
-    const warriorStrengthBonus = 3;
-    this.stat.setStrength(baseStrength + warriorStrengthBonus);
+    const barbarianStrengthBonus = 3;
+    this.stat.setStrength(baseStrength + barbarianStrengthBonus);
 
     // and bonus to stamina:
     const baseStamina = this.stat.baseStamina();
-    const warriorStaminaBonus = 2;
-    this.stat.setStamina(baseStamina + warriorStaminaBonus);
+    const barbarianStaminaBonus = 2;
+    this.stat.setStamina(baseStamina + barbarianStaminaBonus);
 
     // starting equipment
     const equipped = this.equipment.equipped();
@@ -72,12 +72,12 @@ export default class Warrior extends Character {
     this.rageBar = new RageBar(scene, x - 8, y - 12);
 
     // ai system
-    this.AI = warriorAI();
+    this.AI = barbarianAI();
 
     // class specific updates e.g. rage, mana, energy
     this.classUpdate = function() {
       // after 5 seconds start regen hp according to spirit
-      if(!this.combat.inCombat()) this.rage.rageDecay();
+      if(!this.combat.isInCombat()) this.rage.rageDecay();
     };
   }
 }

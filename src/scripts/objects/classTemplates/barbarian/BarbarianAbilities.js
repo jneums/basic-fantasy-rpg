@@ -1,4 +1,6 @@
-export default class WarriorAbilities {
+import processCombatObject from '../../Managers/Combat/processCombatObject';
+
+export default class BarbarianAbilities {
   constructor(character) {
     let abilities = ['dodge', 'block', 'parry'];
 
@@ -22,7 +24,7 @@ export default class WarriorAbilities {
     }
 
     /**
-     * Battle Shout - The warrior shouts, increasing the melee
+     * Battle Shout - The barbarian shouts, increasing the melee
      * attack power of all party members within 20 yards by 15.
      * Lasts 2 minutes.
      *
@@ -89,6 +91,7 @@ export default class WarriorAbilities {
      */
     this.charge = function() {
       const range = 60;
+      const duration = 3;
       const target = character.target.currentTarget();
       if (!target) return console.log('I dont have a target!');
       const inRange = character.target.rangeCheck(target, range)
@@ -108,8 +111,7 @@ export default class WarriorAbilities {
       }
       target.buffs.add({
         name: 'stun',
-        duration: 100,
-        interval: 100,
+        duration: duration * 60,
         combatObject,
         attacker: character
       });
@@ -138,6 +140,7 @@ export default class WarriorAbilities {
       // build combatObject
       const myName = character.getName();
       const time = 9;
+      const interval = 3;
       const dmgTick = 15;
       const combatObject = {
         attacker: character.getName(),
@@ -156,7 +159,7 @@ export default class WarriorAbilities {
       const debuff = {
         name: 'rend',
         duration: time * 60,
-        interval: 300,
+        interval: interval * 60,
         combatObject,
         attacker: character
       }
@@ -220,7 +223,7 @@ export default class WarriorAbilities {
               time: Date.now()
             }
             // send object to be used
-            character.combat.processCombatObject(enemy, combatObject);
+            processCombatObject(character, enemy, combatObject);
             const debuff = {
               name: 'thunderClap',
               duration: time * 60,
@@ -270,7 +273,7 @@ export default class WarriorAbilities {
         time: Date.now()
       }
       // send object to be used
-      character.combat.processCombatObject(target, combatObject);
+      processCombatObject(character, target, combatObject);
       // create combat object for 5 dmg, send it to be processed
       const debuff = {
         name: 'hamstring',

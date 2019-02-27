@@ -166,7 +166,8 @@ export default class MageAbilities {
       const manaCost = 85;
       const paidMana = character.mana.spendMana(manaCost);
       if (!paidMana) return;
-
+      const duration = 3;
+      const interval = 1;
       // channeled, .132 is spell coefficient
       const dmgTick = .132 * character.stat.spellPower();
       // create buff item:
@@ -185,8 +186,8 @@ export default class MageAbilities {
       }
       target.buffs.add({
         name: 'arcaneMissiles',
-        duration: 300,
-        interval: 100,
+        duration: duration * 60,
+        interval: interval * 60,
         channel: true,
         combatObject,
         attacker: character

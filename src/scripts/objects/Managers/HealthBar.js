@@ -9,6 +9,7 @@ export default class HealthBar {
         this.bar.depth = 1;
         this.value = startingHp;
         this.p = 14 / this.value;
+        this.backgroundColor = 0x1c1117;
 
         this.draw();
 
@@ -23,6 +24,11 @@ export default class HealthBar {
 
         return (this.value === 0);
     }
+    setBackgroundColor (newColor = 0x1c1117)
+    {
+      this.backgroundColor = newColor;
+
+    }
 
     destroy ()
     {
@@ -34,7 +40,7 @@ export default class HealthBar {
         this.bar.clear();
 
         //  BG
-        this.bar.fillStyle(0x1c1117);
+        this.bar.fillStyle(this.backgroundColor);
         this.bar.fillRect(this.x, this.y, 16, 4);
 
         //  Health

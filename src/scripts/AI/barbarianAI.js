@@ -1,10 +1,10 @@
 /**
- * WarriorAI - warrior script
+ * barbarianAI - barbarian script
  *
  * @param  {Character} character reference
  * @returns {function} update function
  */
-export default function WarriorAI() {
+export default function barbarianAI() {
   const meleeRange = 25;
   const rageDumpValue = 20;
   const AI = function() {

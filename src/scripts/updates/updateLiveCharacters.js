@@ -14,6 +14,10 @@ export default function updateLiveCharacters(scene = {}) {
       child.timer.updateSwingTimers();
       child.timer.updateCastTimer();
       child.classUpdate();
+      // use tint or animation to show buffs?
+      if (child.buffs.has('battleShout')) child.hands.setTint(0xaa3333);
+      else child.hands.clearTint();
+
       if (child.combat.isStunned()) {
         // cant move, timers dont move, and
         // ai is not running:

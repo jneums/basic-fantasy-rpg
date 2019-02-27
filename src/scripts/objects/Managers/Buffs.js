@@ -1,4 +1,4 @@
-
+import processCombatObject from './Combat/processCombatObject';
 /**
  * Buff Manager: collects and updates temporary
  * changes to characters stats. sends combatObjects
@@ -120,9 +120,8 @@ export default class Buffs {
             // use the interval for timing combatObject creation
             // and execution throughout the duration of the buff
             if (buff.duration % buff.interval === 0) {
-
               const attacker = buff.attacker;
-              attacker.combat.processCombatObject(character, buff.combatObject);
+              processCombatObject(attacker, character, buff.combatObject);
             }
           }
         })

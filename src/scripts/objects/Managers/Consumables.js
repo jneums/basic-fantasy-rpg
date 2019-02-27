@@ -21,7 +21,7 @@ export default class Consumables {
     this.eat = function(foodLevel = 1) {
       // channeled, so movement will break it
       // out of combat only:
-      if (character.combat.inCombat()) return console.log('You are in combat')
+      if (character.combat.isInCombat()) return console.log('You are in combat')
       // hp gained depends on the foodLevel
       const healing = 29;
       // create buff
@@ -29,7 +29,7 @@ export default class Consumables {
       const buff = {
         name: 'eating',
         duration: 30 * 60, // 30 secs * 60 fps update time
-        interval: 180,
+        interval: 3 * 60,
         channel: true,
         combatObject: {
           attacker: character.getName(),
@@ -64,7 +64,7 @@ export default class Consumables {
     this.drink = function(waterLevel = 1) {
       // channeled, so movement will break it
       // out of combat only:
-      if (character.combat.inCombat()) return console.log('You are in combat')
+      if (character.combat.isInCombat()) return console.log('You are in combat')
       // mana gained depends on the water Level
       const regen = 29;
       // create buff
@@ -72,7 +72,7 @@ export default class Consumables {
       const buff = {
         name: 'drinking',
         duration: 30 * 60,
-        interval: 180,
+        interval: 3 * 60,
         channel: true,
         combatObject: {
           attacker: character.getName(),

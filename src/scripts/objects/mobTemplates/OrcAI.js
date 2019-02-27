@@ -1,10 +1,10 @@
 /**
- * KoboldMinerAI - warrior script
+ * OrcAI - barbarian script
  *
  * @param  {Character} character reference
  * @returns {function} update function
  */
-export default function KoboldMinerAI() {
+export default function OrcAI() {
   const meleeRange = 30;
   const AI = function() {
     if (this.combat.isDead()) return;

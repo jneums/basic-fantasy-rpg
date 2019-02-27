@@ -4,7 +4,7 @@ import { getWeaponByName } from './weapons';
 import { getArmorByName } from './armor';
 
 export default function createLoot(name = '') {
-  if (name === 'kobold-miner') {
+  if (name === 'orc') {
     const random = Phaser.Math.Between(0, 101);
     switch (true) {
       case (random < 35):

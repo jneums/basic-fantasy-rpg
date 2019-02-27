@@ -2,7 +2,7 @@ import Stat from './Managers/Stats';
 import Skills from './Managers/Skills';
 import Timer from './Managers/Timer';
 import Inventory from './Managers/Inventory';
-import Combat from './Managers/Combat';
+import Combat from './Managers/Combat/Combat';
 import Movement from './Managers/Movement';
 import Equipment from './Managers/Equipment';
 import Lvl from './Managers/Level';
@@ -63,7 +63,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     let name = '';
     // ['dwarf', 'night-elf', 'gnome', 'human'];
     let race = 'human';
-    // ['druid', 'hunter', 'mage', 'paladin', 'priest', 'rogue', 'warlock', 'warrior'];
+    // ['druid', 'hunter', 'mage', 'paladin', 'priest', 'rogue', 'warlock', 'barbarian'];
     let characterClass = '';
     // 'horder', 'alliance', 'monster'
     let team = '';

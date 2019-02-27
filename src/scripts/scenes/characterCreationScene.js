@@ -1,5 +1,5 @@
-import Warrior from '../objects/classTemplates/warrior/Warrior';
-import KoboldMiner from '../objects/mobTemplates/KoboldMiner';
+import Barbarian from '../objects/classTemplates/barbarian/Barbarian';
+import Orc from '../objects/mobTemplates/Orc';
 import playerInput from '../player/playerInput';
 import playerUpdate from '../player/playerUpdate';
 import updateLiveCharacters from '../updates/updateLiveCharacters';
@@ -28,14 +28,14 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // use map to spawn mobs:
     map.getObjectLayer('spawns').objects.forEach(spawnPoint => {
       let npc;
-      if (spawnPoint.type === 'kobold-miner') {
-        npc = new KoboldMiner(this, spawnPoint.x, spawnPoint.y);
+      if (spawnPoint.type === 'orc') {
+        npc = new Orc(this, spawnPoint.x, spawnPoint.y);
       }
       npc.setTexture('orc-mask-idle', 0).setOrigin(.5).setSize(22, 16);
       this.characters.add(npc);
     })
 
-    this.player = new Warrior(this, 60, 110);
+    this.player = new Barbarian(this, 60, 110);
     this.player.setTexture('barbarian-run', 0).setSize(22, 16);
     this.player.inventory.add(getConsumableByName('Tough Jerky'))
     this.player.inventory.add(getConsumableByName('Tough Jerky'))
@@ -48,6 +48,7 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.cameras.main.setRoundPixels(true);
     this.cameras.main.startFollow(this.player, true, .05, .05)
     this.cameras.main.setZoom(4)
+
   }
 
   update() {
