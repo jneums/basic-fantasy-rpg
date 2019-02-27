@@ -22,6 +22,10 @@ export default class Combat {
      * @returns {object} damage information
      */
     this.meleeAttack = function(target = {}, hand = '', type = '') {
+      // face enemy:
+      character.movement.faceTarget(target);
+      // show swing animation:
+      character.animations.swing();
       // reset timer right away:
       character.timer.resetSwingTimer(hand);
       // get the attack status roll, e.g. 'hit', 'miss', 'crit'...

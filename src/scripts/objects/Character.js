@@ -36,11 +36,16 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.threat = new Threat(this);
     this.buffs = new Buffs(this);
     this.inventory = new Inventory(this);
-    this.healthBar = new HealthBar(scene, x, y, this.stat.maxHp())
+    this.healthBar = new HealthBar(scene, x, y, this.stat.maxHp());
+    this.hands = scene.add.sprite(x, y - 4);
+    this.hands.depth = 2;
+
 
     // method to keep bars up to date:
     this.updateBars = function() {
-
+      // keep hands in right place:
+      this.hands.x = this.x;
+      this.hands.y = this.y - 4;
       this.healthBar.p = 14 / (this.stat.maxHp());
       this.healthBar.x = this.x - 8;
       this.healthBar.y = this.y - 20;

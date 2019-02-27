@@ -18,7 +18,7 @@ export default class Warrior extends Character {
     // warrior specific abilities
     this.ability = new WarriorAbilities(this);
     this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
-    this.animations = new Anims(this, 'barbarian-run', 'barbarian-stab', 'smallRed', 'barbarian-idle', 'barbarian-die');
+    this.animations = new Anims(this, 'barbarian', 'barbarian');
     // config keymap for warrior abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.charge);

@@ -6,6 +6,7 @@ export default class HealthBar {
 
         this.x = x;
         this.y = y;
+        this.bar.depth = 1;
         this.value = startingHp;
         this.p = 14 / this.value;
 

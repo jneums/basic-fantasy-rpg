@@ -2,7 +2,7 @@
  * moveToMoveTarget - used in update()
  *
  * @param  {Character} character body to move
- * @returns {void}
+ * @returns {bool} true if moving;
  */
 export default function moveToMoveTarget(character = {}) {
   // step 1: move to the move target regardless
@@ -14,7 +14,6 @@ export default function moveToMoveTarget(character = {}) {
     moveTargetCoords[0], moveTargetCoords[1]
   ) < 5;
   if (isMoveTargetWithinDistance) {
-    character.animations.idle();
     character.movement.setMovementSpeed(40);
     character.setVelocity(0, 0);
     return false;

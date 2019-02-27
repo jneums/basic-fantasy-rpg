@@ -6,6 +6,7 @@ export default class RageBar {
 
         this.x = x;
         this.y = y;
+        this.bar.depth = 1;
         this.value = 100;
         this.p = 14 / this.value;
 

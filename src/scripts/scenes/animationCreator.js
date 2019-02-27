@@ -15,10 +15,39 @@ export default function animationCreator(scene = {}) {
     repeatDelay: 2900
   })
   scene.anims.create({
+    key: 'barbarian-combat',
+    frames: scene.anims.generateFrameNumbers('barbarian-combat', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
     key: 'barbarian-die',
     frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
     frameRate: 6,
     yoyo: false,
+    repeat: 0,
+  })
+  scene.anims.create({
+    key: 'barbarian-sword-run',
+    frames: scene.anims.generateFrameNumbers('barbarian-sword-run', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'barbarian-sword-idle',
+    frames: scene.anims.generateFrameNumbers('barbarian-sword-idle', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3000
+  })
+  scene.anims.create({
+    key: 'barbarian-sword-stab',
+    frames: scene.anims.generateFrameNumbers('barbarian-sword-stab', {frames: [0, 1, 2]}),
+    frameRate: 9,
+    yoyo: true,
     repeat: 0,
   })
   scene.anims.create({
@@ -34,7 +63,6 @@ export default function animationCreator(scene = {}) {
     frameRate: 4,
     yoyo: false,
     repeat: -1,
-    repeatDelay: 500
   })
 
   scene.anims.create({
@@ -53,11 +81,26 @@ export default function animationCreator(scene = {}) {
     repeat: 0,
   })
   scene.anims.create({
-    key: 'orc-sword',
-    frames: scene.anims.generateFrameNumbers('orc-sword', {frames: [0,1]}),
-    frameRate: 5,
-    yoyo: false,
+    key: 'orc-sword-idle',
+    frames: scene.anims.generateFrameNumbers('orc-sword-idle', {frames: [2, 1, 0]}),
+    frameRate: 4,
+    yoyo: true,
     repeat: -1,
+    repeatDelay: 3200
+  })
+  scene.anims.create({
+    key: 'orc-sword-run',
+    frames: scene.anims.generateFrameNumbers('orc-sword-run', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'orc-sword-stab',
+    frames: scene.anims.generateFrameNumbers('orc-sword-stab', {frames: [2, 1, 0]}),
+    frameRate: 9,
+    yoyo: true,
+    repeat: 0,
   })
   scene.anims.create({
     key: 'small-red',

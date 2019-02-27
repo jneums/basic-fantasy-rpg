@@ -14,7 +14,7 @@ export default class KoboldMiner extends Character {
   constructor(scene = {}, x = 0, y = 0) {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
-    this.animations = new Anims(this, 'orc-mask-run', 'orc-mask-combat', '', 'orc-mask-idle', 'orc-mask-die');
+    this.animations = new Anims(this, 'orc-mask', 'orc');
 
     this.setTeam('mob');
     this.setName('kobold-miner');

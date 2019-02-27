@@ -11,9 +11,34 @@ export default class Movement {
     // where to move to
     let moveTargetCoords = [x, y];
 
+
+    /**
+     * faceTarget - evaluates which side of character
+     * the target is on, then faces that side.
+     *
+     * @param  {Character} target
+     * @returns {void}
+     */
+    this.faceTarget = function(target = {}) {
+      const sign = Math.sign(character.x - target.x)
+      if(sign > 0) {
+        character.flipX = true;
+        character.hands.flipX = true;
+      } else {
+        character.flipX = false;
+        character.hands.flipX = false;
+      }
+    }
+
+    /**
+     * stop - sets moveTargetCoords to current position.
+     *
+     * @returns {void}
+     */
     this.stop = function() {
       moveTargetCoords = [character.x, character.y];
     }
+
     /**
     * getMovementSpeed
     *

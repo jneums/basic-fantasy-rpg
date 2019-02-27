@@ -129,41 +129,44 @@ export default class WarriorAbilities {
      * @returns {void}
      */
     this.rend = function() {
-      const rageCost = 10;
-      // target
+      // check for valid target:
       const target = character.target.currentTarget();
       if (!target) return console.log('You need a target');
-      if (character.rage.spendRage(rageCost)) {
-        // build combatObject
-        const myName = character.getName();
-        const time = 9;
-        const dmgTick = 15;
-        const combatObject = {
-          attacker: character.getName(),
-          target: target.getName(),
-          status: 'hit',
-          type: 'dot',
-          range: 'melee',
-          damageType: 'physical',
-          amount: dmgTick,
-          bonusThreat: 0,
-          mitigationAmount: 0,
-          hand: 'main',
-          time: Date.now()
-        }
-        // build debuff
-        const debuff = {
-          name: 'rend',
-          duration: time * 60,
-          interval: 300,
-          combatObject,
-          attacker: character
-        }
-        if (target.buffs.has('rend'))
-          target.buffs.replace(debuff);
-        else
-          target.buffs.add(debuff);
+      // check for enough rage:
+      const rageCost = 10;
+      if (!character.rage.spendRage(rageCost)) return console.log('I need more rage')
+      // build combatObject
+      const myName = character.getName();
+      const time = 9;
+      const dmgTick = 15;
+      const combatObject = {
+        attacker: character.getName(),
+        target: target.getName(),
+        status: 'hit',
+        type: 'dot',
+        range: 'melee',
+        damageType: 'physical',
+        amount: dmgTick,
+        bonusThreat: 0,
+        mitigationAmount: 0,
+        hand: 'main',
+        time: Date.now()
       }
+      // build debuff
+      const debuff = {
+        name: 'rend',
+        duration: time * 60,
+        interval: 300,
+        combatObject,
+        attacker: character
+      }
+      if (target.buffs.has('rend'))
+        target.buffs.replace(debuff);
+      else
+        target.buffs.add(debuff);
+      // placeholder animation, will make specific one for rend
+      character.animations.swing();
+
     }
 
     /**
@@ -252,23 +255,22 @@ export default class WarriorAbilities {
       const time = 15;
       const target = character.target.currentTarget();
       if (!target) return console.log('You need a target');
-      if (character.rage.spendRage(rageCost)) {
-        const combatObject = {
-          attacker: character.getName(),
-          target,
-          status: 'hit',
-          type: 'special',
-          range: 'melee',
-          damageType: 'physical',
-          amount: 5,
-          bonusThreat: 0,
-          mitigationAmount: 0,
-          hand: 'main',
-          time: Date.now()
-        }
-        // send object to be used
-        character.combat.processCombatObject(target, combatObject);
+      if (!character.rage.spendRage(rageCost)) return console.log('I need more rage')
+      const combatObject = {
+        attacker: character.getName(),
+        target,
+        status: 'hit',
+        type: 'special',
+        range: 'melee',
+        damageType: 'physical',
+        amount: 5,
+        bonusThreat: 0,
+        mitigationAmount: 0,
+        hand: 'main',
+        time: Date.now()
       }
+      // send object to be used
+      character.combat.processCombatObject(target, combatObject);
       // create combat object for 5 dmg, send it to be processed
       const debuff = {
         name: 'hamstring',
@@ -283,6 +285,8 @@ export default class WarriorAbilities {
         target.buffs.replace(debuff);
       else
         target.buffs.add(debuff);
+      // placeholder animation, will make specific one for rend
+      character.animations.swing();
     }
   }
 }

@@ -3,6 +3,8 @@ export default function updateDeadCharacters(scene = {}) {
     if (child.combat.isDead()) {
       if (child.healthBar) child.healthBar.destroy();
       if (child.rageBar) child.rageBar.destroy();
+      if (child.hands) child.hands.destroy();
+      if (child.body.enable) child.body.enable = false;
 
       child.setVelocity(0, 0);
       // reward xp: everyone on the threat table wins!

@@ -11,7 +11,7 @@ export default function standGuard(character = {}) {
   if (target) {
     const inRange = character.target.rangeCheck(target, range);
     const targetIsEnemy = (character.team() !== target.team());
-    if (inRange && targetIsEnemy) {
+    if (inRange && targetIsEnemy && !target.combat.isDead()) {
       if (character.combat.autoAttack()) {
         character.combat.meleeAutoAttack(target);
         return true;

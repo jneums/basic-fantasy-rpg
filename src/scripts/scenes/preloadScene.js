@@ -8,17 +8,37 @@ export default class PreloadScene extends Phaser.Scene {
       './assets/anims/barbarian_run_spritesheet.png',
       { frameWidth: 16, frameHeight: 16 }
     )
-    this.load.spritesheet('barbarian-die',
-      './assets/anims/barbarian_die_spritesheet.png',
-      { frameWidth: 16, frameHeight: 16 }
-    )
     this.load.spritesheet('barbarian-idle',
       './assets/anims/barbarian_idle_spritesheet.png',
       { frameWidth: 16, frameHeight: 16 }
     )
+    this.load.spritesheet('barbarian-combat',
+      './assets/anims/barbarian_combat_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    )
+    this.load.spritesheet('barbarian-die',
+      './assets/anims/barbarian_die_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    )
+    this.load.spritesheet('barbarian-sword-run',
+      './assets/anims/barbarian_sword_run_spritesheet.png',
+      { frameWidth: 24, frameHeight: 36 }
+    )
+    this.load.spritesheet('barbarian-sword-idle',
+      './assets/anims/barbarian_sword_idle_spritesheet.png',
+      { frameWidth: 24, frameHeight: 36 }
+    )
+    this.load.spritesheet('barbarian-sword-stab',
+      './assets/anims/barbarian_sword_stab_spritesheet.png',
+      { frameWidth: 36, frameHeight: 24 }
+    )
     this.load.spritesheet('orc-mask-idle',
       './assets/anims/orc_mask_idle_spritesheet.png',
       { frameWidth: 16, frameHeight: 16 }
+    )
+    this.load.spritesheet('orc-sword-idle',
+      './assets/anims/orc_sword_idle_spritesheet.png',
+      { frameWidth: 24, frameHeight: 24 }
     )
     this.load.spritesheet('orc-mask-run',
       './assets/anims/orc_mask_run_spritesheet.png',
@@ -37,6 +57,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('orc-sword',
       './assets/anims/orc_sword_spritesheet.png',
       { frameWidth: 40, frameHeight: 22 }
+    )
+    this.load.spritesheet('orc-sword-stab',
+      './assets/anims/orc_sword_stab_spritesheet.png',
+      { frameWidth: 36, frameHeight: 24 }
+    )
+    this.load.spritesheet('orc-sword-run',
+      './assets/anims/orc_sword_run_spritesheet.png',
+      { frameWidth: 24, frameHeight: 24 }
     )
     this.load.spritesheet('small-red',
       './assets/anims/red_potion_small_spritesheet.png',
