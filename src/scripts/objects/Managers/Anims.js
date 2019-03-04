@@ -41,6 +41,7 @@ export default class Anims {
     }
 
     this.stun = function() {
+      character.hands.setTexture(handType + '-sword-idle', 0)
       character.anims.play(characterType + '-stun', true);
     }
   }
