@@ -1,5 +1,5 @@
 function _textColor (combatObject = {}) {
-  switch (combatObject.type) {
+  switch (combatObject.type()) {
     case 'dot':
       return 0xd04648;
     case 'special':

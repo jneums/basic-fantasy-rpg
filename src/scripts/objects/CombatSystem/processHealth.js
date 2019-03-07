@@ -8,9 +8,9 @@
  * @returns {void}
  */
  export default function processHealth (character = {}, target = {}, combatObject = {} ) {
-  const amount = combatObject.amount;
+  const amount = combatObject.amount();
   // dont try and restore mana if character doesnt use it
-  if (combatObject.type === 'drink' && target.mana) {
+  if (combatObject.type() === 'drink' && target.mana) {
     const oldMana = target.mana.mana();
     const maxMana = target.mana.maxMana();
     // make sure there are no overflows

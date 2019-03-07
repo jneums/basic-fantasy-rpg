@@ -1,6 +1,5 @@
-import meleeAttackObject from './meleeAttack';
-import buildCombatObject from './buildCombatObject';
-import processCombatObject from './processCombatObject';
+import CombatObject from '../CombatSystem/CombatObject';
+import meleeAutoAttackHitTable from '../../hitTables/meleeAutoAttackHitTable';
 
 
 export default class Combat {
@@ -19,26 +18,57 @@ export default class Combat {
 
 
     /**
+     * meleeAttack
+     *
+     * @param  {character} target
+     * @param  {string} hand left or right
+     * @returns {object} damage information
+     */
+    this.meleeAttack  = function(target = {}, hand = '', type = '') {
+      // face enemy:
+      character.movement.faceTarget(target);
+      // show swing animation:
+      character.animations.swing();
+      // reset timer right away:
+      character.timer.resetSwingTimer(hand);
+
+      // build combatObject, used to describe the outcome of the swing
+      const meleeCombatObject = new CombatObject(character.getName(), target.getName())
+      meleeCombatObject.setHand(hand);
+      meleeCombatObject.setType(type);
+      // get the attack status roll, e.g. 'hit', 'miss', 'crit'...
+      meleeCombatObject.setStatus(meleeAutoAttackHitTable(character, target, hand));
+      // get the range for the random roll, e.g. { min: 2, max: 5 }
+      const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
+      // random number between the above range
+      let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
+      // offhand attacks hit for half as much:
+      if (hand === 'off') weaponDmg /= 2;
+      // formula for auto attack damage:
+      meleeCombatObject.setAmount(weaponDmg + character.stat.APBonus(hand));
+      meleeCombatObject.process(character, target);
+      return meleeCombatObject;
+    }
+
+
+    /**
      * meleeAutoAttack - wrapper for melee attack.
      * checks each hand swing timer,
      * checks to see if two handed weapon is being used.
      *
-     * @param  {Character} character attacking
+     * @param  {Character} target
      * @returns {void}
      */
     this.meleeAutoAttack = function(target = {}) {
       if (!target.combat.isDead()) {
         const canAttackWithMainHand = character.timer.checkSwingTimer('main');
         if (canAttackWithMainHand) {
-          const meleeCombatObject = meleeAttackObject(character, target, 'main', 'autoAttack');
-          // send combatObject to be used:
-          processCombatObject(character, target, meleeCombatObject);
-          // return object for debugging
+          this.meleeAttack(target, 'main', 'autoAttack');
         }
         const canAttackWithOffHand = character.timer.checkSwingTimer('off');
         // if offhand has damage key, must be a weapon.
         if (canAttackWithOffHand && character.equipment.isDualWielding()) {
-          meleeAttackObject(character, target, 'off', 'autoAttack');
+          this.meleeAttack(target, 'off', 'autoAttack');
         }
       }
     }
@@ -200,6 +230,4 @@ export default class Combat {
   setCombatLog (newCombatLog) {
     this.combatLog = newCombatLog;
   }
-
-
 }

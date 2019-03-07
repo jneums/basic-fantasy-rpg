@@ -36,7 +36,7 @@ export default class MageAbilities {
         // build spell combat object
         const attackStatus = spellHitTable(character, target);
         // process combat object
-        const combatObject = character.combat.buildCombatObject(
+        const combatObject = character.combat.CombatObject(
           target,
           attackStatus,
           wand,
@@ -44,7 +44,7 @@ export default class MageAbilities {
           wand.type,
           amount
         );
-        character.combat.processCombatObject(target, combatObject);
+        combatObject.process(character, target);
       } else return console.log(target, "I'll have to get closer")
     }
 

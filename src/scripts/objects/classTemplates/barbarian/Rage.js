@@ -51,14 +51,14 @@ export default class RageMechanic {
      */
     this.processRage = function(combatObject = {}, role = '') {
       // dont process rage from eating food
-      if (combatObject.type === 'eat') return;
+      if (combatObject.type() === 'eat') return;
       let rageGain = 0;
       const oldRage = this.rage();
       // equation to determine how much rage is gained
       const level = character.lvl.getLevel();
       const rageConversion = 0.0091107836 * (level * level) + (3.225598133 * level) + 4.2652911;
-      const dmgAmt = combatObject.amount;
-      const weaponSpeed = (combatObject.hand === 'main')
+      const dmgAmt = combatObject.amount();
+      const weaponSpeed = (combatObject.hand() === 'main')
         ? character.equipment.getWeaponSpeed('main')
         : character.equipment.getWeaponSpeed('off');
       const hitFactor = calculateHitFactor(combatObject);
@@ -97,8 +97,8 @@ export default class RageMechanic {
  */
 function calculateHitFactor(combatObject = {}) {
   let hitFactor = 0;
-  const hand = combatObject.hand;
-  const type = combatObject.type;
+  const hand = combatObject.hand();
+  const type = combatObject.type();
   if (hand === 'main') {
     if( type === 'hit') {
       hitFactor = 3.5;

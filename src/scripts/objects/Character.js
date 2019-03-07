@@ -2,7 +2,7 @@ import Stat from './Managers/Stats';
 import Skills from './Managers/Skills';
 import Timer from './Managers/Timer';
 import Inventory from './Managers/Inventory';
-import Combat from './Managers/Combat/Combat';
+import Combat from './Managers/Combat';
 import Movement from './Managers/Movement';
 import Equipment from './Managers/Equipment';
 import Lvl from './Managers/Level';

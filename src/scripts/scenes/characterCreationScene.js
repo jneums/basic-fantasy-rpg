@@ -35,7 +35,7 @@ export default class CharacterCreationScene extends Phaser.Scene {
       this.characters.add(npc);
     })
 
-    this.player = new Barbarian(this, 60, 110);
+    this.player = new Barbarian(this, 110, 110);
     this.player.setTexture('barbarian-run', 0).setSize(22, 16);
     this.player.inventory.add(getConsumableByName('Tough Jerky'))
     this.player.inventory.add(getConsumableByName('Tough Jerky'))

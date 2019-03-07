@@ -17,16 +17,17 @@ export default class Barbarian extends Character {
     super(scene, x, y)
     // barbarian specific abilities
     this.ability = new BarbarianAbilities(this);
-    this.keys = ['auto attack', 'charge', 'rend', 'heroic strike', 'battle shout', 'thunder clap', 'hamstring']
+    this.keys = ['auto attack', 'rush', 'gore', 'savage blow', 'battle cry', 'intimidate', 'hobble']
     this.animations = new Anims(this, 'barbarian', 'barbarian');
     // config keymap for barbarian abilities
+    // enable sending config object as second arg to keymap?
     this.keyMap = new KeyMap(this);
-    this.keyMap.setTwo(this.ability.charge);
-    this.keyMap.setThree(this.ability.rend);
-    this.keyMap.setFour(this.ability.heroicStrike);
-    this.keyMap.setFive(this.ability.battleShout);
-    this.keyMap.setSix(this.ability.thunderClap);
-    this.keyMap.setSeven(this.ability.hamstring);
+    this.keyMap.setTwo(this.ability.rush);
+    this.keyMap.setThree(this.ability.gore);
+    this.keyMap.setFour(this.ability.savageBlow);
+    this.keyMap.setFive(this.ability.battleCry);
+    this.keyMap.setSix(this.ability.intimidate);
+    this.keyMap.setSeven(this.ability.hobble);
     this.keyMap.setEight('');
 
     // faction

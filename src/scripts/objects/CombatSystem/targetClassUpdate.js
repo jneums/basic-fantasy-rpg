@@ -5,15 +5,16 @@
  * @param  {object} combatObject info about attack
  * @returns {void}
  */
-export default function targetClassUpdate (character = {}, newCombatObject = {}) {
+export default function targetClassUpdate (character = {}, combatObject = {}) {
   const targetClass = character.getCharacterClass();
   switch(targetClass) {
     case 'barbarian':
       // dont gain rage from being healed
-      if (newCombatObject.type !== 'heal')
-        character.rage.processRage(newCombatObject, 'target');
-      return newCombatObject;
+      if (combatObject.type() !== 'heal')
+        character.rage.processRage(combatObject, 'target');
+      break;
     default:
-      return newCombatObject;
+      break;
   }
+  return combatObject;
 }
