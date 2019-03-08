@@ -19,3 +19,6 @@ Probably sounds familiar...
 However, check it out and let me know if you have any questions.
 
 The game is very early in development, though there is a large framework in place that will enable tons of options.
+
+Here is some documentation for the Combat System if you have questions:
+https://codepen.io/Jesse989/full/vPgPGY
