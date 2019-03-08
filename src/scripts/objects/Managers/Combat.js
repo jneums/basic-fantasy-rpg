@@ -22,7 +22,7 @@ export default class Combat {
      *
      * @param  {character} target
      * @param  {string} hand left or right
-     * @returns {object} damage information
+     * @returns {void}
      */
     this.meleeAttack  = function(target = {}, hand = '', type = '') {
       // face enemy:
@@ -33,7 +33,7 @@ export default class Combat {
       character.timer.resetSwingTimer(hand);
 
       // build combatObject, used to describe the outcome of the swing
-      const meleeCombatObject = new CombatObject(character.getName(), target.getName())
+      const meleeCombatObject = new CombatObject(character, target);
       meleeCombatObject.setHand(hand);
       meleeCombatObject.setType(type);
       // get the attack status roll, e.g. 'hit', 'miss', 'crit'...
@@ -46,8 +46,7 @@ export default class Combat {
       if (hand === 'off') weaponDmg /= 2;
       // formula for auto attack damage:
       meleeCombatObject.setAmount(weaponDmg + character.stat.APBonus(hand));
-      meleeCombatObject.process(character, target);
-      return meleeCombatObject;
+      meleeCombatObject.process();
     }
 
 
@@ -219,15 +218,10 @@ export default class Combat {
     this.setAutoShoot = function() {
       autoShootToggle = !autoShootToggle;
     }
-  }
 
-  /**
-   * setCombatLog
-   *
-   * @param  {array} newCombatLog
-   * @returns {void}
-   */
-  setCombatLog (newCombatLog) {
-    this.combatLog = newCombatLog;
+    this.addToLog = function(newObject) {
+      if (!newObject) return;
+      combatLog = combatLog.concat([newObject]);
+    }
   }
 }

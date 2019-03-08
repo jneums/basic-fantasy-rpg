@@ -2,7 +2,7 @@
 /**
  * targetClassUpdate - specific reactions for taking dmg
  *
- * @param  {object} combatObject info about attack
+ * @param  {Character} character
  * @returns {void}
  */
 export default function targetClassUpdate (character = {}, combatObject = {}) {

@@ -29,12 +29,12 @@ export default function intimidate() {
   if (!closest.length) return;
   closest.forEach(enemy => {
     // setup combat object for each enemy:
-    const combatObject = new CombatObject(this.getName(), enemy.getName());
+    const combatObject = new CombatObject(this, enemy);
     combatObject.setType('special');
     combatObject.setAmount(10);
     combatObject.setBonusThreat(10 * .75);
     // send object to be used
-    combatObject.process(this, enemy);
+    combatObject.process();
     const debuff = {
       name: 'intimidate',
       duration: 10 * 60,

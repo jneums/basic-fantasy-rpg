@@ -4,10 +4,6 @@ export default function animateFloatingText(scene = {}, floatingText) {
 
   if (floatingText._animation === 'up') {
     let side = floatingText._side;// which way are we facing;
-    let firstBezierPointX;
-    let firstBezierPointY;
-    let secondBezierPointX;
-    let secondBezierPointY;
     let endX;
     let endY;
     // set variables used to tween:
@@ -25,11 +21,11 @@ export default function animateFloatingText(scene = {}, floatingText) {
       tweens: [
         { x: endX, y: endY, alpha: 0}
       ],
-      onComplete: destroy,
+      onComplete: _destroy,
       onCompleteParams: [floatingText]
     });
 
-    function destroy(timeline, targets) {
+    function _destroy(timeline, targets) {
       targets.destroy();
     }
   }

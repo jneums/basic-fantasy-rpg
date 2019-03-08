@@ -19,7 +19,7 @@ export default function rush() {
   if (inRange) return console.log('You are too close')
 
   // setup combat object:
-  const combatObject = new CombatObject(this.getName(), target.getName());
+  const combatObject = new CombatObject(this, target);
   combatObject.setType('stun');
   combatObject.setBonusThreat(1);
 

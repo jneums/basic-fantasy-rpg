@@ -1,4 +1,4 @@
-export default function processStatus(attacker = {}, target = {}, combatObject = {}) {
+export default function statusMod(attacker = {}, target = {}, combatObject = {}) {
   // values used to determine mitigation amount
   const amount = combatObject.amount();
   const mitigatedByArmor = amount * attacker.stat.armorMitigationPercent(target);

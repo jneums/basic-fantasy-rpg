@@ -18,12 +18,12 @@ import CombatObject from '../../../CombatSystem/CombatObject';
   // rage check:
   if (!this.rage.spendRage(10)) return console.log('I need more rage')
   // setup combat object:
-  const combatObject = new CombatObject(this.getName(), target.getName());
+  const combatObject = new CombatObject(this, target);
   combatObject.setType('special');
   combatObject.setAmount(5);
 
   // send object to be used
-  combatObject.process(this, target);
+  combatObject.process();
   // create combat object for 5 dmg, send it to be processed
   const debuff = {
     name: 'hobble',

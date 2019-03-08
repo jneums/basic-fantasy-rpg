@@ -1,4 +1,3 @@
-import CombatObject from '../../CombatSystem/CombatObject';
 import battleCry from './abilities/battleCry';
 import savageBlow from './abilities/savageBlow';
 import rush from './abilities/rush';

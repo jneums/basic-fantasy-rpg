@@ -2,10 +2,11 @@
  * attackerClassUpdate - specific modifiacations to combat
  *
  * @param  {Character} attacker
- * @param  {object} combatObject info about attack
- * @returns {object} modified combatObject
+ * @param  {CombatObject} combatObject
+ * @returns {void}
  */
 export default function attackerClassUpdate (attacker = {}, combatObject = {}) {
+  if (!attacker.getCharacterClass()) return;
   const attackerClass = attacker.getCharacterClass();
   switch(attackerClass) {
     case 'barbarian':
@@ -34,5 +35,4 @@ export default function attackerClassUpdate (attacker = {}, combatObject = {}) {
     default:
       break;
   }
-  return combatObject;
 }

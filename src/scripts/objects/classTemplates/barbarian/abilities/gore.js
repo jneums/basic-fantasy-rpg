@@ -18,7 +18,7 @@ export default function gore() {
   if (!this.rage.spendRage(10)) return console.log('I need more rage')
 
   // setup combat object:
-  const combatObject = new CombatObject(this.getName(), target.getName());
+  const combatObject = new CombatObject(this, target);
   combatObject.setType('dot');
   combatObject.setBonusThreat(1);
   combatObject.setAmount(15); // damage per tick

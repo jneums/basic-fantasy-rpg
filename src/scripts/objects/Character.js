@@ -174,6 +174,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
      * @returns {void}
      */
     this.setTapped = function(newTapped) {
+      if (tapped) return;
       tapped = newTapped;
     }
 

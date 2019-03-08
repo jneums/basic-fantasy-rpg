@@ -1,6 +1,6 @@
 import FloatingText from '../FloatingText/FloatingText';
 
-export default function createFloatingText(attacker, target, combatObject) {
+export default function textMod(attacker = {}, target = {}, combatObject = {}) {
   // create floating text:
   const text = new FloatingText(attacker.scene, {
       text: -1 * Math.round(combatObject.amount()),

@@ -1,20 +1,3 @@
-function _textColor (combatObject = {}) {
-  switch (combatObject.type()) {
-    case 'dot':
-      return 0xd04648;
-    case 'special':
-      return 0xccaa44;
-    case 'eat':
-    case 'heal':
-      return 0x649438;
-    case 'drink':
-      return 0x337799;
-    case 'autoAttack':
-      return 0xc8dae3;
-    default:
-      break;
-  }
-}
 
 /**
  * createFloatingText - create text group
@@ -74,4 +57,22 @@ export default function createFloatingText(scene = {}, options = {}) {
   _obj.setVisible(false);
   // animateFloatingText();
   return _obj;
+}
+
+function _textColor (combatObject = {}) {
+  switch (combatObject.type()) {
+    case 'dot':
+      return 0xd04648;
+    case 'special':
+      return 0xccaa44;
+    case 'eat':
+    case 'heal':
+      return 0x649438;
+    case 'drink':
+      return 0x337799;
+    case 'autoAttack':
+      return 0xc8dae3;
+    default:
+      break;
+  }
 }

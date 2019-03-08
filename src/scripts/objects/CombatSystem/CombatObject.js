@@ -1,15 +1,13 @@
 import processCombatObject from './processCombatObject';
-
-
  /**
   * CombatObject - Create anytime you want to modify health
   * of self or enemy. e.g. melee attack, heal, eating.
   *
-  * @param  {string} attacker name
-  * @param  {string} target name
+  * @param  {Character} attacker
+  * @param  {Character} target
   * @return {CombatObject}
   */
- export default function CombatObject (attacker = '', target = '') {
+ export default function CombatObject (attacker = {}, target = {}) {
    // attacker and target are set at construction,
    // no reason to change them so no setter methods.
    this.attacker = function() {
@@ -19,7 +17,9 @@ import processCombatObject from './processCombatObject';
      return target;
    }
 
-   this.process = processCombatObject.bind(this);
+   // main function, called after config is complete.
+   this.process = processCombatObject.bind(this, attacker, target);
+
    // e.g. 'hit', 'miss', 'parry'
    let status = 'hit';
    this.status = () => status;
