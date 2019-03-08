@@ -20,6 +20,7 @@ export default function OrcAI() {
       this.animations.idle();
       return this.setVelocity(0, 0);
     }
+
     // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {

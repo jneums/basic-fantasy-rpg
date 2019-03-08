@@ -61,6 +61,8 @@ export default function createFloatingText(scene = {}, options = {}) {
 
 function _textColor (combatObject = {}) {
   switch (combatObject.type()) {
+    case 'wand':
+      return 0x337799;
     case 'dot':
       return 0xd04648;
     case 'special':

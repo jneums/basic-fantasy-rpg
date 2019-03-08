@@ -19,7 +19,10 @@ export default class Threat {
      * @returns {void}
      */
     this.setThreatTable = function(newThreatTable) {
-      threatTable = newThreatTable;
+      // sort new threat table first:
+      threatTable = newThreatTable.sort((a, b) => {
+        return b.threat - a.threat;
+      });
     }
 
     /**
@@ -30,12 +33,8 @@ export default class Threat {
      * @returns {Character}
      */
     this.highestThreat = function() {
-      if (threatTable.length) {
-        // return first entry in sorted threatTable
-        return threatTable.sort((a, b) => {
-          b.threat - a.threat;
-        })[0].character;
-      }
+      if (!threatTable.length) return;
+      return threatTable[0].character;
     }
 
     /**
@@ -46,9 +45,8 @@ export default class Threat {
      * @returns {void}
      */
     this.updateTargetThreatTable = function(target = {}, combatObject = {}) {
-      const threat = combatObject.amount + combatObject.bonusThreat;
+      const threat = combatObject.amount() + combatObject.bonusThreat();
       const oldTable = target.threat.threatTable()
-
       const oldEntry = oldTable.filter(entry => entry.character.getName() === character.getName())[0];
       const newTable = oldTable.filter(entry => entry.character.getName() !== character.getName());
 

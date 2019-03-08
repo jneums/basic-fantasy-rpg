@@ -40,6 +40,9 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.hands = scene.add.sprite(x, y - 4);
     this.hands.depth = 2;
 
+    scene.characters.add(this);
+
+
 
     // method to keep bars up to date:
     this.updateBars = function() {
@@ -50,11 +53,19 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       this.healthBar.x = this.x - 8;
       this.healthBar.y = this.y - 20;
       this.healthBar.draw();
-      if (!this.rage) return;
-      this.rageBar.set(this.rage.rage());
-      this.rageBar.x = this.x - 8;
-      this.rageBar.y = this.y - 16;
-      this.rageBar.draw();
+      if (this.rage) {
+        this.rageBar.set(this.rage.rage());
+        this.rageBar.x = this.x - 8;
+        this.rageBar.y = this.y - 16;
+        this.rageBar.draw();
+      } else if (this.mana) {
+        this.manaBar.p = 14 / (this.mana.maxMana());
+        this.manaBar.set(this.mana.mana());
+        this.manaBar.x = this.x - 8;
+        this.manaBar.y = this.y - 16;
+        this.manaBar.draw();
+      }
+
     }
 
 

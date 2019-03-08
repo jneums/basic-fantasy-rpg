@@ -1,53 +1,12 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
 import { getConsumableByName } from '../../../loot/consumables';
+import wand from './abilities/wand';
 
 export default class MageAbilities {
   constructor(character) {
-    let abilities = ['shoot'];
+    let abilities = ['wand'];
 
-    /**
-     * Shoot - attack with an equipped wand
-     *
-     * level: 1
-     *
-     * requires: level 1, wand
-     *
-     * @returns {void}
-     */
-    this.shoot = function() {
-      // check for cooldown
-      const canRanged = character.timer.checkSwingTimer('ranged');
-      if (!canRanged) return;
-      // check if there is a target
-      const target = character.target.currentTarget();
-      if (!target) return console.log("I need a target");
-      // check for wand
-      const wand = character.equipment.equipped().ranged;
-      if (!wand.damage) return console.log("I dont have a wand")
-      // check if target is in range
-      const maxDistance = 300;
-      const inRange = character.target.rangeCheck(target, maxDistance);
-      if (inRange) {
-        // stop moving, cant move and shoot
-        character.movement.stop();
-        character.timer.resetSwingTimer('ranged');
-        // get weapon dmg roll
-        const amount = Phaser.Math.Between(wand.damage.min, wand.damage.max);
-        // build spell combat object
-        const attackStatus = spellHitTable(character, target);
-        // process combat object
-        const combatObject = character.combat.CombatObject(
-          target,
-          attackStatus,
-          wand,
-          'ranged',
-          wand.type,
-          amount
-        );
-        combatObject.process(character, target);
-      } else return console.log(target, "I'll have to get closer")
-    }
-
+    this.wand = wand.bind(character);
     /**
      * Arcane Intellect -
      *

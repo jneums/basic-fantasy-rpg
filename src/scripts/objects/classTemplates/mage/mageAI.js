@@ -1,23 +1,21 @@
 /**
- * PriestAI - priest script
+ * MagicUserAI - npc magic user script
  *
  * @param  {Character} character reference
  * @returns {function} update function
  */
-export default function PriestAI() {
+export default function MageAI() {
   const AI = function() {
-    const newSwingTimer = this.timer.updateSwingTimers();
-    const newSpellTimers = this.timer.updateSpellTimers();
     const allies = this.target.scanForAllies();
 
     const enemies = this.target.scanForEnemies(500);
     // if no enemies, stop
     if (!enemies.length) return this.setVelocity(0, 0);
     const target = this.target.getClosestEnemy(enemies);
-    const canReachTarget = this.target.rangeCheck(target, 50);
-    if (canReachTarget) {
+
+    const wandRange = this.target.rangeCheck(target, 300);
+    if (wandRange) {
       this.setVelocity(0, 0);
-      this.combat.meleeAutoAttack(target);
     } else {
       this.scene.physics.moveToObject(this, target);
     }

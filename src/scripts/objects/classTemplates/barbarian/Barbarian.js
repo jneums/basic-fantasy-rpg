@@ -1,8 +1,7 @@
 import Character from '../../Character';
-import { getRandomCoordsOnCanvas } from '../../../utilities/randomNumberUtilities';
 import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
-import barbarianAI from '../../../AI/barbarianAI';
+import barbarianAI from './barbarianAI';
 import RageMechanic from './Rage';
 import RageBar from '../../Managers/RageBar';
 import BarbarianAbilities from './BarbarianAbilities';
@@ -19,6 +18,10 @@ export default class Barbarian extends Character {
     this.ability = new BarbarianAbilities(this);
     this.keys = ['auto attack', 'rush', 'gore', 'savage blow', 'battle cry', 'intimidate', 'hobble']
     this.animations = new Anims(this, 'barbarian', 'barbarian');
+
+    //set starting texture and size:
+    this.setTexture('barbarian-run', 0).setSize(12, 16);
+
     // config keymap for barbarian abilities
     // enable sending config object as second arg to keymap?
     this.keyMap = new KeyMap(this);
@@ -30,7 +33,7 @@ export default class Barbarian extends Character {
     this.keyMap.setSeven(this.ability.hobble);
     this.keyMap.setEight('');
 
-    // faction
+    // faction, default 'alliance'
     this.setTeam('alliance');
 
     // placement on the map
@@ -70,7 +73,9 @@ export default class Barbarian extends Character {
 
     // rage system
     this.rage = new RageMechanic(this);
-    this.rageBar = new RageBar(scene, x - 8, y - 12);
+
+    // new resource bar, positioned to float above the character:
+    this.rageBar = new RageBar(scene, x - 8, y - 16);
 
     // ai system
     this.AI = barbarianAI();
@@ -80,5 +85,6 @@ export default class Barbarian extends Character {
       // after 5 seconds start regen hp according to spirit
       if(!this.combat.isInCombat()) this.rage.rageDecay();
     };
+
   }
 }

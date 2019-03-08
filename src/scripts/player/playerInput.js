@@ -16,6 +16,7 @@ export default function playerInput(player = {}) {
    * toggle inventory
    */
   player.scene.input.keyboard.on('keyup_SPACE', (event) => {
+
     inventoryToggle = !inventoryToggle;
     if (inventoryToggle) {
       // add and setup the inventory camera:

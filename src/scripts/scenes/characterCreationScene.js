@@ -1,4 +1,5 @@
 import Barbarian from '../objects/classTemplates/barbarian/Barbarian';
+import Mage from '../objects/classTemplates/mage/Mage';
 import Orc from '../objects/mobTemplates/Orc';
 import playerInput from '../player/playerInput';
 import playerUpdate from '../player/playerUpdate';
@@ -21,32 +22,44 @@ export default class CharacterCreationScene extends Phaser.Scene {
   create() {
     // holds all characters:
     this.characters = this.add.group();
+
     // add animations to scene:
     animationCreator(this);
+
     // create map:
     const map = mapCreator(this);
-    // use map to spawn mobs:
+
+    // use map object to spawn mobs:
     map.getObjectLayer('spawns').objects.forEach(spawnPoint => {
       let npc;
       if (spawnPoint.type === 'orc') {
         npc = new Orc(this, spawnPoint.x, spawnPoint.y);
       }
-      npc.setTexture('orc-mask-idle', 0).setOrigin(.5).setSize(22, 16);
-      this.characters.add(npc);
     })
 
-    this.player = new Barbarian(this, 110, 110);
-    this.player.setTexture('barbarian-run', 0).setSize(22, 16);
-    this.player.inventory.add(getConsumableByName('Tough Jerky'))
-    this.player.inventory.add(getConsumableByName('Tough Jerky'))
-    this.player.inventory.add(getConsumableByName('Tough Jerky'))
-    // player update will be handled by user input:
-    this.player.AI = playerUpdate();
-    playerInput(this.player);
-    this.characters.add(this.player)
 
+    // add some characters:
+    this.mage = new Mage(this, 90, 130);
+    this.barbarian = new Barbarian(this, 110, 110);
+
+    // add some food:
+    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'))
+    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'))
+    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'))
+
+    // uncomment to control mage:
+    this.mage.AI = playerUpdate();
+    playerInput(this.mage);
+
+    // uncomment to control barbarian:
+    // this.barbarian.AI = playerUpdate();
+    // playerInput(this.barbarian);
+
+    // camera will follow player controlled character:
     this.cameras.main.setRoundPixels(true);
-    this.cameras.main.startFollow(this.player, true, .05, .05)
+
+    // set follow to current player controlled character:
+    this.cameras.main.startFollow(this.mage, true, .05, .05);
     this.cameras.main.setZoom(4)
 
   }

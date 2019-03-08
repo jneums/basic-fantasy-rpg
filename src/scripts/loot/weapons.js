@@ -97,7 +97,7 @@ const weapons = [
     speed: 1.5,
     durability: 30,
     repairCost: 60,
-    damage: { min: 1, max: 2 },
+    damage: { min: 3, max: 9 },
     disenchant: 'no',
     icon: 'inv_staff_02',
     droppedBy: '',

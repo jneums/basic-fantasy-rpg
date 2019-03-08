@@ -16,6 +16,10 @@ export default class Orc extends Character {
     this.ability = new MobAbilities(this);
     this.animations = new Anims(this, 'orc-mask', 'orc');
 
+    // starting texture and size;
+    this.setTexture('orc-mask-idle', 0).setSize(22, 16);
+
+
     this.setTeam('mob');
     this.setName('orc');
     this.setCharacterClass('mob');
@@ -31,7 +35,8 @@ export default class Orc extends Character {
     this.equipment.setEquipped(equipped);
 
     // starting hp
-    const startingHp = this.stat.baseStamina() * 10;
+    this.stat.setBaseHp(10);
+    const startingHp = (this.stat.baseStamina() * 10) + this.stat.baseHp();
     this.stat.setHp(startingHp);
 
     // starting loot

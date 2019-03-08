@@ -14,6 +14,15 @@ Shift + number keys will use the item in that inventory slot.
 
 For example, the player starts with "Tough Jerky" in slot 1. Use shift + 1 to use the "Tough Jerky". Because the item type of "Tough Jerky" is a consumable, the game knows to cast the "eat" buff. Make sure not to move, as "eat" is channeled.
 
+Start by opening up `./src/scripts/scenes/characterCreationScene`, and choose your
+class by uncommenting whichever class you would like to test.
+
+The mage is in progress, but can wand and conjure food and water:
+
+1. Toggle auto attack.
+
+2. Shoot your wand.
+
 The first playable class is the Barbarian, which has the following abilities:
 
 1. Toggle auto attack.
@@ -35,6 +44,15 @@ Probably sounds familiar...these abilities were created based on the mechanics o
 ## Contributing:
 
 This game is in a very early stats right now. Many of the core systems are in place, however the methods needed to interact with them are missing.
+
+### TODO:
+
+If you would like to help but don't know where to start, here is a list that is
+constantly updated with new things:
+
+1. Mage animations: need all the basic animations that the barbarian and orc have,
+having a 'wand' animation would be REALLY great right now because that is the Mages
+number one ability currently. Check out the spritesheets for orc and barbarian for ideas, and use one of the caster sprites from the master spritesheet in 'assets'.
 
 ### Roadmap:
 
