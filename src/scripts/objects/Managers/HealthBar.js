@@ -6,7 +6,7 @@ export default class HealthBar {
 
         this.x = x;
         this.y = y;
-        this.bar.depth = 1;
+        this.bar.depth = 0;
         this.value = startingHp;
         this.p = 14 / this.value;
         this.backgroundColor = 0x1c1117;

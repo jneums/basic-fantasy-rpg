@@ -6,7 +6,7 @@ export default class ManaBar {
 
         this.x = x;
         this.y = y;
-        this.bar.depth = 1;
+        this.bar.depth = 0;
         this.value = 100;
         this.p = 14 / this.value;
 

@@ -12,6 +12,10 @@ import Buffs from './Managers/Buffs';
 import Consumables from './Managers/Consumables';
 import HealthBar from './Managers/HealthBar';
 
+
+/**
+ * Main character class, inherited by all characters.
+ */
 export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x = 0, y = 0) {
     super(scene, x, y)
@@ -38,6 +42,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.inventory = new Inventory(this);
     this.healthBar = new HealthBar(scene, x, y, this.stat.maxHp());
     this.hands = scene.add.sprite(x, y - 4);
+    this.depth = 1;
     this.hands.depth = 2;
 
     scene.characters.add(this);

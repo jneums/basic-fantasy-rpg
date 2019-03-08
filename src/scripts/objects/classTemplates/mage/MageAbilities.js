@@ -1,47 +1,15 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
 import { getConsumableByName } from '../../../loot/consumables';
 import wand from './abilities/wand';
+import arcaneIntellect from './abilities/arcaneIntellect';
 
 export default class MageAbilities {
   constructor(character) {
     let abilities = ['wand'];
 
     this.wand = wand.bind(character);
-    /**
-     * Arcane Intellect -
-     *
-     * level: 1
-     *
-     * requires: level 1
-     *
-     * @returns {void}
-     */
-    this.arcaneIntellect = function() {
-      const target = character.target.currentTarget();
-      const manaCost = 60;
-      const range = 300;
-      // create a buff object.
-      // range check
-      if (!character.target.rangeCheck(target, range)) return console.log('I have to get closer')
-      const buff = {
-        name: 'arcaneIntellect',
-        duration: 1800 * 60,
-        statObject: {
-          intellect: 2
-        }
-      }
-      // is target friendly:
-      if (target.team() === character.team()) {
-        // increases the target's Intellect by 2 for 30 min.
-        if (character.mana.spendMana(manaCost)) {
-          if (target.buffs.has('arcaneIntellect'))
-            target.buffs.replace(buff);
-          else
-            target.buffs.add(buff);
-        }
-      }
-    }
-
+    this.arcaneIntellect = arcaneIntellect.bind(character);
+    
     /**
      * Conjure Water - Conjures 2 bottle of water, providing
      * the mage and his allies with something to drink.

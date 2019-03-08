@@ -5,6 +5,11 @@ import moveToMoveTarget from './moveToMoveTarget';
  * PlayerUpdate - update() to run on player
  * controlled character.
  *
+ * Handles animations based on the state of the
+ * character.
+ *
+ * Attacks if enemy in range.
+ *
  * @param  {Character} character reference
  * @returns {function} update function
  */

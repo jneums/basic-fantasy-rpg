@@ -1,3 +1,12 @@
+
+/**
+ * actionPointerDown - called when the inventory is closed,
+ * e.g. the pointer has interacted with the game world, not the ui.
+ *
+ * @param  {type} pointer     description
+ * @param  {type} player = {} description
+ * @return {type}             description
+ */
 export default function actionPointerDown(pointer, player = {}) {
   // is pointer on a character:
   let target = false;
@@ -7,11 +16,9 @@ export default function actionPointerDown(pointer, player = {}) {
     if (child.body.hitTest(pointer.worldX, pointer.worldY)) {
       // if so, set target to that character:
       target = child;
-      // if that character is an enemy,
-      if (target.team() === 'mob') {
-        // set it as the new target of the player
-        player.target.setCurrentTarget(target);
-      }
+      // set it as the new target of the player
+      player.target.setCurrentTarget(target);
+
     }
   })
   // if a character was clicked, and it has loot:

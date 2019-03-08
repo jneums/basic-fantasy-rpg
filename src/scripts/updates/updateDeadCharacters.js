@@ -1,3 +1,12 @@
+
+/**
+ * updateDeadCharacters - What to do for characters that have
+ * died but have not been cleared yet.
+ * Handles character clean up.
+ *
+ * @param  {type} scene = {} description
+ * @return {type}            description
+ */
 export default function updateDeadCharacters(scene = {}) {
   scene.characters.children.entries.forEach(child => {
     if (child.combat.isDead()) {

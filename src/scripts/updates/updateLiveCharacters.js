@@ -1,6 +1,9 @@
 
 /**
- * updateLiveCharacters - run from scene update
+ * updateLiveCharacters - run from scene update,
+ * keeps bars and characters in sync, updates
+ * swing and spell timers, keeps characters incapacitated
+ * if they have a 'stun' debuff, etc...
  *
  * @param  {Scene} scene
  * @returns {void}

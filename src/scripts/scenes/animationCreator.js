@@ -1,4 +1,22 @@
+
+
+
+/**
+ * animationCreator - put your animations in here!
+ * Eventually we will use an atlas, however it is easier
+ * to update and change things if we use individual spritesheets.
+ *
+ * This function inserts the animaions into the game object,
+ * making the animations available from any scene in the game.
+ *
+ * @param  {Scene} scene
+ * @return {void}
+ */
 export default function animationCreator(scene = {}) {
+
+  // barbarian animations:
+  // notice there are body animations, as well as hand/weapon animations.
+  // this is to make it easier to swap out weapons when they are equipped:
   scene.anims.create({
     key: 'barbarian-run',
     frames: scene.anims.generateFrameNumbers('barbarian-run', {start: 0, end: 4}),
@@ -28,6 +46,8 @@ export default function animationCreator(scene = {}) {
     yoyo: false,
     repeat: 0,
   })
+
+  // start the sword animations:
   scene.anims.create({
     key: 'barbarian-sword-run',
     frames: scene.anims.generateFrameNumbers('barbarian-sword-run', {start: 0, end: 3}),
@@ -50,6 +70,8 @@ export default function animationCreator(scene = {}) {
     yoyo: true,
     repeat: 0,
   })
+
+  // orc body animations:
   scene.anims.create({
     key: 'orc-mask-run',
     frames: scene.anims.generateFrameNumbers('orc-mask-run', {start: 0, end: 4}),
@@ -87,6 +109,8 @@ export default function animationCreator(scene = {}) {
     yoyo: false,
     repeat: 0,
   })
+
+  // and orc sword animations:
   scene.anims.create({
     key: 'orc-sword-idle',
     frames: scene.anims.generateFrameNumbers('orc-sword-idle', {frames: [2, 1, 0]}),
@@ -109,6 +133,8 @@ export default function animationCreator(scene = {}) {
     yoyo: true,
     repeat: 0,
   })
+
+  // drinking animation:
   scene.anims.create({
     key: 'small-red',
     frames: scene.anims.generateFrameNumbers('small-red', {frames: [0,1, 1, 0, 0, 0]}),
