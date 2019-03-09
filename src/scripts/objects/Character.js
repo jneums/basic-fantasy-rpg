@@ -54,6 +54,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       // keep hands in right place:
       this.hands.x = this.x;
       this.hands.y = this.y - 4;
+      this.healthBar.set(this.stat.hp());
       this.healthBar.p = 14 / (this.stat.maxHp());
       this.healthBar.x = this.x - 8;
       this.healthBar.y = this.y - 20;

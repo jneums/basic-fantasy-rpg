@@ -14,16 +14,67 @@
  */
 export default function animationCreator(scene = {}) {
 
-  // barbarian animations:
-  // notice there are body animations, as well as hand/weapon animations.
-  // this is to make it easier to swap out weapons when they are equipped:
+
+  // mage animations:
+  // change from barabrian anims as you import mage anims:
+  // (barbarian anim are placeholders atm for mage)
   scene.anims.create({
-    key: 'barbarian-run',
-    frames: scene.anims.generateFrameNumbers('barbarian-run', {start: 0, end: 4}),
+    key: 'mage-idle',
+    frames: scene.anims.generateFrameNumbers('mage-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 2900
+  })
+  scene.anims.create({
+    key: 'mage-run',
+    frames: scene.anims.generateFrameNumbers('mage-run', {start: 0, end: 4}),
     duration: 500,
     yoyo: false,
     repeat: -1
   })
+  scene.anims.create({
+    key: 'mage-combat',
+    frames: scene.anims.generateFrameNumbers('mage-combat', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'mage-die',
+    frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
+  })
+  
+  // mage sword (hand) anims:
+  scene.anims.create({
+    key: 'mage-sword-idle',
+    frames: scene.anims.generateFrameNumbers('mage-sword-idle', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3000
+  })
+  scene.anims.create({
+    key: 'mage-sword-run',
+    frames: scene.anims.generateFrameNumbers('mage-sword-run', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'mage-sword-stab',
+    frames: scene.anims.generateFrameNumbers('mage-sword-stab', {frames: [0, 1, 2]}),
+    frameRate: 9,
+    yoyo: true,
+    repeat: 0,
+  })
+
+  // barbarian animations:
+  // notice there are body animations, as well as hand/weapon animations.
+  // this is to make it easier to swap out weapons when they are equipped:
   scene.anims.create({
     key: 'barbarian-idle',
     frames: scene.anims.generateFrameNumbers('barbarian-idle', {start: 0, end: 4}),
@@ -31,6 +82,13 @@ export default function animationCreator(scene = {}) {
     yoyo: true,
     repeat: -1,
     repeatDelay: 2900
+  })
+  scene.anims.create({
+    key: 'barbarian-run',
+    frames: scene.anims.generateFrameNumbers('barbarian-run', {start: 0, end: 4}),
+    duration: 500,
+    yoyo: false,
+    repeat: -1
   })
   scene.anims.create({
     key: 'barbarian-combat',
@@ -49,19 +107,19 @@ export default function animationCreator(scene = {}) {
 
   // start the sword animations:
   scene.anims.create({
-    key: 'barbarian-sword-run',
-    frames: scene.anims.generateFrameNumbers('barbarian-sword-run', {start: 0, end: 3}),
-    frameRate: 5,
-    yoyo: true,
-    repeat: -1,
-  })
-  scene.anims.create({
     key: 'barbarian-sword-idle',
     frames: scene.anims.generateFrameNumbers('barbarian-sword-idle', {start: 0, end: 3}),
     frameRate: 8,
     yoyo: true,
     repeat: -1,
     repeatDelay: 3000
+  })
+  scene.anims.create({
+    key: 'barbarian-sword-run',
+    frames: scene.anims.generateFrameNumbers('barbarian-sword-run', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
   })
   scene.anims.create({
     key: 'barbarian-sword-stab',
@@ -72,6 +130,14 @@ export default function animationCreator(scene = {}) {
   })
 
   // orc body animations:
+  scene.anims.create({
+    key: 'orc-mask-idle',
+    frames: scene.anims.generateFrameNumbers('orc-mask-idle', {start: 0, end: 3}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3200
+  })
   scene.anims.create({
     key: 'orc-mask-run',
     frames: scene.anims.generateFrameNumbers('orc-mask-run', {start: 0, end: 4}),
@@ -85,15 +151,6 @@ export default function animationCreator(scene = {}) {
     frameRate: 4,
     yoyo: false,
     repeat: -1,
-  })
-
-  scene.anims.create({
-    key: 'orc-mask-idle',
-    frames: scene.anims.generateFrameNumbers('orc-mask-idle', {start: 0, end: 3}),
-    frameRate: 6,
-    yoyo: true,
-    repeat: -1,
-    repeatDelay: 3200
   })
   scene.anims.create({
     key: 'orc-mask-die',

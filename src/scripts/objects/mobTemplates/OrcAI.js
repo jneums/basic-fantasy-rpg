@@ -5,7 +5,7 @@
  * @returns {function} update function
  */
 export default function OrcAI() {
-  const meleeRange = 30;
+  const meleeRange = 25;
   const AI = function() {
     if (this.combat.isDead()) return;
 

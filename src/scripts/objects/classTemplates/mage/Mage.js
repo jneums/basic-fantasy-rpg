@@ -19,7 +19,7 @@ export default class Mage extends Character {
     this.keys = ['auto attack', 'wand', 'arcane intellect', 'conjure water', 'conjure food', 'arcane missiles']
 
     // replace with mage animations when implemented:
-    this.animations = new Anims(this, 'barbarian', 'barbarian');
+    this.animations = new Anims(this, 'mage', 'mage');
 
     //set starting texture and size:
     this.setTexture('barbarian-run', 0).setSize(12, 16);
@@ -77,7 +77,7 @@ export default class Mage extends Character {
     this.mana.setMana(maxMana);
 
     // new resource bar, positioned to float above the character:
-    this.manaBar = new ManaBar(scene, x - 8, y - 16);
+    this.manaBar = new ManaBar(scene, x - 8, y - 16, maxMana);
 
     // ai system
     this.AI = mageAI();

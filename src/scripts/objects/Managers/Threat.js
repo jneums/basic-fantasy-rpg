@@ -25,10 +25,17 @@ export default class Threat {
       });
     }
 
+    this.resetThreat = function(character) {
+      const newThreatTable = threatTable.filter(a => a.character.getName() !== character.getName());
+      this.setThreatTable(newThreatTable);
+    }
+
     /**
      * highestThreat - sort threat table and
      * return character reference with the highest
      * threat
+     *
+     * filters out dead characters as well.
      *
      * @returns {Character}
      */

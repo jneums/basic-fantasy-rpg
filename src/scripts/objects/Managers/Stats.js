@@ -396,7 +396,7 @@ export default class Stat {
      *
      * @returns {number}
      */
-    this.getspellHit = function() {
+    this.getSpellHit = function() {
       return spellHit;
     }
 
@@ -535,7 +535,6 @@ export default class Stat {
      */
     this.setHp = function(newHp) {
       hp = newHp;
-      character.healthBar.set(newHp);
     }
 
     /**

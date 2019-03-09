@@ -1,13 +1,13 @@
 export default class ManaBar {
 
-    constructor (scene, x, y)
+    constructor (scene, x, y, startingMana)
     {
         this.bar = new Phaser.GameObjects.Graphics(scene);
 
         this.x = x;
         this.y = y;
         this.bar.depth = 0;
-        this.value = 100;
+        this.value = startingMana;
         this.p = 14 / this.value;
 
         this.draw();
