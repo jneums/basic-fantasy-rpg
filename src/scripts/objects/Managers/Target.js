@@ -118,12 +118,6 @@ export default class Target {
      */
     this.setCurrentTarget = function(newTarget) {
       previousTarget = currentTarget;
-      if (currentTarget) {
-        currentTarget.healthBar.setBackgroundColor();
-      }
-      if (newTarget) {
-        newTarget.healthBar.setBackgroundColor(0xaa3333);
-      }
       currentTarget = newTarget;
     }
 

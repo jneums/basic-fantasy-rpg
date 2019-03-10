@@ -1,3 +1,4 @@
+import moveToMoveTarget from '../../../player/moveToMoveTarget';
 /**
  * barbarianAI - barbarian script, used for
  * non player controlled barbarian characters.
@@ -7,7 +8,7 @@
  */
 export default function barbarianAI() {
   const meleeRange = 25;
-  const rageDumpValue = 20;
+  const rageDumpValue = 30;
   const AI = function() {
     if (this.combat.isDead()) return;
 
@@ -23,24 +24,27 @@ export default function barbarianAI() {
     if (!target) {
       this.animations.idle();
       return this.setVelocity(0, 0);
+    } else {
+      this.target.setCurrentTarget(target);
     }
 
-    // if target, move close enough to attack
+    // if target, is he far enough to charge?
+    const isTooCloseToCharge = this.target.rangeCheck(target, 60);
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
+      // stop moving:
       this.setVelocity(0, 0);
+      // does target have gore? if not, give it to him!
+      if (!target.buffs.has("gore")) this.ability.gore();
+
+      // do I have too much rage? spend it...
       if (rage > rageDumpValue) this.ability.savageBlow();
       this.animations.combat();
       this.combat.meleeAutoAttack(target);
     } else {
-      // change this to total moveSpeed
-      const moveModifier = this.buffs.statBonus('moveSpeed')
-      ? this.buffs.statBonus('moveSpeed')
-      : 1;
-      const moveSpeed = this.movement.getMovementSpeed() * moveModifier;
-      this.movement.setMoveTargetCoords([target.x, target.y]);
-      this.animations.run();
-      this.scene.physics.moveToObject(this, target, moveSpeed);
+      // charge if not in melee range:
+      moveToMoveTarget(this);
+      if (!isTooCloseToCharge) return this.ability.rush();
     }
   }
   return AI;

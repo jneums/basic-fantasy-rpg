@@ -18,14 +18,14 @@ export default class MageAbilities {
 
     this.wand = wand.bind(character);
     this.arcaneIntellect = arcaneIntellect.bind(character);
-    this.conjureWater = conjureWater.bind(character);
-    this.conjureFood = conjureFood.bind(character);
     this.arcaneMissiles = arcaneMissiles.bind(character);
     this.polymorph = polymorph.bind(character);
     this.fireball = fireball.bind(character);
     this.fireBlast = fireBlast.bind(character);
     this.frostArmor = frostArmor.bind(character);
     this.frostbolt = frostbolt.bind(character);
+    this.conjureWater = conjureWater.bind(character);
+    this.conjureFood = conjureFood.bind(character);
 
 
 

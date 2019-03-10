@@ -16,23 +16,23 @@ export default class Mage extends Character {
     super(scene, x, y);
     // mage specific abilities
     this.ability = new MageAbilities(this);
-    this.keys = ['auto attack', 'wand', 'arcane intellect', 'conjure water', 'conjure food', 'arcane missiles']
 
     // replace with mage animations when implemented:
     this.animations = new Anims(this, 'mage', 'mage');
 
     //set starting texture and size:
-    this.setTexture('barbarian-run', 0).setSize(12, 16);
+    this.setTexture('mage-run', 0).setSize(12, 16);
 
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.wand);
     this.keyMap.setThree(this.ability.arcaneIntellect);
-    this.keyMap.setFour(this.ability.conjureWater);
-    this.keyMap.setFive(this.ability.conjureFood);
-    this.keyMap.setSix(this.ability.arcaneMissiles);
-    // this.keyMap.setSeven();
-    // this.keyMap.setEight();
+    this.keyMap.setFour(this.ability.arcaneMissiles);
+    this.keyMap.setFive(this.ability.polymorph);
+    this.keyMap.setSix(this.ability.fireball);
+    this.keyMap.setSeven(this.ability.fireBlast);
+    this.keyMap.setEight(this.ability.frostArmor);
+    this.keyMap.setNine(this.ability.frostbolt);
 
     // set faction, default 'alliance'
     this.setTeam('alliance');
