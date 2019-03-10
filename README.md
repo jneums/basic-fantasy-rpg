@@ -97,6 +97,13 @@ Please notice, this game is very early in development and there are a lot of thi
 
 ### Credits:
 
+First off, thank you to Richard Davey and the rest of the Phaser3 
+development team. This game engine is a blast to work with, the 
+documentation is up to date and vast, and the Phaser3 examples are 
+a huge resource. This game would not exist without Phaser3, and it 
+has been inspiring to watch its development and growth over the last 
+year.
+
 Big thanks to 0x72 for his awesome work on the open-source tileset. Here is the link to his page on itch.io. Check it out if you get a minute, the quality is amazing for a free asset.
 
 https://0x72.itch.io/16x16-dungeon-tileset
