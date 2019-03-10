@@ -25,11 +25,8 @@ The mage is in progress, but can wand and conjure food and water:
 
 3. Arcane Intellect. Buff yourself and your friends.
 
-4. Conjure food.
+4. Arcane Missiles.
 
-5. Conjure water.
-
-6. Arcane Missiles
 
 The first playable class is the Barbarian, which has the following abilities:
 
