@@ -95,6 +95,12 @@ Players will be able to work together to defeat epic Mobs that drop epic loot.
 
 Please notice, this game is very early in development and there are a lot of things to complete, however that being said, there is a large framework in place that will enable tons of options and playability.
 
+### Credits:
+
+Big thanks to 0x72 for his awesome work on the open-source tileset. Here is the link to his page on itch.io. Check it out if you get a minute, the quality is amazing for a free asset.
+
+https://0x72.itch.io/16x16-dungeon-tileset
+
 Here is some documentation for the Combat System if you have questions:
 
 https://codepen.io/Jesse989/full/vPgPGY
