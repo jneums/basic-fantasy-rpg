@@ -43,9 +43,11 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.barbarian = new Barbarian(this, 110, 110);
 
     // add some food:
-    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'))
-    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'))
-    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'))
+    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'));
+    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'));
+    this.mage.inventory.add(getConsumableByName('Tough Jerky'));
+    this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
+    this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
 
     // uncomment to control mage:
     this.mage.AI = playerUpdate();

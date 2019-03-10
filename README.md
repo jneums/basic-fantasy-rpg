@@ -23,6 +23,14 @@ The mage is in progress, but can wand and conjure food and water:
 
 2. Shoot your wand.
 
+3. Arcane Intellect. Buff yourself and your friends.
+
+4. Conjure food.
+
+5. Conjure water.
+
+6. Arcane Missiles
+
 The first playable class is the Barbarian, which has the following abilities:
 
 1. Toggle auto attack.
@@ -39,20 +47,26 @@ The first playable class is the Barbarian, which has the following abilities:
 
 7. hamstring (does 7 dmg and causes target to run half as fast)
 
-Probably sounds familiar...these abilities were created based on the mechanics of the Warrior class from vanilla WoW.
+Probably sounds familiar...these abilities were created based on the mechanics of the Warrior and Mage classes from vanilla WoW.
 
 ## Contributing:
 
 This game is in a very early stats right now. Many of the core systems are in place, however the methods needed to interact with them are missing.
 
-### TODO:
+### Current Opportunities:
 
 If you would like to help but don't know where to start, here is a list that is
 constantly updated with new things:
 
-1. Mage animations: need all the basic animations that the barbarian and orc have,
-having a 'wand' animation would be REALLY great right now because that is the Mages
-number one ability currently. Check out the spritesheets for orc and barbarian for ideas, and use one of the caster sprites from the master spritesheet in 'assets'.
+1. Animations: The more the better! Pick a sprite from the master sprite sheet in the assets folder and make one for each of the animations which the Orc has. Notice as well that the hands/weapon have their own, make sure to add those as well!
+
+2. Spells and abilities: Mage has a few that need to be done. If you are feeling up to it maybe you can create some healing spells or rogue abilities.
+
+3. Maps: Use tiled and the master sprite sheet and either enhance the current map, or create a new one. If you create a new one we can link them together and start creating an entire zone. Be creative and have fun!
+
+4. Items: If you would like something a little bit less daunting, then creating an item entry would be a really great first project. Open up the items folder and insert your entry there. Use the other items as a template, and use your best judgment. For example, if you create a level 1 item that does one million damage, it will definitely not get approved.
+
+5. Quests: This is more of a brainstorming category at this time, since we have no quest system implemented yet. If you would like to tackle the project please let me know. It will be more challenging than the other ways of contributing, but it would also be a lot of fun. If you are not quite up to it yet dont worry, we will get to that part soon.
 
 ### Roadmap:
 
@@ -79,17 +93,7 @@ At this point there will be multi-player capabilities, and a mini-raid/dungeon.
 Players will be able to work together to defeat epic Mobs that drop epic loot.
 
 
-### Current Opportunities:
-
-1. UI: This is the most important for now, and will define how the user interacts with the game. The UI should be designed with mobile in mind, so use of pointer events will be the main method of interaction. This is the largest project, not for the faint of heart.
-
-2. Mobs: New mobs can be created and would be very helpful in making the game play more varied and exciting. Creating a ranged mob, such as a Orc Shaman, would add depth to the combat. Same with a Orc Archer or something similar.
-
-3. Animations: Animations can be created using the master spritesheet, which has a variety of mobs and heros to use. Check out the implemented animations to see how it is done. There is currently a guide in the works, explaining the process for creating, implementing, and consuming the animations. If you have any question please ask me.
-
-4. Armor and Weapons: This part is very approachable and can be completed by everyone. Eventually these will be served from a database, until it reaches that point though you can create items directly into the .js file. For example, if you would like to create a weapon, open the `./src/loot/weapons.js` file. Using the other items as a template, create a new object in the array and update all the fields. The items currently in there were based largely on vanilla WoW, so if you need ideas you can look up items on classic.wowhead.com.
-
-The game is very early in development, though there is a large framework in place that will enable tons of options.
+Please notice, this game is very early in development and there are a lot of things to complete, however that being said, there is a large framework in place that will enable tons of options and playability.
 
 Here is some documentation for the Combat System if you have questions:
 

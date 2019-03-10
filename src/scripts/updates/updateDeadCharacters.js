@@ -11,6 +11,7 @@ export default function updateDeadCharacters(scene = {}) {
   scene.characters.children.entries.forEach(child => {
     if (child.combat.isDead()) {
       if (child.healthBar) child.healthBar.destroy();
+      if (child.manaBar) child.manaBar.destroy();
       if (child.rageBar) child.rageBar.destroy();
       if (child.hands) child.hands.destroy();
       if (child.body.enable) child.body.enable = false;

@@ -23,6 +23,10 @@ export default function wand() {
   const target = this.target.currentTarget();
   if (!target) return console.log("I need a target");
 
+  // make sure target is alive:
+  if (target.combat.isDead()) return console.log("I cant attack that!")
+
+
   // check if target is in range
   const maxDistance = 300;
   const inRange = this.target.rangeCheck(target, maxDistance);
