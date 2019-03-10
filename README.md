@@ -101,6 +101,8 @@ a huge resource. This game would not exist without Phaser3, and it
 has been inspiring to watch its development and growth over the last 
 year.
 
+https://phaser.io/phaser3
+
 Big thanks to 0x72 for his awesome work on the open-source tileset. Here is the link to his page on itch.io. Check it out if you get a minute, the quality is amazing for a free asset.
 
 https://0x72.itch.io/16x16-dungeon-tileset
