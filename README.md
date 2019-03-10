@@ -51,7 +51,7 @@ Probably sounds familiar...these abilities were created based on the mechanics o
 
 ## Contributing:
 
-This game is in a very early stats right now. Many of the core systems are in place, however the methods needed to interact with them are missing.
+This game is in a very early status right now. Many of the core systems are in place, however the methods needed to interact with them are missing.
 
 ### Current Opportunities:
 
