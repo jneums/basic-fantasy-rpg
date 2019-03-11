@@ -2,7 +2,7 @@ import Character from '../../Character';
 import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
 import mageAI from './mageAI';
-import ManaMechanic from './Mana';
+import ManaMechanic from '../Mana';
 import ManaBar from '../../Managers/ManaBar';
 import MageAbilities from './MageAbilities';
 import KeyMap from '../../../player/KeyMap';

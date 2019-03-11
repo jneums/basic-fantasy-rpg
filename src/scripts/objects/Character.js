@@ -22,6 +22,8 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this)
     scene.physics.add.existing(this)
     this.setInteractive();
+    // who is controlling this character:
+    this.controller = 'AI';
 
 
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};
@@ -52,23 +54,28 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // method to keep bars up to date:
     this.updateBars = function() {
       // keep hands in right place:
+      this.depth = this.y + 1;
       this.hands.x = this.x;
       this.hands.y = this.y - 4;
+      this.hands.depth = this.y + 2;
       this.healthBar.set(this.stat.hp());
       this.healthBar.p = 14 / (this.stat.maxHp());
       this.healthBar.x = this.x - 8;
       this.healthBar.y = this.y - 20;
+      this.healthBar.bar.depth = this.y;
       this.healthBar.draw();
       if (this.rage) {
         this.rageBar.set(this.rage.rage());
         this.rageBar.x = this.x - 8;
         this.rageBar.y = this.y - 16;
+        this.rageBar.bar.depth = this.y;
         this.rageBar.draw();
       } else if (this.mana) {
         this.manaBar.p = 14 / (this.mana.maxMana());
         this.manaBar.set(this.mana.mana());
         this.manaBar.x = this.x - 8;
         this.manaBar.y = this.y - 16;
+        this.manaBar.bar.depth = this.y;
         this.manaBar.draw();
       }
 

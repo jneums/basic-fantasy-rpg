@@ -8,21 +8,11 @@ export default class Lvl {
     // level 1 - 60;
     // xp, gain xp to level up
     let xp = 0;
-    let nextLvl = 100;
+    let nextLvl = 1000;
 
 
     this.gainXP = function(amount) {
       xp += amount;
-
-      if (xp >= nextLvl) {
-        // level up!
-        const nextLevel = this.getLevel() + 1;
-        this.setLevel(nextLevel);
-        this.setXp(0);
-        nextLvl *= 2;
-        console.log("leveled up: ", this.getLevel());
-      }
-      console.log('xp: ', xp);
     }
     /**
      * getLevel

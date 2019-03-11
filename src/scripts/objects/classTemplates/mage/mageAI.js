@@ -1,3 +1,5 @@
+import moveToMoveTarget from '../../../player/moveToMoveTarget';
+
 /**
  * MagicUserAI - npc magic user script
  *
@@ -5,19 +7,34 @@
  * @returns {function} update function
  */
 export default function MageAI() {
-  const AI = function() {
-    const allies = this.target.scanForAllies();
+    const meleeRange = 25;
+    const AI = function() {
+      if (this.combat.isDead()) return;
 
-    const enemies = this.target.scanForEnemies(500);
-    // if no enemies, stop
-    if (!enemies.length) return this.setVelocity(0, 0);
-    const target = this.target.getClosestEnemy(enemies);
-
+      // scan for enemies for body pull
+      const enemies = this.target.scanForEnemies(75);
+      // scan for enemies by threat table (pulled by attack)
+      const target = this.threat.highestThreat()
+        ? this.threat.highestThreat()
+        : this.target.getClosestEnemy(enemies);
+      // if no target in range and no aggro, wait
+      if (!target) {
+        this.animations.idle();
+        return this.setVelocity(0, 0);
+      }
+    this.target.setCurrentTarget(target);
     const wandRange = this.target.rangeCheck(target, 300);
-    if (wandRange) {
+    // if target, move close enough to attack
+    const canMelee = this.target.rangeCheck(target, meleeRange);
+    if (canMelee) {
+      this.setVelocity(0, 0);
+      this.animations.combat();
+      this.combat.meleeAutoAttack(target);
+    } else if (wandRange) {
+      this.ability.wand();
       this.setVelocity(0, 0);
     } else {
-      this.scene.physics.moveToObject(this, target);
+      moveToMoveTarget(this);
     }
   }
   return AI;

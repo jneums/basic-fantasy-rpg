@@ -1,5 +1,6 @@
 import actionPointerDown from './actionPointerDown';
 import inventoryPointerDown from './inventoryPointerDown';
+import toggleControl from './toggleControl';
 
 export default function playerInput(player = {}) {
   let inventoryToggle = false;
@@ -13,22 +14,12 @@ export default function playerInput(player = {}) {
   })
 
   /**
-   * toggle inventory
+   * toggle characters
    */
   player.scene.input.keyboard.on('keyup_SPACE', (event) => {
+    // switch players control:
+    toggleControl(player.scene);
 
-    inventoryToggle = !inventoryToggle;
-    if (inventoryToggle) {
-      // add and setup the inventory camera:
-      player.scene.minimap = player.scene.cameras.add(220, 32, 840, 586)
-        .setZoom(4).setName('mini');
-      player.scene.minimap.setBackgroundColor(0xccaa44);
-      player.scene.minimap.scrollX = -268;
-      player.scene.minimap.scrollY = 131;
-    } else {
-      // remove inventory cam:
-      player.scene.cameras.remove(player.scene.minimap);
-    }
   })
 
   player.scene.input.keyboard.on('keydown_SHIFT', (event) => {

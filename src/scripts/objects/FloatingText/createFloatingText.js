@@ -62,11 +62,20 @@ export default function createFloatingText(scene = {}, options = {}) {
 function _textColor (combatObject = {}) {
   switch (combatObject.type()) {
     case 'magic':
-      return 0x666699;
     case 'wand':
-      return 0x337799;
+      switch (combatObject.damageType()) {
+        case 'fire':
+          return 0xbf7b3f;
+        case 'frost':
+          return 0x8ebbd1;
+        case 'arcane':
+          return 0x5ba3c7;
+        case 'shadow':
+          return 0x43135f;
+        case 'holy':
+          return 0xe4da99;
+      }
     case 'dot':
-      return 0xd04648;
     case 'special':
       return 0xccaa44;
     case 'eat':

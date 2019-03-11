@@ -14,35 +14,35 @@ Shift + number keys will use the item in that inventory slot.
 
 For example, the player starts with "Tough Jerky" in slot 1. Use shift + 1 to use the "Tough Jerky". Because the item type of "Tough Jerky" is a consumable, the game knows to cast the "eat" buff. Make sure not to move, as "eat" is channeled.
 
-Start by opening up `./src/scripts/scenes/characterCreationScene`, and choose your
-class by uncommenting whichever class you would like to test.
+Space bar will change between the active character:
 
-The mage is in progress, but can wand and conjure food and water:
+The mage is in progress, but has a few abilities:
 
 1. Toggle auto attack.
 
-2. Shoot your wand.
+2. Wand: shoot from a distance.
 
-3. Arcane Intellect. Buff yourself and your friends.
+3. Arcane Intellect:  buff yourself and your friends.
 
-4. Arcane Missiles.
+4. Arcane Missiles: instant attack that ticks three times for 30 damage. Uses a lot of mana.
 
+9. Frostbolt: does damage and slows your target.
 
 The first playable class is the Barbarian, which has the following abilities:
 
 1. Toggle auto attack.
 
-2. charge (run at target and stun them for 3 seconds)
+2. Rush: run at target and stun them for 3 seconds.
 
-3. rend (apply a dot that does 15 dmg per tick)
+3. Gore: apply a dot that does 15 dmg per tick.
 
-4. strike (next melee swing does 11 extra damage)
+4. Strike: next melee swing does 11 extra damage.
 
-5. shout (raises attack power by 25)
+5. Battle cry: raises attack power by 25.
 
-6. thunder clap (does 10 damage and slows enemy attacks by 100%)
+6. Intimidate: does 10 damage and slows enemy attacks by 100%.
 
-7. hamstring (does 7 dmg and causes target to run half as fast)
+7. Hobble: does 7 dmg and causes target to run half as fast.
 
 Probably sounds familiar...these abilities were created based on the mechanics of the Warrior and Mage classes from vanilla WoW.
 
@@ -94,11 +94,11 @@ Please notice, this game is very early in development and there are a lot of thi
 
 ### Credits:
 
-First off, thank you to Richard Davey and the rest of the Phaser3 
-development team. This game engine is a blast to work with, the 
-documentation is up to date and vast, and the Phaser3 examples are 
-a huge resource. This game would not exist without Phaser3, and it 
-has been inspiring to watch its development and growth over the last 
+First off, thank you to Richard Davey and the rest of the Phaser3
+development team. This game engine is a blast to work with, the
+documentation is up to date and vast, and the Phaser3 examples are
+a huge resource. This game would not exist without Phaser3, and it
+has been inspiring to watch its development and growth over the last
 year.
 
 https://phaser.io/phaser3
@@ -106,6 +106,10 @@ https://phaser.io/phaser3
 Big thanks to 0x72 for his awesome work on the open-source tileset. Here is the link to his page on itch.io. Check it out if you get a minute, the quality is amazing for a free asset.
 
 https://0x72.itch.io/16x16-dungeon-tileset
+
+Thanks to Yandeu for the awesome template. Quickest and most painless way to get setup and coding when you want Phaser3, Webpack, Babel, and other great stuff. Here is the link:
+
+https://github.com/yandeu/phaser-project-template-es6
 
 Here is some documentation for the Combat System if you have questions:
 

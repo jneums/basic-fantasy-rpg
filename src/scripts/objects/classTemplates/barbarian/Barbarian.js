@@ -2,7 +2,7 @@ import Character from '../../Character';
 import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
 import barbarianAI from './barbarianAI';
-import RageMechanic from './Rage';
+import RageMechanic from '../Rage';
 import RageBar from '../../Managers/RageBar';
 import BarbarianAbilities from './BarbarianAbilities';
 import KeyMap from '../../../player/KeyMap';

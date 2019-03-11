@@ -47,7 +47,7 @@ export default function wand() {
   const combatObject = new CombatObject(this, target);
   combatObject.setStatus(attackStatus);
   combatObject.setType('wand');
-  combatObject.setDamageType(wand.type);
+  combatObject.setDamageType(wand.damageType);
   combatObject.setRange('ranged');
   combatObject.setAmount(amount);
 

@@ -49,6 +49,7 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
     this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
 
+
     // uncomment to control mage:
     this.mage.AI = playerUpdate();
     playerInput(this.mage);

@@ -3,9 +3,9 @@
  * actionPointerDown - called when the inventory is closed,
  * e.g. the pointer has interacted with the game world, not the ui.
  *
- * @param  {type} pointer     description
- * @param  {type} player = {} description
- * @return {type}             description
+ * @param  {object} pointer   
+ * @param  {Character} player
+ * @return {void}
  */
 export default function actionPointerDown(pointer, player = {}) {
   // is pointer on a character:
