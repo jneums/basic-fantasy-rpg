@@ -26,7 +26,7 @@ export default class Priest extends Character {
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo(this.ability.wand);
-    this.keyMap.setThree(this.ability);
+    this.keyMap.setThree(this.ability.lesserHeal);
     this.keyMap.setFour(this.ability);
     this.keyMap.setFive(this.ability);
     this.keyMap.setSix(this.ability);

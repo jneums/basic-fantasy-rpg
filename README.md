@@ -16,7 +16,7 @@ For example, the player starts with "Tough Jerky" in slot 1. Use shift + 1 to us
 
 Space bar will change between the active character:
 
-The mage is in progress, but has a few abilities:
+### Mage:
 
 1. Toggle auto attack.
 
@@ -28,7 +28,7 @@ The mage is in progress, but has a few abilities:
 
 9. Frostbolt: does damage and slows your target.
 
-The first playable class is the Barbarian, which has the following abilities:
+### Barbarian:
 
 1. Toggle auto attack.
 
@@ -44,7 +44,13 @@ The first playable class is the Barbarian, which has the following abilities:
 
 7. Hobble: does 7 dmg and causes target to run half as fast.
 
-Probably sounds familiar...these abilities were created based on the mechanics of the Warrior and Mage classes from vanilla WoW.
+### Priest:
+
+1. Toggle auto attack.
+
+2. Wand: shoot from a distance.
+
+3. Lesser Heal: heal a small amount of friendly targets hit points.
 
 ## Contributing:
 

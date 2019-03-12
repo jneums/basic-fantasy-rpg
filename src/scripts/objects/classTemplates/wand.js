@@ -1,5 +1,5 @@
-import CombatObject from '../../../CombatSystem/CombatObject';
-import spellHitTable from '../../../../hitTables/spellHitTable';
+import CombatObject from '../CombatSystem/CombatObject';
+import spellHitTable from '../../hitTables/spellHitTable';
 
 /**
  * wand - attack with an equipped wand
@@ -24,7 +24,7 @@ export default function wand() {
   if (!target) return console.log("I need a target");
 
   // make sure target is alive:
-  if (target.combat.isDead()) return console.log("I cant attack that!")
+  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
 
 
   // check if target is in range

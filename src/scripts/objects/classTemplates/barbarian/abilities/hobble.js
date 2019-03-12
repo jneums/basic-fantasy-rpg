@@ -15,8 +15,10 @@ import CombatObject from '../../../CombatSystem/CombatObject';
   // target validation:
   const target = this.target.currentTarget();
   if (!target) return console.log('You need a target');
+
+  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
   // rage check:
-  if (!this.rage.spendRage(10)) return console.log('I need more rage')
+  if (!this.rage.spendRage(10)) return;
   // setup combat object:
   const combatObject = new CombatObject(this, target);
   combatObject.setType('special');

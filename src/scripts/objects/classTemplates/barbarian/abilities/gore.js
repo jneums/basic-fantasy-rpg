@@ -14,8 +14,11 @@ export default function gore() {
   // check for valid target:
   const target = this.target.currentTarget();
   if (!target) return console.log('You need a target');
+
+  // is target friendly?
+  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
   // check for enough rage:
-  if (!this.rage.spendRage(10)) return console.log('I need more rage')
+  if (!this.rage.spendRage(10)) return;
 
   // setup combat object:
   const combatObject = new CombatObject(this, target);

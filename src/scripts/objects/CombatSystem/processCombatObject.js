@@ -19,18 +19,22 @@ export default function processCombatObject (attacker = {}, target = {}) {
 
   // update combat object based on status e.g. mitigation, resistances:
   statusMod(attacker, target, this);
-
   // give combatants a chance to modify the combat object
   classMod(attacker, target, this);
 
   // now that updates to object are done, use final object to
   // modify the characters:
   textMod(attacker, target, this);
+
   // add object to the combat logs
   logMod(attacker, target, this);
+
   // update threat table
   threatMod(attacker, target, this);
+
   // take dmg according to the final combat object
   healthMod(attacker, target, this);
+
   manaMod(attacker, target, this);
+
 }

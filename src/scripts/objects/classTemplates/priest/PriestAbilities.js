@@ -1,6 +1,7 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
 import { getConsumableByName } from '../../../loot/consumables';
-import wand from './abilities/wand';
+import wand from '../wand';
+import lesserHeal from './abilities/lesserHeal';
 
 
 
@@ -9,7 +10,7 @@ export default class PriestAbilities {
     let abilities = ['wand'];
 
     this.wand = wand.bind(character);
-
+    this.lesserHeal = lesserHeal.bind(character);
 
     /**
     * getAbilities

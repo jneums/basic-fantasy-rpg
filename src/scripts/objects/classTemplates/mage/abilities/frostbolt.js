@@ -21,10 +21,8 @@ export default function frostbolt () {
   if (!target) return console.log("I need a target");
 
   // check that target isnt friendly
-  if (target.team() === this.team()) return console.log("I cant do that");
+  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
 
-  // make sure target is alive:
-  if (target.combat.isDead()) return console.log("I cant attack that!")
   this.movement.faceTarget();
 
   // check if target is in range

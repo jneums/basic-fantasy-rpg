@@ -14,7 +14,7 @@ export default function rush() {
   // meets requirements:
   const target = this.target.currentTarget();
   if (!target) return console.log('I dont have a target!');
-  if (target.combat.isDead()) return console.log("I can't attack that")
+  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
   const inRange = this.target.rangeCheck(target, 60)
   if (inRange) return console.log('You are too close')
 

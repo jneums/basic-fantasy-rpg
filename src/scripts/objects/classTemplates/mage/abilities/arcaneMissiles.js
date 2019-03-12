@@ -16,11 +16,7 @@ export default function arcaneMissiles() {
   const target = this.target.currentTarget();
   if (!target) return console.log("I need a target");
 
-  // check that target isnt friendly
-  if (target.team() === this.team()) return console.log("I cant do that");
-
-  // make sure target is alive:
-  if (target.combat.isDead()) return console.log("I cant attack that!")
+  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
 
   // check if target is in range
   const range = 300;

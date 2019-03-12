@@ -119,7 +119,6 @@ export default class Buffs {
             // use the interval for timing combatObject creation
             // and execution throughout the duration of the buff
             if (buff.duration % buff.interval === 0) {
-              const attacker = buff.attacker;
               buff.combatObject.process();
             }
           }

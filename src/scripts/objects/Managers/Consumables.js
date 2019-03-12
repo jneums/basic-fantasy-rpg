@@ -27,6 +27,7 @@ export default class Consumables {
       const healing = 29;
       // create combat object:
       const combatObject = new CombatObject(character, character);
+      combatObject.setStatus(null);
       combatObject.setType('eat');
       combatObject.setAmount(-healing);
       // create buff
@@ -62,6 +63,7 @@ export default class Consumables {
       const regen = 29;
       // create combat object:
       const combatObject = new CombatObject(character, character);
+      combatObject.setStatus('null');
       combatObject.setType('drink');
       combatObject.setAmount(-regen);
       // create buff

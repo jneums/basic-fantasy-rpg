@@ -1,6 +1,6 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
 import { getConsumableByName } from '../../../loot/consumables';
-import wand from './abilities/wand';
+import wand from '../wand';
 import arcaneIntellect from './abilities/arcaneIntellect';
 import conjureWater from './abilities/conjureWater';
 import conjureFood from './abilities/conjureFood';

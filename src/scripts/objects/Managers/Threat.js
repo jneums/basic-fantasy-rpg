@@ -52,7 +52,10 @@ export default class Threat {
      * @returns {void}
      */
     this.updateTargetThreatTable = function(target = {}, combatObject = {}) {
-      const threat = combatObject.amount() + combatObject.bonusThreat();
+      let threat = combatObject.amount() + combatObject.bonusThreat();
+      if (combatObject.type() === 'heal') {
+        threat = (combatObject.amount() * -1)
+      }
       const oldTable = target.threat.threatTable()
       const oldEntry = oldTable.filter(entry => entry.character.getName() === character.getName())[0];
       const newTable = oldTable.filter(entry => entry.character.getName() !== character.getName());

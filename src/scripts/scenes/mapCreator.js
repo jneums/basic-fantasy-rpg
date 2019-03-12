@@ -18,9 +18,6 @@ export default function mapCreator(scene = {}) {
   scene.physics.add.collider(scene.characters, colliderLayer, (a, b) => {
     a.movement.stop();
   });
-  scene.physics.add.collider(scene.characters, scene.characters, (a, b) => {
-    a.movement.stop();
-    b.movement.stop();
-  });
+
   return map;
 }

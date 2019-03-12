@@ -41,6 +41,8 @@ export default function statusMod(attacker = {}, target = {}, combatObject = {})
         combatObject.setMitigationAmount(mitigatedByArmor);
       }
     break;
+    default:
+      break;
   }
   return combatObject;
 }

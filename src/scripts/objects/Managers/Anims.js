@@ -10,7 +10,7 @@ export default class Anims {
     character.hands.on('animationcomplete', transition, character.hands);
 
     this.run = function() {
-      const shouldFlip = (character.x - character.movement.getMoveTargetCoords()[0] > 0)
+      const shouldFlip = (character.x - character.movement.getMoveTargetCoords()[0] > 6)
         ? true
         : false;
       character.flipX = shouldFlip;
