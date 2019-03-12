@@ -3,28 +3,33 @@ import barbarianAI from '../objects/classTemplates/barbarian/barbarianAI.js'
 import playerUpdate from './playerUpdate';
 import inputListeners from './inputListeners';
 
+let index = 0;
 
 export default function toggleControl(scene = {}) {
-  const currentCharacter = scene.availableCharacters[0];
-  const nextCharacter = scene.availableCharacters[1];
+  index++;
+  const playerCharacters = scene.characters.getChildren().filter(child => child.team() !== 'mob');
+  const currentCharacter = playerCharacters.filter(character => character.controller === 'player')[0]
+  const nextCharacter = playerCharacters[index % playerCharacters.length]
   // starting with mage, switch to barbarian:
-  if (scene[currentCharacter] && scene[currentCharacter].controller === 'AI') {
-    scene[currentCharacter].controller = 'player';
-    if (scene[nextCharacter]) {
-      swap(scene[nextCharacter]);
+  if (currentCharacter && nextCharacter) {
+    // change character flag:
+    nextCharacter.controller = 'player';
+
+    // strip all input and visuals from current character:
+    if (currentCharacter) {
+      strip(currentCharacter);
     }
 
-    inputListeners(scene[currentCharacter]);
-    scene.cameras.main.startFollow(scene[currentCharacter], true, .05, .05);
-    scene.availableCharacters.shift();
-    scene.availableCharacters.push(currentCharacter)
+    inputListeners(nextCharacter);
+    scene.cameras.main.startFollow(nextCharacter, true, .05, .05);
   }
 }
 
 // reduces repeating self:
-function swap(character = {}) {
-  character.movement.stop();
+function strip(character = {}) {
+  character.target.clearCurrentTarget();
   character.controller = 'AI';
+  character.movement.stop();
   character.scene.input.removeAllListeners();
   character.scene.input.keyboard.removeAllListeners();
 }

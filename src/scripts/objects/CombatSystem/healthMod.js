@@ -9,6 +9,7 @@
  * @returns {void}
  */
  export default function healthMod (attacker = {}, target = {}, combatObject = {}) {
+   if (combatObject.type === 'drink') return;
    if (!target.stat) return;
   const amount = combatObject.amount();
   const oldHp = target.stat.hp();

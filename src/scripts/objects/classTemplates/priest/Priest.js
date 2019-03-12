@@ -21,7 +21,7 @@ export default class Priest extends Character {
         this.setTexture('mage-run', 0).setSize(12, 12)
 
     // coordinate which animations to play:
-    this.animations = new Anims(this, 'priest', 'priest');
+    this.animations = new Anims(this, 'priest', 'priest-sword');
 
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);

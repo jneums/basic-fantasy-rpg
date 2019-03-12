@@ -88,12 +88,16 @@ export default class Target {
       return currentTarget;
     }
 
+    this.clearCurrentTarget = function () {
+      this.setCurrentTarget(null);
+    }
+
     /**
-     * getPreviousTarget
+     * previousTarget
      *
      * @returns {Character} target reference
      */
-    this.getPreviousTarget = function() {
+    this.previousTarget = function() {
       return previousTarget;
     }
 

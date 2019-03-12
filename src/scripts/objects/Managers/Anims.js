@@ -2,8 +2,8 @@ export default class Anims {
   constructor(character = {}, characterType ='', handType = '') {
 
     function transition (anim, frame) {
-      if (anim.key === handType + '-sword-stab') {
-        this.anims.play(handType + '-sword-idle', true)
+      if (anim.key === handType + '-stab') {
+        this.anims.play(handType + '-idle', true)
       }
     }
 
@@ -16,7 +16,7 @@ export default class Anims {
       character.flipX = shouldFlip;
       character.hands.flipX = shouldFlip;
       character.anims.play(characterType + '-run', true);
-      character.hands.anims.play(handType + '-sword-run', true);
+      character.hands.anims.play(handType + '-run', true);
     }
 
     this.combat = function() {
@@ -24,7 +24,7 @@ export default class Anims {
     }
 
     this.swing = function() {
-      character.hands.anims.play(handType + '-sword-stab', false);
+      character.hands.anims.play(handType + '-stab', false);
     }
 
     this.drink = function() {
@@ -33,7 +33,7 @@ export default class Anims {
 
     this.idle = function() {;
       character.anims.play(characterType + '-idle', true);
-      character.hands.anims.play(handType + '-sword-idle', true);
+      character.hands.anims.play(handType + '-idle', true);
     }
 
     this.die = function() {
@@ -41,7 +41,7 @@ export default class Anims {
     }
 
     this.stun = function() {
-      character.hands.setTexture(handType + '-sword-idle', 0)
+      character.hands.setTexture(handType + '-idle', 0)
       character.anims.play(characterType + '-stun', true);
     }
   }

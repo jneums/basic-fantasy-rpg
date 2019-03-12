@@ -27,15 +27,12 @@ export default function updateLiveCharacters(scene = {}) {
         // cant move, timers dont move, and
         child.animations.stun();
         // ai is not running:
-        return child.setVelocity(0, 0);
+        return child.movement.stop();
       }
 
       if (child.controller === 'player') {
-
         child.playerControlled();
       } else {
-
-
        // only run ai if not player controlled:
         child.AI();
       }

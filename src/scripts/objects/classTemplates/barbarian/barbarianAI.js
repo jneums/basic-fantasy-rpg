@@ -23,7 +23,7 @@ export default function barbarianAI() {
     // if no target in range and no aggro, wait
     if (!target) {
       this.animations.idle();
-      return this.setVelocity(0, 0);
+      return this.movement.stop();
     } else {
       this.target.setCurrentTarget(target);
     }
@@ -33,9 +33,9 @@ export default function barbarianAI() {
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
       // stop moving:
-      this.setVelocity(0, 0);
+      this.movement.stop();
       // does target have gore? if not, give it to him!
-      if (!target.buffs.has("gore")) this.ability.gore();
+      if (!target.buffs.has("gore") && rage > rageDumpValue) this.ability.gore();
 
       // do I have too much rage? spend it...
       if (rage > rageDumpValue) this.ability.savageBlow();

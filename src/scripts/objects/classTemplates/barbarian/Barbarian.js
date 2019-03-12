@@ -18,7 +18,7 @@ export default class Barbarian extends Character {
     this.ability = new BarbarianAbilities(this);
 
     // coordinate which animations to play:
-    this.animations = new Anims(this, 'barbarian', 'barbarian');
+    this.animations = new Anims(this, 'barbarian', 'barbarian-sword');
 
         //set starting texture and size:
         this.setTexture('mage-run', 0).setSize(12, 12);

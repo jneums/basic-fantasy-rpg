@@ -1,13 +1,16 @@
 import moveToMoveTarget from '../../../player/moveToMoveTarget';
 
+
 /**
- * MagicUserAI - npc magic user script
+ * OrcArcherAI - ranged NPC script
  *
  * @param  {Character} character reference
  * @returns {function} update function
  */
-export default function PriestAI() {
+export default function OrcArcherAI() {
   const meleeRange = 25;
+  const shootRange = 75;
+
   const AI = function() {
     if (this.combat.isDead()) return;
 
@@ -21,23 +24,28 @@ export default function PriestAI() {
     if (!target) {
       this.animations.idle();
       return this.movement.stop();
-    } else {
-      this.target.setCurrentTarget(target);
     }
 
-    //
-    const wandRange = this.target.rangeCheck(target, 75);
     // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
-    if (canMelee) {
+    const canShoot = this.target.rangeCheck(target, shootRange);
+
+    if (canShoot) {
       this.movement.stop();
+      this.animations.combat();
+      this.combat.rangedAutoAttack(target);
+    } else if (canMelee) {
+      this.movement.stop();
+      this.animations.combat();
       this.combat.meleeAutoAttack(target);
-      this.animations.combat();
-    } else if (wandRange) {
-      this.movement.stop();
-      this.ability.wand();
-      this.animations.combat();
     } else {
+      // change this to total moveSpeed
+      const moveModifier = this.buffs.statBonus('moveSpeed')
+      ? this.buffs.statBonus('moveSpeed')
+      : 1;
+      const moveSpeed = this.movement.getMovementSpeed() * moveModifier;
+      this.movement.setMoveTargetCoords([target.x, target.y]);
+      this.animations.run();
       moveToMoveTarget(this);
     }
   }

@@ -15,7 +15,7 @@ export default function moveToMoveTarget(character = {}) {
   ) < 5;
   if (isMoveTargetWithinDistance) {
     character.movement.setMovementSpeed(40);
-    character.setVelocity(0, 0);
+    character.movement.stop();
     return false;
   } else {
     character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);

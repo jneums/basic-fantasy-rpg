@@ -10,7 +10,7 @@ import Anims from '../Managers/Anims';
 /**
  *
  */
-export default class Orc extends Character {
+export default class OrcArcher extends Character {
   constructor(scene = {}, x = 0, y = 0) {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
@@ -19,7 +19,7 @@ export default class Orc extends Character {
         //set starting texture and size:
         this.setTexture('mage-run', 0).setSize(12, 12);
     this.setTeam('mob');
-    this.setName('orc');
+    this.setName('orc-archer');
     this.setCharacterClass('mob');
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);

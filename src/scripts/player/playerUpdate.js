@@ -15,6 +15,7 @@ import moveToMoveTarget from './moveToMoveTarget';
  */
 export default function PlayerUpdate() {
   const update = function() {
+
     const moving = moveToMoveTarget(this);
     const attacking = standGuard(this);
     if (moving) this.animations.run();

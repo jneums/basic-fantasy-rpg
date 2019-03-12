@@ -18,13 +18,13 @@ export default function OrcAI() {
     // if no target in range and no aggro, wait
     if (!target) {
       this.animations.idle();
-      return this.setVelocity(0, 0);
+      return this.movement.stop();
     }
 
     // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
-      this.setVelocity(0, 0);
+      this.movement.stop();
       this.animations.combat();
       this.combat.meleeAutoAttack(target);
     } else {

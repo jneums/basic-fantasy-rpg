@@ -37,6 +37,7 @@ export default class Movement {
      */
     this.stop = function() {
       moveTargetCoords = [character.x, character.y];
+      character.setVelocity(0,0)
     }
 
     /**

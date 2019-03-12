@@ -14,15 +14,16 @@ export default function actionPointerDown(pointer, player = {}) {
   // clicked on their body:
   player.scene.characters.getChildren().forEach(child => {
     if (child.body.hitTest(pointer.worldX, pointer.worldY)) {
-      // if so, set target to that character:
-      target = child;
-      // set it as the new target of the player
-      player.target.setCurrentTarget(target);
-
+      return target = child;
     }
   })
-  // if a character was clicked, and it has loot:
-  if (target && target.loot()) {
+
+
+  // if a character was clicked:
+  if (target) {
+    player.target.setCurrentTarget(target);
+
+  } else if (target && target.combat.isDead() && target.loot()) {
     const targetLootOwner = player.target.currentTarget().tapped();
     // if click target is dead, and was tapped, and looter is in range:
     if (target.combat.isDead() && (targetLootOwner && target.target.rangeCheck(targetLootOwner, 70))) {

@@ -2,6 +2,7 @@ import Barbarian from '../objects/classTemplates/barbarian/Barbarian';
 import Mage from '../objects/classTemplates/mage/Mage';
 import Priest from '../objects/classTemplates/priest/Priest';
 import Orc from '../objects/mobTemplates/Orc';
+import OrcArcher from '../objects/mobTemplates/OrcArcher';
 import inputListeners from '../player/inputListeners';
 import playerUpdate from '../player/playerUpdate';
 import updateLiveCharacters from '../updates/updateLiveCharacters';
@@ -24,10 +25,6 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // holds all characters:
     this.characters = this.add.group();
 
-    // for toggling between player controlled characters:
-    this.availableCharacters = [ 'priest', 'barbarian', 'mage'];
-
-
     // add animations to scene:
     animationCreator(this);
 
@@ -39,6 +36,13 @@ export default class CharacterCreationScene extends Phaser.Scene {
       let npc;
       if (spawnPoint.type === 'orc') {
         npc = new Orc(this, spawnPoint.x, spawnPoint.y);
+      }
+    })
+    // use map object to spawn mobs:
+    map.getObjectLayer('spawns').objects.forEach(spawnPoint => {
+      let npc;
+      if (spawnPoint.type === 'orc') {
+        npc = new OrcArcher(this, spawnPoint.x + 20, spawnPoint.y);
       }
     })
 
@@ -61,16 +65,12 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // start as mage:
     inputListeners(this.mage);
     this.mage.controller = 'player';
-    // uncomment to control barbarian:
-    // this.barbarian.AI = playerUpdate();
-    // inputListeners(this.barbarian);
 
-    // camera will follow player controlled character:
-    this.cameras.main.setRoundPixels(true);
 
     // set follow to current player controlled character:
-    this.cameras.main.startFollow(this.mage, true, .05, .05);
-    this.cameras.main.setZoom(4)
+    this.cameras.main.setRoundPixels(true)
+      .startFollow(this.mage, true, .05, .05)
+      .setZoom(4)
 
   }
 

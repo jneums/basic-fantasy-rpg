@@ -9,9 +9,18 @@ export default function mapCreator(scene = {}) {
   wallLayer.setCollisionByProperty({ collides: true });
   specials.setCollisionByProperty({ collides: true });
   // group to hold all characters
-  scene.physics.add.collider(scene.characters, wallLayer);
-  scene.physics.add.collider(scene.characters, specials);
-  scene.physics.add.collider(scene.characters, colliderLayer);
-  scene.physics.add.collider(scene.characters, scene.characters);
+  scene.physics.add.collider(scene.characters, wallLayer, (a, b) => {
+    a.movement.stop();
+  });
+  scene.physics.add.collider(scene.characters, specials, (a, b) => {
+    a.movement.stop();
+  });
+  scene.physics.add.collider(scene.characters, colliderLayer, (a, b) => {
+    a.movement.stop();
+  });
+  scene.physics.add.collider(scene.characters, scene.characters, (a, b) => {
+    a.movement.stop();
+    b.movement.stop();
+  });
   return map;
 }
