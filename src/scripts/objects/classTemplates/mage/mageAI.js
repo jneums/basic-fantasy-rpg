@@ -23,7 +23,7 @@ export default function MageAI() {
         return this.setVelocity(0, 0);
       }
     this.target.setCurrentTarget(target);
-    const wandRange = this.target.rangeCheck(target, 300);
+    const wandRange = this.target.rangeCheck(target, 75);
     // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {
@@ -33,8 +33,10 @@ export default function MageAI() {
     } else if (wandRange) {
       this.ability.wand();
       this.setVelocity(0, 0);
+      this.animations.combat();
     } else {
       moveToMoveTarget(this);
+      this.animations.run();
     }
   }
   return AI;

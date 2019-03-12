@@ -9,6 +9,12 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
+    // priest anims:
+    this.load.spritesheet('priest-idle',
+      './assets/anims/priest_idle_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    )
+
     // mage amims:
     this.load.spritesheet('mage-idle',
       './assets/anims/mage_idle_spritesheet.png',

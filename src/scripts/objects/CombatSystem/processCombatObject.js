@@ -4,6 +4,7 @@ import textMod from './textMod';
 import logMod from './logMod';
 import threatMod from './threatMod';
 import healthMod from './healthMod';
+import manaMod from './manaMod';
 /**
  * processCombatObject - take dmg, add to log, add rage,
  * modify threat table, create scrolling text, etc.
@@ -31,4 +32,5 @@ export default function processCombatObject (attacker = {}, target = {}) {
   threatMod(attacker, target, this);
   // take dmg according to the final combat object
   healthMod(attacker, target, this);
+  manaMod(attacker, target, this);
 }

@@ -16,10 +16,8 @@ export default class Orc extends Character {
     this.ability = new MobAbilities(this);
     this.animations = new Anims(this, 'orc-mask', 'orc');
 
-    // starting texture and size;
-    this.setTexture('orc-mask-idle', 0).setSize(22, 16);
-
-
+        //set starting texture and size:
+        this.setTexture('mage-run', 0).setSize(12, 12);
     this.setTeam('mob');
     this.setName('orc');
     this.setCharacterClass('mob');

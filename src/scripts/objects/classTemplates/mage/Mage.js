@@ -3,7 +3,7 @@ import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
 import mageAI from './mageAI';
 import ManaMechanic from '../Mana';
-import ManaBar from '../../Managers/ManaBar';
+import ResourceBar from '../../Managers/ResourceBar';
 import MageAbilities from './MageAbilities';
 import KeyMap from '../../../player/KeyMap';
 import Anims from '../../Managers/Anims';
@@ -17,11 +17,12 @@ export default class Mage extends Character {
     // mage specific abilities
     this.ability = new MageAbilities(this);
 
-    // replace with mage animations when implemented:
-    this.animations = new Anims(this, 'mage', 'mage');
 
-    //set starting texture and size:
-    this.setTexture('mage-run', 0).setSize(12, 16);
+        //set starting texture and size:
+        this.setTexture('mage-run', 0).setSize(12, 12);
+
+    // coordinate which animations to play:
+    this.animations = new Anims(this, 'mage', 'mage');
 
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
@@ -60,7 +61,7 @@ export default class Mage extends Character {
     // starting equipment
     const equipped = this.equipment.equipped();
     equipped.mainHand = getWeaponByName("Crooked Staff");
-    equipped.ranged = getWeaponByName("Fire Wand");
+    equipped.ranged = getWeaponByName("Frost Wand");
     equipped.chest = getArmorByName("Apprentice's Robe");
     equipped.legs = getArmorByName("Apprentice's Pants");
     equipped.feet = getArmorByName("Apprentice's Boots");
@@ -73,11 +74,10 @@ export default class Mage extends Character {
 
     // mana system
     this.mana = new ManaMechanic(this);
-    const maxMana = this.mana.maxMana();
-    this.mana.setMana(maxMana);
 
     // new resource bar, positioned to float above the character:
-    this.manaBar = new ManaBar(scene, x - 8, y - 16, maxMana);
+    this.mana.setMana(this.mana.maxMana());
+    this.manaBar = new ResourceBar(scene, 'mana', this.mana.mana());
 
     // ai system
     this.AI = mageAI();

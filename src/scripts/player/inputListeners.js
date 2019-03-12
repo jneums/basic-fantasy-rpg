@@ -2,7 +2,7 @@ import actionPointerDown from './actionPointerDown';
 import inventoryPointerDown from './inventoryPointerDown';
 import toggleControl from './toggleControl';
 
-export default function playerInput(player = {}) {
+export default function inputListeners(player = {}) {
   let inventoryToggle = false;
 
   player.scene.input.on('pointerdown', (pointer) => {
@@ -12,6 +12,7 @@ export default function playerInput(player = {}) {
       actionPointerDown(pointer, player);
     }
   })
+  
 
   /**
    * toggle characters

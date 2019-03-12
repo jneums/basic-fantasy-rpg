@@ -14,6 +14,60 @@
  */
 export default function animationCreator(scene = {}) {
 
+  // priest animations:
+  scene.anims.create({
+    key: 'priest-idle',
+    frames: scene.anims.generateFrameNumbers('priest-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 2900
+  })
+  scene.anims.create({
+    key: 'priest-run',
+    frames: scene.anims.generateFrameNumbers('priest-idle', {start: 0, end: 4}),
+    duration: 500,
+    yoyo: false,
+    repeat: -1
+  })
+  scene.anims.create({
+    key: 'priest-combat',
+    frames: scene.anims.generateFrameNumbers('priest-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'priest-die',
+    frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
+  })
+
+  // mage sword (hand) anims:
+  scene.anims.create({
+    key: 'priest-sword-idle',
+    frames: scene.anims.generateFrameNumbers('mage-sword-idle', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3000
+  })
+  scene.anims.create({
+    key: 'priest-sword-run',
+    frames: scene.anims.generateFrameNumbers('mage-sword-run', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'priest-sword-stab',
+    frames: scene.anims.generateFrameNumbers('mage-sword-stab', {frames: [0, 1, 2]}),
+    frameRate: 9,
+    yoyo: true,
+    repeat: 0,
+  })
 
   // mage animations:
   // change from barabrian anims as you import mage anims:
@@ -47,7 +101,7 @@ export default function animationCreator(scene = {}) {
     yoyo: false,
     repeat: 0,
   })
-  
+
   // mage sword (hand) anims:
   scene.anims.create({
     key: 'mage-sword-idle',

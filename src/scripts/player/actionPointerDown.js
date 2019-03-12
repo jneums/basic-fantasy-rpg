@@ -3,7 +3,7 @@
  * actionPointerDown - called when the inventory is closed,
  * e.g. the pointer has interacted with the game world, not the ui.
  *
- * @param  {object} pointer   
+ * @param  {object} pointer
  * @param  {Character} player
  * @return {void}
  */
@@ -18,10 +18,7 @@ export default function actionPointerDown(pointer, player = {}) {
       target = child;
       // set it as the new target of the player
       player.target.setCurrentTarget(target);
-      target.healthBar.setBackgroundColor(0xaa3333);
-      if (player.target.getPreviousTarget()) {
-        player.target.getPreviousTarget().healthBar.setBackgroundColor();
-      }
+
     }
   })
   // if a character was clicked, and it has loot:

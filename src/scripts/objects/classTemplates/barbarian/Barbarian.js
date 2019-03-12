@@ -3,7 +3,7 @@ import { getWeaponByName } from '../../../loot/weapons';
 import { getArmorByName } from '../../../loot/armor';
 import barbarianAI from './barbarianAI';
 import RageMechanic from '../Rage';
-import RageBar from '../../Managers/RageBar';
+import ResourceBar from '../../Managers/ResourceBar';
 import BarbarianAbilities from './BarbarianAbilities';
 import KeyMap from '../../../player/KeyMap';
 import Anims from '../../Managers/Anims';
@@ -16,11 +16,12 @@ export default class Barbarian extends Character {
     super(scene, x, y)
     // barbarian specific abilities
     this.ability = new BarbarianAbilities(this);
-    this.keys = ['auto attack', 'rush', 'gore', 'savage blow', 'battle cry', 'intimidate', 'hobble']
+
+    // coordinate which animations to play:
     this.animations = new Anims(this, 'barbarian', 'barbarian');
 
-    //set starting texture and size:
-    this.setTexture('barbarian-run', 0).setSize(12, 16);
+        //set starting texture and size:
+        this.setTexture('mage-run', 0).setSize(12, 12);
 
     // config keymap for barbarian abilities
     // enable sending config object as second arg to keymap?
@@ -75,7 +76,7 @@ export default class Barbarian extends Character {
     this.rage = new RageMechanic(this);
 
     // new resource bar, positioned to float above the character:
-    this.rageBar = new RageBar(scene, x - 8, y - 16);
+    this.rageBar = new ResourceBar(scene, 'rage', 100);
 
     // ai system
     this.AI = barbarianAI();

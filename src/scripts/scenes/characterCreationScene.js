@@ -1,7 +1,8 @@
 import Barbarian from '../objects/classTemplates/barbarian/Barbarian';
 import Mage from '../objects/classTemplates/mage/Mage';
+import Priest from '../objects/classTemplates/priest/Priest';
 import Orc from '../objects/mobTemplates/Orc';
-import playerInput from '../player/playerInput';
+import inputListeners from '../player/inputListeners';
 import playerUpdate from '../player/playerUpdate';
 import updateLiveCharacters from '../updates/updateLiveCharacters';
 import updateDeadCharacters from '../updates/updateDeadCharacters';
@@ -23,6 +24,10 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // holds all characters:
     this.characters = this.add.group();
 
+    // for toggling between player controlled characters:
+    this.availableCharacters = [ 'priest', 'barbarian', 'mage'];
+
+
     // add animations to scene:
     animationCreator(this);
 
@@ -41,6 +46,7 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // add some characters:
     this.mage = new Mage(this, 90, 130);
     this.barbarian = new Barbarian(this, 110, 110);
+    this.priest = new Priest(this, 76, 110);
 
     // add some food:
     this.barbarian.inventory.add(getConsumableByName('Tough Jerky'));
@@ -48,15 +54,16 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.mage.inventory.add(getConsumableByName('Tough Jerky'));
     this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
     this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
+    this.priest.inventory.add(getConsumableByName('Refreshing Spring Water'));
+    this.priest.inventory.add(getConsumableByName('Refreshing Spring Water'));
 
 
-    // uncomment to control mage:
-    this.mage.AI = playerUpdate();
-    playerInput(this.mage);
-
+    // start as mage:
+    inputListeners(this.mage);
+    this.mage.controller = 'player';
     // uncomment to control barbarian:
     // this.barbarian.AI = playerUpdate();
-    // playerInput(this.barbarian);
+    // inputListeners(this.barbarian);
 
     // camera will follow player controlled character:
     this.cameras.main.setRoundPixels(true);

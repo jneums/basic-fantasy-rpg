@@ -17,18 +17,29 @@ export default function updateLiveCharacters(scene = {}) {
       child.timer.updateSwingTimers();
       child.timer.updateCastTimer();
       child.classUpdate();
+
       // use tint or animation to show buffs?
       if (child.buffs.has('battleShout')) child.hands.setTint(0xaa3333);
       else child.hands.clearTint();
 
+      // return before reaching update scripts:
       if (child.combat.isStunned()) {
         // cant move, timers dont move, and
         child.animations.stun();
         // ai is not running:
-        child.setVelocity(0, 0);
+        return child.setVelocity(0, 0);
+      }
+
+      if (child.controller === 'player') {
+
+        child.playerControlled();
       } else {
+
+
+       // only run ai if not player controlled:
         child.AI();
       }
+
     }
   })
 }

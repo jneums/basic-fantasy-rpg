@@ -1,49 +1,30 @@
 import mageAI from '../objects/classTemplates/mage/mageAI.js'
 import barbarianAI from '../objects/classTemplates/barbarian/barbarianAI.js'
 import playerUpdate from './playerUpdate';
-import playerInput from './playerInput';
+import inputListeners from './inputListeners';
 
 
 export default function toggleControl(scene = {}) {
-
-  if (scene.barbarian && scene.barbarian.controller === 'AI') {
-    scene.barbarian.controller = 'player';
-    scene.barbarian.AI = playerUpdate();
-    if (scene.mage) {
-      if (scene.mage.target.currentTarget()) {
-        scene.mage.target.currentTarget().healthBar.setBackgroundColor();
-      }
-      scene.mage.movement.stop();
-      scene.mage.controller = 'AI';
-      scene.mage.AI = mageAI();
-      scene.mage.scene.input.removeAllListeners();
-      scene.mage.scene.input.keyboard.removeAllListeners();
-    }
-    if (scene.barbarian.target.currentTarget()) {
-      scene.barbarian.target.currentTarget().healthBar.setBackgroundColor(0xaa3333);
+  const currentCharacter = scene.availableCharacters[0];
+  const nextCharacter = scene.availableCharacters[1];
+  // starting with mage, switch to barbarian:
+  if (scene[currentCharacter] && scene[currentCharacter].controller === 'AI') {
+    scene[currentCharacter].controller = 'player';
+    if (scene[nextCharacter]) {
+      swap(scene[nextCharacter]);
     }
 
-    playerInput(scene.barbarian);
-    scene.cameras.main.startFollow(scene.barbarian, true, .05, .05);
-
-  } else if (scene.mage && scene.mage.controller === 'AI') {
-    scene.mage.controller = 'player';
-    scene.mage.AI = playerUpdate();
-    if (scene.barbarian) {
-      if (scene.barbarian.target.currentTarget()) {
-        scene.barbarian.target.currentTarget().healthBar.setBackgroundColor();
-      }
-      scene.barbarian.movement.stop();
-      scene.barbarian.controller = 'AI';
-      scene.barbarian.AI = barbarianAI();
-      scene.barbarian.scene.input.removeAllListeners();
-      scene.barbarian.scene.input.keyboard.removeAllListeners();
-    }
-    if (scene.mage.target.currentTarget()) {
-      scene.mage.target.currentTarget().healthBar.setBackgroundColor(0xaa3333);
-    }
-    playerInput(scene.mage);
-    scene.cameras.main.startFollow(scene.mage, true, .05, .05);
+    inputListeners(scene[currentCharacter]);
+    scene.cameras.main.startFollow(scene[currentCharacter], true, .05, .05);
+    scene.availableCharacters.shift();
+    scene.availableCharacters.push(currentCharacter)
   }
+}
 
+// reduces repeating self:
+function swap(character = {}) {
+  character.movement.stop();
+  character.controller = 'AI';
+  character.scene.input.removeAllListeners();
+  character.scene.input.keyboard.removeAllListeners();
 }

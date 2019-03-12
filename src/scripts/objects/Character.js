@@ -10,8 +10,8 @@ import Target from './Managers/Target';
 import Threat from './Managers/Threat';
 import Buffs from './Managers/Buffs';
 import Consumables from './Managers/Consumables';
-import HealthBar from './Managers/HealthBar';
-
+import ResourceBar from './Managers/ResourceBar';
+import playerUpdate from '../player/playerUpdate';
 
 /**
  * Main character class, inherited by all characters.
@@ -20,8 +20,12 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x = 0, y = 0) {
     super(scene, x, y)
     scene.add.existing(this)
-    scene.physics.add.existing(this)
-    this.setInteractive();
+    scene.physics.add.existing(this);
+
+
+    // working on this: keeps messing up the hit test though when they are circles.
+    // this.setInteractive().setCircle(8)
+
     // who is controlling this character:
     this.controller = 'AI';
 
@@ -42,7 +46,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.threat = new Threat(this);
     this.buffs = new Buffs(this);
     this.inventory = new Inventory(this);
-    this.healthBar = new HealthBar(scene, x, y, this.stat.maxHp());
+    this.healthBar = new ResourceBar(scene, 'health', this.stat.maxHp());
     this.hands = scene.add.sprite(x, y - 4);
     this.depth = 1;
     this.hands.depth = 2;
@@ -67,19 +71,21 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       if (this.rage) {
         this.rageBar.set(this.rage.rage());
         this.rageBar.x = this.x - 8;
-        this.rageBar.y = this.y - 16;
+        this.rageBar.y = this.y - 17;
         this.rageBar.bar.depth = this.y;
         this.rageBar.draw();
       } else if (this.mana) {
         this.manaBar.p = 14 / (this.mana.maxMana());
         this.manaBar.set(this.mana.mana());
         this.manaBar.x = this.x - 8;
-        this.manaBar.y = this.y - 16;
+        this.manaBar.y = this.y - 17;
         this.manaBar.bar.depth = this.y;
         this.manaBar.draw();
       }
 
     }
+
+    this.playerControlled = playerUpdate();
 
 
 

@@ -1,4 +1,5 @@
 
+import CombatObject from '../CombatSystem/CombatObject';
 /**
  * Consumables Manager - In charge of providing
  * each character with the eat and drink abilities.
@@ -24,6 +25,10 @@ export default class Consumables {
       if (character.combat.isInCombat()) return console.log('You are in combat')
       // hp gained depends on the foodLevel
       const healing = 29;
+      // create combat object:
+      const combatObject = new CombatObject(character, character);
+      combatObject.setType('eat');
+      combatObject.setAmount(-healing);
       // create buff
       // buff manager knows about channeling: set flag to true
       const buff = {
@@ -31,19 +36,7 @@ export default class Consumables {
         duration: 30 * 60, // 30 secs * 60 fps update time
         interval: 3 * 60,
         channel: true,
-        combatObject: {
-          attacker: character.getName(),
-          target: character.getName(),
-          status: 'hit',
-          type: 'eat',
-          range: 'melee',
-          damageType: '',
-          amount: -healing,
-          bonusThreat: 0,
-          mitigationAmount: 0,
-          hand: 'main',
-          time: Date.now()
-        },
+        combatObject,
         attacker: character
       }
       // check if already has, if so replace it instead
@@ -67,6 +60,10 @@ export default class Consumables {
       if (character.combat.isInCombat()) return console.log('You are in combat')
       // mana gained depends on the water Level
       const regen = 29;
+      // create combat object:
+      const combatObject = new CombatObject(character, character);
+      combatObject.setType('drink');
+      combatObject.setAmount(-regen);
       // create buff
       // buff manager needs to know about channeling
       const buff = {
@@ -74,19 +71,7 @@ export default class Consumables {
         duration: 30 * 60,
         interval: 3 * 60,
         channel: true,
-        combatObject: {
-          attacker: character.getName(),
-          target: character.getName(),
-          status: 'hit',
-          type: 'drink',
-          range: 'melee',
-          damageType: '',
-          amount: -regen,
-          bonusThreat: 0,
-          mitigationAmount: 0,
-          hand: 'main',
-          time: Date.now()
-        },
+        combatObject,
         attacker: character
       }
       // replace instead of adding duplicate:
