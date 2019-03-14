@@ -2,17 +2,51 @@ import actionPointerDown from './actionPointerDown';
 import inventoryPointerDown from './inventoryPointerDown';
 import toggleControl from './toggleControl';
 
+
+function actionBar(pointer, player) {
+  // is the pointer in the left or right column:
+  if (pointer.downX > 1120 && pointer.downX < 1192) {
+    // position vertically:
+    if (pointer.downY > 192 && pointer.downY < 256) {
+      return player.keyMap.executeOne();
+    } else if (pointer.downY > 268 && pointer.downY < 340) {
+      return player.keyMap.executeTwo();
+    } else if (pointer.downY > 348 && pointer.downY < 420) {
+      return player.keyMap.executeThree();
+    } else if (pointer.downY > 428 && pointer.downY < 496) {
+      return player.keyMap.executeFour();
+    } else if (pointer.downY > 508 && pointer.downY < 580) {
+      return player.keyMap.executeFive();
+    }
+  } else if (pointer.downX > 1200 && pointer.downX < 1272){
+    // vertically in the right column:
+    if (pointer.downY > 192 && pointer.downY < 256) {
+      return player.keyMap.executeSix();
+    } else if (pointer.downY > 268 && pointer.downY < 340) {
+      return player.keyMap.executeSeven();
+    } else if (pointer.downY > 348 && pointer.downY < 420) {
+      return player.keyMap.executeEight();
+    } else if (pointer.downY > 428 && pointer.downY < 496) {
+      return player.keyMap.executeNine();
+    } else if (pointer.downY > 508 && pointer.downY < 580) {
+      return player.keyMap.executeZero();
+    }
+  }
+}
+
+
 export default function inputListeners(player = {}) {
   let inventoryToggle = false;
 
   player.scene.input.on('pointerdown', (pointer) => {
-    if (inventoryToggle) {
-      inventoryPointerDown(pointer, player);
+    // is the pointer on the ui or the dungeon?
+    if (pointer.downX > 1110) {
+      actionBar(pointer, player);
     } else {
       actionPointerDown(pointer, player);
     }
   })
-  
+
 
   /**
    * toggle characters

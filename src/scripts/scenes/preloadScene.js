@@ -131,16 +131,29 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('map', './assets/map/combat.json')
     this.load.image('v4', './assets/map/0x72_16x16DungeonTileset_extruded.v4.png')
 
+    // icons:
+    this.load.image('auto-attack', './assets/icons/auto_attack_icon.png')
+    this.load.image('rush', './assets/icons/rush_icon.png')
+    this.load.image('gore', './assets/icons/gore_icon.png')
+    this.load.image('savage-blow', './assets/icons/strike_icon.png')
+    this.load.image('shout', './assets/icons/shout_icon.png')
+
 
     // bitmap data:
     this.load.bitmapFont('font',
     './assets/fonts/font.png',
     './assets/fonts/font.fnt');
 
+    // ui:
+    this.load.image('ui', './assets/ui/ui.png');
+
     // load event:
     this.load.on('complete', ()=> {
       this.scene.start('MainScene')
+      this.scene.start('UIScene')
+
     })
+
   }
 
   create() {

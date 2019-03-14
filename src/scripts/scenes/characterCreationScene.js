@@ -22,6 +22,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
   preload() {}
 
   create() {
+
+
     // holds all characters:
     this.characters = this.add.group();
 
@@ -38,13 +40,7 @@ export default class CharacterCreationScene extends Phaser.Scene {
         npc = new Orc(this, spawnPoint.x, spawnPoint.y);
       }
     })
-    // use map object to spawn mobs:
-    map.getObjectLayer('spawns').objects.forEach(spawnPoint => {
-      let npc;
-      if (spawnPoint.type === 'orc') {
-        npc = new OrcArcher(this, spawnPoint.x + 20, spawnPoint.y);
-      }
-    })
+
 
 
     // add some characters:
@@ -71,6 +67,13 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.cameras.main.setRoundPixels(true)
       .startFollow(this.mage, true, .05, .05)
       .setZoom(4)
+
+    // mini-map:
+    this.minimap = this.cameras.add(1110, 0, 200, 200)
+      .setName('mini')
+      .setBackgroundColor(0x1c1117)
+      .startFollow(this.mage, true, .05, .05)
+      .setZoom(.2)
 
   }
 
