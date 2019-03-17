@@ -20,6 +20,8 @@ export default function toggleControl(scene = {}) {
       strip(currentCharacter);
     }
 
+    // emit to UI:
+    scene.registry.set('reloadUI', nextCharacter);
     inputListeners(nextCharacter);
     scene.cameras.main.startFollow(nextCharacter, true, .05, .05);
   }

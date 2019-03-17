@@ -25,14 +25,14 @@ export default class Priest extends Character {
 
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
-    this.keyMap.setTwo(this.ability.wand);
-    this.keyMap.setThree(this.ability.lesserHeal);
-    this.keyMap.setFour(this.ability);
-    this.keyMap.setFive(this.ability);
-    this.keyMap.setSix(this.ability);
-    this.keyMap.setSeven(this.ability);
-    this.keyMap.setEight(this.ability);
-    this.keyMap.setNine(this.ability);
+    this.keyMap.setTwo({ ability: this.ability.wand, icon: null });
+    this.keyMap.setThree({ ability:this.ability.lesserHeal, icon:null });
+    this.keyMap.setFour({ ability: this.ability, icon: null });
+    this.keyMap.setFive({ ability: this.ability, icon: null });
+    this.keyMap.setSix({ ability: this.ability, icon: null });
+    this.keyMap.setSeven({ ability: this.ability, icon: null });
+    this.keyMap.setEight({ ability: this.ability, icon: null });
+    this.keyMap.setNine({ ability: this.ability, icon: null });
 
     // set faction, default 'alliance'
     this.setTeam('alliance');

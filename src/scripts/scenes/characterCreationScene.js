@@ -62,6 +62,12 @@ export default class CharacterCreationScene extends Phaser.Scene {
     inputListeners(this.mage);
     this.mage.controller = 'player';
 
+    // called twice to force update...better way??
+    this.registry.set('reloadUI', this.mage)
+    this.registry.set('reloadUI', this.mage)
+
+    this.registry.set('errorText', 'test');
+    this.registry.set('errorText', 'test');
 
     // set follow to current player controlled character:
     this.cameras.main.setRoundPixels(true)
