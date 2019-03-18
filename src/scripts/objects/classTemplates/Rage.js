@@ -13,7 +13,6 @@ export default class RageMechanic {
     this.spendRage = function(cost = 0) {
       // calculate if enough rage
       if (this.rage() - cost < 0) {
-        console.log('Not enough rage');
         return false;
       } else {
         // if so, deduct rage cost

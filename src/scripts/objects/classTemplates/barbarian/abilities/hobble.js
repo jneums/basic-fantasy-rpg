@@ -1,4 +1,5 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
+import abilityRequirements from '../../abilityRequirements';
 
 /**
  * hobble - Maims the enemy, causing 5 damage and slowing
@@ -12,13 +13,19 @@ import CombatObject from '../../../CombatSystem/CombatObject';
  * @returns {void}
  */
  export default function hobble() {
-  // target validation:
-  const target = this.target.currentTarget();
-  if (!target) return console.log('You need a target');
+   // pre ability requirements:
+   const config = {
+     beneficial: false,
+     resourceAmount: 10,
+     resource: 'rage',
+     range: 25,
+     needsTarget: true
+   }
 
-  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
-  // rage check:
-  if (!this.rage.spendRage(10)) return;
+   if(!abilityRequirements(this, config)) return;
+   
+  const target = this.target.currentTarget();
+
   // setup combat object:
   const combatObject = new CombatObject(this, target);
   combatObject.setType('special');

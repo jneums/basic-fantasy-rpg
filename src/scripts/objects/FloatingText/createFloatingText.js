@@ -28,15 +28,16 @@ export default function createFloatingText(scene = {}, options = {}) {
   const _timeToLive = options.timeToLive || 5000; // in ms
   // whether or not to move with the camera:
   const _fixedToCamera = options.fixedToCamera || false;
-  const _combatObject = options.combatObject;
-  const _side = options.side;
+  const _combatObject = options.combatObject || null;
+  const _side = options.side || null;
 
   // set color:
   const _color = _textColor(_combatObject);
   const _size = 4 + options.size;
 
   // create the element
-  let _obj = scene.add.bitmapText(0, 0, 'font', _text, _size).setTint(_color);
+  let _obj = scene.add.dynamicBitmapText(0, 0, 'font', _text, _size)
+    .setTint(_color)
   //_obj.anchor.setTo(_spriteAnchor);
 
   // adjust rotation:
@@ -44,9 +45,20 @@ export default function createFloatingText(scene = {}, options = {}) {
       _obj.angle = _rotation;
   }
 
-  // set position:
-  _obj.x = _parentObj.x - _obj.width / 2;
-  _obj.y = _parentObj.y - _obj.height / 2 - 20;
+  if (_parentObj) {
+    // set position:
+    _obj.x = _parentObj.x - _obj.width / 2;
+    _obj.y = _parentObj.y - _obj.height / 2 - 20;
+  } else {
+    _obj.x = (scene.cameras.main.midPoint.x) - _obj.width / 2;
+    _obj.y = (scene.cameras.main.midPoint.y + 40) - _obj.height / 2;
+  }
+
+  if (_fixedToCamera) {
+    // _obj.setScrollFactor(0)
+
+  }
+
 
   _obj._animation = _animation;
   _obj._easing = _easing;
@@ -59,7 +71,8 @@ export default function createFloatingText(scene = {}, options = {}) {
   return _obj;
 }
 
-function _textColor (combatObject = {}) {
+function _textColor (combatObject) {
+  if (!combatObject) return 0xd04648;
   switch (combatObject.type()) {
     case 'magic':
     case 'wand':

@@ -1,6 +1,8 @@
+import abilityRequirements from '../../abilityRequirements';
+
 /**
- * Conjure Water - Conjures 2 bottle of water, providing
- * the mage and his allies with something to drink.
+ * Conjure Water - Conjures 2 bottle of Water, providing
+ * the mage and his allies with something to eat.
  *
  * level: 1
  *
@@ -8,19 +10,28 @@
  *
  * @returns {void}
  */
- export default function conjureWater () {
-  this.timer.setCastTimer(0);
-  const castTime = 3 * 60; //seconds
-  const manaCost = 60;
-  if (this.mana.mana() - manaCost > 0) {
-    const cast = {
-      name: 'Conjure Water',
-      castTime,
-      cast: () => {
-        this.mana.spendMana(manaCost);
-        this.inventory.add(getConsumableByName("Conjured Water"))
-      }
-    }
-    this.timer.setSpell(cast);
+export default function conjureWater() {
+  // pre ability requirements:
+  const config = {
+    beneficial: true,
+    resourceAmount: 60,
+    resource: 'mana',
+    range: 25,
+    needsTarget: false
   }
+
+  if(!abilityRequirements(this, config)) return;
+
+  const castTime = 3 * 60; //seconds * frames
+
+  const cast = {
+    name: 'Conjure Water',
+    castTime,
+    cast: () => {
+      this.mana.spendMana(60);
+      this.inventory.add(getConsumableByName("Conjured Water"))
+    }
+  }
+  this.timer.setSpell(cast);
+
 }

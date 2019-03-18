@@ -1,4 +1,5 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
+import abilityRequirements from '../../abilityRequirements';
 
 
 /**
@@ -11,33 +12,29 @@ import CombatObject from '../../../CombatSystem/CombatObject';
  * @return {void}
  */
 export default function lesserHeal () {
+
+  // pre ability requirements:
+  const config = {
+    beneficial: true,
+    resourceAmount: 25,
+    resource: 'mana',
+    range: 175,
+    needsTarget: true
+  }
+
+  if(!abilityRequirements(this, config)) return;
+
   const castTime = 1.5 * 60; // 1.5 seconds
   const manaCost = 25;
   const amount = Phaser.Math.Between(18, 20);
 
-  // check if there is a target
   const target = this.target.currentTarget();
-  if (!target) return console.log("I need a target");
-
-  // check that target is friendly
-  if (target.team() !== this.team()) return console.log("I cant do that");
-
-  // make sure target is alive:
-  if (target.combat.isDead()) return console.log("I cant attack that!");
 
   // turn and face target:
-  this.movement.faceTarget();
-
-  // check if target is in range
-  const range = 75;
-  const inRange = this.target.rangeCheck(target, range);
-  if (!inRange) return console.log("I need to get closer");
-
-
-  if (this.mana.mana() - manaCost < 0) return console.log('I dont have enough mana');
+  this.movement.faceTarget(target);
 
   const cast = {
-    name: 'lesser-heal',
+    name: 'Lesser Heal',
     castTime,
     cast: () => {
       if (target.combat.isDead()) return;

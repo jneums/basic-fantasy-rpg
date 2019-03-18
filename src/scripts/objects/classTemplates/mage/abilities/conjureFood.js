@@ -1,3 +1,4 @@
+import abilityRequirements from '../../abilityRequirements';
 
 /**
  * Conjure Food - Conjures 2 bottle of food, providing
@@ -10,17 +11,27 @@
  * @returns {void}
  */
 export default function conjureFood() {
-  const castTime = 3 * 60; //seconds * frames
-  const manaCost = 60;
-  if (this.mana.mana() - manaCost > 0) {
-    const cast = {
-      name: 'Conjure Food',
-      castTime,
-      cast: () => {
-        this.mana.spendMana(manaCost);
-        this.inventory.add(getConsumableByName("Conjured Food"))
-      }
-    }
-    this.timer.setSpell(cast);
+  // pre ability requirements:
+  const config = {
+    beneficial: true,
+    resourceAmount: 60,
+    resource: 'mana',
+    range: 25,
+    needsTarget: false
   }
+
+  if(!abilityRequirements(this, config)) return;
+
+  const castTime = 3 * 60; //seconds * frames
+
+  const cast = {
+    name: 'Conjure Food',
+    castTime,
+    cast: () => {
+      this.mana.spendMana(60);
+      this.inventory.add(getConsumableByName("Conjured Food"))
+    }
+  }
+  this.timer.setSpell(cast);
+
 }

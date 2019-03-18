@@ -1,3 +1,5 @@
+import abilityRequirements from '../../abilityRequirements';
+
 /**
  * Battle Cry - The barbarian shouts, increasing the melee
  * attack power of all party members within 20 yards by 15.
@@ -10,6 +12,16 @@
  * @returns {void}
  */
 export default function battleCry() {
+
+  const reqConfig = {
+    beneficial: 'true',
+    resourceAmount: 10,
+    resource: 'rage',
+    range: 25,
+    needsTarget: false
+  }
+  if(!abilityRequirements(this, reqConfig)) return;
+
   const alliesInRange = this.target.scanForAllies(200);
   // create a buff object.
   const buff = {

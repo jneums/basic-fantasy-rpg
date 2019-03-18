@@ -1,4 +1,5 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
+import abilityRequirements from '../../abilityRequirements';
 
 /**
  * rush - rush an enemy, generate 9 rage, and stun it for 3 seconds.
@@ -12,11 +13,14 @@ import CombatObject from '../../../CombatSystem/CombatObject';
  */
 export default function rush() {
   // meets requirements:
+  const reqConfig = {
+    resourceAmount: 0,
+    resourceType: 'rage',
+    range: 175,
+    needsTarget: true
+  }
+  if (!abilityRequirements(this, reqConfig)) return;
   const target = this.target.currentTarget();
-  if (!target) return console.log('I dont have a target!');
-  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
-  const inRange = this.target.rangeCheck(target, 60)
-  if (inRange) return console.log('You are too close')
 
   // setup combat object:
   const combatObject = new CombatObject(this, target);

@@ -1,4 +1,5 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
+import abilityRequirements from '../../abilityRequirements';
 
 /**
  * intimidate - Blasts nearby enemies, increasing the time
@@ -19,8 +20,16 @@ import CombatObject from '../../../CombatSystem/CombatObject';
  * @returns {void}
  */
 export default function intimidate() {
-  // rage check
-  if (!this.rage.spendRage(20)) return;
+
+  const reqConfig = {
+    beneficial: 'false',
+    resourceAmount: 20,
+    resource: 'rage',
+    range: 25,
+    needsTarget: false
+  }
+  if(!abilityRequirements(this, reqConfig)) return;
+  
   // scan for enemies
   const enemiesInRange = this.target.scanForEnemies(80);
   // only four closest:

@@ -1,4 +1,5 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
+import abilityRequirements from '../../abilityRequirements';
 
 /**
  * gore - Wounds the target causing them to bleed for 15 damage
@@ -11,15 +12,18 @@ import CombatObject from '../../../CombatSystem/CombatObject';
  * @returns {void}
  */
 export default function gore() {
-  // check for valid target:
+  // pre ability requirements:
+  const config = {
+    beneficial: false,
+    resourceAmount: 10,
+    resource: 'rage',
+    range: 25,
+    needsTarget: true
+  }
+
+  if(!abilityRequirements(this, config)) return;
+  
   const target = this.target.currentTarget();
-  if (!target) return console.log('You need a target');
-
-  // is target friendly?
-  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
-  // check for enough rage:
-  if (!this.rage.spendRage(10)) return;
-
   // setup combat object:
   const combatObject = new CombatObject(this, target);
   combatObject.setType('dot');

@@ -1,6 +1,6 @@
 import CombatObject from '../CombatSystem/CombatObject';
 import spellHitTable from '../../hitTables/spellHitTable';
-
+import abilityRequirements from './abilityRequirements';
 /**
  * wand - attack with an equipped wand
  *
@@ -11,6 +11,18 @@ import spellHitTable from '../../hitTables/spellHitTable';
  * @returns {void}
  */
 export default function wand() {
+
+  // pre ability requirements:
+  const config = {
+    beneficial: false,
+    resourceAmount: 0,
+    resource: 'mana',
+    range: 175,
+    needsTarget: true
+  }
+
+  if(!abilityRequirements(this, config)) return;
+
   // check for wand
   const wand = this.equipment.equipped().ranged;
   if (!wand.damage && wand.type !== 'wand') return console.log("I dont have a wand")
@@ -21,24 +33,11 @@ export default function wand() {
 
   // check if there is a target
   const target = this.target.currentTarget();
-  if (!target) return console.log("I need a target");
 
-  // make sure target is alive:
-  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
-
-
-  // check if target is in range
-  const maxDistance = 300;
-  const inRange = this.target.rangeCheck(target, maxDistance);
-  if (!inRange) return console.log("I'm too far away");
-
-
-  // stop moving, cant move and wand
-  this.movement.stop();
   this.timer.resetSwingTimer('ranged');
 
   // turn and face target:
-  this.movement.faceTarget();
+  this.movement.faceTarget(target);
   // get weapon dmg roll
   const amount = Phaser.Math.Between(wand.damage.min, wand.damage.max);
   // build spell combat object

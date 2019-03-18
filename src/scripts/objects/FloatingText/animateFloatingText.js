@@ -29,4 +29,14 @@ export default function animateFloatingText(scene = {}, floatingText) {
       targets.destroy();
     }
   }
+
+  if (floatingText._animation === 'fade') {
+    floatingText.depth = 1800;
+    const tween = scene.tweens.add({
+      targets: floatingText,
+      alpha: 0,
+      duration: floatingText._timeToLive,
+      onComplete: function () { arguments[1][0].destroy() }
+    })
+  }
 }

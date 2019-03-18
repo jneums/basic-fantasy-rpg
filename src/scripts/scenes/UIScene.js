@@ -1,5 +1,4 @@
 
-
 /**
  * UI:
  */
@@ -12,8 +11,6 @@ export default class UIScene extends Phaser.Scene {
 
   create() {
 
-    // text warnings:
-    this.errorText = this.add.bitmapText(100, 100, 'font', 'initializing', 8);
     // icons:
     this.icons = this.add.group();
     // action bars:
@@ -35,21 +32,11 @@ export default class UIScene extends Phaser.Scene {
       loadActionBar(this, icons)
 
     } else if (key === 'errorText') {
-      clearErrorText(this);
-      const newText = data;
-      showText(this, newText);
+    
     }
   }
 }
 
-
-function clearErrorText(scene) {
-  scene.errorText = '';
-}
-
-function showText(scene, newText) {
-  scene.errorText = newText;
-}
 
 function clearActionBar(scene) {
   scene.icons.clear(true, true)

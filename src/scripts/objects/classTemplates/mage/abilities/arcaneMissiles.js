@@ -1,4 +1,5 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
+import abilityRequirements from '../../abilityRequirements';
 
 /**
  * Arcane Missiles -
@@ -10,27 +11,24 @@ import CombatObject from '../../../CombatSystem/CombatObject';
  * @returns {void}
  */
 export default function arcaneMissiles() {
-  // if (!canCast) return;
+  // pre ability requirements:
+  const config = {
+    beneficial: false,
+    resourceAmount: 85,
+    resource: 'mana',
+    range: 175,
+    needsTarget: true
+  }
+
+  if(!abilityRequirements(this, config)) return;
 
   // check if there is a target
   const target = this.target.currentTarget();
-  if (!target) return console.log("I need a target");
 
-  if (target.team() === this.team() || target.combat.isDead()) return console.log("I can't attack that")
+  this.mana.spendMana(85);
 
-  // check if target is in range
-  const range = 300;
-  const inRange = this.target.rangeCheck(target, range);
-  if (!inRange) return console.log("I need to get closer");
-
-  // check mana
-  const manaCost = 85;
-  const paidMana = this.mana.spendMana(manaCost);
-  if (!paidMana) return;
-  const duration = 3;
-  const interval = 1;
   // channeled, .132 is spell coefficient
-  const dmgTick = .332 * this.stat.spellPower();
+  const dmgTick = .162 * this.stat.spellPower();
   // create buff item:
   const combatObject = new CombatObject(this, target);
   combatObject.setType('magic');
@@ -40,8 +38,8 @@ export default function arcaneMissiles() {
 
   target.buffs.add({
     name: 'arcaneMissiles',
-    duration: duration * 60,
-    interval: interval * 60,
+    duration: 3 * 60,
+    interval: 1 * 60,
     combatObject,
     attacker: this
   });
