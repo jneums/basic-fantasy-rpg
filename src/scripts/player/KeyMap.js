@@ -38,12 +38,12 @@ export default class KeyMap {
         icon: null
       },
       nine: {
-        ability: null,
-        icon: null
+        ability: character.consumables.drink,
+        icon: 'wine'
       },
       zero: {
-        ability: null,
-        icon: null
+        ability: character.consumables.eat,
+        icon: 'cheese'
       }
     }
 
@@ -86,40 +86,44 @@ export default class KeyMap {
       keys.nine.ability.call(character)
     }
 
+    this.executeZero = function() {
+      keys.zero.ability.call(character)
+    }
+
     this.executeInventoryOne = function() {
-      inventory.call(character.inventory, 0)
+      keys.inventory.abilitycall(character.inventory, 0)
     }
 
     this.executeInventoryTwo = function() {
-      inventory.call(character, 1)
+      keys.inventory.abilitycall(character, 1)
     }
 
     this.executeInventoryThree = function() {
-      inventory.call(character.inventory, 2)
+      keys.inventory.abilitycall(character.inventory, 2)
     }
 
     this.executeInventoryFour = function() {
-      inventory.call(character.inventory, 3)
+      keys.inventory.abilitycall(character.inventory, 3)
     }
 
     this.executeInventoryFive = function() {
-      inventory.call(character.inventory, 4)
+      keys.inventory.abilitycall(character.inventory, 4)
     }
 
     this.executeInventorySix = function() {
-      inventory.call(character.inventory, 5)
+      keys.inventory.abilitycall(character.inventory, 5)
     }
 
     this.executeInventorySeven = function() {
-      inventory.call(character.inventory, 6)
+      keys.inventory.abilitycall(character.inventory, 6)
     }
 
     this.executeInventoryEight = function() {
-      inventory.call(character.inventory, 7)
+      keys.inventory.abilitycall(character.inventory, 7)
     }
 
     this.executeInventoryNine = function() {
-      inventory.call(character.inventory, 8)
+      keys.inventory.abilitycall(character.inventory, 8)
     }
 
     this.getOne = function() {

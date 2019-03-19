@@ -6,7 +6,7 @@
  * @returns {bool} attacking or not
  */
 export default function standGuard(character = {}) {
-  const range = 32;
+  const range = 25;
   const target = character.target.currentTarget();
   if (target) {
     const inRange = character.target.rangeCheck(target, range);

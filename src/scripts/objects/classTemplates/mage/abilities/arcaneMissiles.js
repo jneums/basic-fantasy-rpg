@@ -25,8 +25,6 @@ export default function arcaneMissiles() {
   // check if there is a target
   const target = this.target.currentTarget();
 
-  this.mana.spendMana(85);
-
   // channeled, .132 is spell coefficient
   const dmgTick = .162 * this.stat.spellPower();
   // create buff item:

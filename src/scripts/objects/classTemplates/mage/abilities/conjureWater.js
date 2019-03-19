@@ -28,7 +28,6 @@ export default function conjureWater() {
     name: 'Conjure Water',
     castTime,
     cast: () => {
-      this.mana.spendMana(60);
       this.inventory.add(getConsumableByName("Conjured Water"))
     }
   }

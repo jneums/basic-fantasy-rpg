@@ -26,14 +26,13 @@ export default class Mage extends Character {
 
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
-    this.keyMap.setTwo({ ability: this.ability.wand, icon: null });
-    this.keyMap.setThree({ ability: this.ability.arcaneIntellect, icon: null });
-    this.keyMap.setFour({ ability: this.ability.arcaneMissiles, icon: null });
-    this.keyMap.setFive({ ability: this.ability.polymorph, icon: null });
+    this.keyMap.setTwo({ ability: this.ability.wand, icon: 'wand' });
+    this.keyMap.setThree({ ability: this.ability.arcaneIntellect, icon: 'intellect' });
+    this.keyMap.setFour({ ability: this.ability.arcaneMissiles, icon: 'missiles' });
+    this.keyMap.setFive({ ability: this.ability.frostbolt, icon: 'frostbolt' });
     this.keyMap.setSix({ ability: this.ability.fireball, icon: null });
     this.keyMap.setSeven({ ability: this.ability.fireBlast, icon: null });
     this.keyMap.setEight({ ability: this.ability.frostArmor, icon: null });
-    this.keyMap.setNine({ ability: this.ability.frostbolt, icon: null });
 
     // set faction, default 'alliance'
     this.setTeam('alliance');

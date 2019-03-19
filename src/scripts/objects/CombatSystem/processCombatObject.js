@@ -5,6 +5,7 @@ import logMod from './logMod';
 import threatMod from './threatMod';
 import healthMod from './healthMod';
 import manaMod from './manaMod';
+import playAnims from './playAnims';
 /**
  * processCombatObject - take dmg, add to log, add rage,
  * modify threat table, create scrolling text, etc.
@@ -24,6 +25,7 @@ export default function processCombatObject (attacker = {}, target = {}) {
 
   // now that updates to object are done, use final object to
   // modify the characters:
+  playAnims(attacker, target, this);
   textMod(attacker, target, this);
 
   // add object to the combat logs

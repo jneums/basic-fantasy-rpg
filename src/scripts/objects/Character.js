@@ -88,7 +88,14 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.playerControlled = playerUpdate();
 
 
+    let casting = false;
 
+    this.casting = function() {
+      return casting;
+    }
+    this.setCasting = function(bool) {
+      casting = bool;
+    }
     // character name
     let name = '';
     // ['dwarf', 'night-elf', 'gnome', 'human'];

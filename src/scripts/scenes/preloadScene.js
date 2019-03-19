@@ -9,6 +9,18 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
+
+    // casting animations:
+    this.load.spritesheet('mage-sword-frost-cast',
+      './assets/anims/mage_sword_frost_cast_spritesheet.png',
+      { frameWidth: 24, frameHeight: 36 }
+    )
+    this.load.spritesheet('priest-sword-nature-cast',
+      './assets/anims/priest_sword_nature_cast_spritesheet.png',
+      { frameWidth: 24, frameHeight: 36 }
+    )
+
+
     // priest anims:
     this.load.spritesheet('priest-idle',
       './assets/anims/priest_idle_spritesheet.png',
@@ -41,6 +53,7 @@ export default class PreloadScene extends Phaser.Scene {
       './assets/anims/mage_sword_stab_spritesheet.png',
       { frameWidth: 36, frameHeight: 24 }
     )
+
 
     // barbarian anims:
     this.load.spritesheet('barbarian-idle',
@@ -132,11 +145,34 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('v4', './assets/map/0x72_16x16DungeonTileset_extruded.v4.png')
 
     // icons:
+    // barbarian:
     this.load.image('auto-attack', './assets/icons/auto_attack_icon.png')
-    this.load.image('rush', './assets/icons/rush_icon.png')
+    this.load.image('rush', './assets/icons/fast_icon.png')
     this.load.image('gore', './assets/icons/gore_icon.png')
     this.load.image('savage-blow', './assets/icons/strike_icon.png')
     this.load.image('shout', './assets/icons/shout_icon.png')
+    this.load.image('intimidate', './assets/icons/earth_column.png')
+    this.load.image('hobble', './assets/icons/fire_sword_icon.png')
+
+    // mage:
+    this.load.image('wand', './assets/icons/wand.png')
+    this.load.image('cheese', './assets/icons/cheese_icon.png')
+    this.load.image('wine', './assets/icons/wine_icon.png')
+    this.load.image('intellect', './assets/icons/eye_icon.png')
+    this.load.image('missiles', './assets/icons/frost_ball.png')
+    this.load.image('frostbolt', './assets/icons/ice_arrow_icon.png')
+    this.load.image('empty', './assets/icons/empty_icon.png')
+
+    //priest:
+    this.load.image('heal', './assets/icons/heart_icon.png')
+
+
+
+    this.load.image('nature-ball', './assets/anims/nature_ball.png')
+    this.load.image('frost-ball', './assets/anims/frost_ball.png')
+    this.load.image('fire-ball', './assets/anims/fire_ball.png')
+    this.load.image('arcane-ball', './assets/anims/arcane_ball.png')
+    this.load.image('shadow-ball', './assets/anims/shadow_ball.png')
 
 
     // bitmap data:

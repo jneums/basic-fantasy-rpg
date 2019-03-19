@@ -45,6 +45,22 @@ export default function animationCreator(scene = {}) {
     repeat: 0,
   })
 
+
+  scene.anims.create({
+    key: 'priest-sword-nature-cast',
+    frames: scene.anims.generateFrameNumbers('priest-sword-nature-cast', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+  })
+
+  scene.anims.create({
+    key: 'mage-sword-frost-cast',
+    frames: scene.anims.generateFrameNumbers('mage-sword-frost-cast', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+  })
   // mage sword (hand) anims:
   scene.anims.create({
     key: 'priest-sword-idle',

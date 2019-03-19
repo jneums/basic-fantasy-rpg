@@ -18,9 +18,10 @@ export default function PlayerUpdate() {
 
     const moving = moveToMoveTarget(this);
     const attacking = standGuard(this);
+    const casting = this.casting();
     if (moving) this.animations.run();
     if (attacking) this.animations.combat();
-    if (!attacking && !moving) this.animations.idle();
+    if (!attacking && !moving && !casting) this.animations.idle();
 
   }
   return update;

@@ -47,9 +47,11 @@ export default function lesserHeal () {
       combatObject.setDamageType('holy');
       combatObject.setAmount(-amount);
       combatObject.process();
-
+      this.setCasting(false)
     }
   }
+  this.setCasting(true)
+  this.animations.cast('nature');
   this.timer.setSpell(cast);
 
 }

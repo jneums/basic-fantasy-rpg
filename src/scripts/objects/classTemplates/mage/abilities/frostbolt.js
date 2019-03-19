@@ -37,7 +37,6 @@ export default function frostbolt () {
     name: 'Frostbolt',
     castTime,
     cast: () => {
-      this.mana.spendMana(manaCost);
       // spell effect here:
       // create combat object ot deal 18 - 20 frost dmg:
       const combatObject = new CombatObject(this, target);
@@ -55,6 +54,7 @@ export default function frostbolt () {
         },
         attacker: this
       }
+      this.setCasting(false);
       // create debuff for * .6 movement speed, send it to buff
       if (target.buffs.has('frostbolt'))
         target.buffs.replace(debuff);
@@ -62,6 +62,8 @@ export default function frostbolt () {
         target.buffs.add(debuff);
     }
   }
+  this.setCasting(true);
+  this.animations.cast('frost')
   this.timer.setSpell(cast);
 
 }

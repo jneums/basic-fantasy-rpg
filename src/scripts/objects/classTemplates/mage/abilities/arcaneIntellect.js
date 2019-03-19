@@ -32,8 +32,6 @@ export default function arcaneIntellect() {
       intellect: 2
     }
   }
-  this.mana.spendMana(60)
-
 
   if (target.buffs.has('arcaneIntellect'))
     target.buffs.replace(buff);

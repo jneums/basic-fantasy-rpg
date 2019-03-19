@@ -32,7 +32,7 @@ export default class UIScene extends Phaser.Scene {
       loadActionBar(this, icons)
 
     } else if (key === 'errorText') {
-    
+
     }
   }
 }
@@ -47,16 +47,16 @@ function loadActionBar(scene, abilities) {
   let x = 1124;
   let y = 192;
   abilities.forEach((ability, i) => {
-    if (!ability) return;
+    if (!ability) ability = 'empty'
     let icon = scene.add.image(x, y, ability)
       .setOrigin(0)
     scene.icons.add(icon);
     icon.scaleX = 4
     icon.scaleY = 4
-    if (i === 5) {
+    if (i % 2 === 0) {
       x += 80;
-      y = 192;
     } else {
+      x = 1124;
       y += 80;
     }
   })

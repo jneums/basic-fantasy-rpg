@@ -34,6 +34,8 @@ export default function rush() {
     attacker: this
   });
   this.rage.spendRage(-9)
-  this.movement.setMoveTargetCoords([target.x, target.y])
+
+  let offset = Math.sign(this.x - target.x) * 20;
+  this.movement.setMoveTargetCoords([target.x + offset, target.y])
   this.movement.setMovementSpeed(500)
 }

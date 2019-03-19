@@ -10,7 +10,7 @@ export default class Anims {
     character.hands.on('animationcomplete', transition, character.hands);
 
     this.run = function() {
-      const shouldFlip = (character.x - character.movement.getMoveTargetCoords()[0] > 6)
+      const shouldFlip = (character.x - character.movement.getMoveTargetCoords()[0] > 0)
         ? true
         : false;
       character.flipX = shouldFlip;
@@ -43,6 +43,10 @@ export default class Anims {
     this.stun = function() {
       character.hands.setTexture(handType + '-idle', 0)
       character.anims.play(characterType + '-stun', true);
+    }
+
+    this.cast = function(school = '') {
+      character.hands.anims.play(handType + '-' + school + '-cast', true)
     }
   }
 

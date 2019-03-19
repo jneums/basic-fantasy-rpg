@@ -10,24 +10,24 @@ function actionBar(pointer, player) {
     if (pointer.downY > 192 && pointer.downY < 256) {
       return player.keyMap.executeOne();
     } else if (pointer.downY > 268 && pointer.downY < 340) {
-      return player.keyMap.executeTwo();
-    } else if (pointer.downY > 348 && pointer.downY < 420) {
       return player.keyMap.executeThree();
-    } else if (pointer.downY > 428 && pointer.downY < 496) {
-      return player.keyMap.executeFour();
-    } else if (pointer.downY > 508 && pointer.downY < 580) {
+    } else if (pointer.downY > 348 && pointer.downY < 420) {
       return player.keyMap.executeFive();
+    } else if (pointer.downY > 428 && pointer.downY < 496) {
+      return player.keyMap.executeSeven();
+    } else if (pointer.downY > 508 && pointer.downY < 580) {
+      return player.keyMap.executeNine();
     }
   } else if (pointer.downX > 1200 && pointer.downX < 1272){
     // vertically in the right column:
     if (pointer.downY > 192 && pointer.downY < 256) {
-      return player.keyMap.executeSix();
+      return player.keyMap.executeTwo();
     } else if (pointer.downY > 268 && pointer.downY < 340) {
-      return player.keyMap.executeSeven();
+      return player.keyMap.executeFour();
     } else if (pointer.downY > 348 && pointer.downY < 420) {
-      return player.keyMap.executeEight();
+      return player.keyMap.executeSix();
     } else if (pointer.downY > 428 && pointer.downY < 496) {
-      return player.keyMap.executeNine();
+      return player.keyMap.executeEight();
     } else if (pointer.downY > 508 && pointer.downY < 580) {
       return player.keyMap.executeZero();
     }

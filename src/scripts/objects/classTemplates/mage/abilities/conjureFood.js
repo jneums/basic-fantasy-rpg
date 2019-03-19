@@ -28,7 +28,6 @@ export default function conjureFood() {
     name: 'Conjure Food',
     castTime,
     cast: () => {
-      this.mana.spendMana(60);
       this.inventory.add(getConsumableByName("Conjured Food"))
     }
   }
