@@ -10,14 +10,22 @@ export default class UIScene extends Phaser.Scene {
   }
 
   create() {
+    // dialogue box:
+    this.dialogueBox = this.add.image(100, 20, 'dialogueBox');
+    this.dialogueBox.setOrigin(0);
+    this.dialogueBox.scaleX = 4;
+    this.dialogueBox.scaleY = 4;
+    this.dialogueBox.setVisible(false);
+
+    this.dialogueText = this.add.dynamicBitmapText(130, 50, 'font', '', 24);
 
     // icons:
     this.icons = this.add.group();
     // action bars:
-    this.actionBars = this.add.image(0,0,'ui')
-    this.actionBars.setOrigin(0)
-    this.actionBars.scaleX = 4
-    this.actionBars.scaleY = 4
+    this.actionBars = this.add.image(0,0,'ui');
+    this.actionBars.setOrigin(0);
+    this.actionBars.scaleX = 4;
+    this.actionBars.scaleY = 4;
 
     // events:
     this.registry.events.on('changedata', this.updateData, this);
@@ -31,8 +39,12 @@ export default class UIScene extends Phaser.Scene {
       const icons = data.keyMap.getIcons();
       loadActionBar(this, icons)
 
-    } else if (key === 'errorText') {
-
+    } else if (key === 'closeDialogueBox') {
+      this.dialogueText._text = '';
+      this.dialogueBox.setVisible(false);
+    } else if (key === 'openDialogueBox') {
+      this.dialogueBox.setVisible(true);
+      this.dialogueText._text = data;
     }
   }
 }

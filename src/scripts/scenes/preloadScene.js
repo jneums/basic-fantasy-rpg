@@ -207,7 +207,7 @@ export default class PreloadScene extends Phaser.Scene {
 
 
     this.load.image('hidden', './assets/anims/empty.png')
-
+    this.load.image('dialogueBox', './assets/ui/dialogue.png');
 
     // bitmap data:
     this.load.bitmapFont('font',

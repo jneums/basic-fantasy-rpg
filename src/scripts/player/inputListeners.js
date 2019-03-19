@@ -39,6 +39,11 @@ export default function inputListeners(player = {}) {
   let inventoryToggle = false;
 
   player.scene.input.on('pointerdown', (pointer) => {
+    if (player.scene.dialogueBoxActive) {
+      player.scene.dialogueBoxActive = false;
+      player.scene.registry.set('closeDialogueBox');
+      return;
+    }
     // is the pointer on the ui or the dungeon?
     if (pointer.downX > 1110) {
       actionBar(pointer, player);

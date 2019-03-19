@@ -23,7 +23,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
 
   create() {
 
-
+    // is dialogue box open:
+    this.dialogueBoxActive = false;
     // holds all characters:
     this.characters = this.add.group();
 
@@ -65,9 +66,24 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // called twice to force update...better way??
     this.registry.set('reloadUI', this.mage)
     this.registry.set('reloadUI', this.mage)
+    this.registry.set('closeDialogueBox');
 
-    this.registry.set('errorText', 'test');
-    this.registry.set('errorText', 'test');
+    var timer = this.time.addEvent({
+        delay: 5000,                // ms
+        callback: testDialogue,
+        //args: [],
+        callbackScope: this,
+        loop: false
+    });
+
+    function testDialogue() {
+      const welcomeText = "GREETINGS ADVENTURER! WELCOME."
+      this.dialogueBoxActive = true;
+      this.registry.set('openDialogueBox', 'test');
+      this.registry.set('openDialogueBox', welcomeText);
+
+    }
+
 
     // set follow to current player controlled character:
     this.cameras.main.setRoundPixels(true)
