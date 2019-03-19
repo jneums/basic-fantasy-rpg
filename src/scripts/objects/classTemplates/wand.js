@@ -36,8 +36,7 @@ export default function wand() {
 
   this.timer.resetSwingTimer('ranged');
 
-  // turn and face target:
-  this.movement.faceTarget(target);
+
   // get weapon dmg roll
   const amount = Phaser.Math.Between(wand.damage.min, wand.damage.max);
   // build spell combat object

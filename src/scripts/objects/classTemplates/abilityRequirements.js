@@ -93,6 +93,6 @@ export default function abilityRequirements(character = {}, config = {}) {
     break;
   }
 
-
+  character.movement.faceTarget(_target);
   return true;
 }

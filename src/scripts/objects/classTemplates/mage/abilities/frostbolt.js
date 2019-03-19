@@ -31,8 +31,6 @@ export default function frostbolt () {
 
   const target = this.target.currentTarget();
 
-  this.movement.faceTarget(target);
-
   const cast = {
     name: 'Frostbolt',
     castTime,

@@ -30,8 +30,6 @@ export default function lesserHeal () {
 
   const target = this.target.currentTarget();
 
-  // turn and face target:
-  this.movement.faceTarget(target);
 
   const cast = {
     name: 'Lesser Heal',
