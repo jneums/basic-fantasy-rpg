@@ -129,6 +129,12 @@ export default class PreloadScene extends Phaser.Scene {
       { frameWidth: 40, frameHeight: 16 }
     )
 
+    // poly anim:
+    this.load.spritesheet('polymorph',
+      './assets/anims/poly_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    )
+
     // blood spray anim:
     this.load.spritesheet('blood',
       './assets/anims/blood_spritesheet.png',
@@ -153,6 +159,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('shout', './assets/icons/shout_icon.png')
     this.load.image('intimidate', './assets/icons/earth_column.png')
     this.load.image('hobble', './assets/icons/fire_sword_icon.png')
+    this.load.image('ruby', './assets/icons/ruby_icon.png')
 
     // mage:
     this.load.image('wand', './assets/icons/wand.png')
@@ -161,10 +168,12 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('intellect', './assets/icons/eye_icon.png')
     this.load.image('missiles', './assets/icons/frost_ball.png')
     this.load.image('frostbolt', './assets/icons/ice_arrow_icon.png')
+    this.load.image('poly', './assets/icons/poly_icon.png')
     this.load.image('empty', './assets/icons/empty_icon.png')
 
     //priest:
     this.load.image('heal', './assets/icons/heart_icon.png')
+    this.load.image('renew', './assets/icons/renew_icon.png')
 
 
 
@@ -173,6 +182,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('fire-ball', './assets/anims/fire_ball.png')
     this.load.image('arcane-ball', './assets/anims/arcane_ball.png')
     this.load.image('shadow-ball', './assets/anims/shadow_ball.png')
+
+
+    this.load.image('hidden', './assets/anims/empty.png')
 
 
     // bitmap data:

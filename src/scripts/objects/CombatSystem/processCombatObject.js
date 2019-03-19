@@ -4,7 +4,7 @@ import textMod from './textMod';
 import logMod from './logMod';
 import threatMod from './threatMod';
 import healthMod from './healthMod';
-import manaMod from './manaMod';
+import resourceMod from './resourceMod';
 import playAnims from './playAnims';
 /**
  * processCombatObject - take dmg, add to log, add rage,
@@ -37,6 +37,6 @@ export default function processCombatObject (attacker = {}, target = {}) {
   // take dmg according to the final combat object
   healthMod(attacker, target, this);
 
-  manaMod(attacker, target, this);
+  resourceMod(attacker, target, this);
 
 }

@@ -49,7 +49,7 @@ export default function animationCreator(scene = {}) {
   scene.anims.create({
     key: 'priest-sword-nature-cast',
     frames: scene.anims.generateFrameNumbers('priest-sword-nature-cast', {start: 0, end: 3}),
-    frameRate: 8,
+    frameRate: 5,
     yoyo: true,
     repeat: -1,
   })
@@ -57,7 +57,7 @@ export default function animationCreator(scene = {}) {
   scene.anims.create({
     key: 'mage-sword-frost-cast',
     frames: scene.anims.generateFrameNumbers('mage-sword-frost-cast', {start: 0, end: 3}),
-    frameRate: 8,
+    frameRate: 5,
     yoyo: true,
     repeat: -1,
   })
@@ -259,6 +259,15 @@ export default function animationCreator(scene = {}) {
     frameRate: 9,
     yoyo: true,
     repeat: 0,
+  })
+
+  // poly animation:
+  scene.anims.create({
+    key: 'polymorph',
+    frames: scene.anims.generateFrameNumbers('polymorph', {start: 0, end: 4}),
+    frameRate: 2,
+    yoyo: true,
+    repeat: -1,
   })
 
   // drinking animation:

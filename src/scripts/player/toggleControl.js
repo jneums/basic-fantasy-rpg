@@ -12,9 +12,6 @@ export default function toggleControl(scene = {}) {
   const nextCharacter = playerCharacters[index % playerCharacters.length]
   // starting with mage, switch to barbarian:
   if (currentCharacter && nextCharacter) {
-    // change character flag:
-    nextCharacter.controller = 'player';
-
     // strip all input and visuals from current character:
     if (currentCharacter) {
       strip(currentCharacter);
@@ -24,14 +21,21 @@ export default function toggleControl(scene = {}) {
     scene.registry.set('reloadUI', nextCharacter);
     inputListeners(nextCharacter);
     scene.cameras.main.startFollow(nextCharacter, true, .05, .05);
+
+    // change character flag:
+    nextCharacter.controller = 'player';
+    if (nextCharacter.target.currentTarget()) {
+      nextCharacter.target.currentTarget().playerTarget = true;
+    }
   }
 }
 
 // reduces repeating self:
 function strip(character = {}) {
-  character.target.clearCurrentTarget();
+  if (character.target.currentTarget()) {
+    character.target.currentTarget().playerTarget = false;
+  }
   character.controller = 'AI';
-  character.movement.stop();
   character.scene.input.removeAllListeners();
   character.scene.input.keyboard.removeAllListeners();
 }

@@ -118,6 +118,10 @@ export default class Combat {
       return character.buffs.has('stun');
     }
 
+    this.isPoly = function() {
+      return character.buffs.has('polymorph');
+    }
+
 
 
     /**

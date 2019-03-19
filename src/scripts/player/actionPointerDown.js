@@ -22,6 +22,11 @@ export default function actionPointerDown(pointer, player = {}) {
   // if a character was clicked:
   if (target) {
     player.target.setCurrentTarget(target);
+    target.playerTarget = true;
+    
+    if (player.target.previousTarget()) {
+      player.target.previousTarget().playerTarget = false;
+    }
 
   } else if (target && target.combat.isDead() && target.loot()) {
     const targetLootOwner = player.target.currentTarget().tapped();
@@ -31,11 +36,10 @@ export default function actionPointerDown(pointer, player = {}) {
       targetLootOwner.inventory.add(target.loot());
       console.log(player.inventory.getInventory());
       // clear loot so it cannot be looted again.
-      target.setLoot(undefined);
+      target.setLoot(null);
     }
   } else {
     // if no target was clicked, move to that spot instead
     player.movement.setMoveTargetCoords([pointer.worldX, pointer.worldY]);
-    player.animations.run();
   }
 }

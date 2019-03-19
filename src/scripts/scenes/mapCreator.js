@@ -10,13 +10,10 @@ export default function mapCreator(scene = {}) {
   specials.setCollisionByProperty({ collides: true });
   // group to hold all characters
   scene.physics.add.collider(scene.characters, wallLayer, (a, b) => {
-    a.movement.stop();
   });
   scene.physics.add.collider(scene.characters, specials, (a, b) => {
-    a.movement.stop();
   });
   scene.physics.add.collider(scene.characters, colliderLayer, (a, b) => {
-    a.movement.stop();
   });
 
   return map;

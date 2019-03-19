@@ -48,6 +48,11 @@ export default class Anims {
     this.cast = function(school = '') {
       character.hands.anims.play(handType + '-' + school + '-cast', true)
     }
+
+    this.poly = function() {
+      character.hands.setTexture('hidden')
+      character.anims.play('polymorph', true)
+    }
   }
 
 }

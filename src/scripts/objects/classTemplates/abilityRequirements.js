@@ -88,7 +88,13 @@ export default function abilityRequirements(character = {}, config = {}) {
         combatError(character, 'rage');
         return false;
       }
+      break;
     case 'mana':
+    if (!character.mana.spendMana(_resourceAmount)) {
+      combatError(character, 'mana');
+      return false;
+    }
+    break;
     case 'energy':
     break;
   }

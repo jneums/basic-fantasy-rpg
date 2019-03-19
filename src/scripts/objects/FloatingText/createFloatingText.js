@@ -84,7 +84,7 @@ function _textColor (combatObject) {
         case 'arcane':
           return 0x5ba3c7;
         case 'shadow':
-          return 0x43135f;
+          return 0x944a9c;
         case 'holy':
           return 0xe4da99;
       }

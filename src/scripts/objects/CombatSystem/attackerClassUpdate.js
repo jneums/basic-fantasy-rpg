@@ -8,6 +8,8 @@
 export default function attackerClassUpdate (attacker = {}, combatObject = {}) {
   if (!attacker.getCharacterClass()) return;
   const attackerClass = attacker.getCharacterClass();
+
+  if (combatObject.type() === 'eat' || combatObject.type() === 'drink') return;
   switch(attackerClass) {
     case 'barbarian':
       // add heroic strike onto next melee hit

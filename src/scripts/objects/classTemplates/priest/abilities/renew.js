@@ -3,15 +3,14 @@ import abilityRequirements from '../../abilityRequirements';
 
 
 /**
- * Lesser Heal - Send a beam of holy magic onto your ally,
- * healing 47 to 58 damage.
+ * Renew - Heals 45 dmg of 15 seconds
  *
  * requires level 4
  *
  *
  * @return {void}
  */
-export default function lesserHeal () {
+export default function renew() {
 
   // pre ability requirements:
   const config = {
@@ -24,26 +23,37 @@ export default function lesserHeal () {
 
   if(!abilityRequirements(this, config)) return;
 
-  const castTime = 1.5 * 60; // 1.5 seconds
-  const manaCost = 45;
-  const amount = Phaser.Math.Between(47, 58);
+  const castTime = .5 * 60; // 1.5 seconds
+  const manaCost = 25;
+  const amount = 9;
 
   const target = this.target.currentTarget();
 
 
   const cast = {
-    name: 'Lesser Heal',
+    name: 'Renew',
     castTime,
     cast: () => {
       if (target.combat.isDead()) return;
-      // spell effect here:
-      // create combat object ot deal 18 - 20 frost dmg:
       const combatObject = new CombatObject(this, target);
       combatObject.setType('heal');
+      combatObject.setStatus(null);
       combatObject.setRange('ranged');
-      combatObject.setDamageType('holy');
+      combatObject.setDamageType('nature');
       combatObject.setAmount(-amount);
-      combatObject.process();
+
+      // build debuff
+      const buff = {
+        name: 'renew',
+        duration: 15 * 60,
+        interval: 3 * 60,
+        combatObject,
+        attacker: this
+      }
+      if (target.buffs.has('renew'))
+        target.buffs.replace(buff);
+      else
+        target.buffs.add(buff);
       this.setCasting(false)
     }
   }

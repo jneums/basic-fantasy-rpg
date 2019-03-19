@@ -15,6 +15,7 @@ export default function updateDeadCharacters(scene = {}) {
       if (child.rageBar) child.rageBar.destroy();
       if (child.hands) child.hands.destroy();
       if (child.body.enable) child.body.enable = false;
+      child.clearTint();
       const animationType = child.anims.currentAnim.key.substring(child.anims.currentAnim.key.length - 3, child.anims.currentAnim.key.length);
       if (animationType !== 'die') child.animations.die();
       child.setVelocity(0, 0);

@@ -9,7 +9,7 @@ export default function playAnims(attacker = {}, target = {}, combatObject = {})
       x: target.x,
       y: target.y,
       rotation: 360,
-      duration: 500,
+      duration: 200,
       onComplete: function () { arguments[1][0].destroy() }
     })
   } else if (combatObject.type() === 'heal') {

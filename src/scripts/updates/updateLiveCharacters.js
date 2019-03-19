@@ -9,7 +9,7 @@
  * @returns {void}
  */
 export default function updateLiveCharacters(scene = {}) {
-  scene.characters.children.entries.forEach(child => {
+  scene.characters.getChildren().forEach(child => {
     // if alive, run update
     if (!child.combat.isDead()) {
       child.updateBars()
@@ -18,12 +18,20 @@ export default function updateLiveCharacters(scene = {}) {
       child.timer.updateCastTimer();
       child.classUpdate();
 
-      // use tint or animation to show buffs?
-      if (child.buffs.has('battleShout')) child.hands.setTint(0xaa3333);
-      else child.hands.clearTint();
+
+      if (child.playerTarget) {
+        child.setTint(0xbb4444);
+      } else {
+        child.clearTint();
+      }
 
       // return before reaching update scripts:
-      if (child.combat.isStunned()) {
+      if (child.combat.isPoly()) {
+        child.animations.poly();
+
+        // stop for now, later make it 'wander'.
+        return child.movement.stop();
+      } else if (child.combat.isStunned()) {
         // cant move, timers dont move, and
         child.animations.stun();
         // ai is not running:
@@ -31,8 +39,10 @@ export default function updateLiveCharacters(scene = {}) {
       }
 
       if (child.controller === 'player') {
+
         child.playerControlled();
       } else {
+
        // only run ai if not player controlled:
         child.AI();
       }

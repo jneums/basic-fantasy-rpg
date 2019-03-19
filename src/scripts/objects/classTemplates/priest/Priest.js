@@ -27,7 +27,7 @@ export default class Priest extends Character {
     this.keyMap = new KeyMap(this);
     this.keyMap.setTwo({ ability: this.ability.wand, icon: 'wand' });
     this.keyMap.setThree({ ability:this.ability.lesserHeal, icon: 'heal' });
-    this.keyMap.setFour({ ability: this.ability, icon: null });
+    this.keyMap.setFour({ ability: this.ability.renew, icon: 'renew' });
     this.keyMap.setFive({ ability: this.ability, icon: null });
     this.keyMap.setSix({ ability: this.ability, icon: null });
     this.keyMap.setSeven({ ability: this.ability, icon: null });

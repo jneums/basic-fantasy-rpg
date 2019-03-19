@@ -33,6 +33,7 @@ export default class Barbarian extends Character {
     this.keyMap.setSix({ ability: this.ability.intimidate, icon: 'intimidate' });
     this.keyMap.setSeven({ ability: this.ability.hobble, icon: 'hobble' });
     this.keyMap.setEight('');
+    this.keyMap.setNine({ ability: this.consumables.drink, icon: 'ruby'});
 
     // faction, default 'alliance'
     this.setTeam('alliance');
