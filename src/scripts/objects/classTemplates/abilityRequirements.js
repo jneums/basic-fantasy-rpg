@@ -4,6 +4,8 @@ import FloatingText from '../FloatingText/FloatingText.js'
 function combatError(character, type) {
   let error = '';
   switch (type) {
+    case 'casting':
+      break;
     case 'target':
       error = 'I need a target!';
       break;
@@ -80,7 +82,11 @@ export default function abilityRequirements(character = {}, config = {}) {
     }
   }
 
-
+  // is currently casting:
+  if (character.casting()) {
+    combatError(character, 'casting');
+    return false;
+  }
   // has enough resources:
   switch (_resource) {
     case 'rage':

@@ -292,7 +292,7 @@ export default class Timer {
      * spell object.
      *
      * @param  {object} spellObject
-     * @returns {void}                  
+     * @returns {void}
      */
     this.setSpell = function(spellObject) {
       this.setCastTimer(spellObject.castTime);

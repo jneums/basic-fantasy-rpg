@@ -118,6 +118,7 @@ export default class Target {
      * @returns {void}
      */
     this.setCurrentTarget = function(newTarget) {
+      if (currentTarget === newTarget) return;
       previousTarget = currentTarget;
       currentTarget = newTarget;
     }

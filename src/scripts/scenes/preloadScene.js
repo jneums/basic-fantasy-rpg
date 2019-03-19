@@ -10,6 +10,28 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload() {
 
+    const width = this.cameras.main.width;
+    const height = this.cameras.main.height;
+
+
+    const loadingText = this.make.text({
+    x: width / 2,
+    y: height / 2,
+    text: 'Loading...',
+    style: {
+        font: '28px monospace',
+        fill: '#ffffff'
+      }
+    });
+
+    loadingText.setOrigin(0.5, 0.5);
+
+    const progressBar = this.add.graphics();
+    const progressBox = this.add.graphics();
+
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(380, 270, 520, 50);
+
     // casting animations:
     this.load.spritesheet('mage-sword-frost-cast',
       './assets/anims/mage_sword_frost_cast_spritesheet.png',
@@ -195,8 +217,18 @@ export default class PreloadScene extends Phaser.Scene {
     // ui:
     this.load.image('ui', './assets/ui/ui.png');
 
+    this.load.on('progress', function (value) {
+      progressBar.clear();
+      progressBar.fillStyle(0xbf7b3f, 1);
+      progressBar.fillRect(390, 280, 500 * value, 30);
+    });
+
+
     // load event:
     this.load.on('complete', ()=> {
+      loadingText.destroy();
+      progressBar.destroy();
+      progressBox.destroy();
       this.scene.start('MainScene')
       this.scene.start('UIScene')
 
