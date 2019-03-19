@@ -8,13 +8,12 @@
 4. Browser should pop up automatically with game running.
 
 ## Game Play:
-Currently there is no UI, so you kind of have to know what the keys do.
-
-Shift + number keys will use the item in that inventory slot.
-
-For example, the player starts with "Tough Jerky" in slot 1. Use shift + 1 to use the "Tough Jerky". Because the item type of "Tough Jerky" is a consumable, the game knows to cast the "eat" buff. Make sure not to move, as "eat" is channeled.
+Tap on a character to target them.
+Use an ability by clicking the icons on the right side of the screen.
 
 Space bar will change between the active character:
+
+Each character has a cheese (restore health) and a drink (restore resource) button on the bottom two action bar slots. Barbarian has a 'rage ruby' instead, it fills up his rage bar.
 
 ### Mage:
 
@@ -26,7 +25,9 @@ Space bar will change between the active character:
 
 4. Arcane Missiles: instant attack that ticks three times for 30 damage. Uses a lot of mana.
 
-9. Frostbolt: does damage and slows your target.
+5. Frostbolt: does damage and slows your target.
+
+6. Polymorph: turn your target into a small sheep like thing.
 
 ### Barbarian:
 
@@ -52,9 +53,11 @@ Space bar will change between the active character:
 
 3. Lesser Heal: heal a small amount of friendly targets hit points.
 
+4. Renew: heals 50 damage over 15 seconds, uses less mana.
+
 ## Contributing:
 
-This game is in a very early status right now. Many of the core systems are in place, however the methods needed to interact with them are missing.
+This game is in a very early status right now. Many of the core systems are in place. Now is just tying them all together.
 
 ### Current Opportunities:
 
@@ -67,15 +70,13 @@ constantly updated with new things:
 
 3. Maps: Use tiled and the master sprite sheet and either enhance the current map, or create a new one. If you create a new one we can link them together and start creating an entire zone. Be creative and have fun!
 
-4. Items: If you would like something a little bit less daunting, then creating an item entry would be a really great first project. Open up the items folder and insert your entry there. Use the other items as a template, and use your best judgment. For example, if you create a level 1 item that does one million damage, it will definitely not get approved.
-
-5. Quests: This is more of a brainstorming category at this time, since we have no quest system implemented yet. If you would like to tackle the project please let me know. It will be more challenging than the other ways of contributing, but it would also be a lot of fun. If you are not quite up to it yet dont worry, we will get to that part soon.
+5. Quests: Implement a quest system.
 
 ### Roadmap:
 
 #### Phase 1:
 
-This phase consists of creating a playable demo, where the user can choose which class to play (Barbarian or Mage to start with). After they choose they will be started in the demo scene, which is a large dungeon filled with groups of enemies. The groups will consist of a Orcs: melee, ranged caster, and ranged physical damage. The player will be able to defeat these packs and progress through the dungeon. After a few packs, the player will 'level-up' and gain access to another ability. Ideally this will repeat until the character is up to level 5, and has a solid selection of abilities to use.
+This phase consists of creating a playable demo, where the user can choose which class to play (Barbarian or Mage to start with). After they choose they will be started in the demo scene, which is a large dungeon filled with groups of enemies. The groups will consist of an orc group: melee, ranged caster, and ranged physical damage. The player will be able to defeat these packs and progress through the dungeon. After a few packs, the player will 'level-up' and gain access to another ability. Ideally this will repeat until the character is up to level 5, and has a solid selection of abilities to use.
 Also, the player will be able to loot the bodies, and equip/use any items they pick up.
 Finally, the player should be able to talk to a friendly NPC at the start of the dungeon, who will offer the player a quest: kill x amount of enemies, or collect x amount of quest items. On completion of the quest, the player will receive experience and loot.
 
