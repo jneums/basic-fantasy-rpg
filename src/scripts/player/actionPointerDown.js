@@ -20,15 +20,7 @@ export default function actionPointerDown(pointer, player = {}) {
 
 
   // if a character was clicked:
-  if (target) {
-    player.target.setCurrentTarget(target);
-    target.playerTarget = true;
-    
-    if (player.target.previousTarget()) {
-      player.target.previousTarget().playerTarget = false;
-    }
-
-  } else if (target && target.combat.isDead() && target.loot()) {
+  if (target && target.combat.isDead() && target.loot()) {
     const targetLootOwner = player.target.currentTarget().tapped();
     // if click target is dead, and was tapped, and looter is in range:
     if (target.combat.isDead() && (targetLootOwner && target.target.rangeCheck(targetLootOwner, 70))) {
@@ -37,6 +29,18 @@ export default function actionPointerDown(pointer, player = {}) {
       console.log(player.inventory.getInventory());
       // clear loot so it cannot be looted again.
       target.setLoot(null);
+    }
+  } else if (target) {
+    player.movement.faceTarget(target);
+    player.target.setCurrentTarget(target);
+    target.playerTarget = true;
+
+    if (player.target.previousTarget()) {
+      player.target.previousTarget().playerTarget = false;
+    }
+
+    if (target.getCharacterClass() === 'NPC' && player.target.rangeCheck(target, 25)) {
+      console.log('test')
     }
   } else {
     // if no target was clicked, move to that spot instead

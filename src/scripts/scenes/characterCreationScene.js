@@ -3,6 +3,7 @@ import Mage from '../objects/classTemplates/mage/Mage';
 import Priest from '../objects/classTemplates/priest/Priest';
 import Orc from '../objects/mobTemplates/Orc';
 import OrcArcher from '../objects/mobTemplates/OrcArcher';
+import NPC from '../objects/NPC';
 import inputListeners from '../player/inputListeners';
 import playerUpdate from '../player/playerUpdate';
 import updateLiveCharacters from '../updates/updateLiveCharacters';
@@ -39,6 +40,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
       let npc;
       if (spawnPoint.type === 'orc') {
         npc = new Orc(this, spawnPoint.x, spawnPoint.y);
+      } else if (spawnPoint.type === 'quest') {
+        npc = new NPC(this, spawnPoint.x, spawnPoint.y);
       }
     })
 

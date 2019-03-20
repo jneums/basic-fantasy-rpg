@@ -149,6 +149,18 @@
                  "width":0,
                  "x":1177.69,
                  "y":119.462
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"npc",
+                 "point":true,
+                 "rotation":0,
+                 "type":"quest",
+                 "visible":true,
+                 "width":0,
+                 "x":125.668781883787,
+                 "y":89.0879681473186
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -157,7 +169,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":13,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.3",

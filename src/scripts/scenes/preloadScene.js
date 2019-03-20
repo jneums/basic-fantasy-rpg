@@ -13,6 +13,11 @@ export default class PreloadScene extends Phaser.Scene {
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
 
+    // bitmap data:
+    this.load.bitmapFont('font',
+    './assets/fonts/font.png',
+    './assets/fonts/font.fnt');
+
 
     const loadingText = this.make.text({
     x: width / 2,
@@ -208,11 +213,6 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.load.image('hidden', './assets/anims/empty.png')
     this.load.image('dialogueBox', './assets/ui/dialogue.png');
-
-    // bitmap data:
-    this.load.bitmapFont('font',
-    './assets/fonts/font.png',
-    './assets/fonts/font.fnt');
 
     // ui:
     this.load.image('ui', './assets/ui/ui.png');
