@@ -15,7 +15,7 @@ function actionBar(pointer, player) {
       return player.keyMap.executeFive();
     } else if (pointer.downY > 428 && pointer.downY < 496) {
       return player.keyMap.executeSeven();
-    } else if (pointer.downY > 508 && pointer.downY < 580) {
+    } else if (pointer.downY > 536 && pointer.downY < 600) {
       return player.keyMap.executeNine();
     }
   } else if (pointer.downX > 1200 && pointer.downX < 1272){
@@ -28,7 +28,7 @@ function actionBar(pointer, player) {
       return player.keyMap.executeSix();
     } else if (pointer.downY > 428 && pointer.downY < 496) {
       return player.keyMap.executeEight();
-    } else if (pointer.downY > 508 && pointer.downY < 580) {
+    } else if (pointer.downY > 536 && pointer.downY < 600) {
       return player.keyMap.executeZero();
     }
   }
@@ -36,12 +36,20 @@ function actionBar(pointer, player) {
 
 
 export default function inputListeners(player = {}) {
-  let inventoryToggle = false;
 
   player.scene.input.on('pointerdown', (pointer) => {
     if (player.scene.dialogueBoxActive) {
       player.scene.dialogueBoxActive = false;
       player.scene.registry.set('closeDialogueBox');
+      return;
+    } else if (player.scene.questLogActive) {
+      // close if pointer clicks log button again:
+      if (pointer.downY > 536 && pointer.downY < 600) {
+        player.scene.questLogActive = false;
+        player.scene.registry.set('closeQuestLog');
+      } else {
+        inventoryPointerDown(pointer, player);
+      }
       return;
     }
     // is the pointer on the ui or the dungeon?

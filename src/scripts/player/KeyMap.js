@@ -6,8 +6,8 @@ export default class KeyMap {
         icon: null
       },
       one: {
-        ability: character.combat.setAutoAttack,
-        icon: 'auto-attack'
+        ability: null,
+        icon: null
       },
       two: {
         ability: null,
@@ -30,20 +30,20 @@ export default class KeyMap {
         icon: null
       },
       seven: {
-        ability: null,
-        icon: null
-      },
-      eight: {
-        ability: null,
-        icon: null
-      },
-      nine: {
         ability: character.consumables.drink,
         icon: 'wine'
       },
-      zero: {
+      eight: {
         ability: character.consumables.eat,
         icon: 'cheese'
+      },
+      nine: {
+        ability: null,
+        icon: 'inventory'
+      },
+      zero: {
+        ability: null,
+        icon: 'quest'
       }
     }
 
@@ -83,11 +83,13 @@ export default class KeyMap {
     }
 
     this.executeNine = function() {
-      keys.nine.ability.call(character)
+      character.scene.inventoryActive = true;
+      character.scene.registry.set('openInventory')
     }
 
     this.executeZero = function() {
-      keys.zero.ability.call(character)
+      character.scene.questLogActive = true;
+      character.scene.registry.set('openQuestLog', character.questLog.getAll())
     }
 
     this.executeInventoryOne = function() {

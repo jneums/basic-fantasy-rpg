@@ -10,12 +10,14 @@ export default class QuestLog {
     this.add = function(questId) {
       // needs a 'getQuestById' generator:
       const newQuest = new Quest(
+        "Orc Cleanup",
         "kill",
         5,
         "orc",
-        "KILL 5 ORCS",
-        "DID YOU KILL THEM?",
-        "THANK YOU SO MUCH HERO!",
+        ["This dungeon is teemingwith orcs.", "How would you like to help out by", "murdering five of them?"],
+        ["Did you murder them?"],
+        ["Thank you brave warrior!"],
+        ["The weird little blonde dude at", "the entrance wants me to kill", "some orcs for him."],
         getArmorByName("Recruit's Pants")
       )
 

@@ -28,14 +28,13 @@ export default class Barbarian extends Character {
     // config keymap for barbarian abilities
     // enable sending config object as second arg to keymap?
     this.keyMap = new KeyMap(this);
-    this.keyMap.setTwo({ ability: this.ability.rush, icon: 'rush' });
+    this.keyMap.setOne({ ability: this.ability.rush, icon: 'rush' });
+    this.keyMap.setTwo({ ability: this.ability.hobble, icon: 'hobble' });
     this.keyMap.setThree({ ability: this.ability.gore, icon: 'gore' });
     this.keyMap.setFour({ ability: this.ability.savageBlow, icon: 'savage-blow' });
     this.keyMap.setFive({ ability: this.ability.battleCry, icon: 'shout' });
     this.keyMap.setSix({ ability: this.ability.intimidate, icon: 'intimidate' });
-    this.keyMap.setSeven({ ability: this.ability.hobble, icon: 'hobble' });
-    this.keyMap.setEight('');
-    this.keyMap.setNine({ ability: this.consumables.drink, icon: 'ruby'});
+    this.keyMap.setSeven({ ability: this.consumables.drink, icon: 'ruby'});
 
     // faction, default 'alliance'
     this.setTeam('alliance');

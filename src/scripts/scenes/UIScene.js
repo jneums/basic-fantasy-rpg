@@ -1,4 +1,4 @@
-
+const ACTION_BAR_WIDTH = 70;
 /**
  * UI:
  */
@@ -10,14 +10,45 @@ export default class UIScene extends Phaser.Scene {
   }
 
   create() {
-    // dialogue box:
-    this.dialogueBox = this.add.image(100, 20, 'dialogueBox');
-    this.dialogueBox.setOrigin(0);
-    this.dialogueBox.scaleX = 4;
-    this.dialogueBox.scaleY = 4;
-    this.dialogueBox.setVisible(false);
+    // quest log:
+    this.questLogContainer = this.add.container((this.scale.width - ACTION_BAR_WIDTH) /2, this.scale.height /2);
+    const questLogBackground = this.add.image( 0, 0, 'questLog');
+    questLogBackground.scaleX = 4;
+    questLogBackground.scaleY = 4;
 
-    this.dialogueText = this.add.dynamicBitmapText(130, 50, 'font', '', 24);
+    const questLogTitle = this.add.bitmapText(0, -200,  'font', 'Quests', 24);
+    questLogTitle.setOrigin(0.5);
+    this.questLogContainer.setVisible(false);
+    this.questLogContainer.add(questLogBackground);
+    this.questLogContainer.add(questLogTitle);
+
+
+    this.questListContainer = this.add.container(this.questLogContainer.x, this.questLogContainer.y);
+    this.questList = this.add.dynamicBitmapText(-402, -138, 'font', '', 16);
+    this.questList.setOrigin(0);
+    this.questListContainer.add(this.questList);
+
+
+    // dialogue box:
+    this.dialogueBoxContainer = this.add.container((this.scale.width - ACTION_BAR_WIDTH) /2, this.scale.height /2);
+    const dialogueBoxBackground = this.add.image(0, 0, 'dialogueBox');
+    dialogueBoxBackground.scaleX = 4;
+    dialogueBoxBackground.scaleY = 4;
+
+    this.dialogueBoxContainer.setVisible(false);
+
+    this.dialogueText = this.add.dynamicBitmapText(
+      0,
+      0,
+      'font',
+       '',
+       24
+     );
+
+    this.dialogueText.setOrigin(.5).setCenterAlign();
+
+    this.dialogueBoxContainer.add(dialogueBoxBackground);
+    this.dialogueBoxContainer.add(this.dialogueText);
 
     // icons:
     this.icons = this.add.group();
@@ -39,14 +70,43 @@ export default class UIScene extends Phaser.Scene {
       const icons = data.keyMap.getIcons();
       loadActionBar(this, icons)
 
-    } else if (key === 'closeDialogueBox') {
-      this.dialogueText._text = '';
-      this.dialogueBox.setVisible(false);
     } else if (key === 'openDialogueBox') {
-      this.dialogueBox.setVisible(true);
-      this.dialogueText._text = data;
+      this.dialogueBoxContainer.setVisible(true);
+      this.dialogueText.setText(data);
+
+    } else if (key === 'closeDialogueBox') {
+      this.dialogueText.setText('');
+      this.dialogueBoxContainer.setVisible(false);
+
+    } else if (key === 'openQuestLog') {
+      this.questLogContainer.setVisible(true);
+      loadQuestLog(this, data);
+
+    } else if (key === 'closeQuestLog') {
+      this.questLogContainer.setVisible(false);
+      clearQuestLog(this);
+    } else if (key === 'selectQuest') {
+      selectQuest(scene, data);
     }
   }
+}
+
+function selectQuest(scene, quest) {
+  // set active indicator for quest list:
+  console.log(scene.questList)
+  // update description text:
+}
+
+function clearQuestLog(scene) {
+  scene.questList.setText('');
+}
+
+function loadQuestLog(scene, quests) {
+  if (!quests[0]) return;
+  const questTitles = quests.map(quest => {
+    return quest.title;
+  })
+  scene.questList.setText(questTitles);
 }
 
 
@@ -65,7 +125,10 @@ function loadActionBar(scene, abilities) {
     scene.icons.add(icon);
     icon.scaleX = 4
     icon.scaleY = 4
-    if (i % 2 === 0) {
+    if (i === 7) {
+      x = 1124;
+      y += 108;
+    } else if (i % 2 === 0) {
       x += 80;
     } else {
       x = 1124;

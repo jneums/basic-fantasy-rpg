@@ -23,8 +23,10 @@ export default class CharacterCreationScene extends Phaser.Scene {
   preload() {}
 
   create() {
-    // death emmiter:
-    this.deathChannel = new Phaser.Events.EventEmitter();
+    // is inventory open:
+    this.inventoryActive = false;
+    // is quest log open:
+    this.questLogActive = false;
     // is dialogue box open:
     this.dialogueBoxActive = false;
     // holds all characters:
@@ -70,14 +72,19 @@ export default class CharacterCreationScene extends Phaser.Scene {
     // called twice to force update...better way??
     this.registry.set('reloadUI', this.mage)
     this.registry.set('reloadUI', this.mage)
+
+    this.registry.set('openDialogueBox');
     this.registry.set('closeDialogueBox');
-    this.registry.set('openDialogueBox', 'test');
+
+    this.registry.set('openQuestLog');
+    this.registry.set('closeQuestLog');
 
 
 
 
     // set follow to current player controlled character:
     this.cameras.main.setRoundPixels(true)
+      .setSize(1106, 682)
       .startFollow(this.mage, true, .05, .05)
       .setZoom(4)
 

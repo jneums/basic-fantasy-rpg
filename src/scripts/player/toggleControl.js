@@ -20,7 +20,7 @@ export default function toggleControl(scene = {}) {
     // emit to UI:
     scene.registry.set('reloadUI', nextCharacter);
     inputListeners(nextCharacter);
-    scene.cameras.main.startFollow(nextCharacter, true, .05, .05);
+    scene.cameras.main.startFollow(nextCharacter, true, .05, .05)
 
     // change character flag:
     nextCharacter.controller = 'player';

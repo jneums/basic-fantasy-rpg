@@ -1,14 +1,19 @@
 export default class Quest {
   constructor(
+    title = "",
     type = "",
     amount = 0,
     target = "",
-    initText = "",
-    inProgressText = "",
-    finishText = "",
+    initText = [],
+    inProgressText = [],
+    finishText = [],
+    description = [],
     reward = {}
   ) {
     this.id = 1;
+
+    this.title = title;
+    this.description = description;
 
     let _status = 0;
     this.advanceStatus = function() { _status++ }
@@ -51,8 +56,10 @@ export default class Quest {
       if (_counter + 1 === _amount) {
         _counter++;
         this.advanceStatus();
-      } else {
+      } else if (_counter + 1 < _amount){
         _counter++;
+      } else {
+        return;
       }
     };
 
