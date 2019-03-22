@@ -7,6 +7,7 @@ import ResourceBar from '../../Managers/ResourceBar';
 import MageAbilities from './MageAbilities';
 import KeyMap from '../../../player/KeyMap';
 import Anims from '../../Managers/Anims';
+import QuestLog from '../../Managers/QuestLog';
 
 /**
  *
@@ -16,6 +17,8 @@ export default class Mage extends Character {
     super(scene, x, y);
     // mage specific abilities
     this.ability = new MageAbilities(this);
+    this.questLog = new QuestLog();
+
 
 
         //set starting texture and size:

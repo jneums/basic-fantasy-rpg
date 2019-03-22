@@ -12,7 +12,7 @@ export default function MageAI() {
       if (this.combat.isDead()) return;
 
       // scan for enemies for body pull
-      const enemies = this.target.scanForEnemies(75);
+      const enemies = this.target.scanForEnemies(125);
       // scan for enemies by threat table (pulled by attack)
       const target = this.threat.highestThreat()
         ? this.threat.highestThreat()
@@ -23,7 +23,7 @@ export default function MageAI() {
         return this.movement.stop();
       }
     this.target.setCurrentTarget(target);
-    const wandRange = this.target.rangeCheck(target, 75);
+    const wandRange = this.target.rangeCheck(target, 175);
     // if target, move close enough to attack
     const canMelee = this.target.rangeCheck(target, meleeRange);
     if (canMelee) {

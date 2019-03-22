@@ -23,7 +23,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
   preload() {}
 
   create() {
-
+    // death emmiter:
+    this.deathChannel = new Phaser.Events.EventEmitter();
     // is dialogue box open:
     this.dialogueBoxActive = false;
     // holds all characters:
@@ -70,22 +71,9 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.registry.set('reloadUI', this.mage)
     this.registry.set('reloadUI', this.mage)
     this.registry.set('closeDialogueBox');
+    this.registry.set('openDialogueBox', 'test');
 
-    var timer = this.time.addEvent({
-        delay: 5000,                // ms
-        callback: testDialogue,
-        //args: [],
-        callbackScope: this,
-        loop: false
-    });
 
-    function testDialogue() {
-      const welcomeText = "GREETINGS ADVENTURER! WELCOME."
-      this.dialogueBoxActive = true;
-      this.registry.set('openDialogueBox', 'test');
-      this.registry.set('openDialogueBox', welcomeText);
-
-    }
 
 
     // set follow to current player controlled character:

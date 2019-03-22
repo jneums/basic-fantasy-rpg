@@ -47,6 +47,16 @@ export default class PreloadScene extends Phaser.Scene {
       { frameWidth: 24, frameHeight: 36 }
     )
 
+    // npc anims:
+    this.load.spritesheet('npc-idle',
+      './assets/anims/npc_idle_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    )
+    this.load.spritesheet('npc-unarmed-idle',
+      './assets/anims/npc_unarmed_idle_spritesheet.png',
+      { frameWidth: 24, frameHeight: 36 }
+    )
+
 
     // priest anims:
     this.load.spritesheet('priest-idle',

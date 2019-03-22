@@ -12,6 +12,7 @@ import Buffs from './Managers/Buffs';
 import Consumables from './Managers/Consumables';
 import ResourceBar from './Managers/ResourceBar';
 import playerUpdate from '../player/playerUpdate';
+import KillLog from './Managers/KillLog';
 
 /**
  * Main character class, inherited by all characters.
@@ -48,6 +49,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.buffs = new Buffs(this);
     this.inventory = new Inventory(this);
     this.healthBar = new ResourceBar(scene, 'health', this.stat.maxHp());
+    this.killLog = new KillLog(this);
     this.hands = scene.add.sprite(x, y - 4);
     this.depth = 1;
     this.hands.depth = 2;
@@ -87,7 +89,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.playerControlled = playerUpdate();
-
 
     let casting = false;
 

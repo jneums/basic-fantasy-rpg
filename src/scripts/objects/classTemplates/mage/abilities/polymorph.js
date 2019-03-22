@@ -41,7 +41,9 @@ export default function polymorph() {
       const debuff = {
         name: 'polymorph',
         duration: 30 * 60,
-        attacker: this
+        attacker: this,
+        breakOnDmg: true,
+        beginHP: target.stat.hp()
       }
       this.setCasting(false);
       // create debuff for * .6 movement speed, send it to buff

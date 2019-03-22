@@ -5,6 +5,7 @@ import NPCAI from './NPCAI';
 import createLoot from '../loot/createLoot';
 import Anims from './Managers/Anims';
 import MobAbilities from './mobTemplates/MobAbilities';
+import Quest from './Managers/Quest';
 
 
 /**
@@ -14,14 +15,18 @@ export default class NPC extends Character {
   constructor(scene = {}, x = 0, y = 0) {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
-    this.animations = new Anims(this, 'barbarian', 'barbarian-sword');
+    this.animations = new Anims(this, 'npc', 'npc-unarmed');
+
+    this.quest = { id: 1 }
+
 
     //set starting texture and size:
     this.setTexture('mage-run', 0).setSize(12, 12);
+    this.healthBar.hideBar();
 
     this.setTeam('alliance');
-    this.setName('NPC');
-    this.setCharacterClass('NPC');
+    this.setName('npc');
+    this.setCharacterClass('npc');
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);

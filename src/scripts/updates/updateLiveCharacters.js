@@ -20,7 +20,11 @@ export default function updateLiveCharacters(scene = {}) {
 
 
       if (child.playerTarget) {
-        child.setTint(0xbb4444);
+        if (child.team() === 'alliance') {
+          child.setTint(0x44ff44);
+        } else {
+          child.setTint(0xbb4444);
+        }
       } else {
         child.clearTint();
       }

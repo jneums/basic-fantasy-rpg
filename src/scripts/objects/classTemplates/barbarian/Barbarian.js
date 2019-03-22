@@ -7,6 +7,7 @@ import ResourceBar from '../../Managers/ResourceBar';
 import BarbarianAbilities from './BarbarianAbilities';
 import KeyMap from '../../../player/KeyMap';
 import Anims from '../../Managers/Anims';
+import QuestLog from '../../Managers/QuestLog';
 
 /**
  *
@@ -16,6 +17,7 @@ export default class Barbarian extends Character {
     super(scene, x, y)
     // barbarian specific abilities
     this.ability = new BarbarianAbilities(this);
+    this.questLog = new QuestLog();
 
     // coordinate which animations to play:
     this.animations = new Anims(this, 'barbarian', 'barbarian-sword');

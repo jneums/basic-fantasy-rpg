@@ -39,8 +39,23 @@ export default function actionPointerDown(pointer, player = {}) {
       player.target.previousTarget().playerTarget = false;
     }
 
-    if (target.getCharacterClass() === 'NPC' && player.target.rangeCheck(target, 25)) {
-      console.log('test')
+    if (target.getCharacterClass() === 'npc' && player.target.rangeCheck(target, 25)) {
+        let text = '';
+        const questId = target.quest.id;
+        const playerQuest = player.questLog.getOne(questId);
+        const status = playerQuest ? playerQuest.getStatus() : 'not given';
+
+        if ( status === 'not given') {
+          player.questLog.add(questId);
+          text = player.questLog.getOne(questId).getText();
+        } else if (status === 'in progress') {
+          text = player.questLog.getOne(questId).getText(1);
+        } else if (status === 'ready for turn in'){
+          text = player.questLog.getOne(questId).getText(2)
+        }
+
+        player.scene.dialogueBoxActive = true;
+        player.scene.registry.set('openDialogueBox', text);
     }
   } else {
     // if no target was clicked, move to that spot instead

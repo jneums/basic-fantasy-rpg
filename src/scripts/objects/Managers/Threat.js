@@ -40,8 +40,10 @@ export default class Threat {
      * @returns {Character}
      */
     this.highestThreat = function() {
-      if (!threatTable.length) return;
-      return threatTable[0].character;
+      if (!threatTable[0]) return null;
+      const filteredThreat = threatTable.filter(entry => !entry.character.combat.isDead());
+      if (!filteredThreat[0]) return null;
+      return filteredThreat[0].character
     }
 
     /**

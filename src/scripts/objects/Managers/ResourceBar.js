@@ -16,6 +16,11 @@ export default class ResourceBar {
         scene.add.existing(this.bar);
     }
 
+    hideBar()
+    {
+      this.bar.setVisible(false)
+    }
+
     set (amount)
     {
         this.value = amount;

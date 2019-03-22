@@ -113,6 +113,16 @@ export default class Buffs {
               buff.duration = 0;
             }
           }
+          if (buff.breakOnDmg) {
+            // check if current hp is lower than init hp:
+            if (character.stat.hp() < buff.beginHP) {
+              buff.duration = 0;
+            } else {
+              // update with refreshed hp, becuase healing
+              // does not break it.
+              buff.beginHP = character.stat.hp();
+            }
+          }
           // if buff has a combat object
           if (buff.combatObject) {
             // check for interval, if ready then fire

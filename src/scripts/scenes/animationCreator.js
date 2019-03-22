@@ -14,6 +14,63 @@
  */
 export default function animationCreator(scene = {}) {
 
+
+
+  // npc animations:
+  scene.anims.create({
+    key: 'npc-idle',
+    frames: scene.anims.generateFrameNumbers('npc-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 2900
+  })
+  scene.anims.create({
+    key: 'npc-run',
+    frames: scene.anims.generateFrameNumbers('npc-idle', {start: 0, end: 4}),
+    duration: 500,
+    yoyo: false,
+    repeat: -1
+  })
+  scene.anims.create({
+    key: 'npc-combat',
+    frames: scene.anims.generateFrameNumbers('npc-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'npc-die',
+    frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
+  })
+
+  scene.anims.create({
+    key: 'npc-unarmed-idle',
+    frames: scene.anims.generateFrameNumbers('npc-unarmed-idle', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3500
+  })
+  scene.anims.create({
+    key: 'npc-unarmed-run',
+    frames: scene.anims.generateFrameNumbers('npc-unarmed-idle', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'npc-unarmed-stab',
+    frames: scene.anims.generateFrameNumbers('npc-unarmed-idle', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+
+
   // priest animations:
   scene.anims.create({
     key: 'priest-idle',

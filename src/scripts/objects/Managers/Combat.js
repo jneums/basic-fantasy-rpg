@@ -25,6 +25,7 @@ export default class Combat {
      * @returns {void}
      */
     this.meleeAttack  = function(target = {}, hand = '', type = '') {
+      if (character.casting()) return;
       // face enemy:
       character.movement.faceTarget(target);
       // show swing animation:
