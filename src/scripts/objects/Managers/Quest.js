@@ -1,6 +1,7 @@
 export default class Quest {
   constructor(
     title = "",
+    difficulty = "",
     type = "",
     amount = 0,
     target = "",
@@ -10,10 +11,21 @@ export default class Quest {
     description = [],
     reward = {}
   ) {
-    this.id = 1;
+    
+    let _id = 1;
+
+    this.getId = function() {
+      return _id;
+    }
 
     this.title = title;
     this.description = description;
+
+    this.getColor = function() {
+      if (difficulty === 'easy') return 'green';
+      else if (difficulty === 'medium') return 'yellow';
+      else return 'red';
+    }
 
     let _status = 0;
     this.advanceStatus = function() { _status++ }

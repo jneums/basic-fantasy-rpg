@@ -230,6 +230,10 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('dialogueBox', './assets/ui/dialogue.png');
     this.load.image('questLog', './assets/ui/quest-log.png');
 
+    this.load.image('green-quest', './assets/ui/green_quest_background.png')
+    this.load.image('yellow-quest', './assets/ui/yellow_quest_background.png')
+    this.load.image('red-quest', './assets/ui/red_quest_background.png')
+
     this.load.on('progress', function (value) {
       progressBar.clear();
       progressBar.fillStyle(0xbf7b3f, 1);

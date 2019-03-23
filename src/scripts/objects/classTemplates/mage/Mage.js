@@ -17,7 +17,7 @@ export default class Mage extends Character {
     super(scene, x, y);
     // mage specific abilities
     this.ability = new MageAbilities(this);
-    this.questLog = new QuestLog();
+    this.questLog = new QuestLog(this);
 
 
 

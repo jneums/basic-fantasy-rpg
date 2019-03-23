@@ -52,6 +52,10 @@ export default function actionPointerDown(pointer, player = {}) {
           text = player.questLog.getOne(questId).getText(1);
         } else if (status === 'ready for turn in'){
           text = player.questLog.getOne(questId).getText(2)
+          // get reward, mark quest as complete:
+          player.questLog.completeQuest(questId);
+        } else {
+          text = "Thanks again brave person."
         }
 
         player.scene.dialogueBoxActive = true;

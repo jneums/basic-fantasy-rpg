@@ -17,7 +17,7 @@ export default class Barbarian extends Character {
     super(scene, x, y)
     // barbarian specific abilities
     this.ability = new BarbarianAbilities(this);
-    this.questLog = new QuestLog();
+    this.questLog = new QuestLog(this);
 
     // coordinate which animations to play:
     this.animations = new Anims(this, 'barbarian', 'barbarian-sword');

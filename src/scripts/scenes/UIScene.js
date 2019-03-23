@@ -1,4 +1,6 @@
 const ACTION_BAR_WIDTH = 70;
+const QUEST_LIST_X = -248;
+const QUEST_LIST_Y = -144;
 /**
  * UI:
  */
@@ -16,17 +18,20 @@ export default class UIScene extends Phaser.Scene {
     questLogBackground.scaleX = 4;
     questLogBackground.scaleY = 4;
 
-    const questLogTitle = this.add.bitmapText(0, -200,  'font', 'Quests', 24);
+    const questLogTitle = this.add.bitmapText(0, -208,  'font', 'Quests', 24);
     questLogTitle.setOrigin(0.5);
+    this.questDescription = this.add.bitmapText( -40,-158, 'font', '', 18);
+    this.questStatus = this.add.bitmapText( -40,0, 'font', '', 18);
+
+
     this.questLogContainer.setVisible(false);
     this.questLogContainer.add(questLogBackground);
     this.questLogContainer.add(questLogTitle);
+    this.questLogContainer.add(this.questDescription);
+    this.questLogContainer.add(this.questStatus);
 
 
     this.questListContainer = this.add.container(this.questLogContainer.x, this.questLogContainer.y);
-    this.questList = this.add.dynamicBitmapText(-402, -138, 'font', '', 16);
-    this.questList.setOrigin(0);
-    this.questListContainer.add(this.questList);
 
 
     // dialogue box:
@@ -93,20 +98,67 @@ export default class UIScene extends Phaser.Scene {
 
 function selectQuest(scene, quest) {
   // set active indicator for quest list:
-  console.log(scene.questList)
   // update description text:
+  scene.questDescription.setText(quest.description)
+  scene.questStatus.setText(`Current Progress: ${quest.getCount()}`);
+
 }
 
 function clearQuestLog(scene) {
-  scene.questList.setText('');
+  scene.questDescription.setText('');
+  scene.questStatus.setText('');
+  scene.questListContainer.removeAll(true);
 }
 
-function loadQuestLog(scene, quests) {
+function loadQuestLog(scene, questLog) {
+  let _x = QUEST_LIST_X;
+  let _y = QUEST_LIST_Y;
+  const _yIncrement = 64;
+
+  const quests = questLog.getAll();
   if (!quests[0]) return;
-  const questTitles = quests.map(quest => {
-    return quest.title;
-  })
-  scene.questList.setText(questTitles);
+
+  const questsInProgress = questLog.getByStatus('in progress');
+
+  if (questsInProgress[0]) {
+    questsInProgress.forEach(quest => {
+      // add background:
+      const difficultyColor = quest.getColor();
+      const bg = scene.add.image(_x, _y, difficultyColor + "-quest");
+      // add text:
+      const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, 16)
+        .setOrigin(0.5)
+      bg.scaleX = 4;
+      bg.scaleY = 4;
+      scene.questListContainer.add(bg);
+      scene.questListContainer.add(title);
+
+      _y += _yIncrement;
+    })
+  }
+
+  const turnIns = questLog.getByStatus('ready for turn in');
+
+  if (turnIns) {
+    turnIns.forEach(quest => {
+      // add background:
+      const difficultyColor = quest.getColor();
+      const bg = scene.add.image(_x, _y, difficultyColor + "-quest");
+      // add text:
+      const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, 16)
+        .setOrigin(0.5)
+      bg.scaleX = 4;
+      bg.scaleY = 4;
+      scene.questListContainer.add(bg);
+      scene.questListContainer.add(title);
+
+      _y += _yIncrement;
+    })
+  }
+
+  const active = quests[questLog.getActive()];
+  if (active.getStatus() === 'completed') return;
+  selectQuest(scene, active);
 }
 
 

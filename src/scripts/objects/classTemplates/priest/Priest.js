@@ -7,6 +7,7 @@ import ResourceBar from '../../Managers/ResourceBar';
 import PriestAbilities from './PriestAbilities';
 import KeyMap from '../../../player/KeyMap';
 import Anims from '../../Managers/Anims';
+import QuestLog from '../../Managers/QuestLog';
 
 /**
  *
@@ -16,6 +17,8 @@ export default class Priest extends Character {
     super(scene, x, y);
     // mage specific abilities
     this.ability = new PriestAbilities(this);
+    this.questLog = new QuestLog(this);
+
 
         //set starting texture and size:
         this.setTexture('mage-run', 0).setSize(12, 12)

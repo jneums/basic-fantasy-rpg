@@ -89,7 +89,7 @@ export default class KeyMap {
 
     this.executeZero = function() {
       character.scene.questLogActive = true;
-      character.scene.registry.set('openQuestLog', character.questLog.getAll())
+      character.scene.registry.set('openQuestLog', character.questLog)
     }
 
     this.executeInventoryOne = function() {
