@@ -14,7 +14,7 @@ export default function savageBlow() {
   // pre ability requirements:
   const config = {
     beneficial: false,
-    resourceAmount: 15,
+    resourceAmount: 0,
     resource: 'rage',
     range: this.CONST.MELEE_RANGE,
     needsTarget: true

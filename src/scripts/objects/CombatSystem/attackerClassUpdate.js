@@ -23,7 +23,7 @@ export default function attackerClassUpdate (attacker = {}, combatObject = {}) {
         const onNextAttack = attacker.combat.getOnNextAttack();
 
         if (onNextAttack === 'savageBlow') {
-
+          if(!attacker.rage.spendRage(15)) return;
           // savage blow deals increased threat, and 11 extra damage:
           combatObject.setAmount(combatObject.amount() + 11);
           combatObject.setBonusThreat(combatObject.bonusThreat() + 20);
