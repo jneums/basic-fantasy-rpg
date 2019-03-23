@@ -170,7 +170,7 @@ export default class Combat {
     /**
      * getOnNextAttack - applied to next swing
      *
-     * @returns {string} 'heroicStrike'
+     * @returns {string} 'savageBlow'
      */
     this.getOnNextAttack = function() {
       return onNextAttack;

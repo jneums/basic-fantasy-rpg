@@ -16,7 +16,7 @@ export default function savageBlow() {
     beneficial: false,
     resourceAmount: 15,
     resource: 'rage',
-    range: 25,
+    range: this.CONST.MELEE_RANGE,
     needsTarget: true
   }
 
@@ -24,8 +24,8 @@ export default function savageBlow() {
 
   const onNextAttack = this.combat.getOnNextAttack();
   // exit early if heroic strike is already to go
-  if (onNextAttack === 'heroicStrike') return;
+  if (onNextAttack === 'savageBlow') return;
 
-  const newOnNextAttack = 'heroicStrike';
+  const newOnNextAttack = 'savageBlow';
   this.combat.setOnNextAttack(newOnNextAttack)
 }

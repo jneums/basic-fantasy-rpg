@@ -18,12 +18,12 @@ import abilityRequirements from '../../abilityRequirements';
      beneficial: false,
      resourceAmount: 10,
      resource: 'rage',
-     range: 25,
+     range: this.CONST.MELEE_RANGE,
      needsTarget: true
    }
 
    if(!abilityRequirements(this, config)) return;
-   
+
   const target = this.target.currentTarget();
 
   // setup combat object:

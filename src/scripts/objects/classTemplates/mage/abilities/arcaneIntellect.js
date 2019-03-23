@@ -17,7 +17,7 @@ export default function arcaneIntellect() {
     beneficial: true,
     resourceAmount: 60,
     resource: 'mana',
-    range: 175,
+    range: this.CONST.CAST_RANGE,
     needsTarget: true
   }
 

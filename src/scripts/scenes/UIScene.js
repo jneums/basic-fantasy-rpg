@@ -156,7 +156,7 @@ function loadQuestLog(scene, questLog) {
     })
   }
 
-  const active = quests[questLog.getActive()];
+  const active = quests[questLog.getActiveQuestIndex()];
   if (active.getStatus() === 'completed') return;
   selectQuest(scene, active);
 }

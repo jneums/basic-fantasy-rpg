@@ -17,7 +17,7 @@ export default function wand() {
     beneficial: false,
     resourceAmount: 0,
     resource: 'mana',
-    range: 175,
+    range: this.CONST.CAST_RANGE,
     needsTarget: true
   }
 

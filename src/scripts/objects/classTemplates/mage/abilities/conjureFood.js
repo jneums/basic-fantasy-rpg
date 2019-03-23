@@ -16,7 +16,7 @@ export default function conjureFood() {
     beneficial: true,
     resourceAmount: 60,
     resource: 'mana',
-    range: 25,
+    range: this.CONST.MELEE_RANGE,
     needsTarget: false
   }
 

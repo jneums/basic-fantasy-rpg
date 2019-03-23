@@ -13,6 +13,10 @@ import Consumables from './Managers/Consumables';
 import ResourceBar from './Managers/ResourceBar';
 import playerUpdate from '../player/playerUpdate';
 import KillLog from './Managers/KillLog';
+import Const from './Managers/Const';
+
+const MELEE_RANGE = 25;
+const MOVEMENT_SPEED = 40;
 
 /**
  * Main character class, inherited by all characters.
@@ -20,6 +24,7 @@ import KillLog from './Managers/KillLog';
 export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x = 0, y = 0) {
     super(scene, x, y)
+
     scene.add.existing(this)
     scene.physics.add.existing(this);
 
@@ -35,6 +40,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};
 
     // managers to track and change state:
+    this.CONST = new Const();
     this.stat = new Stat(this, humanStartingStats);
     this.skills = new Skills(this);
     this.equipment = new Equipment(this);
@@ -50,12 +56,12 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.inventory = new Inventory(this);
     this.healthBar = new ResourceBar(scene, 'health', this.stat.maxHp());
     this.killLog = new KillLog(this);
+
     this.hands = scene.add.sprite(x, y - 4);
     this.depth = 1;
     this.hands.depth = 2;
 
     scene.characters.add(this);
-
 
 
     // method to keep bars up to date:

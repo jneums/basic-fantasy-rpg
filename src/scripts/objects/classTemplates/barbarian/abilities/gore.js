@@ -17,12 +17,12 @@ export default function gore() {
     beneficial: false,
     resourceAmount: 10,
     resource: 'rage',
-    range: 25,
+    range: this.CONST.MELEE_RANGE,
     needsTarget: true
   }
 
   if(!abilityRequirements(this, config)) return;
-  
+
   const target = this.target.currentTarget();
   // setup combat object:
   const combatObject = new CombatObject(this, target);

@@ -16,7 +16,7 @@ export default function arcaneMissiles() {
     beneficial: false,
     resourceAmount: 85,
     resource: 'mana',
-    range: 175,
+    range: this.CONST.CAST_RANGE,
     needsTarget: true
   }
 

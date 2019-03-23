@@ -19,7 +19,7 @@ export default function frostbolt () {
     beneficial: false,
     resourceAmount: 25,
     resource: 'mana',
-    range: 175,
+    range: this.CONST.CAST_RANGE,
     needsTarget: true
   }
 

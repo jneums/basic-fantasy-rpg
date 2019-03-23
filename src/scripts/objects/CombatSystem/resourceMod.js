@@ -14,7 +14,7 @@ export default function resourceMod (attacker = {}, target = {}, combatObject = 
   if (target.rage) {
     const amount = combatObject.amount();
     const oldRage = target.rage.rage();
-    const maxRage = 100;
+    const maxRage = this.CONST.MAX_RAGE;
 
     // check for overflow or underflow:
     if (oldRage - amount < 0) {

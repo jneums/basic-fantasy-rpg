@@ -20,8 +20,6 @@ export default class CharacterCreationScene extends Phaser.Scene {
     super({ key: 'CharacterCreationScene' })
   }
 
-  preload() {}
-
   create() {
     // is inventory open:
     this.inventoryActive = false;
@@ -29,6 +27,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.questLogActive = false;
     // is dialogue box open:
     this.dialogueBoxActive = false;
+
+
     // holds all characters:
     this.characters = this.add.group();
 
@@ -49,51 +49,21 @@ export default class CharacterCreationScene extends Phaser.Scene {
     })
 
 
-
     // add some characters:
     this.mage = new Mage(this, 90, 130);
     this.barbarian = new Barbarian(this, 110, 110);
     this.priest = new Priest(this, 76, 110);
 
-    // add some food:
-    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'));
-    this.barbarian.inventory.add(getConsumableByName('Tough Jerky'));
-    this.mage.inventory.add(getConsumableByName('Tough Jerky'));
-    this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
-    this.mage.inventory.add(getConsumableByName('Refreshing Spring Water'));
-    this.priest.inventory.add(getConsumableByName('Refreshing Spring Water'));
-    this.priest.inventory.add(getConsumableByName('Refreshing Spring Water'));
 
 
     // start as mage:
     inputListeners(this.mage);
     this.mage.controller = 'player';
 
-    // called twice to force update...better way??
-    this.registry.set('reloadUI', this.mage)
-    this.registry.set('reloadUI', this.mage)
+    // initialize registry onChange listeners:
+    _initRegistry(this);
 
-    this.registry.set('openDialogueBox');
-    this.registry.set('closeDialogueBox');
-
-    this.registry.set('openQuestLog');
-    this.registry.set('closeQuestLog');
-
-
-
-
-    // set follow to current player controlled character:
-    this.cameras.main.setRoundPixels(true)
-      .setSize(1106, 682)
-      .startFollow(this.mage, true, .05, .05)
-      .setZoom(4)
-
-    // mini-map:
-    this.minimap = this.cameras.add(1110, 0, 200, 200)
-      .setName('mini')
-      .setBackgroundColor(0x1c1117)
-      .startFollow(this.mage, true, .05, .05)
-      .setZoom(.2)
+    _initCameras(this);
 
   }
 
@@ -102,4 +72,37 @@ export default class CharacterCreationScene extends Phaser.Scene {
     updateLiveCharacters(this);
     updateDeadCharacters(this);
   }
+
+}
+
+
+
+
+function _initCameras(scene = {}) {
+
+  // set follow to current player controlled character:
+  scene.cameras.main.setRoundPixels(true)
+    .setSize(1106, 682)
+    .startFollow(scene.mage, true, .05, .05)
+    .setZoom(4)
+
+  // mini-map:
+  scene.minimap = scene.cameras.add(1110, 0, 200, 200)
+    .setName('mini')
+    .setBackgroundColor(0x1c1117)
+    .startFollow(scene.mage, true, .05, .05)
+    .setZoom(.2)
+}
+
+
+function _initRegistry(scene = {}) {
+  // called twice to force update...better way??
+  scene.registry.set('reloadUI', scene.mage)
+  scene.registry.set('reloadUI', scene.mage)
+
+  scene.registry.set('openDialogueBox');
+  scene.registry.set('closeDialogueBox');
+
+  scene.registry.set('openQuestLog');
+  scene.registry.set('closeQuestLog');
 }

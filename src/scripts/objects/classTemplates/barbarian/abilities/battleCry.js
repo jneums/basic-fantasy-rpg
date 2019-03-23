@@ -17,12 +17,12 @@ export default function battleCry() {
     beneficial: 'true',
     resourceAmount: 10,
     resource: 'rage',
-    range: 25,
+    range: this.CONST.MELEE_RANGE,
     needsTarget: false
   }
   if(!abilityRequirements(this, reqConfig)) return;
 
-  const alliesInRange = this.target.scanForAllies(200);
+  const alliesInRange = this.target.scanForAllies(this.CONST.CAST_RANGE);
   // create a buff object.
   const buff = {
     name: 'battleShout',

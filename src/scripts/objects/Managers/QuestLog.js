@@ -3,14 +3,19 @@ import { getArmorByName } from '../../loot/armor'
 
 export default class QuestLog {
   constructor(character) {
+
     // holds a list of quests:
     let quests = [];
-    let active = 0;
+
+    // which quest to focus in UI:
+    let activeQuestIndex = 0;
 
     // add quest:
     this.add = function(questId) {
-      // needs a 'getQuestById' generator:
+
+      // needs a 'getQuestById' generator, possible on server side:
       const newQuest = new Quest(
+        1,
         "Orc Cleanup",
         "easy",
         "kill",
@@ -19,11 +24,11 @@ export default class QuestLog {
         ["This dungeon is teeming with orcs.", "", "How would you like to help out by", "murdering five of them?"],
         ["Did you murder them?"],
         ["Thank you brave warrior!"],
-        ["The weird little blonde", "dude at the entrance", "wants me to kill", "some orcs for him."],
+        ["The strange looking", "dude at the entrance", "wants me to kill", "some orcs for him."],
         getArmorByName("Recruit's Pants")
       )
 
-
+      // initialize quest:
       newQuest.advanceStatus();
       quests.push(newQuest);
 
@@ -48,13 +53,13 @@ export default class QuestLog {
       else return filteredQuests;
     }
 
-    this.getActive = function() {
-      return active;
+    this.getActiveQuestIndex = function() {
+      return activeQuestIndex;
     }
 
-    this.setActive = function(index) {
+    this.setActiveQuestIndex = function(index) {
       if (!quests[index]) return;
-      active = index;
+      activeQuestIndex = index;
     }
 
     // get indvidual:

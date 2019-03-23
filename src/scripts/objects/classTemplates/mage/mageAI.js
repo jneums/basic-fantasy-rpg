@@ -7,12 +7,11 @@ import moveToMoveTarget from '../../../player/moveToMoveTarget';
  * @returns {function} update function
  */
 export default function MageAI() {
-    const meleeRange = 25;
     const AI = function() {
       if (this.combat.isDead()) return;
 
       // scan for enemies for body pull
-      const enemies = this.target.scanForEnemies(125);
+      const enemies = this.target.scanForEnemies(this.CONST.BODY_PULL_RANGE);
       // scan for enemies by threat table (pulled by attack)
       const target = this.threat.highestThreat()
         ? this.threat.highestThreat()
@@ -23,9 +22,9 @@ export default function MageAI() {
         return this.movement.stop();
       }
     this.target.setCurrentTarget(target);
-    const wandRange = this.target.rangeCheck(target, 175);
+    const wandRange = this.target.rangeCheck(target, this.CONST.CAST_RANGE);
     // if target, move close enough to attack
-    const canMelee = this.target.rangeCheck(target, meleeRange);
+    const canMelee = this.target.rangeCheck(target, this.CONST.MELEE_RANGE);
     if (canMelee) {
       this.movement.stop();
       this.animations.combat();

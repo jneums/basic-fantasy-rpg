@@ -1,5 +1,6 @@
 export default class Quest {
   constructor(
+    id = 1,
     title = "",
     difficulty = "",
     type = "",
@@ -11,16 +12,18 @@ export default class Quest {
     description = [],
     reward = {}
   ) {
-    
-    let _id = 1;
+
+    let _id = id;
 
     this.getId = function() {
       return _id;
     }
 
     this.title = title;
+
     this.description = description;
 
+    // for UI elements:
     this.getColor = function() {
       if (difficulty === 'easy') return 'green';
       else if (difficulty === 'medium') return 'yellow';
@@ -28,7 +31,9 @@ export default class Quest {
     }
 
     let _status = 0;
+
     this.advanceStatus = function() { _status++ }
+
     this.getStatus = function() {
       if (_status === 0) return 'not given';
       else if (_status === 1) return 'in progress';
@@ -42,6 +47,7 @@ export default class Quest {
       else return finishText;
     }
 
+    // used for UI:
     this.peekReward = function() {
       return reward;
     }
@@ -51,28 +57,44 @@ export default class Quest {
     }
 
     let _type = type;
+
     this.changeType = function(newType = "") {
       _type === newType;
     }
+
     this.getType = function() {
       return _type;
     }
 
+    // who to kill, or what to aquire:
     this.getTarget = function() {
       return target;
     }
 
     let _amount = amount;
+
     let _counter = 0;
+
+
+    // increment counter:
     this.incCounter = function() {
+
+      // is quest is finished, early return:
+      if (this.getStatus() === 'completed') return;
+
+      // this increment will complete requirements:
       if (_counter + 1 === _amount) {
+
         _counter++;
         this.advanceStatus();
+
+        // otherwise increment normally:
       } else if (_counter + 1 < _amount){
+
         _counter++;
-      } else {
-        return;
+
       }
+
     };
 
     this.getCount = function() {

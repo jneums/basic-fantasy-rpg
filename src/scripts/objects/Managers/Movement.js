@@ -1,12 +1,12 @@
-
 /**
  * Movement Manager - Sets movement speed and
  * target coordinates.
  */
 export default class Movement {
   constructor(character, x, y) {
+    
     // how fast you move. default is 100
-    let movementSpeed = 30;
+    let movementSpeed = character.CONST.MOVEMENT_SPEED;
 
     // where to move to
     let moveTargetCoords = [x, y];

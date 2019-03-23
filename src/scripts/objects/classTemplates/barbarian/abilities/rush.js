@@ -16,7 +16,7 @@ export default function rush() {
   const reqConfig = {
     resourceAmount: 0,
     resourceType: 'rage',
-    range: 175,
+    range: this.CONST.CHARGE_MAX_DIST,
     needsTarget: true
   }
   if (!abilityRequirements(this, reqConfig)) return;
@@ -37,5 +37,5 @@ export default function rush() {
 
   let offset = Math.sign(this.x - target.x) * 20;
   this.movement.setMoveTargetCoords([target.x + offset, target.y])
-  this.movement.setMovementSpeed(500)
+  this.movement.setMovementSpeed(this.CONST.CHARGE_SPEED)
 }

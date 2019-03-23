@@ -25,15 +25,15 @@ export default function intimidate() {
     beneficial: 'false',
     resourceAmount: 20,
     resource: 'rage',
-    range: 25,
+    range: this.CONST.MELEE_RANGE,
     needsTarget: false
   }
   if(!abilityRequirements(this, reqConfig)) return;
-  
+
   // scan for enemies
   const enemiesInRange = this.target.scanForEnemies(80);
   // only four closest:
-  const closest = enemiesInRange.slice(0, 4);
+  const closest = enemiesInRange.slice(0, this.CONST.MAX_AOE_TARGETS);
   // push debuff to each of the allies in 20 yards
   if (!closest.length) return;
   closest.forEach(enemy => {

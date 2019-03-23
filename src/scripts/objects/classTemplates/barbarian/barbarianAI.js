@@ -7,15 +7,13 @@ import moveToMoveTarget from '../../../player/moveToMoveTarget';
  * @returns {function} update function
  */
 export default function barbarianAI() {
-  const meleeRange = 25;
-  const rageDumpValue = 30;
   const AI = function() {
     if (this.combat.isDead()) return;
 
     const rage = this.rage.rage();
 
     // scan for enemies for body pull
-    const enemies = this.target.scanForEnemies(75);
+    const enemies = this.target.scanForEnemies(this.CONST.BODY_PULL_RANGE);
     // scan for enemies by threat table (pulled by attack)
     const target = this.threat.highestThreat()
       ? this.threat.highestThreat()
@@ -29,16 +27,17 @@ export default function barbarianAI() {
     }
 
     // if target, is he far enough to charge?
-    const isTooCloseToCharge = this.target.rangeCheck(target, 60);
-    const canMelee = this.target.rangeCheck(target, meleeRange);
+    const isTooCloseToCharge = this.target.rangeCheck(target, this.CONST.CHARGE_MIN_DIST);
+    const canMelee = this.target.rangeCheck(target, this.CONST.MELEE_RANGE);
+
     if (canMelee) {
       // stop moving:
       this.movement.stop();
       // does target have gore? if not, give it to him!
-      if (!target.buffs.has("gore") && rage > rageDumpValue) this.ability.gore();
+      if (!target.buffs.has("gore") && rage > this.CONST.RAGE_DUMP_VALUE) this.ability.gore();
 
       // do I have too much rage? spend it...
-      if (rage > rageDumpValue) this.ability.savageBlow();
+      if (rage > this.CONST.RAGE_DUMP_VALUE) this.ability.savageBlow();
       this.combat.meleeAutoAttack(target);
       this.animations.combat();
     } else {
