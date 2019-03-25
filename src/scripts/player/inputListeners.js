@@ -3,6 +3,9 @@ import inventoryPointerDown from './inventoryPointerDown';
 import toggleControl from './toggleControl';
 import lootBoxPointerDown from './lootBoxPointerDown';
 import questLogPointerDown from './questLogPointerDown';
+import actionBarDown from './actionBarDown';
+
+const GAME_VIEW_WIDTH = 1110;
 
 /**
  * inputListeners - add all input event listeners
@@ -16,10 +19,10 @@ export default function inputListeners(player = {}) {
   player.scene.input.on('pointerdown', (pointer) => {
 
 
-    if (pointer.downX > 1110) {
+    if (pointer.downX > GAME_VIEW_WIDTH) {
 
       // clicked the right action bar:
-      _actionBar(pointer, player);
+      actionBarDown(pointer, player);
 
     } else {
 
@@ -162,43 +165,4 @@ export default function inputListeners(player = {}) {
     } else {
       return player.keyMap.executeNine();
     }  })
-}
-
-
-/**
- * _actionBar - map coordinates to action bar icons
- *
- * @param  {Event} pointer
- * @param  {Character} player owns inputListeners
- * @return {void}
- */
-function _actionBar(pointer = {}, player = {}) {
-  // is the pointer in the left or right column:
-  if (pointer.downX > 1120 && pointer.downX < 1192) {
-    // position vertically:
-    if (pointer.downY > 192 && pointer.downY < 256) {
-      player.keyMap.executeOne();
-    } else if (pointer.downY > 268 && pointer.downY < 340) {
-      player.keyMap.executeThree();
-    } else if (pointer.downY > 348 && pointer.downY < 420) {
-      player.keyMap.executeFive();
-    } else if (pointer.downY > 428 && pointer.downY < 496) {
-      player.keyMap.executeSeven();
-    } else if (pointer.downY > 536 && pointer.downY < 600) {
-      player.keyMap.executeNine();
-    }
-  } else if (pointer.downX > 1200 && pointer.downX < 1272){
-    // vertically in the right column:
-    if (pointer.downY > 192 && pointer.downY < 256) {
-      player.keyMap.executeTwo();
-    } else if (pointer.downY > 268 && pointer.downY < 340) {
-      player.keyMap.executeFour();
-    } else if (pointer.downY > 348 && pointer.downY < 420) {
-      player.keyMap.executeSix();
-    } else if (pointer.downY > 428 && pointer.downY < 496) {
-      player.keyMap.executeEight();
-    } else if (pointer.downY > 536 && pointer.downY < 600) {
-      player.keyMap.executeZero();
-    }
-  }
 }

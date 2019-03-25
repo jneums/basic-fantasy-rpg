@@ -1,10 +1,11 @@
+import Const from './Const';
+const CONST = Const();
 
 
+// TODO:: do not need to create ALL the animations:
 import animationCreator from './animationCreator';
 
-const H1_SIZE = 24;
-const H2_SIZE = 20;
-const H3_SIZE = 18;
+
 
 export default class CharacterSelectionScene extends Phaser.Scene {
   constructor() {
@@ -25,7 +26,7 @@ export default class CharacterSelectionScene extends Phaser.Scene {
     selectionContainer.add(background);
 
     // create scene title:
-    const title = this.add.bitmapText(0,0, 'font', 'Choose Your Character:', H1_SIZE);
+    const title = this.add.bitmapText(0,0, 'font', 'Choose Your Character:', CONST.TXT_L);
     title.x = -(title.width / 2);
     title.y = -238;
 
@@ -50,7 +51,7 @@ export default class CharacterSelectionScene extends Phaser.Scene {
 
 
     // add texts:
-    const className = this.add.bitmapText(0,0, 'font', 'Barbarian:', H2_SIZE);
+    const className = this.add.bitmapText(0,0, 'font', 'Barbarian:', CONST.TXT_M);
     className.setOrigin(.5)
 
     const text = {
@@ -63,7 +64,7 @@ export default class CharacterSelectionScene extends Phaser.Scene {
     }
 
     let selectedClass = 'barbarian';
-    const selectedText = this.add.bitmapText(0, 28, 'font', text[selectedClass], H3_SIZE);
+    const selectedText = this.add.bitmapText(0, 28, 'font', text[selectedClass], CONST.TXT_S);
     selectedText.setOrigin(.5);
 
     selectionContainer.add([ className, selectedText ]);
@@ -97,7 +98,7 @@ export default class CharacterSelectionScene extends Phaser.Scene {
 
 
     // add start button:
-    const startButton = this.add.bitmapText(0, 0, 'font', 'Continue...', H2_SIZE);
+    const startButton = this.add.bitmapText(0, 0, 'font', 'Continue...', CONST.TXT_M);
     startButton.x = 494 - startButton.width;
     startButton.y = 198;
 

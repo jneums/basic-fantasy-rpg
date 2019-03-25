@@ -1,6 +1,10 @@
+import Const from './Const';
+const CONST = Const();
+
 const ACTION_BAR_WIDTH = 70;
 const QUEST_LIST_X = -248;
 const QUEST_LIST_Y = -144;
+
 
 /**
  * UI:
@@ -13,30 +17,30 @@ export default class UIScene extends Phaser.Scene {
   }
 
   create() {
-    const MID_DISPLAY_X = (this.scale.width - ACTION_BAR_WIDTH) /2;
-    const MID_DISPLAY_Y = this.scale.height /2;
+    const CENTER_X = (this.scale.width - ACTION_BAR_WIDTH) /2;
+    const CENTER_Y = this.scale.height /2;
     // lootBox:
-    this.lootBoxContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
+    this.lootBoxContainer = this.add.container(CENTER_X, CENTER_Y);
 
 
     // inventory:
-    this.inventoryContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
+    this.inventoryContainer = this.add.container(CENTER_X, CENTER_Y);
     const inventoryBackground = this.add.image(0, 0, 'inventory-background');
-    inventoryBackground.scaleX = 4;
-    inventoryBackground.scaleY = 4;
+    inventoryBackground.scaleX = CONST.SCALE;
+    inventoryBackground.scaleY = CONST.SCALE;
 
     this.inventoryContainer.add(inventoryBackground).setVisible(false);
 
     // quest log:
-    this.questLogContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
+    this.questLogContainer = this.add.container(CENTER_X, CENTER_Y);
     const questLogBackground = this.add.image( 0, 0, 'questLog');
-    questLogBackground.scaleX = 4;
-    questLogBackground.scaleY = 4;
+    questLogBackground.scaleX = CONST.SCALE;
+    questLogBackground.scaleY = CONST.SCALE;
 
-    const questLogTitle = this.add.bitmapText(0, -208,  'font', 'Quests', 24);
+    const questLogTitle = this.add.bitmapText(0, -208,  'font', 'Quests', CONST.TXT_L);
     questLogTitle.setOrigin(0.5);
-    this.questDescription = this.add.bitmapText( -40,-158, 'font', '', 18);
-    this.questStatus = this.add.bitmapText( -40,0, 'font', '', 18);
+    this.questDescription = this.add.bitmapText( -40,-158, 'font', '', CONST.TXT_M);
+    this.questStatus = this.add.bitmapText( -40,0, 'font', '', CONST.TXT_M);
 
 
     this.questLogContainer.setVisible(false);
@@ -47,14 +51,14 @@ export default class UIScene extends Phaser.Scene {
 
 
     // dialogue box:
-    this.dialogueBoxContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
+    this.dialogueBoxContainer = this.add.container(CENTER_X, CENTER_Y);
     const dialogueBoxBackground = this.add.image(0, 0, 'dialogueBox');
-    dialogueBoxBackground.scaleX = 4;
-    dialogueBoxBackground.scaleY = 4;
+    dialogueBoxBackground.scaleX = CONST.SCALE;
+    dialogueBoxBackground.scaleY = CONST.SCALE;
 
     this.dialogueBoxContainer.setVisible(false);
 
-    this.dialogueText = this.add.dynamicBitmapText( 0, 0, 'font', '', 24 );
+    this.dialogueText = this.add.dynamicBitmapText( 0, 0, 'font', '', CONST.TXT_S);
 
     this.dialogueText.setOrigin(.5).setCenterAlign();
 
@@ -65,8 +69,8 @@ export default class UIScene extends Phaser.Scene {
     // action bars:
     this.actionBars = this.add.image(0,0,'ui');
     this.actionBars.setOrigin(0);
-    this.actionBars.scaleX = 4;
-    this.actionBars.scaleY = 4;
+    this.actionBars.scaleX = CONST.SCALE;
+    this.actionBars.scaleY = CONST.SCALE;
 
     // events:
     this.registry.events.on('changedata', this.updateData, this);
@@ -111,29 +115,29 @@ export default class UIScene extends Phaser.Scene {
 
     } else if (key === 'closeLootBox') {
 
-      hideLoot(scene);
+      hideLoot(this);
 
     }
   }
 }
 
 function hideLoot(scene) {
-  scene.lootBoxActive.removeAll(true);
+  scene.lootBoxContainer.removeAll(true);
 }
 
 
 function showLoot(scene, loot) {
 
   const lootBoxBackground = scene.add.image(0, -8, 'loot-box-background');
-  lootBoxBackground.scaleX = 4;
-  lootBoxBackground.scaleY = 4;
+  lootBoxBackground.scaleX = CONST.SCALE;
+  lootBoxBackground.scaleY = CONST.SCALE;
 
   scene.lootBoxContainer.add(lootBoxBackground);
 
   // create bg for loot:
   const lootIcon = scene.add.image(0, 0, loot.icon);
-  lootIcon.scaleX = 4;
-  lootIcon.scaleY = 4;
+  lootIcon.scaleX = CONST.SCALE;
+  lootIcon.scaleY = CONST.SCALE;
 
   const lootName = scene.add.bitmapText(0, 0, 'font', loot.name, 12);
   scene.lootBoxContainer.add([lootIcon, lootName]);
@@ -170,10 +174,10 @@ function loadQuestLog(scene, questLog) {
       const difficultyColor = quest.getColor();
       const bg = scene.add.image(_x, _y, difficultyColor + "-quest");
       // add text:
-      const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, 16)
+      const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, CONST.TXT_M)
         .setOrigin(0.5)
-      bg.scaleX = 4;
-      bg.scaleY = 4;
+      bg.scaleX = CONST.SCALE;
+      bg.scaleY = CONST.SCALE;
       scene.questListContainer.add(bg);
       scene.questListContainer.add(title);
 
@@ -189,10 +193,10 @@ function loadQuestLog(scene, questLog) {
       const difficultyColor = quest.getColor();
       const bg = scene.add.image(_x, _y, difficultyColor + "-quest");
       // add text:
-      const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, 16)
+      const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, CONST.TXT_M)
         .setOrigin(0.5)
-      bg.scaleX = 4;
-      bg.scaleY = 4;
+      bg.scaleX = CONST.SCALE;
+      bg.scaleY = CONST.SCALE;
       scene.questListContainer.add(bg);
       scene.questListContainer.add(title);
 

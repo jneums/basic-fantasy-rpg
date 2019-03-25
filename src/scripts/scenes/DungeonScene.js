@@ -13,6 +13,9 @@ import { getWeaponByName } from '../loot/weapons';
 import animationCreator from './animationCreator';
 import mapCreator from './mapCreator';
 
+import Const from './Const';
+const CONST = Const();
+
 
 
 export default class DungeonScene extends Phaser.Scene {
@@ -120,7 +123,7 @@ function _initCameras(scene = {}) {
   scene.cameras.main.setRoundPixels(true)
     .setSize(1106, 682)
     .startFollow(scene.player, true, .05, .05)
-    .setZoom(4)
+    .setZoom(CONST.SCALE)
 
   // mini-map:
   scene.minimap = scene.cameras.add(1110, 0, 200, 200)
