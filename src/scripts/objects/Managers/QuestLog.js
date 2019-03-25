@@ -26,7 +26,7 @@ export default class QuestLog {
         ["Did you murder them?"],
         ["Thank you brave warrior!"],
         ["The strange looking", "dude at the entrance", "wants me to kill", "some orcs for him."],
-        getArmorByName("Recruit's Pants")
+        getArmorByName("Recruit's Boots")
       )
 
       // initialize quest:

@@ -1,10 +1,28 @@
+import CONST from '../scenes/Const';
+
+const LOOT_BOX_HEIGHT = 16 * 4;
+const LOOT_BOX_WIDTH = 86 * 4;
+const LOOT_BOX_TOP = CONST.GAME_VIEW_CENTER_Y - (LOOT_BOX_HEIGHT / 2);
+const LOOT_BOX_BOTTOM = CONST.GAME_VIEW_CENTER_Y + (LOOT_BOX_HEIGHT / 2);
+const LOOT_BOX_LEFT = CONST.GAME_VIEW_CENTER_X - (LOOT_BOX_WIDTH / 2);
+const LOOT_BOX_RIGHT = CONST.GAME_VIEW_CENTER_X + (LOOT_BOX_WIDTH / 2);
+
+
 export default function lootBoxPointerDown(pointer, player) {
 
-  // if pointer is outside the box:
-  if (pointer.downX > 400 && pointer.downX < 600) {
-    if (pointer.downY > 200 && pointer.downY < 500) {
-      player.scene.lootBoxActive = false;
-      player.scene.registry.set('closeLootBox');
-    }
+
+
+  // if pointer is on the loot:
+  if (pointer.downX > LOOT_BOX_LEFT && pointer.downX < LOOT_BOX_RIGHT
+        && pointer.downY > LOOT_BOX_TOP && pointer.downY < LOOT_BOX_BOTTOM) {
+          const loot = player.target.currentTarget().loot();
+          player.inventory.add(loot);
+          player.target.currentTarget().setLoot(null);
+          player.scene.lootBoxActive = false;
+          player.scene.registry.set('closeLootBox');
+
+  } else {
+    player.scene.lootBoxActive = false;
+    player.scene.registry.set('closeLootBox');
   }
 }

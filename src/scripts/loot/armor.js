@@ -24,7 +24,8 @@ const armor = [
     durability: 55,
     repairCost: 44,
     disenchant: 'no',
-    icon: 'inv_shirt_05',
+    icon: 'item-04',
+    color: 'green',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -54,7 +55,8 @@ const armor = [
     durability: 25,
     repairCost: 20,
     disenchant: 'no',
-    icon: 'inv_boots_06',
+    icon: 'item-24',
+    color: 'blue',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -69,7 +71,8 @@ const armor = [
     durability: 55,
     repairCost: 44,
     disenchant: 'no',
-    icon: 'inv_shirt_05',
+    icon: 'item-02',
+    color: 'yellow',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -84,7 +87,8 @@ const armor = [
     durability: 40,
     repairCost: 32,
     disenchant: 'no',
-    icon: 'inv_pants_02',
+    icon: 'item-05',
+    color: 'green',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -99,7 +103,8 @@ const armor = [
     durability: 25,
     repairCost: 20,
     disenchant: 'no',
-    icon: 'inv_boots_05',
+    icon: 'item-02',
+    color: 'green',
     droppedBy: '',
     levelRequirement: 1
   },

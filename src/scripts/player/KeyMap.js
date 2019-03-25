@@ -92,7 +92,7 @@ export default class KeyMap {
           character.scene.registry.set('closeQuestLog')
         }
         character.scene.inventoryActive = true;
-        character.scene.registry.set('openInventory')
+        character.scene.registry.set('openInventory', character.inventory.getInventory());
 
       }
     }

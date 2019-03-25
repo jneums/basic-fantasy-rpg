@@ -230,8 +230,22 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('heal', './assets/icons/heart_icon.png');
     this.load.image('renew', './assets/icons/renew_icon.png');
 
+    // item bg's:
+    this.load.image('brown-bg', 'assets/items/brown_bg.png');
+    this.load.image('green-bg', 'assets/items/green_bg.png');
+    this.load.image('yellow-bg', 'assets/items/yellow_bg.png');
+    this.load.image('blue-bg', 'assets/items/blue_bg.png');
+    this.load.image('purple-bg', 'assets/items/purple_bg.png');
+    this.load.image('red-bg', 'assets/items/red_bg.png');
+
     // items:
-    this.load.image('short-sword', './assets/items/green_sword.png');
+    for (let i = 1; i < 109; i++) {
+      if (i < 10) {
+        this.load.image('item-0' + i, './assets/items/icon_0' + i + '.png');
+      } else {
+        this.load.image('item-' + i, './assets/items/icon_' + i + '.png');
+      }
+    }
 
     this.load.image('nature-ball', './assets/anims/nature_ball.png');
     this.load.image('frost-ball', './assets/anims/frost_ball.png');

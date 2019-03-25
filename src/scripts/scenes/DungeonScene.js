@@ -13,8 +13,7 @@ import { getWeaponByName } from '../loot/weapons';
 import animationCreator from './animationCreator';
 import mapCreator from './mapCreator';
 
-import Const from './Const';
-const CONST = Const();
+import CONST from './Const';
 
 
 
@@ -103,6 +102,9 @@ export default class DungeonScene extends Phaser.Scene {
     this.registry.set('closeQuestLog');
 
     this.player.controller = 'player';
+
+
+    this.player.inventory.add(getWeaponByName('Short Sword'))
 
   }
 

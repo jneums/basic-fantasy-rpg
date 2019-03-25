@@ -19,7 +19,8 @@ const items = [
     type: 'questItem',
     quantity: 1,
     maxStack: 20,
-    icon: 'inv_misc_dust_01',
+    icon: 'item-102',
+    color: 'brown'
   },
   {
     name: 'Large Candle',
@@ -29,7 +30,8 @@ const items = [
     type: 'questItem',
     quantity: 1,
     maxStack: 20,
-    icon: 'inv_misc_candle_01',
+    icon: 'item-100',
+    color: 'brown'
   },
   {
     name: 'Malachite',
@@ -39,6 +41,7 @@ const items = [
     type: 'crafting',
     quantity: 1,
     maxStack: 200,
-    icon: 'inv_misc_gem_emerald_03',
+    icon: 'item-105',
+    color: 'brown'
   },
 ]

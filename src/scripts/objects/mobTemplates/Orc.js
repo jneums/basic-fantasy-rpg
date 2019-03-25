@@ -38,8 +38,7 @@ export default class Orc extends Character {
     this.stat.setHp(startingHp);
 
     // starting loot
-    // const loot = createLoot(this.getName());
-    this.setLoot(getWeaponByName('Short Sword'));
+    this.setLoot(createLoot(this.getName()));
 
     this.AI = OrcAI();
     this.classUpdate = function() {

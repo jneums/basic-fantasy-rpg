@@ -63,7 +63,7 @@ export default class Barbarian extends Character {
 
     // starting equipment
     const equipped = this.equipment.equipped();
-    equipped.mainHand = getWeaponByName("Tarnished Bastard Sword");
+    equipped.mainHand = getWeaponByName("Tarnished Sword");
     equipped.chest = getArmorByName("Recruit's Vest");
     equipped.legs = getArmorByName("Recruit's Pants");
     equipped.feet = getArmorByName("Recruit's Boots");

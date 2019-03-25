@@ -1,5 +1,4 @@
-import Const from './Const';
-const CONST = Const();
+import CONST from './Const';
 
 
 // TODO:: do not need to create ALL the animations:

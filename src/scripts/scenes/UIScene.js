@@ -1,7 +1,5 @@
-import Const from './Const';
-const CONST = Const();
+import CONST from './Const';
 
-const ACTION_BAR_WIDTH = 70;
 const QUEST_LIST_X = -248;
 const QUEST_LIST_Y = -144;
 
@@ -17,22 +15,16 @@ export default class UIScene extends Phaser.Scene {
   }
 
   create() {
-    const CENTER_X = (this.scale.width - ACTION_BAR_WIDTH) /2;
-    const CENTER_Y = this.scale.height /2;
     // lootBox:
-    this.lootBoxContainer = this.add.container(CENTER_X, CENTER_Y);
+    this.lootBoxContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
 
 
     // inventory:
-    this.inventoryContainer = this.add.container(CENTER_X, CENTER_Y);
-    const inventoryBackground = this.add.image(0, 0, 'inventory-background');
-    inventoryBackground.scaleX = CONST.SCALE;
-    inventoryBackground.scaleY = CONST.SCALE;
+    this.inventoryContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
 
-    this.inventoryContainer.add(inventoryBackground).setVisible(false);
 
     // quest log:
-    this.questLogContainer = this.add.container(CENTER_X, CENTER_Y);
+    this.questLogContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
     const questLogBackground = this.add.image( 0, 0, 'questLog');
     questLogBackground.scaleX = CONST.SCALE;
     questLogBackground.scaleY = CONST.SCALE;
@@ -51,7 +43,7 @@ export default class UIScene extends Phaser.Scene {
 
 
     // dialogue box:
-    this.dialogueBoxContainer = this.add.container(CENTER_X, CENTER_Y);
+    this.dialogueBoxContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
     const dialogueBoxBackground = this.add.image(0, 0, 'dialogueBox');
     dialogueBoxBackground.scaleX = CONST.SCALE;
     dialogueBoxBackground.scaleY = CONST.SCALE;
@@ -104,13 +96,12 @@ export default class UIScene extends Phaser.Scene {
       selectQuest(scene, data);
 
     } else if (key === 'openInventory') {
-      this.inventoryContainer.setVisible(true);
+      showInventory(this, data);
 
     } else if (key === 'closeInventory') {
-      this.inventoryContainer.setVisible(false);
+      clearInventory(this);
 
     } else if (key === 'openLootBox') {
-      this.lootBoxContainer.setVisible(true);
       showLoot(this, data);
 
     } else if (key === 'closeLootBox') {
@@ -119,6 +110,85 @@ export default class UIScene extends Phaser.Scene {
 
     }
   }
+}
+
+
+function clearInventory(scene) {
+  scene.inventoryContainer.removeAll(true);
+  scene.inventoryContainer.setVisible(false);
+
+}
+
+
+function buildLoot(scene, item, index) {
+
+  let _x = 0;
+  let _y = 0;
+  let _xOffset = 0;
+  let _yOffset = 0;
+
+
+  // looting position:
+  if (index > 5) {
+    _xOffset = 360 / 2;
+    _yOffset = (-126 / 2) - 13;
+    _x = _xOffset;
+    _y = (-376 / 2) + ((-index + 6) * _yOffset);
+  } else if (index > 0) {
+    _xOffset = -512 / 2;
+    _yOffset = (-126 / 2) - 13;
+    _x = _xOffset;
+    _y = (-376 / 2) + (-index * _yOffset);
+  } else if (index > -1) {
+    _x = -512 / 2;
+    _y = -376 / 2;
+  }
+
+
+
+  // add colored bg:
+  const bg = scene.add.image(_x, _y, item.color + '-bg');
+  bg.scaleX = CONST.SCALE;
+  bg.scaleY = CONST.SCALE;
+
+  // set loot icon over bg:
+  const lootIcon = scene.add.image(_x -136, _y, item.icon);
+  lootIcon.scaleX = CONST.SCALE;
+  lootIcon.scaleY = CONST.SCALE;
+
+  // name:
+
+  // qty:
+  let qtyText = item.quantity ? `x${item.quantity}` : ''
+
+  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.name + ' ' + qtyText, 16);
+
+   if (index > -1) {
+     scene.inventoryContainer.add([bg, lootIcon, lootName]);
+
+   } else {
+     scene.lootBoxContainer.add([bg, lootIcon, lootName]);
+
+   }
+
+}
+
+
+function showInventory(scene, inventory) {
+  if (!inventory) return;
+
+  const inventoryBackground = scene.add.image(0, 0, 'inventory-background');
+  inventoryBackground.scaleX = CONST.SCALE;
+  inventoryBackground.scaleY = CONST.SCALE;
+
+  scene.inventoryContainer.add([inventoryBackground]);
+
+  inventory.forEach((item, i) => {
+    buildLoot(scene, item, i);
+  })
+
+  scene.inventoryContainer.setVisible(true);
+
 }
 
 function hideLoot(scene) {
@@ -134,14 +204,9 @@ function showLoot(scene, loot) {
 
   scene.lootBoxContainer.add(lootBoxBackground);
 
-  // create bg for loot:
-  const lootIcon = scene.add.image(0, 0, loot.icon);
-  lootIcon.scaleX = CONST.SCALE;
-  lootIcon.scaleY = CONST.SCALE;
+  buildLoot(scene, loot, -1);
 
-  const lootName = scene.add.bitmapText(0, 0, 'font', loot.name, 12);
-  scene.lootBoxContainer.add([lootIcon, lootName]);
-
+  scene.lootBoxContainer.setVisible(true);
 }
 
 function selectQuest(scene, quest) {

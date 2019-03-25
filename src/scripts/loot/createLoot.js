@@ -14,7 +14,7 @@ export default function createLoot(name = '') {
       case (random < 85):
         return getConsumableByName('Tough Jerky');
       case (random < 87):
-        return getConsumableByName('Refreshing Spring Water');
+        return getConsumableByName('Spring Water');
       case (random < 89):
         return getItemByName('Malachite');
       case (random < 93):
@@ -22,7 +22,7 @@ export default function createLoot(name = '') {
       case (random < 99):
         return getWeaponByName('Deadman Dagger');
       case (random < 100):
-        return getWeaponByName('Sword of a million truths');
+        return getWeaponByName('Sword of Truth');
     }
   }
 }
