@@ -1,9 +1,10 @@
-import 'phaser'
-import '@babel/polyfill'
+import 'phaser';
+import '@babel/polyfill';
 
-import MainScene from './scenes/mainScene'
-import PreloadScene from './scenes/preloadScene'
-import CharacterCreationScene from './scenes/characterCreationScene'
+import PreloadScene from './scenes/PreloadScene';
+import AuthenticationScene from './scenes/AuthenticationScene';
+import CharacterSelectionScene from './scenes/CharacterSelectionScene';
+import DungeonScene from './scenes/DungeonScene';
 import UIScene from './scenes/UIScene'
 
 
@@ -19,7 +20,13 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, MainScene, CharacterCreationScene, UIScene],
+  scene: [
+    PreloadScene,
+    AuthenticationScene,
+    CharacterSelectionScene,
+    DungeonScene,
+    UIScene
+  ],
   physics: {
     default: 'arcade',
     arcade: {

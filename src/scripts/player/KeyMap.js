@@ -83,13 +83,34 @@ export default class KeyMap {
     }
 
     this.executeNine = function() {
-      character.scene.inventoryActive = true;
-      character.scene.registry.set('openInventory')
+      if (character.scene.inventoryActive) {
+        character.scene.inventoryActive = false;
+        character.scene.registry.set('closeInventory');
+      } else {
+        if (character.scene.questLogActive) {
+          character.scene.questLogActive = false;
+          character.scene.registry.set('closeQuestLog')
+        }
+        character.scene.inventoryActive = true;
+        character.scene.registry.set('openInventory')
+
+      }
     }
 
     this.executeZero = function() {
-      character.scene.questLogActive = true;
-      character.scene.registry.set('openQuestLog', character.questLog)
+      if (character.scene.questLogActive) {
+        character.scene.questLogActive = false;
+        character.scene.registry.set('closeQuestLog')
+
+      } else {
+        if (character.scene.inventoryActive) {
+          character.scene.inventoryActive = false;
+          character.scene.registry.set('closeInventory')
+        }
+        character.scene.questLogActive = true;
+        character.scene.registry.set('openQuestLog', character.questLog)
+
+      }
     }
 
     this.executeInventoryOne = function() {

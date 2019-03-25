@@ -14,6 +14,8 @@ export default function createFloatingText(scene = {}, options = {}) {
   // position:
   const _x = options.x || "auto";
   const _y = options.y || "auto";
+
+  const _posisition = options.position || "below";
   // rotation:
   const _rotation = options.rotation || false;
   // parent object reference:
@@ -32,7 +34,7 @@ export default function createFloatingText(scene = {}, options = {}) {
   const _side = options.side || null;
 
   // set color:
-  const _color = _textColor(_combatObject);
+  const _color = options.color || _textColor(_combatObject);
   const _size = 4 + options.size;
 
   // create the element
@@ -50,8 +52,9 @@ export default function createFloatingText(scene = {}, options = {}) {
     _obj.x = _parentObj.x - _obj.width / 2;
     _obj.y = _parentObj.y - _obj.height / 2 - 20;
   } else {
+    const yOffset = (_posisition === "below") ? 40 : -40
     _obj.x = (scene.cameras.main.midPoint.x) - _obj.width / 2;
-    _obj.y = (scene.cameras.main.midPoint.y + 40) - _obj.height / 2;
+    _obj.y = (scene.cameras.main.midPoint.y + yOffset) - _obj.height / 2;
   }
 
   if (_fixedToCamera) {

@@ -1,9 +1,8 @@
 import actionPointerDown from './actionPointerDown';
 import inventoryPointerDown from './inventoryPointerDown';
 import toggleControl from './toggleControl';
-
-
-
+import lootBoxPointerDown from './lootBoxPointerDown';
+import questLogPointerDown from './questLogPointerDown';
 
 /**
  * inputListeners - add all input event listeners
@@ -16,43 +15,44 @@ export default function inputListeners(player = {}) {
 
   player.scene.input.on('pointerdown', (pointer) => {
 
-    // while the dialogue box is visible:
-    if (player.scene.dialogueBoxActive) {
 
-      // close dialog box:
-      player.scene.dialogueBoxActive = false;
-      player.scene.registry.set('closeDialogueBox');
-      return;
-
-      // while the quest log is visible:
-    } else if (player.scene.questLogActive) {
-
-      // close if pointer clicks quest log button again:
-      if (pointer.downY > 536 && pointer.downY < 600) {
-
-        // close quest log:
-        player.scene.questLogActive = false;
-        player.scene.registry.set('closeQuestLog');
-        return;
-
-      } else {
-
-        // if click occurs over anyplace other than quest log icon:
-        inventoryPointerDown(pointer, player);
-      }
-
-
-    } else if (pointer.downX > 1110) {
+    if (pointer.downX > 1110) {
 
       // clicked the right action bar:
       _actionBar(pointer, player);
 
     } else {
 
-      // clicked anyplace on the game view:
-      actionPointerDown(pointer, player);
+      // while the dialogue box is visible:
+      if (player.scene.dialogueBoxActive) {
+
+        // close dialog box:
+        player.scene.dialogueBoxActive = false;
+        player.scene.registry.set('closeDialogueBox');
+        return;
+
+        // while the quest log is visible:
+      } else if (player.scene.questLogActive) {
+
+        questLogPointerDown(pointer, player);
+
+        // while the inventory log is visible:
+      } else if (player.scene.inventoryActive) {
+
+        inventoryPointerDown(pointer, player);
+
+      } else if (player.scene.lootBoxActive) {
+
+        lootBoxPointerDown(pointer, player);
+
+      } else {
+        // clicked anyplace on the game view:
+        actionPointerDown(pointer, player);
+
+      }
+
     }
-    
+
   })
 
 

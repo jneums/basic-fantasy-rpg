@@ -19,17 +19,21 @@ export default function actionPointerDown(pointer, player = {}) {
   })
 
 
-  // if a character was clicked:
+  // if a dead character with loot was clicked:
   if (target && target.combat.isDead() && target.loot()) {
+
+    // tapped is whomever hit it first:
     const targetLootOwner = player.target.currentTarget().tapped();
-    // if click target is dead, and was tapped, and looter is in range:
-    if (target.combat.isDead() && (targetLootOwner && target.target.rangeCheck(targetLootOwner, 70))) {
-      // give some loot to tapped (person who killed this)
-      targetLootOwner.inventory.add(target.loot());
-      console.log(player.inventory.getInventory());
-      // clear loot so it cannot be looted again.
-      target.setLoot(null);
+    if (targetLootOwner.getName() !== player.getName()) return;
+
+    // if click target was tapped, and tapper is in range:
+    if (targetLootOwner && target.target.rangeCheck(targetLootOwner, 70)) {
+
+      player.scene.lootBoxActive = true;
+      player.scene.registry.set('openLootBox', target.loot());
+
     }
+
   } else if (target) {
     player.movement.faceTarget(target);
     player.target.setCurrentTarget(target);

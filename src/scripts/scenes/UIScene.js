@@ -1,6 +1,7 @@
 const ACTION_BAR_WIDTH = 70;
 const QUEST_LIST_X = -248;
 const QUEST_LIST_Y = -144;
+
 /**
  * UI:
  */
@@ -12,8 +13,22 @@ export default class UIScene extends Phaser.Scene {
   }
 
   create() {
+    const MID_DISPLAY_X = (this.scale.width - ACTION_BAR_WIDTH) /2;
+    const MID_DISPLAY_Y = this.scale.height /2;
+    // lootBox:
+    this.lootBoxContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
+
+
+    // inventory:
+    this.inventoryContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
+    const inventoryBackground = this.add.image(0, 0, 'inventory-background');
+    inventoryBackground.scaleX = 4;
+    inventoryBackground.scaleY = 4;
+
+    this.inventoryContainer.add(inventoryBackground).setVisible(false);
+
     // quest log:
-    this.questLogContainer = this.add.container((this.scale.width - ACTION_BAR_WIDTH) /2, this.scale.height /2);
+    this.questLogContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
     const questLogBackground = this.add.image( 0, 0, 'questLog');
     questLogBackground.scaleX = 4;
     questLogBackground.scaleY = 4;
@@ -25,35 +40,25 @@ export default class UIScene extends Phaser.Scene {
 
 
     this.questLogContainer.setVisible(false);
-    this.questLogContainer.add(questLogBackground);
-    this.questLogContainer.add(questLogTitle);
-    this.questLogContainer.add(this.questDescription);
-    this.questLogContainer.add(this.questStatus);
+    this.questLogContainer.add([questLogBackground, questLogTitle, this.questDescription, this.questStatus]);
 
 
     this.questListContainer = this.add.container(this.questLogContainer.x, this.questLogContainer.y);
 
 
     // dialogue box:
-    this.dialogueBoxContainer = this.add.container((this.scale.width - ACTION_BAR_WIDTH) /2, this.scale.height /2);
+    this.dialogueBoxContainer = this.add.container(MID_DISPLAY_X, MID_DISPLAY_Y);
     const dialogueBoxBackground = this.add.image(0, 0, 'dialogueBox');
     dialogueBoxBackground.scaleX = 4;
     dialogueBoxBackground.scaleY = 4;
 
     this.dialogueBoxContainer.setVisible(false);
 
-    this.dialogueText = this.add.dynamicBitmapText(
-      0,
-      0,
-      'font',
-       '',
-       24
-     );
+    this.dialogueText = this.add.dynamicBitmapText( 0, 0, 'font', '', 24 );
 
     this.dialogueText.setOrigin(.5).setCenterAlign();
 
-    this.dialogueBoxContainer.add(dialogueBoxBackground);
-    this.dialogueBoxContainer.add(this.dialogueText);
+    this.dialogueBoxContainer.add([dialogueBoxBackground, this.dialogueText]);
 
     // icons:
     this.icons = this.add.group();
@@ -90,10 +95,49 @@ export default class UIScene extends Phaser.Scene {
     } else if (key === 'closeQuestLog') {
       this.questLogContainer.setVisible(false);
       clearQuestLog(this);
+
     } else if (key === 'selectQuest') {
       selectQuest(scene, data);
+
+    } else if (key === 'openInventory') {
+      this.inventoryContainer.setVisible(true);
+
+    } else if (key === 'closeInventory') {
+      this.inventoryContainer.setVisible(false);
+
+    } else if (key === 'openLootBox') {
+      this.lootBoxContainer.setVisible(true);
+      showLoot(this, data);
+
+    } else if (key === 'closeLootBox') {
+
+      hideLoot(scene);
+
     }
   }
+}
+
+function hideLoot(scene) {
+  scene.lootBoxActive.removeAll(true);
+}
+
+
+function showLoot(scene, loot) {
+
+  const lootBoxBackground = scene.add.image(0, -8, 'loot-box-background');
+  lootBoxBackground.scaleX = 4;
+  lootBoxBackground.scaleY = 4;
+
+  scene.lootBoxContainer.add(lootBoxBackground);
+
+  // create bg for loot:
+  const lootIcon = scene.add.image(0, 0, loot.icon);
+  lootIcon.scaleX = 4;
+  lootIcon.scaleY = 4;
+
+  const lootName = scene.add.bitmapText(0, 0, 'font', loot.name, 12);
+  scene.lootBoxContainer.add([lootIcon, lootName]);
+
 }
 
 function selectQuest(scene, quest) {

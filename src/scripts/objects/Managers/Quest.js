@@ -58,10 +58,6 @@ export default class Quest {
 
     let _type = type;
 
-    this.changeType = function(newType = "") {
-      _type === newType;
-    }
-
     this.getType = function() {
       return _type;
     }
@@ -98,9 +94,34 @@ export default class Quest {
     };
 
     this.getCount = function() {
-      return `${_counter} / ${_amount}`;
+      return `${_counter}/${_amount}`;
+    }
+
+
+    // use for presenting progress to user:
+    // plural or singular, and case:
+    this.getUIName = function() {
+      let formattedName = this.getTarget();
+
+      // plural or singular:
+      if (_amount > 1) {
+        // append an 's
+        formattedName = formattedName.concat("'s")
+      }
+
+      // uppercase first letter in each word:
+      // e.g. shattered crystal goblet -> Shattered Crystal Goblet's
+      return toTitleCase(formattedName)
     }
 
   }
 
 }
+
+const toTitleCase = (phrase) => {
+  return phrase
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};

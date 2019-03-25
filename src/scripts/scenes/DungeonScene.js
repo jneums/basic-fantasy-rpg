@@ -15,12 +15,56 @@ import mapCreator from './mapCreator';
 
 
 
-export default class CharacterCreationScene extends Phaser.Scene {
+export default class DungeonScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'CharacterCreationScene' })
+    super({ key: 'DungeonScene' })
   }
 
+
+  init(data) {
+    this.registry.set('reloadUI', 'init');
+
+    // holds all characters:
+    this.characters = this.add.group();
+
+
+    // add animations to scene:
+    animationCreator(this);
+
+
+
+    // create selected character class:
+    this.player = {};
+    switch (data.class) {
+
+      default:
+      case 'barbarian':
+      this.player = new Barbarian(this, 110, 110);
+      break;
+
+      case 'mage':
+      this.player = new Mage(this, 90, 130);
+      break;
+
+      case 'priest':
+      this.player = new Priest(this, 76, 110);
+      break;
+
+    }
+
+    // init starting characters input:
+    inputListeners(this.player);
+    this.registry.set('reloadUI', this.player);
+
+
+
+  }
+
+
+
   create() {
+    // is lootBoxOpen:
+    this.lootBoxActive = false;
     // is inventory open:
     this.inventoryActive = false;
     // is quest log open:
@@ -29,15 +73,8 @@ export default class CharacterCreationScene extends Phaser.Scene {
     this.dialogueBoxActive = false;
 
 
-    // holds all characters:
-    this.characters = this.add.group();
-
-    // add animations to scene:
-    animationCreator(this);
-
     // create map:
     const map = mapCreator(this);
-
     // use map object to spawn mobs:
     map.getObjectLayer('spawns').objects.forEach(spawnPoint => {
       let npc;
@@ -49,21 +86,20 @@ export default class CharacterCreationScene extends Phaser.Scene {
     })
 
 
-    // add some characters:
-    this.mage = new Mage(this, 90, 130);
-    this.barbarian = new Barbarian(this, 110, 110);
-    this.priest = new Priest(this, 76, 110);
-
-
-
-    // start as mage:
-    inputListeners(this.mage);
-    this.mage.controller = 'player';
-
-    // initialize registry onChange listeners:
-    _initRegistry(this);
-
     _initCameras(this);
+    this.registry.set('openLootBox');
+    this.registry.set('closeLootBox');
+
+    this.registry.set('openInventory');
+    this.registry.set('closeInventory');
+
+    this.registry.set('openDialogueBox');
+    this.registry.set('closeDialogueBox');
+
+    this.registry.set('openQuestLog');
+    this.registry.set('closeQuestLog');
+
+    this.player.controller = 'player';
 
   }
 
@@ -83,26 +119,13 @@ function _initCameras(scene = {}) {
   // set follow to current player controlled character:
   scene.cameras.main.setRoundPixels(true)
     .setSize(1106, 682)
-    .startFollow(scene.mage, true, .05, .05)
+    .startFollow(scene.player, true, .05, .05)
     .setZoom(4)
 
   // mini-map:
   scene.minimap = scene.cameras.add(1110, 0, 200, 200)
     .setName('mini')
     .setBackgroundColor(0x1c1117)
-    .startFollow(scene.mage, true, .05, .05)
+    .startFollow(scene.player, true, .05, .05)
     .setZoom(.2)
-}
-
-
-function _initRegistry(scene = {}) {
-  // called twice to force update...better way??
-  scene.registry.set('reloadUI', scene.mage)
-  scene.registry.set('reloadUI', scene.mage)
-
-  scene.registry.set('openDialogueBox');
-  scene.registry.set('closeDialogueBox');
-
-  scene.registry.set('openQuestLog');
-  scene.registry.set('closeQuestLog');
 }

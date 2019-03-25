@@ -56,7 +56,7 @@ const weapons = [
     repairCost: 20,
     damage: { min: 2, max: 6 },
     disenchant: 'no',
-    icon: '',
+    icon: 'short-sword',
     droppedBy: '',
     levelRequirement: 1
   },

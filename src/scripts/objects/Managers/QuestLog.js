@@ -1,5 +1,6 @@
 import Quest from './Quest';
-import { getArmorByName } from '../../loot/armor'
+import { getArmorByName } from '../../loot/armor';
+import FloatingText from '../FloatingText/FloatingText';
 
 export default class QuestLog {
   constructor(character) {
@@ -18,10 +19,10 @@ export default class QuestLog {
         1,
         "Orc Cleanup",
         "easy",
-        "kill",
+        "Kill",
         5,
         "orc",
-        ["This dungeon is teeming with orcs.", "", "How would you like to help out by", "murdering five of them?"],
+        ["Kind sir, these creatures called",  "orcs are flooding our dungeon!", "Can you help by killing five orcs?", "I will give you a reward!"],
         ["Did you murder them?"],
         ["Thank you brave warrior!"],
         ["The strange looking", "dude at the entrance", "wants me to kill", "some orcs for him."],
@@ -81,7 +82,14 @@ export default class QuestLog {
       quests.forEach(quest => {
         if (quest.getTarget() === target.getName()) {
           quest.incCounter();
-          console.log(quest.getStatus(), quest.getCount())
+          const errorText = new FloatingText(character.scene, {
+            text: `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`,
+            size: 2,
+            animation: "fade",
+            timeToLive: 4000,
+            color: 0xccaa44,
+            position: 'above'
+          })
         }
       })
     }

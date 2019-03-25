@@ -54,6 +54,8 @@ export default class Threat {
      * @returns {void}
      */
     this.updateTargetThreatTable = function(target = {}, combatObject = {}) {
+      if (target.combat.isDead()) return;
+      
       let threat = combatObject.amount() + combatObject.bonusThreat();
       if (combatObject.type() === 'heal') {
         threat = (combatObject.amount() * -1)

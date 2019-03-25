@@ -28,7 +28,7 @@ function combatError(character, type) {
   }
 
   const errorText = new FloatingText(character.scene, {
-    text: error.toUpperCase(),
+    text: error,
     size: 2,
     animation: "fade",
     timeToLive: 2000,
