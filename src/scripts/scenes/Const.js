@@ -8,8 +8,8 @@ export default (function Const() {
 
     // text sizes:
     TXT_L: 24,
-    TXT_M: 20,
-    TXT_S: 18,
+    TXT_M: 22,
+    TXT_S: 20,
 
     // colors:
     BG_COLOR: 0x1c1117,

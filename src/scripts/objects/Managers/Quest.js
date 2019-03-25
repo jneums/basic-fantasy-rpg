@@ -106,7 +106,7 @@ export default class Quest {
       // plural or singular:
       if (_amount > 1) {
         // append an 's
-        formattedName = formattedName.concat("'s")
+        formattedName = formattedName.concat("s")
       }
 
       // uppercase first letter in each word:
