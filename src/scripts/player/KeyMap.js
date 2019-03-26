@@ -44,6 +44,10 @@ export default class KeyMap {
       zero: {
         ability: null,
         icon: 'quest'
+      },
+      minus: {
+        ability: null,
+        icon: 'equipment'
       }
     }
 
@@ -90,6 +94,9 @@ export default class KeyMap {
         if (character.scene.questLogActive) {
           character.scene.questLogActive = false;
           character.scene.registry.set('closeQuestLog')
+        } else if (character.scene.equipmentActive) {
+          character.scene.equipmentActive = false;
+          character.scene.registry.set('closeEquipment')
         }
         character.scene.inventoryActive = true;
         character.scene.registry.set('openInventory', character.inventory.getInventory());
@@ -106,9 +113,31 @@ export default class KeyMap {
         if (character.scene.inventoryActive) {
           character.scene.inventoryActive = false;
           character.scene.registry.set('closeInventory')
+        } else if (character.scene.equipmentActive) {
+          character.scene.equipmentActive = false;
+          character.scene.registry.set('closeEquipment')
         }
         character.scene.questLogActive = true;
         character.scene.registry.set('openQuestLog', character.questLog)
+
+      }
+    }
+
+    this.executeMinus = function() {
+      if (character.scene.equipmentActive) {
+        character.scene.equipmentActive = false;
+        character.scene.registry.set('closeEquipment')
+
+      } else {
+        if (character.scene.inventoryActive) {
+          character.scene.inventoryActive = false;
+          character.scene.registry.set('closeInventory')
+        } else if (character.scene.questLogActive) {
+          character.scene.questLogActive = false;
+          character.scene.registry.set('closeQuestLog');
+        }
+        character.scene.equipmentActive = true;
+        character.scene.registry.set('openEquipment', character.stat.displayStats())
 
       }
     }

@@ -257,12 +257,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('hidden', './assets/anims/empty.png');
     this.load.image('inventory', './assets/icons/backpack_icon.png');
     this.load.image('quest', './assets/icons/book_icon.png');
+    this.load.image('equipment', './assets/icons/equip_icon.png');
 
     // ui:
     this.load.image('ui', './assets/ui/ui.png');
     this.load.image('dialogueBox', './assets/ui/dialogue.png');
     this.load.image('questLog', './assets/ui/quest-log.png');
     this.load.image('inventory-background', './assets/ui/inventory.png');
+    this.load.image('equipment-background', './assets/ui/equipment.png');
     this.load.image('loot-box-background', './assets/ui/loot_box.png');
 
     this.load.image('green-quest', './assets/ui/green_quest_background.png');

@@ -65,6 +65,9 @@ export default class DungeonScene extends Phaser.Scene {
 
 
   create() {
+
+    // is equipped open:
+    this.equipmentActive = false;
     // is lootBoxOpen:
     this.lootBoxActive = false;
     // is inventory open:
@@ -89,6 +92,10 @@ export default class DungeonScene extends Phaser.Scene {
 
 
     _initCameras(this);
+
+    this.registry.set('openEquipment');
+    this.registry.set('closeEquipment');
+    
     this.registry.set('openLootBox');
     this.registry.set('closeLootBox');
 

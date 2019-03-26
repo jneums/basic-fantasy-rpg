@@ -15,15 +15,15 @@ function buildLoot(scene, item, index) {
     _xOffset = 360 / 2;
     _yOffset = (-126 / 2) - 13;
     _x = _xOffset;
-    _y = (-376 / 2) + ((-index + 6) * _yOffset);
+    _y = (-312/ 2) + ((-index + 6) * _yOffset);
   } else if (index > 0) {
     _xOffset = -512 / 2;
     _yOffset = (-126 / 2) - 13;
     _x = _xOffset;
-    _y = (-376 / 2) + (-index * _yOffset);
+    _y = (-312 / 2) + (-index * _yOffset);
   } else if (index > -1) {
     _x = -512 / 2;
-    _y = -376 / 2;
+    _y = -312 / 2;
   }
 
 

@@ -22,6 +22,9 @@ export default class UIScene extends Phaser.Scene {
     // lootBox:
     this.lootBoxContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
 
+    // equipment:
+    this.equipmentContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
+
     // inventory:
     this.inventoryContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
 
@@ -73,6 +76,34 @@ export default class UIScene extends Phaser.Scene {
     } else if (key === 'closeLootBox') {
       hideLoot(this);
 
+    } else if (key === 'openEquipment') {
+      showEquipment(this, data);
+
+    } else if (key === 'closeEquipment') {
+      clearEquipment(this);
+
     }
   }
+}
+
+function showEquipment(scene, stats) {
+  if (!stats) return;
+
+  const equipmentBackground = scene.add.image(0, 0, 'equipment-background');
+  equipmentBackground.scaleX = CONST.SCALE;
+  equipmentBackground.scaleY = CONST.SCALE;
+
+
+  const statsHeader = scene.add.bitmapText(-420, -176, 'font', ['Strength: ', 'Agility: ', 'Stamina: ', 'Intellect: ', 'Spirit: '], 18)
+  const statsInfo = scene.add.bitmapText(-216, -176, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi], 18)
+  statsInfo.setRightAlign()
+  // add equipped items:
+  scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo]);
+
+
+}
+
+function clearEquipment(scene) {
+  scene.equipmentContainer.removeAll(true);
+
 }

@@ -55,6 +55,18 @@ export default class Stat {
     }
 
 
+
+    this.displayStats = function() {
+      const stats = {
+        str: this.stamina(),
+        agi: this.agility(),
+        sta: this.stamina(),
+        int: this.intellect(),
+        spi: this.spirit()
+      };
+
+      return stats;
+    }
     /**
      * maxHp - maximum allowed hitpoints, referenced when
      * performing health gains so as not to overflow.

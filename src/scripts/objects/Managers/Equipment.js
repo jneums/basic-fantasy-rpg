@@ -8,7 +8,7 @@
  *
  * work on having object placeholders, if they are not used the
  * methods for reducing equipped into stat bonus's will fail.
- * 
+ *
  */
 export default class Equipment {
   constructor(character) {
@@ -17,20 +17,9 @@ export default class Equipment {
       mainHand: {},
       offHand: {},
       ranged: {},
-      ammo: {},
       head: {},
-      neck: {},
-      shoulder: {},
-      back: {},
       chest: {},
-      tabard: {},
-      wrist: {},
-      hands: {},
-      belt: {},
-      legs: {},
       feet: {},
-      trinket1: {},
-      trinket2: {}
     }
 
     /**

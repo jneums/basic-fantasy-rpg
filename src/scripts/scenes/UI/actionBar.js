@@ -16,7 +16,7 @@ function loadActionBar(scene, abilities) {
 
 
   let x = 1124;
-  let y = 192;
+  let y = 140;
   abilities.forEach((ability, i) => {
     if (!ability) ability = 'empty'
     let icon = scene.add.image(x, y, ability)
@@ -26,7 +26,7 @@ function loadActionBar(scene, abilities) {
     icon.scaleY = 4
     if (i === 7) {
       x = 1124;
-      y += 108;
+      y += 160;
     } else if (i % 2 === 0) {
       x += 80;
     } else {

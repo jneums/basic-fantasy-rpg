@@ -1,7 +1,7 @@
 import CONST from '../Const';
 
 const QUEST_LIST_X = -256;
-const QUEST_LIST_Y = -188;
+const QUEST_LIST_Y = -156;
 
 const TITLE_SIZE = 16;
 const DESCRIPTION_SIZE = 16;
@@ -10,8 +10,8 @@ const STATUS_SIZE = 16;
 function selectQuest(scene, quest) {
   // set active indicator for quest list:
   // update description text:
-  const questDescription = scene.add.bitmapText( 48,-188, 'font', quest.description, DESCRIPTION_SIZE);
-  const questStatus = scene.add.bitmapText( 48, 108, 'font', `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`, STATUS_SIZE);
+  const questDescription = scene.add.bitmapText( 48,-178, 'font', quest.description, DESCRIPTION_SIZE);
+  const questStatus = scene.add.bitmapText( 48, 128, 'font', `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`, STATUS_SIZE);
 
   scene.questLogContainer.add([questDescription, questStatus])
 
