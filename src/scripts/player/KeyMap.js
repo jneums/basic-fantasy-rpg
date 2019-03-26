@@ -136,8 +136,13 @@ export default class KeyMap {
           character.scene.questLogActive = false;
           character.scene.registry.set('closeQuestLog');
         }
+
+        const data = {
+          stats: character.stat.displayStats(),
+          equipment: character.equipment.equipped()
+        }
         character.scene.equipmentActive = true;
-        character.scene.registry.set('openEquipment', character.stat.displayStats())
+        character.scene.registry.set('openEquipment', data)
 
       }
     }

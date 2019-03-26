@@ -4,6 +4,7 @@ import toggleControl from './toggleControl';
 import lootBoxPointerDown from './lootBoxPointerDown';
 import questLogPointerDown from './questLogPointerDown';
 import actionBarDown from './actionBarDown';
+import equipmentPointerDown from './equipmentPointerDown';
 
 const GAME_VIEW_WIDTH = 1110;
 
@@ -47,6 +48,11 @@ export default function inputListeners(player = {}) {
       } else if (player.scene.lootBoxActive) {
 
         lootBoxPointerDown(pointer, player);
+
+      } else if (player.scene.equipmentActive) {
+
+        equipmentPointerDown(pointer, player);
+
 
       } else {
         // clicked anyplace on the game view:

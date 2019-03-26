@@ -111,7 +111,8 @@ export default class DungeonScene extends Phaser.Scene {
     this.player.controller = 'player';
 
 
-
+    this.player.inventory.add(getConsumableByName('Spring Water'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
 
   }
 

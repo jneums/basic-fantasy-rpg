@@ -58,11 +58,14 @@ export default class Stat {
 
     this.displayStats = function() {
       const stats = {
+        hp: this.maxHp(),
         str: this.stamina(),
         agi: this.agility(),
         sta: this.stamina(),
         int: this.intellect(),
-        spi: this.spirit()
+        spi: this.spirit(),
+        crit: this.crit(),
+        ap: this.attackPower()
       };
 
       return stats;

@@ -5,8 +5,26 @@ import FloatingText from '../FloatingText/FloatingText';
 export default class QuestLog {
   constructor(character) {
 
+    // intital quest:
+    const startingQuest = new Quest(
+      0,
+      "Survive!",
+      "hard",
+      "Kill",
+      500,
+      "orc",
+      [""],
+      [""],
+      [""],
+      ["Do I have what it", "takes to kill over", "500 orcs??"],
+      getArmorByName("Ring of Fury")
+    )
+
     // holds a list of quests:
     let quests = [];
+
+    startingQuest.advanceStatus();
+    quests.push(startingQuest);
 
     // which quest to focus in UI:
     let activeQuestIndex = 0;
@@ -26,7 +44,7 @@ export default class QuestLog {
         ["Did you murder them?"],
         ["Thank you brave warrior!"],
         ["The strange looking", "dude at the entrance", "wants me to kill", "some orcs for him."],
-        getArmorByName("Recruit's Boots")
+        getArmorByName("Ring of Fury")
       )
 
       // initialize quest:

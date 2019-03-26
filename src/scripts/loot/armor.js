@@ -14,6 +14,24 @@ export { getArmorByName };
 
 const armor = [
   {
+    name: "Ring of Fury",
+    ilvl: 1,
+    armor: 14,
+    strength: 14,
+    cost: 13,
+    sellPrice: 26,
+    slot: 'ring',
+    type: 'armor',
+    armorType: 'mail',
+    durability: 55,
+    repairCost: 44,
+    disenchant: 'no',
+    icon: 'item-29',
+    color: 'purple',
+    droppedBy: '',
+    levelRequirement: 1
+  },
+  {
     name: "Recruit's Vest",
     ilvl: 1,
     armor: 7,
@@ -42,7 +60,8 @@ const armor = [
     durability: 40,
     repairCost: 32,
     disenchant: 'no',
-    icon: 'inv_pants_02',
+    icon: 'item-02',
+    color: 'green',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -126,7 +145,8 @@ const armor = [
     durability: 55,
     repairCost: 44,
     disenchant: 'no',
-    icon: 'inv_chest_cloth_23',
+    icon: 'item-05',
+    color: 'red',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -142,7 +162,8 @@ const armor = [
     durability: 40,
     repairCost: 32,
     disenchant: 'no',
-    icon: 'inv_pants_01',
+    icon: 'item-03',
+    color: 'blue',
     droppedBy: '',
     levelRequirement: 1
   },
@@ -158,7 +179,8 @@ const armor = [
     durability: 25,
     repairCost: 20,
     disenchant: 'no',
-    icon: 'inv_boots_09',
+    icon: 'item-01',
+    color: 'purple',
     droppedBy: '',
     levelRequirement: 1
   },

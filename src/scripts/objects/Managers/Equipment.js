@@ -19,6 +19,8 @@ export default class Equipment {
       ranged: {},
       head: {},
       chest: {},
+      legs: {},
+      ring: {},
       feet: {},
     }
 
