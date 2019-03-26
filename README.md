@@ -11,7 +11,6 @@
 Tap on a character to target them.
 Use an ability by clicking the icons on the right side of the screen.
 
-Space bar will change between the active character:
 
 Each character has a cheese (restore health) and a drink (restore resource) button on the bottom two action bar slots. Barbarian has a 'rage ruby' instead, it fills up his rage bar.
 
@@ -55,22 +54,6 @@ Each character has a cheese (restore health) and a drink (restore resource) butt
 
 4. Renew: heals 50 damage over 15 seconds, uses less mana.
 
-## Contributing:
-
-This game is in a very early status right now. Many of the core systems are in place. Now is just tying them all together.
-
-### Current Opportunities:
-
-If you would like to help but don't know where to start, here is a list that is
-constantly updated with new things:
-
-1. Animations: The more the better! Pick a sprite from the master sprite sheet in the assets folder and make one for each of the animations which the Orc has. Notice as well that the hands/weapon have their own, make sure to add those as well!
-
-2. Spells and abilities: Mage has a few that need to be done. If you are feeling up to it maybe you can create some healing spells or rogue abilities.
-
-3. Maps: Use tiled and the master sprite sheet and either enhance the current map, or create a new one. If you create a new one we can link them together and start creating an entire zone. Be creative and have fun!
-
-5. Quests: Implement a quest system.
 
 ### Roadmap:
 

@@ -95,7 +95,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.registry.set('openEquipment');
     this.registry.set('closeEquipment');
-    
+
     this.registry.set('openLootBox');
     this.registry.set('closeLootBox');
 
@@ -111,7 +111,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.player.controller = 'player';
 
 
-    this.player.inventory.add(getWeaponByName('Short Sword'))
+
 
   }
 

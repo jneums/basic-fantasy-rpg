@@ -1,6 +1,6 @@
 import { clearDialogue, loadDialogue } from './UI/dialogue';
 import { hideLoot, showLoot, buildLoot } from './UI/loot';
-import { clearInventory, showInventory } from './UI/inventory';
+import { clearInventory, showInventory, selectItem } from './UI/inventory';
 import { selectQuest, clearQuestLog, loadQuestLog } from './UI/quest';
 import { clearActionBar, loadActionBar } from './UI/actionBar';
 
@@ -82,6 +82,8 @@ export default class UIScene extends Phaser.Scene {
     } else if (key === 'closeEquipment') {
       clearEquipment(this);
 
+    } else if (key === 'selectItem') {
+      selectItem(this, data)
     }
   }
 }

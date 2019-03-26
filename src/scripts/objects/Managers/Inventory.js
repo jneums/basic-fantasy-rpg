@@ -7,7 +7,7 @@ export default class Inventory {
   constructor(character) {
 
     // how many spaces in bag:
-    let capacity = 12;
+    let capacity = 20;
 
     // how many copper pieces:
     let money = 0;

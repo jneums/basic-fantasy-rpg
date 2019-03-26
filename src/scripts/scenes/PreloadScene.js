@@ -230,13 +230,21 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('heal', './assets/icons/heart_icon.png');
     this.load.image('renew', './assets/icons/renew_icon.png');
 
-    // item bg's:
+    // large item bg's:
     this.load.image('brown-bg', 'assets/items/brown_bg.png');
     this.load.image('green-bg', 'assets/items/green_bg.png');
     this.load.image('yellow-bg', 'assets/items/yellow_bg.png');
     this.load.image('blue-bg', 'assets/items/blue_bg.png');
     this.load.image('purple-bg', 'assets/items/purple_bg.png');
     this.load.image('red-bg', 'assets/items/red_bg.png');
+
+    // small item bg's:
+    this.load.image('brown-sm-bg', 'assets/items/brown_small_bg.png');
+    this.load.image('green-sm-bg', 'assets/items/green_small_bg.png');
+    this.load.image('yellow-sm-bg', 'assets/items/yellow_small_bg.png');
+    this.load.image('blue-sm-bg', 'assets/items/blue_small_bg.png');
+    this.load.image('purple-sm-bg', 'assets/items/purple_small_bg.png');
+    this.load.image('red-sm-bg', 'assets/items/red_small_bg.png');
 
     // items:
     for (let i = 1; i < 109; i++) {
