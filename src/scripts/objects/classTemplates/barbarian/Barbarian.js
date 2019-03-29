@@ -61,13 +61,14 @@ export default class Barbarian extends Character {
     const barbarianStaminaBonus = 2;
     this.stat.setStamina(baseStamina + barbarianStaminaBonus);
 
-    // starting equipment
-    const equipped = this.equipment.equipped();
-    equipped.mainHand = getWeaponByName("Tarnished Sword");
-    equipped.chest = getArmorByName("Recruit's Vest");
-    equipped.legs = getArmorByName("Recruit's Pants");
-    equipped.feet = getArmorByName("Recruit's Boots");
-    this.equipment.setEquipped(equipped);
+    // starting skills:
+    this.skills.learnSkill('twoHandedSword');
+    this.skills.learnSkill('mail');
+
+    this.equipment.equip(getWeaponByName("Tarnished Sword"));
+    this.equipment.equip(getArmorByName("Recruit's Vest"));
+    this.equipment.equip(getArmorByName("Recruit's Pants"));
+    this.equipment.equip(getArmorByName("Recruit's Boots"));
 
     // starting hp
     this.stat.setBaseHp(20);

@@ -16,9 +16,14 @@ export default class UIScene extends Phaser.Scene {
   constructor() {
     super({ key: 'UIScene' });
 
+
+
   }
 
   create() {
+
+    // xp bar:
+
     // lootBox:
     this.lootBoxContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
 
@@ -84,8 +89,37 @@ export default class UIScene extends Phaser.Scene {
 
     } else if (key === 'selectItem') {
       selectItem(this, data)
+    } else if (key === 'showComparison') {
+      showComparison(this, data);
+
     }
   }
+}
+
+function showComparison(scene, item) {
+  if (!item) return;
+
+  let name = item.name;
+  let stats = '';
+  let statKeys = '';
+
+  switch(item.type) {
+    case 'armor':
+    stats = [ `${item.armor}`, item.armorType, item.levelRequirement, item.sellPrice, item.slot ];
+    statKeys = ["Armor: ", "Type: ", "Required Level: ", "Sell Price: ", "Slot: " ];
+    break;
+    case 'weapon':
+    stats = [ `${item.damage.min}-${item.damage.max}`, item.speed, item.levelRequirement, item.sellPrice, item.slot ];
+    statKeys = ["Damage: ", "Speed: ", "Required Level: ", "Sell Price: ", "Slot: " ];
+    break;
+  }
+
+  const title = scene.add.bitmapText( -38, (12 * 4), 'font', 'equipped: ', 16)
+  const itemName = scene.add.bitmapText( -38, (18 * 4), 'font', name, 18);
+  const itemStats = scene.add.bitmapText( (86 * 4), (26 * 4), 'font', stats, 16).setOrigin(1, 0).setRightAlign();
+  const itemStatKeys = scene.add.bitmapText( -38, (26 * 4), 'font', statKeys, 16);
+  scene.inventoryContainer.add([title, itemName, itemStats, itemStatKeys])
+
 }
 
 function showEquipment(scene, stats, equipment) {
@@ -96,9 +130,9 @@ function showEquipment(scene, stats, equipment) {
   equipmentBackground.scaleY = CONST.SCALE;
 
 
-  const statsHeader = scene.add.bitmapText(-58, 12 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crit: ', 'AP: '], 18)
-  const statsInfo = scene.add.bitmapText(38, 12 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 18)
-  statsInfo.setRightAlign()
+  const statsHeader = scene.add.bitmapText(-51 * 4, 12 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crt: ', 'POW: '], 18)
+  const statsInfo = scene.add.bitmapText(-12 * 4, 12 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 18)
+  statsInfo.setRightAlign().setOrigin( 1, 0)
   // add equipped items:
   scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo]);
   buildCharacter(scene, equipment);
@@ -108,12 +142,12 @@ function showEquipment(scene, stats, equipment) {
 
 function buildCharacter(scene, equipment) {
   const _xLeft = -93 * 4;
-  const _xRight = -37 * 4;
+  const _xRight = -71 * 4;
 
   const _y1 = -32 * 4;
-  const _y2 = -5 * 4;
-  const _y3 = 22 * 4;
-  const _y4 = 49 * 4;
+  const _y2 = -12 * 4;
+  const _y3 = 8 * 4;
+  const _y4 = 28 * 4;
 
 
 

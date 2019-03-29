@@ -1,30 +1,33 @@
 export default class Skills {
   constructor(character) {
-    let weaponSkills = {
-      dagger: 5,
-      fistWeapon: 5,
-      oneHandedAxe: 5,
-      oneHandedMace: 5,
-      oneHandedSword: 5,
-      polearm: 5,
-      staff: 5,
-      twoHandedAxe: 5,
-      twoHandedMace: 5,
-      twoHandedSword: 5,
-      bow: 5,
-      crossbow: 5,
-      gun: 5,
-      thrown: 5,
-      wands: 5,
-      unarmed: 5
+    let skills = {
+      dagger: -1,
+      fistWeapon: -1,
+      oneHandedAxe: -1,
+      oneHandedMace: -1,
+      oneHandedSword: -1,
+      polearm: -1,
+      staff: -1,
+      twoHandedAxe: -1,
+      twoHandedMace: -1,
+      twoHandedSword: -1,
+      bow: -1,
+      crossbow: -1,
+      gun: -1,
+      thrown: -1,
+      wands: -1,
+      unarmed: 0,
+
+      cloth: 0,
+      leather: -1,
+      mail: -1,
+      plate: -1,
+      shield: -1
     }
 
-    let armorSkills = {
-      cloth: 0,
-      leather: 0,
-      mail: 0,
-      plate: 0,
-      shield: 0
+    this.canUse = function(type) {
+      if (skills[type] > -1) return true;
+      else return false;
     }
 
     /**
@@ -33,7 +36,15 @@ export default class Skills {
      * @returns {object}
      */
     this.getWeaponSkills = function() {
-      return weaponSkills;
+      return skills;
+    }
+
+    this.learnSkill = function(type) {
+      skills[type] = 0;
+    }
+
+    this.levelUpSkill = function(skill) {
+      skills[skill]++
     }
 
     /**
@@ -43,7 +54,7 @@ export default class Skills {
      * @returns {void}
      */
     this.setWeaponSkills = function(newWeaponSkills) {
-      weaponSkills = newWeaponSkills;
+      skills = newWeaponSkills;
     }
   }
 }

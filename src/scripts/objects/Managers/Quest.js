@@ -19,6 +19,16 @@ export default class Quest {
       return _id;
     }
 
+    let _active = false;
+
+    this.setActive = function(bool) {
+      _active = bool;
+    }
+
+    this.isActive = function() {
+      return _active;
+    }
+
     this.title = title;
 
     this.description = description;
@@ -68,6 +78,10 @@ export default class Quest {
     }
 
     let _amount = amount;
+    this.getAmount = function() {
+      return _amount;
+
+    }
 
     let _counter = 0;
 

@@ -8,13 +8,13 @@
  */
 function calculateDodgeChance(attacker = {}, target = {}, hand = '') {
   const totalDodge = target.stat.dodge();
-  const defenseSkill = target.stat.baseDef();
+  const defenseSkill = target.stat.defense();
   // mitigated by attacker weapon skill
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
 
   const dodgeChance =
     (totalDodge + ((defenseSkill - attackerWeaponSkill) * .04));
-  return dodgeChance;
+  return Math.round(dodgeChance * 1000);
 }
 
 /**
@@ -39,7 +39,7 @@ function calculateParryChance(attacker = {}, target = {}, hand = '') {
   const targetParryTalents = attacker.stat.statFromTalents();
   const tarbaseDef = target.stat.baseDef();
   const attackerWeaponSkill = attacker.equipment.getCurrentWeaponSkill(hand);
-  return .05 + tarbaseParry + targetParryTalents + ((tarbaseDef - attackerWeaponSkill) * .04);
+  return Math.round(.05 + tarbaseParry + targetParryTalents + ((tarbaseDef - attackerWeaponSkill) * .04) * 1000);
 }
 
 
@@ -66,7 +66,7 @@ function calculateBlockChance(attacker = {}, target = {}, hand = '') {
   const base = .05;
   const blockChance = (base + tarbaseBlockR + tarbaseBlockRTalents
     + ((tarbaseDef - attackerWeaponSkill) * .04));
-  return blockChance;
+  return Math.round(blockChance * 1000)
 }
 
 
@@ -83,11 +83,11 @@ function calculateCritChance(attacker = {}) {
   const agiCritRatio = attacker.stat.agiCritR();
   if (agiCritRatio) return critChance;
   const total = (totalAgility / agiCritRatio) * .01;
-  return total;
+  return Math.round(total * 1000);
 }
 
 /**
- * calculateMissChance
+ * calculateMissChance - TODO: returning correct number?
  *
  * @param  {Character} attacker
  * @param  {Character} target
@@ -100,6 +100,7 @@ function calculateMissChance(attacker = {}, target = {}, hand = '') {
   const attackerHitRating = attacker.stat.baseHit();
   // worsened by target defense rating
   const tarbaseDef = target.stat.baseDef();
+
   const base = (attacker.equipment.isDualWielding()) ? .24 : .05;
   let missChance = 0;
   if (tarbaseDef - attackerWeaponSkill <= 10) {
@@ -108,8 +109,7 @@ function calculateMissChance(attacker = {}, target = {}, hand = '') {
     // base should be .06 here
     missChance = base + (tarbaseDef - attackerWeaponSkill - 10) * .004;
   }
-
-  return missChance;
+  return Math.round(missChance * 1000);
 }
 
 export {

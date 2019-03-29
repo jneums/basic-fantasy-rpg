@@ -13,6 +13,7 @@ export { getConsumableByName };
 const consumables = [
   {
     name: 'Tough Jerky',
+    description: ['Not easy on the teeth. It', 'does restore 290 HP over',  '30 secs though.'],
     ilvl: 1,
     cost: 25,
     sellPrice: 1,
@@ -26,6 +27,7 @@ const consumables = [
   },
   {
     name: 'Spring Water',
+    description: 'How is it so cold?',
     ilvl: 1,
     cost: 25,
     sellPrice: 1,
@@ -39,6 +41,7 @@ const consumables = [
   },
   {
     name: 'Conjured Water',
+    description: 'Tastes a little funky...',
     ilvl: 1,
     cost: undefined,
     sellPrice: undefined,
@@ -52,6 +55,7 @@ const consumables = [
   },
   {
     name: 'Conjured Food',
+    description: 'Where did it come from?',
     ilvl: 1,
     cost: undefined,
     sellPrice: undefined,

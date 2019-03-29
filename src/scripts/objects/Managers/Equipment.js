@@ -33,6 +33,7 @@ export default class Equipment {
      * @returns {void}
      */
     this.equip = function(gear = {}) {
+      if (!character.skills.canUse(gear.skillType)) return;
       // add to specific slot
       const slot = gear.slot;
       const replacedGear = equipped[slot];
@@ -62,8 +63,8 @@ export default class Equipment {
      * @returns {number} weapon skill
      */
     this.getCurrentWeaponSkill = function(hand = '') {
-      const mainHandType = this.equipped().mainHand.type;
-      const offHandType = this.equipped().offHand.type;
+      const mainHandType = this.equipped().mainHand.skillType;
+      const offHandType = this.equipped().offHand.skillType;
       const weaponType = (hand === 'main')
         ? mainHandType
         : offHandType;
@@ -109,8 +110,8 @@ export default class Equipment {
      * @returns {bool} true if using 2h
      */
     this.checkForTwoHandWeapon = function() {
-      const weaponSlot = this.equipped().mainHand.slot;
-      return weaponSlot === 'two-hand';
+      const weaponType = this.equipped().mainHand.skillType.substr(0,9);
+      return weaponSlot === 'twoHanded';
     }
 
     /**

@@ -15,6 +15,35 @@ export default class Inventory {
     // inventory, holds ${capacity} elements:
     let inventory = [];
 
+    let _activeIndex = -1;
+
+
+    this.useActive = function() {
+      if (!inventory[_activeIndex]) return;
+      this.use(_activeIndex);
+    }
+
+    this.discardActive = function() {
+      if (!inventory[_activeIndex]) return;
+      inventory[_activeIndex].active = false;
+      inventory = inventory.filter((item, i) => i !== _activeIndex);
+    }
+
+    this.setActive = function(index) {
+      if (!inventory[index]) return;
+
+      if (inventory[_activeIndex]) {
+        inventory[_activeIndex].active = false;
+      }
+      _activeIndex = index;
+      inventory[_activeIndex].active = true;
+    }
+
+    this.getActive = function() {
+      if (!inventory[_activeIndex]) return;
+      return inventory[_activeIndex];
+    }
+
     /**
      * use - chooses the correct action based
      * on what the item indicates.
@@ -30,6 +59,7 @@ export default class Inventory {
 
       // otherwise:
       const item = inventory[index];
+      item.active = false;
 
       // if item is a 'consumable':
       if (item.type === 'consumable') {

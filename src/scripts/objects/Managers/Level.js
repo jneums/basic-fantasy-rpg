@@ -1,26 +1,50 @@
 
+
+
 /**
  *  Lvl Manager - will handle adding experience and
  * tracking level ups.
  */
 export default class Lvl {
-  constructor(character, level = 1) {
+  constructor(character) {
     // level 1 - 60;
     // xp, gain xp to level up
-    let xp = 0;
-    let nextLvl = 1000;
+    let _lvl = 1;
+    let _xp = 0;
+    let _nextLvl = 150;
 
+
+    function _levelUp() {
+      if (_xp < _nextLvl) return false;
+
+      _lvl++;
+      _xp -= _nextLvl;
+      _nextLvl *= 1.25;
+      return true;
+
+    }
+
+    function _log() {
+      console.log(
+        `${character.getName()},
+         Level: ${_lvl},
+         XP: ${_xp},
+         Next Level: ${_nextLvl}`)
+    }
 
     this.gainXP = function(amount) {
-      xp += amount;
+      _xp += amount;
+      _levelUp();
+      _log();
     }
+
     /**
      * getLevel
      *
      * @returns {number} character level
      */
     this.getLevel = function() {
-      return level;
+      return _lvl;
     }
 
     /**
@@ -29,28 +53,8 @@ export default class Lvl {
      * @returns {number} character experience
      */
     this.getXp = function() {
-      return xp;
+      return _xp;
     }
 
-    /**
-     * setLevel
-     *
-     * @param  {number} newLevel
-     * @returns {void}
-     */
-    this.setLevel = function(newLevel) {
-      level = newLevel;
-    }
-
-
-    /**
-     * setXp
-     *
-     * @param  {number} newXp
-     * @returns {void}
-     */
-    this.setXp = function(newXp) {
-      xp = newXp;
-    }
   }
 }

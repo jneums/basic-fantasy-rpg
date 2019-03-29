@@ -31,34 +31,34 @@ function buildLoot(scene, item, index) {
 
 
   } else if (index > 7) {
-    _xOffset = 21 * 4;
-    _yOffset = 21 * 4;
-    _x = -94 * 4 + (_xOffset * (index - 8));
-    _y = -33 * 4 + (_yOffset * 2);
+    _xOffset = 19 * 4;
+    _yOffset = 19 * 4;
+    _x = -91 * 4 + (_xOffset * (index - 8));
+    _y = -29 * 4 + (_yOffset * 2);
     _bg = '-sm-bg';
     _iconOffset = 0;
 
 
   } else if (index > 3) {
-    _xOffset = 21 * 4;
-    _yOffset = 21 * 4;
-    _x = -94 * 4 + (_xOffset * (index - 4));
-    _y = -33 * 4 + (_yOffset);
+    _xOffset = 19 * 4;
+    _yOffset = 19 * 4;
+    _x = -91 * 4 + (_xOffset * (index - 4));
+    _y = -29 * 4 + (_yOffset);
     _bg = '-sm-bg';
     _iconOffset = 0;
 
 
   } else if (index > 0) {
-    _xOffset = 21 * 4;
-    _x = -94 * 4 + (_xOffset * index);
-    _y = -33 * 4;
+    _xOffset = 19 * 4;
+    _x = -91 * 4 + (_xOffset * index);
+    _y = -29 * 4;
     _bg = '-sm-bg';
     _iconOffset = 0;
 
 
   } else if (index > -1) {
-    _x = -94 * 4;
-    _y = -33 * 4;
+    _x = -91 * 4;
+    _y = -29 * 4;
     _bg = '-sm-bg';
     _iconOffset = 0;
 
@@ -80,12 +80,12 @@ function buildLoot(scene, item, index) {
   // loot tooltip name:
 
   // qty:
-  const qtyText = item.quantity ? `x${item.quantity}` : ''
-  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.name + ' ' + qtyText, 16);
+  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.name, 16);
 
   // if building loot for inventory:
   if (index > -1) {
-   scene.inventoryContainer.add([bg, lootIcon]);
+   const qtyText = scene.add.bitmapText(_x, _y, 'font', item.quantity, 26);
+   scene.inventoryContainer.add([bg, lootIcon, qtyText]);
 
   // if building loot for looting mob:
   } else {

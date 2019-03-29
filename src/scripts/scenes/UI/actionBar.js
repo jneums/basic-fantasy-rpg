@@ -21,6 +21,7 @@ function loadActionBar(scene, abilities) {
     if (!ability) ability = 'empty'
     let icon = scene.add.image(x, y, ability)
       .setOrigin(0)
+
     scene.icons.add(icon);
     icon.scaleX = 4
     icon.scaleY = 4

@@ -118,7 +118,7 @@ export default class KeyMap {
           character.scene.registry.set('closeEquipment')
         }
         character.scene.questLogActive = true;
-        character.scene.registry.set('openQuestLog', character.questLog)
+        character.scene.registry.set('openQuestLog', character.questLog.getActive())
 
       }
     }

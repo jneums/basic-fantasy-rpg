@@ -21,13 +21,13 @@ export default class QuestLog {
     )
 
     // holds a list of quests:
-    let quests = [];
+    let activeQuests = [];
+    let completedQuests = [];
 
     startingQuest.advanceStatus();
-    quests.push(startingQuest);
+    activeQuests.push(startingQuest);
 
-    // which quest to focus in UI:
-    let activeQuestIndex = 0;
+
 
     // add quest:
     this.add = function(questId) {
@@ -49,47 +49,63 @@ export default class QuestLog {
 
       // initialize quest:
       newQuest.advanceStatus();
-      quests.push(newQuest);
+      activeQuests.push(newQuest);
 
 
     }
 
-    // remove quest:
-    this.remove = function(questId) {
-      quests = quests.filter(quest => quest.id !== questId);
+    // remove quest by index:
+    this.remove = function(index) {
+      if (activeQuestIndex === index) {
+        activeQuests[activeQuestIndex].setActive(false);
+        activeQuestIndex = 0;
+      }
+      activeQuests = activeQuests.filter((quest, i) => i !== index);
 
     }
 
     // get quest log:
-    this.getAll = function() {
-      return quests;
+    this.getActive = function() {
+      return activeQuests;
     }
 
     // get specfic quests:
     this.getByStatus = function(status = '') {
-      const filteredQuests = quests.filter(quest => quest.getStatus() === status);
-      if (!filteredQuests) return null;
-      else return filteredQuests;
+      if (status === 'completed') {
+        return completedQuests;
+      } else {
+        const filteredQuests = activeQuests.filter(quest => quest.getStatus() === status);
+        if (!filteredQuests) return null;
+        else return filteredQuests;
+      }
+
     }
 
     this.getActiveQuestIndex = function() {
       return activeQuestIndex;
     }
 
-    this.setActiveQuestIndex = function(index) {
-      if (!quests[index]) return;
+    // which quest to focus in UI:
+    let activeQuestIndex = 0;
+
+    this.setActiveQuest = function(index) {
+      if (!activeQuests[index]) return;
+
+      activeQuests[activeQuestIndex].setActive(false);
+
       activeQuestIndex = index;
+      activeQuests[activeQuestIndex].setActive(true);
     }
 
     // get indvidual:
     this.getOne = function(questId) {
-      const quest = quests.find(quest => quest.getId() === questId);
+      const quest = activeQuests.filter(quest => quest.getId() === questId)[0];
       if (quest) return quest;
       else return null;
     }
 
     this.completeQuest = function(questId) {
-      const quest = quests.find(quest => quest.getId() === questId);
+      const quest = activeQuests.find(quest => quest.getId() === questId);
       if (!quest) return null;
       quest.advanceStatus();
       quest.takeReward(character)
@@ -97,8 +113,12 @@ export default class QuestLog {
     }
 
     this.update = function(target = {}) {
-      quests.forEach(quest => {
-        if (quest.getTarget() === target.getName()) {
+      activeQuests.forEach(quest => {
+        if (quest.getStatus() === 'completed') {
+          completedQuests.push(quest);
+          activeQuests = activeQuests.filter((quest, i) => i !== activeQuests.indexOf(quest))
+
+        } else if (quest.getTarget() === target.getName()) {
           quest.incCounter();
           const errorText = new FloatingText(character.scene, {
             text: `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`,

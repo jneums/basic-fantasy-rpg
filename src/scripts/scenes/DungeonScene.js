@@ -108,12 +108,26 @@ export default class DungeonScene extends Phaser.Scene {
     this.registry.set('openQuestLog');
     this.registry.set('closeQuestLog');
 
+    this.registry.set('selectItem');
+    this.registry.set('showComparison');
+    this.registry.set('selectQuest')
+
     this.player.controller = 'player';
 
 
     this.player.inventory.add(getConsumableByName('Spring Water'));
     this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getWeaponByName('Shadow Wand'));
+    this.player.inventory.add(getWeaponByName('Short Sword'));
+    this.player.inventory.add(getWeaponByName('Tarnished Sword'));
 
+    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.skills.levelUpSkill('twoHandedSword')
   }
 
   update() {
@@ -135,10 +149,4 @@ function _initCameras(scene = {}) {
     .startFollow(scene.player, true, .05, .05)
     .setZoom(CONST.SCALE)
 
-  // mini-map:
-  scene.minimap = scene.cameras.add(1110, 0, 200, 200)
-    .setName('mini')
-    .setBackgroundColor(0x1c1117)
-    .startFollow(scene.player, true, .05, .05)
-    .setZoom(.2)
 }

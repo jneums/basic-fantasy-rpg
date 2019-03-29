@@ -22,6 +22,7 @@ export default function updateDeadCharacters(scene = {}) {
       // reward xp: everyone on the threat table wins!
       child.threat.threatTable().forEach(entry => {
         entry.character.killLog.add(child);
+        entry.character.lvl.gainXP(child.xpVal)
       })
       // dump threat table
       child.threat.setThreatTable([]);

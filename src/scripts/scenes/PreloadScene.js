@@ -270,7 +270,7 @@ export default class PreloadScene extends Phaser.Scene {
     // ui:
     this.load.image('ui', './assets/ui/ui.png');
     this.load.image('dialogueBox', './assets/ui/dialogue.png');
-    this.load.image('questLog', './assets/ui/quest-log.png');
+    this.load.image('questLog', './assets/ui/quest_log.png');
     this.load.image('inventory-background', './assets/ui/inventory.png');
     this.load.image('equipment-background', './assets/ui/equipment.png');
     this.load.image('loot-box-background', './assets/ui/loot_box.png');

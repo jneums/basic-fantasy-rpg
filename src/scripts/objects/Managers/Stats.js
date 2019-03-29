@@ -59,7 +59,7 @@ export default class Stat {
     this.displayStats = function() {
       const stats = {
         hp: this.maxHp(),
-        str: this.stamina(),
+        str: this.strength(),
         agi: this.agility(),
         sta: this.stamina(),
         int: this.intellect(),
@@ -309,11 +309,13 @@ export default class Stat {
      * @returns {number} total ap
      */
     this.attackPower = function() {
+      const apFromAgi = this.APFromAgi();
+      const apFromStr = this.APFromStr();
       const baseAP = attackPower;
       const gearAP = character.equipment.statBonus('attackPower');
       const buffAP = character.buffs.statBonus('attackPower');
       // talents
-      return baseAP + gearAP + buffAP;
+      return apFromAgi + apFromStr + baseAP + gearAP + buffAP;
     }
 
     /**
@@ -441,6 +443,12 @@ export default class Stat {
      * @returns {number}
      */
     this.baseDef = function() {
+      return defenseRating;
+    }
+
+    this.defense = function() {
+
+      // needs to get TOTAL defense, from stats and skills and talents
       return defenseRating;
     }
 
