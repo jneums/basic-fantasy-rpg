@@ -28,8 +28,8 @@ const y4_B = CONST.GAME_VIEW_CENTER_Y + 36 * 4;
 const y5_T = CONST.GAME_VIEW_CENTER_Y + 39 * 4;
 const y5_B = CONST.GAME_VIEW_CENTER_Y + 54 * 4;
 
-const use_L = CONST.GAME_VIEW_CENTER_X - 8 * 4;
-const use_R = CONST.GAME_VIEW_CENTER_X + 10 * 4;
+const use_L = CONST.GAME_VIEW_CENTER_X - 25 * 4;
+const use_R = CONST.GAME_VIEW_CENTER_X + 1 * 4;
 
 const discard_L = CONST.GAME_VIEW_CENTER_X + 56 * 4;
 const discard_R = CONST.GAME_VIEW_CENTER_X + 85 * 4;
@@ -55,9 +55,11 @@ export default function inventoryPointerDown(pointer, character) {
   if (pointer.downY > buttons_T && pointer.downY < buttons_B) {
     if (pointer.downX > use_L && pointer.downX < use_R) {
       const active = character.inventory.getActive();
-      if (active.type === 'consumable' || character.skills.canUse(active.skillType)) {
-        character.inventory.useActive();
-        character.scene.registry.set('openInventory', character.inventory.getInventory())
+
+      if (active.hasOwnProperty('getType') && active.getType() === 'consumable'
+        || active.hasOwnProperty('skillType') && character.skills.canUse(active.skillType())) {
+          character.inventory.useActive();
+          character.scene.registry.set('openInventory', character.inventory.getInventory())
 
       }
     } else if (pointer.downX > discard_L && pointer.downX < discard_R) {
@@ -177,10 +179,16 @@ export default function inventoryPointerDown(pointer, character) {
   if (index < 0) return;
 
   const filteredInventory = character.inventory.getInventory().map(item => {
-    // if cannot use, add field saying so:
-    if (character.skills.canUse(item.skillType) || item.type === 'consumable') {
+    if (item.hasOwnProperty('getType') && item.getType() === 'consumable') {
       item.canUse = true;
+      // if cannot use, add field saying so:
+
+    } else if (item.hasOwnProperty('skillType') && character.skills.canUse(item.skillType())) {
+      item.canUse = true;
+
     }
+
+
     return item;
   })
 
@@ -188,7 +196,9 @@ export default function inventoryPointerDown(pointer, character) {
   character.inventory.setActive(index);
   character.scene.registry.set('openInventory', filteredInventory)
 
-  if (character.inventory.getInventory()[index].slot && character.equipment.equipped()[character.inventory.getInventory()[index].slot].name) {
-    character.scene.registry.set('showComparison', character.equipment.equipped()[character.inventory.getInventory()[index].slot])
-  }
+  if (!character.inventory.getInventory()[index].hasOwnProperty('slot')) return;
+
+  const slot = character.inventory.getInventory()[index].slot();
+  const equipped = character.equipment.equipped()[slot];
+  character.scene.registry.set('showComparison', equipped)
 }

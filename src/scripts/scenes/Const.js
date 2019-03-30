@@ -21,7 +21,7 @@ export default (function Const() {
     ACTION_BAR_WIDTH: 70,
 
     // width - action bar, / 2.
-    GAME_VIEW_CENTER_X: (1280 - 70) / 2,
+    GAME_VIEW_CENTER_X: (1280 - (43 * 4)) / 2,
 
     // height / 2
     GAME_VIEW_CENTER_Y: 720 / 2,

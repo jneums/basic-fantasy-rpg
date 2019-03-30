@@ -8,10 +8,12 @@ import inputListeners from '../player/inputListeners';
 import playerUpdate from '../player/playerUpdate';
 import updateLiveCharacters from '../updates/updateLiveCharacters';
 import updateDeadCharacters from '../updates/updateDeadCharacters';
-import { getConsumableByName } from '../loot/consumables';
-import { getWeaponByName } from '../loot/weapons';
+import { getConsumableByName } from '../loot/consumableAPI';
+import { getWeaponByName } from '../loot/weaponAPI';
 import animationCreator from './animationCreator';
 import mapCreator from './mapCreator';
+
+import Weapon from '../loot/Weapon';
 
 import CONST from './Const';
 
@@ -25,6 +27,8 @@ export default class DungeonScene extends Phaser.Scene {
 
   init(data) {
     this.registry.set('reloadUI', 'init');
+    this.registry.set('refreshXpBar');
+
 
     // holds all characters:
     this.characters = this.add.group();
@@ -57,7 +61,7 @@ export default class DungeonScene extends Phaser.Scene {
     // init starting characters input:
     inputListeners(this.player);
     this.registry.set('reloadUI', this.player);
-
+    this.registry.set('refreshXpBar', this.player.lvl.lvlInfo());
 
 
   }
@@ -117,17 +121,44 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.player.inventory.add(getConsumableByName('Spring Water'));
     this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
     this.player.inventory.add(getWeaponByName('Shadow Wand'));
     this.player.inventory.add(getWeaponByName('Short Sword'));
-    this.player.inventory.add(getWeaponByName('Tarnished Sword'));
+    const tarnishedSword = new Weapon(
+      'Tarnished Sword',
+      'Beat up training sword.',
+      { strength: 1 },
+      1,
+      1,
+      1,
+      'mainHand',
+      'twoHandSword',
+      3.2,
+      25,
+      20,
+      { min: 4, max: 6 },
+      'item-44'
+    )
+    tarnishedSword.lvlUp()
+    tarnishedSword.lvlUp();
+    tarnishedSword.lvlUp()
+    tarnishedSword.lvlUp()
 
-    this.player.skills.levelUpSkill('twoHandedSword')
-    this.player.skills.levelUpSkill('twoHandedSword')
-    this.player.skills.levelUpSkill('twoHandedSword')
-    this.player.skills.levelUpSkill('twoHandedSword')
-    this.player.skills.levelUpSkill('twoHandedSword')
-    this.player.skills.levelUpSkill('twoHandedSword')
-    this.player.skills.levelUpSkill('twoHandedSword')
+    this.player.inventory.add(tarnishedSword);
+
+    this.player.equipment.equipped().mainHand.lvlUp()
+    this.player.equipment.equipped().mainHand.lvlUp()
+    this.player.equipment.equipped().mainHand.lvlUp()
+    console.log(this.player.equipment.equipped().mainHand.getColor())
+
+    this.player.skills.levelUpSkill('twoHandSword')
+    this.player.skills.levelUpSkill('twoHandSword')
+    this.player.skills.levelUpSkill('twoHandSword')
+    this.player.skills.levelUpSkill('twoHandSword')
+    this.player.skills.levelUpSkill('twoHandSword')
+    this.player.skills.levelUpSkill('twoHandSword')
+    this.player.skills.levelUpSkill('twoHandSword')
   }
 
   update() {

@@ -1,7 +1,7 @@
-import { getItemByName } from './items';
-import { getConsumableByName } from './consumables';
-import { getWeaponByName } from './weapons';
-import { getArmorByName } from './armor';
+import { getItemByName } from './itemAPI';
+import { getConsumableByName } from './consumableAPI';
+import { getWeaponByName } from './weaponAPI';
+import { getArmorByName } from './armorAPI';
 
 export default function createLoot(name = '') {
   if (name === 'orc') {

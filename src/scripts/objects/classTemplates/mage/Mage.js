@@ -1,6 +1,6 @@
 import Character from '../../Character';
-import { getWeaponByName } from '../../../loot/weapons';
-import { getArmorByName } from '../../../loot/armor';
+import { getWeaponByName } from '../../../loot/weaponAPI';
+import { getArmorByName } from '../../../loot/armorAPI';
 import mageAI from './mageAI';
 import ManaMechanic from '../Mana';
 import ResourceBar from '../../Managers/ResourceBar';

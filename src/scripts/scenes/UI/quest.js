@@ -47,20 +47,24 @@ function loadQuestLog(scene, quests) {
 
   if (!quests[0]) return;
 
-
   quests.forEach(quest => {
 
 
     // add background:
     const difficultyColor = quest.getColor();
     const bg = scene.add.image(_x, _y, difficultyColor + "-quest");
-    // add text:
-    const title = scene.add.bitmapText(bg.x, bg.y, 'font', quest.title, TITLE_SIZE)
-      .setOrigin(0.5)
     bg.scaleX = CONST.SCALE;
     bg.scaleY = CONST.SCALE;
-    scene.questLogContainer.add(bg);
-    scene.questLogContainer.add(title);
+
+
+    // add text:
+    const title = scene.add.bitmapText(bg.x, bg.y - 10, 'font', quest.title, TITLE_SIZE)
+      .setOrigin(0.5)
+
+    const progress = scene.add.bitmapText(bg.x, bg.y + 10, 'font', `(${quest.getStatus()})`, 16)
+      .setOrigin(0.5)
+
+    scene.questLogContainer.add([bg, title, progress]);
 
     _y += _yIncrement;
 

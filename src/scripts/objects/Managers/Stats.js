@@ -175,7 +175,7 @@ export default class Stat {
       const armorFromBuffs = character.buffs.statBonus('armor');
       // everyone gets 2 armor per agi
       const armorFromAgility = this.agility() * 2;
-      const armorFromItems = character.equipment.statBonus('armor');
+      const armorFromItems = character.equipment.equippedAC();
       return armorFromBuffs + armorFromAgility + armorFromItems;
     }
 

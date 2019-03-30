@@ -12,7 +12,15 @@ export default class Lvl {
     let _lvl = 1;
     let _xp = 0;
     let _nextLvl = 150;
+    let _dirty = false;
 
+    this.isDirty = function() {
+      return _dirty;
+    }
+
+    this.clean = function() {
+      _dirty = false;
+    }
 
     function _levelUp() {
       if (_xp < _nextLvl) return false;
@@ -24,6 +32,8 @@ export default class Lvl {
 
     }
 
+
+
     function _log() {
       console.log(
         `${character.getName()},
@@ -32,10 +42,20 @@ export default class Lvl {
          Next Level: ${_nextLvl}`)
     }
 
+
+    this.lvlInfo = function() {
+      return {
+        lvl: _lvl,
+        xp: _xp,
+        nextLvl: _nextLvl
+      }
+    }
+
     this.gainXP = function(amount) {
+      _dirty = true;
       _xp += amount;
       _levelUp();
-      _log();
+      // _log();
     }
 
     /**
@@ -54,6 +74,10 @@ export default class Lvl {
      */
     this.getXp = function() {
       return _xp;
+    }
+
+    this.getNextLvl = function() {
+      return _nextLvl;
     }
 
   }

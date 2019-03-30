@@ -63,6 +63,7 @@ export default function questLogPointerDown(pointer, player) {
 
   }
 
+  
 
   player.scene.registry.set('openQuestLog', player.questLog.getActive());
 

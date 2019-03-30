@@ -4,6 +4,8 @@ import { clearInventory, showInventory, selectItem } from './UI/inventory';
 import { selectQuest, clearQuestLog, loadQuestLog } from './UI/quest';
 import { clearActionBar, loadActionBar } from './UI/actionBar';
 
+import XpBar from './UI/XpBar';
+
 
 import CONST from './Const';
 
@@ -23,6 +25,7 @@ export default class UIScene extends Phaser.Scene {
   create() {
 
     // xp bar:
+    this.XpBar = new XpBar(this);
 
     // lootBox:
     this.lootBoxContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
@@ -46,6 +49,7 @@ export default class UIScene extends Phaser.Scene {
     this.registry.events.on('changedata', this.updateData, this);
 
   }
+
 
   updateData(parent, key, data) {
 
@@ -92,6 +96,8 @@ export default class UIScene extends Phaser.Scene {
     } else if (key === 'showComparison') {
       showComparison(this, data);
 
+    } else if (key === 'refreshXpBar') {
+      this.XpBar.set(data);
     }
   }
 }
@@ -106,18 +112,18 @@ function showComparison(scene, item) {
   switch(item.type) {
     case 'armor':
     stats = [ `${item.armor}`, item.armorType, item.levelRequirement, item.sellPrice, item.slot ];
-    statKeys = ["Armor: ", "Type: ", "Required Level: ", "Sell Price: ", "Slot: " ];
+    statKeys = ["AC: ", "Type: ", "Lvl: ", "$$$: ", "Slot: " ];
     break;
     case 'weapon':
-    stats = [ `${item.damage.min}-${item.damage.max}`, item.speed, item.levelRequirement, item.sellPrice, item.slot ];
-    statKeys = ["Damage: ", "Speed: ", "Required Level: ", "Sell Price: ", "Slot: " ];
+    stats = [ `${item.damage.min}-${item.damage.max}`, item.speed, item.levelRequirement, '$' + item.sellPrice, item.slot ];
+    statKeys = ["Dmg: ", "Spd: ", "Lvl: ", "$$$: ", "Slot: " ];
     break;
   }
 
-  const title = scene.add.bitmapText( -38, (12 * 4), 'font', 'equipped: ', 16)
-  const itemName = scene.add.bitmapText( -38, (18 * 4), 'font', name, 18);
-  const itemStats = scene.add.bitmapText( (86 * 4), (26 * 4), 'font', stats, 16).setOrigin(1, 0).setRightAlign();
-  const itemStatKeys = scene.add.bitmapText( -38, (26 * 4), 'font', statKeys, 16);
+  const title = scene.add.bitmapText( (-16 * 4), (12 * 4), 'font', 'equipped: ', 16)
+  const itemName = scene.add.bitmapText( (-16 * 4), (18 * 4), 'font', name, 18);
+  const itemStats = scene.add.bitmapText( (38 * 4), (26 * 4), 'font', stats, 16).setOrigin(1, 0).setRightAlign();
+  const itemStatKeys = scene.add.bitmapText( (-16 * 4), (26 * 4), 'font', statKeys, 16);
   scene.inventoryContainer.add([title, itemName, itemStats, itemStatKeys])
 
 }
@@ -154,101 +160,104 @@ function buildCharacter(scene, equipment) {
 
   for (let item in equipment) {
 
-    let bg = {};
+    if (equipment[item].hasOwnProperty('slot')) {
+      let bg = {};
+      switch (equipment[item].slot()) {
+        case 'head':
+          const head = scene.add.image(_xLeft, _y1, equipment[item].getIcon()).setOrigin(.5);
+          head.scaleX = 4;
+          head.scaleY = 4;
 
-    switch (equipment[item].slot) {
-      case 'head':
-        const head = scene.add.image(_xLeft, _y1, equipment[item].icon).setOrigin(.5);
-        head.scaleX = 4;
-        head.scaleY = 4;
+          bg = scene.add.image(_xLeft, _y1, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
 
-        bg = scene.add.image(_xLeft, _y1, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
+          scene.equipmentContainer.add([bg, head]);
+        break;
+        case 'chest':
+          const chest = scene.add.image(_xLeft, _y2, equipment[item].getIcon()).setOrigin(.5);
+          chest.scaleX = 4;
+          chest.scaleY = 4;
 
-        scene.equipmentContainer.add([bg, head]);
-      break;
-      case 'chest':
-        const chest = scene.add.image(_xLeft, _y2, equipment[item].icon).setOrigin(.5);
-        chest.scaleX = 4;
-        chest.scaleY = 4;
-
-        bg = scene.add.image(_xLeft, _y2, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
-
-
-        scene.equipmentContainer.add([bg, chest]);
-      break;
-      case 'legs':
-        const legs = scene.add.image(_xRight, _y2, equipment[item].icon).setOrigin(.5);
-        legs.scaleX = 4;
-        legs.scaleY = 4;
-
-        bg = scene.add.image(_xRight, _y2, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
-
-        scene.equipmentContainer.add([bg, legs]);
-      break;
-      case 'feet':
-        const feet = scene.add.image(_xRight, _y4, equipment[item].icon).setOrigin(.5);
-        feet.scaleX = 4;
-        feet.scaleY = 4;
-
-        bg = scene.add.image(_xRight, _y4, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
+          bg = scene.add.image(_xLeft, _y2, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
 
 
-        scene.equipmentContainer.add([bg, feet]);
-      break;
-      case 'mainHand':
-        const mainHand = scene.add.image(_xLeft, _y3, equipment[item].icon).setOrigin(.5);
-        mainHand.scaleX = 4;
-        mainHand.scaleY = 4;
+          scene.equipmentContainer.add([bg, chest]);
+        break;
+        case 'legs':
+          const legs = scene.add.image(_xRight, _y2, equipment[item].getIcon()).setOrigin(.5);
+          legs.scaleX = 4;
+          legs.scaleY = 4;
 
-        bg = scene.add.image(_xLeft, _y3, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
+          bg = scene.add.image(_xRight, _y2, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
+
+          scene.equipmentContainer.add([bg, legs]);
+        break;
+        case 'feet':
+          const feet = scene.add.image(_xRight, _y4, equipment[item].getIcon()).setOrigin(.5);
+          feet.scaleX = 4;
+          feet.scaleY = 4;
+
+          bg = scene.add.image(_xRight, _y4, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
 
 
-        scene.equipmentContainer.add([bg, mainHand]);
-      break;
-      case 'offHand':
-        const offHand = scene.add.image(_xRight, _y3, equipment[item].icon).setOrigin(.5);
-        offHand.scaleX = 4;
-        offHand.scaleY = 4;
+          scene.equipmentContainer.add([bg, feet]);
+        break;
+        case 'mainHand':
+          const mainHand = scene.add.image(_xLeft, _y3, equipment[item].getIcon()).setOrigin(.5);
+          mainHand.scaleX = 4;
+          mainHand.scaleY = 4;
 
-        bg = scene.add.image(_xRight, _y3, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
+          bg = scene.add.image(_xLeft, _y3, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
 
-        scene.equipmentContainer.add([bg, offHand]);
-      break;
-      case 'ranged':
-        const ranged = scene.add.image(_xRight, _y1, equipment[item].icon).setOrigin(.5);
-        ranged.scaleX = 4;
-        ranged.scaleY = 4;
 
-        bg = scene.add.image(_xRight, _y1, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
+          scene.equipmentContainer.add([bg, mainHand]);
+        break;
+        case 'offHand':
+          const offHand = scene.add.image(_xRight, _y3, equipment[item].getIcon()).setOrigin(.5);
+          offHand.scaleX = 4;
+          offHand.scaleY = 4;
 
-        scene.equipmentContainer.add([bg, ranged]);
-      break;
-      case 'ring':
-        const ring = scene.add.image(_xLeft, _y4, equipment[item].icon).setOrigin(.5);
-        ring.scaleX = 4;
-        ring.scaleY = 4;
+          bg = scene.add.image(_xRight, _y3, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
 
-        bg = scene.add.image(_xLeft, _y4, equipment[item].color + '-sm-bg');
-        bg.scaleX = 4;
-        bg.scaleY = 4;
+          scene.equipmentContainer.add([bg, offHand]);
+        break;
+        case 'ranged':
+          const ranged = scene.add.image(_xRight, _y1, equipment[item].getIcon()).setOrigin(.5);
+          ranged.scaleX = 4;
+          ranged.scaleY = 4;
 
-        scene.equipmentContainer.add([bg, ring]);
-      break;
+          bg = scene.add.image(_xRight, _y1, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
+
+          scene.equipmentContainer.add([bg, ranged]);
+        break;
+        case 'ring':
+          const ring = scene.add.image(_xLeft, _y4, equipment[item].getIcon()).setOrigin(.5);
+          ring.scaleX = 4;
+          ring.scaleY = 4;
+
+          bg = scene.add.image(_xLeft, _y4, equipment[item].getColor() + '-sm-bg');
+          bg.scaleX = 4;
+          bg.scaleY = 4;
+
+          scene.equipmentContainer.add([bg, ring]);
+        break;
+      }
+
     }
+
 
   }
 

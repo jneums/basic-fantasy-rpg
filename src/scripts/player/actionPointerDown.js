@@ -28,7 +28,6 @@ export default function actionPointerDown(pointer, player = {}) {
 
     // if click target was tapped, and tapper is in range:
     if (targetLootOwner && target.target.rangeCheck(targetLootOwner, 70)) {
-
       player.scene.lootBoxActive = true;
       player.scene.registry.set('openLootBox', target.loot());
 

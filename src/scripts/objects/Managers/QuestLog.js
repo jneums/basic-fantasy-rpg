@@ -1,5 +1,5 @@
 import Quest from './Quest';
-import { getArmorByName } from '../../loot/armor';
+import { getArmorByName } from '../../loot/armorAPI';
 import FloatingText from '../FloatingText/FloatingText';
 
 export default class QuestLog {
@@ -8,16 +8,17 @@ export default class QuestLog {
     // intital quest:
     const startingQuest = new Quest(
       0,
-      "Survive!",
+      "Upgrade Your Weapon",
       "hard",
-      "Kill",
+      "Find",
       500,
-      "orc",
+      "crystal",
       [""],
       [""],
       [""],
-      ["Do I have what it", "takes to kill over", "500 orcs??"],
-      getArmorByName("Ring of Fury")
+      ["Bring 500 crystals to", "the forge and unlock", "the hidden power", "of your weapon!"],
+      getArmorByName("Ring of Fury"),
+      2500
     )
 
     // holds a list of quests:
@@ -38,13 +39,14 @@ export default class QuestLog {
         "Orc Cleanup",
         "easy",
         "Kill",
-        5,
+        1,
         "orc",
         ["Kind sir, these creatures called",  "orcs are flooding our dungeon!", "Can you help by killing five orcs?", "I will give you a reward!"],
         ["Did you murder them?"],
         ["Thank you brave warrior!"],
         ["The strange looking", "dude at the entrance", "wants me to kill", "some orcs for him."],
-        getArmorByName("Ring of Fury")
+        getArmorByName("Ring of Fury"),
+        25
       )
 
       // initialize quest:
@@ -108,17 +110,19 @@ export default class QuestLog {
       const quest = activeQuests.find(quest => quest.getId() === questId);
       if (!quest) return null;
       quest.advanceStatus();
-      quest.takeReward(character)
+      quest.takeReward(character);
+      this.update()
 
     }
 
-    this.update = function(target = {}) {
+    this.update = function(target) {
       activeQuests.forEach(quest => {
         if (quest.getStatus() === 'completed') {
-          completedQuests.push(quest);
-          activeQuests = activeQuests.filter((quest, i) => i !== activeQuests.indexOf(quest))
 
-        } else if (quest.getTarget() === target.getName()) {
+          completedQuests.push(quest);
+          activeQuests = activeQuests.filter(quest => quest.getStatus() !== 'completed')
+
+        } else if (target && quest.getTarget() === target.getName()) {
           quest.incCounter();
           const errorText = new FloatingText(character.scene, {
             text: `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`,

@@ -36,7 +36,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     this.controller = 'AI';
     this.playerTarget = false;
 
-    this.xpVal = 100;
+    this.xpVal = 10;
 
 
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};

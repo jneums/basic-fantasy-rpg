@@ -1,6 +1,6 @@
 import Character from '../../Character';
-import { getWeaponByName } from '../../../loot/weapons';
-import { getArmorByName } from '../../../loot/armor';
+import { getWeaponByName } from '../../../loot/weaponAPI';
+import { getArmorByName } from '../../../loot/armorAPI';
 import barbarianAI from './barbarianAI';
 import RageMechanic from '../Rage';
 import ResourceBar from '../../Managers/ResourceBar';
@@ -62,7 +62,7 @@ export default class Barbarian extends Character {
     this.stat.setStamina(baseStamina + barbarianStaminaBonus);
 
     // starting skills:
-    this.skills.learnSkill('twoHandedSword');
+    this.skills.learnSkill('twoHandSword');
     this.skills.learnSkill('mail');
 
     this.equipment.equip(getWeaponByName("Tarnished Sword"));

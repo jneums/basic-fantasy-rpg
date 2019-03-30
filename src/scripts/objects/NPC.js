@@ -1,6 +1,6 @@
 import Character from './Character';
-import { getWeaponByName } from '../loot/weapons';
-import { getArmorByName } from '../loot/armor';
+import { getWeaponByName } from '../loot/weaponAPI';
+import { getArmorByName } from '../loot/armorAPI';
 import NPCAI from './NPCAI';
 import createLoot from '../loot/createLoot';
 import Anims from './Managers/Anims';

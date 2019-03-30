@@ -19,7 +19,11 @@ export default function processCombatObject (attacker = {}, target = {}) {
   target.setTapped(attacker);
 
   // update combat object based on status e.g. mitigation, resistances:
+  // console.log(this.amount())
+
   statusMod(attacker, target, this);
+  // console.log(this.amount())
+
   // give combatants a chance to modify the combat object
   classMod(attacker, target, this);
 

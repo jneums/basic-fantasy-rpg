@@ -66,25 +66,24 @@ function buildLoot(scene, item, index) {
   }
 
 
-
   // add colored bg:
-  const bg = scene.add.image(_x, _y, item.color + _bg);
+  const bg = scene.add.image(_x, _y, item.getColor() + _bg);
   bg.scaleX = CONST.SCALE;
   bg.scaleY = CONST.SCALE;
 
   // set loot icon over bg:
-  const lootIcon = scene.add.image(_x + _iconOffset, _y, item.icon);
+  const lootIcon = scene.add.image(_x + _iconOffset, _y, item.getIcon());
   lootIcon.scaleX = CONST.SCALE;
   lootIcon.scaleY = CONST.SCALE;
 
   // loot tooltip name:
 
   // qty:
-  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.name, 16);
+  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.getName(), 16);
 
   // if building loot for inventory:
   if (index > -1) {
-   const qtyText = scene.add.bitmapText(_x, _y, 'font', item.quantity, 26);
+   const qtyText = scene.add.bitmapText(_x, _y, 'font', item.getQty(), 26);
    scene.inventoryContainer.add([bg, lootIcon, qtyText]);
 
   // if building loot for looting mob:

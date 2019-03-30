@@ -1,5 +1,5 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
-import { getConsumableByName } from '../../../loot/consumables';
+import { getConsumableByName } from '../../../loot/consumableAPI';
 import wand from '../wand';
 import lesserHeal from './abilities/lesserHeal';
 import renew from './abilities/renew';

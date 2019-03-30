@@ -1,6 +1,6 @@
 import Character from '../Character';
-import { getWeaponByName } from '../../loot/weapons';
-import { getArmorByName } from '../../loot/armor';
+import { getWeaponByName } from '../../loot/weaponAPI';
+import { getArmorByName } from '../../loot/armorAPI';
 import OrcAI from './OrcAI';
 import MobAbilities from './MobAbilities';
 import createLoot from '../../loot/createLoot';
@@ -28,9 +28,11 @@ export default class Orc extends Character {
 
 
     // starting equipment
-    const equipped = this.equipment.equipped();
-    equipped.mainHand = getWeaponByName("Deadman Dagger");
-    this.equipment.setEquipped(equipped);
+    this.skills.learnSkill('dagger');
+
+    this.equipment.equip(getWeaponByName("Deadman Dagger"))
+    
+
 
     // starting hp
     this.stat.setBaseHp(10);

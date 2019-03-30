@@ -13,24 +13,24 @@ function selectItem(scene, item) {
 
   // set active indicator for item tooltip:
   // update description text:
-  let name = item.name;
+  let name = item.getName();
   let stats = '';
   let statKeys = '';
-  let description = item.description;
+  let description = item.getDescription();
   let onUse = '';
 
-  switch (item.type) {
+  switch (item.getType()) {
     case 'questItem':
     break;
     case 'armor':
-    stats = [ `${item.armor}`, item.armorType, item.levelRequirement, item.sellPrice, item.slot, item.skillType ];
-    statKeys = ["AC: ", "Type: ", "Lvl: ", "$$$: ", "Slot: ", "Type: "];
-    onUse = item.canUse ? 'equip' : "can't equip";
+    stats = [ `${item.armor()}`, item.skillType(), item.lvl(), item.sellPrice(), item.slot() ];
+    statKeys = ["AC: ", "Type: ", "Lvl: ", "$$$: ", "Slot: "];
+    onUse = item.canUse ? 'equip' : "(can't equip)";
     break;
     case 'weapon':
-    stats = [ `${item.damage.min}-${item.damage.max}`, item.speed, item.levelRequirement, item.sellPrice, item.slot, item.skillType];
-    statKeys = ["Dmg: ", "Spd: ", "Lvl: ", "$$$: ", "Slot: ", "Type: "];
-    onUse = item.canUse ? 'equip' : "can't equip";
+    stats = [ `${item.dmg().min}-${item.dmg().max}`, item.spd(), item.lvl(), item.sellPrice(), item.slot() ];
+    statKeys = ["Dmg: ", "Spd: ", "Lvl: ", "$$$: ", "Slot: "];
+    onUse = item.canUse ? 'equip' : "(can't equip)";
     break;
     case 'consumable':
     onUse = 'use';
@@ -43,7 +43,7 @@ function selectItem(scene, item) {
 
   let color = 0;
 
-  if (onUse === "can't equip") {
+  if (onUse === "(can't equip)") {
     color = 0xbf7b3f;
   } else {
     color = 0x649438;
@@ -51,10 +51,10 @@ function selectItem(scene, item) {
 
   const itemName = scene.add.bitmapText( -16 * 4, (-40 * 4), 'font', name, 18);
   const itemDescription = scene.add.bitmapText( -16 * 4, -34 * 4, 'font', description, 16);
-  const itemStats = scene.add.bitmapText( (42 * 4), - 28 * 4, 'font', stats, 16).setOrigin(1, 0).setRightAlign();
+  const itemStats = scene.add.bitmapText( (38 * 4), - 28 * 4, 'font', stats, 16).setOrigin(1, 0).setRightAlign();
   const itemStatKeys = scene.add.bitmapText( -16 * 4, - 28 * 4, 'font', statKeys, 16);
-  const equip = scene.add.bitmapText( -16 * 4, 0, 'font', onUse, 16).setTint(color)
-  const discard = scene.add.bitmapText( 56 * 4, 0, 'font', 'discard', 16).setTint(0xbf7b3f)
+  const equip = scene.add.bitmapText( -16 * 4, 0, 'font', onUse, 18).setTint(color)
+  const discard = scene.add.bitmapText( 56 * 4, 0, 'font', 'discard', 18).setTint(0xbf7b3f)
   scene.inventoryContainer.add([inventoryBackground, itemName, itemStats, itemStatKeys, itemDescription, equip, discard])
 
 }

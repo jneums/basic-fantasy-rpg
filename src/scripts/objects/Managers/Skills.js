@@ -10,7 +10,7 @@ export default class Skills {
       staff: -1,
       twoHandedAxe: -1,
       twoHandedMace: -1,
-      twoHandedSword: -1,
+      twoHandSword: -1,
       bow: -1,
       crossbow: -1,
       gun: -1,

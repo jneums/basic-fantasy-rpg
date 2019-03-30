@@ -16,6 +16,8 @@ import moveToMoveTarget from './moveToMoveTarget';
 export default function PlayerUpdate() {
   const update = function() {
 
+    watchXpBar(this);
+
     const moving = moveToMoveTarget(this);
     const attacking = standGuard(this);
     const casting = this.casting();
@@ -25,4 +27,10 @@ export default function PlayerUpdate() {
 
   }
   return update;
+}
+
+function watchXpBar(character) {
+  if (character.lvl.isDirty()) {
+    character.scene.registry.set('refreshXpBar', character.lvl.lvlInfo())
+  }
 }

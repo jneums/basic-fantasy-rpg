@@ -1,6 +1,6 @@
 import Character from '../Character';
-import { getWeaponByName } from '../../loot/weapons';
-import { getArmorByName } from '../../loot/armor';
+import { getWeaponByName } from '../../loot/weaponAPI';
+import { getArmorByName } from '../../loot/armorAPI';
 import OrcAI from './OrcAI';
 import MobAbilities from './MobAbilities';
 import createLoot from '../../loot/createLoot';

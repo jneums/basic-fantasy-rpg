@@ -3,14 +3,15 @@ export default class Quest {
     id = 1,
     title = "",
     difficulty = "",
-    type = "",
+    type = "", // kill or find
     amount = 0,
     target = "",
     initText = [],
     inProgressText = [],
     finishText = [],
     description = [],
-    reward = {}
+    reward = {},
+    xp = 0
   ) {
 
     let _id = id;
@@ -64,6 +65,7 @@ export default class Quest {
 
     this.takeReward = function(character = {}) {
       character.inventory.add(reward);
+      character.lvl.gainXP(xp)
     }
 
     let _type = type;

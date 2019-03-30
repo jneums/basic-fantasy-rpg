@@ -54,35 +54,38 @@ export default class Inventory {
      */
     this.use = function(index = 0) {
 
+
       // if no item in that spot:
       if (!inventory[index]) return;
-
+      // or if it is not an Item:
+      if (!inventory[index].hasOwnProperty('getType')) return;
       // otherwise:
       const item = inventory[index];
+      const type = item.getType();
       item.active = false;
 
       // if item is a 'consumable':
-      if (item.type === 'consumable') {
+      if (type === 'consumable') {
 
         // reduce quantity by one:
-        --item.quantity;
+        item.dec();
 
         // and perform the appropriate action:
         // either eat or drink.
-        if (item.action === 'eat') {
+        if (item.getAction() === 'eat') {
           character.consumables.eat();
-        } else if (item.action === 'drink') {
+        } else if (item.getAction() === 'drink') {
           character.consumables.drink();
         }
 
         // check and see if it was the last one,
         // if so take the empty stack out of inventory.
-        if (item.quantity === 0) {
+        if (item.getQty() === 0) {
           inventory.splice(index, 1);
         }
 
         // if it is a quest item or crafting item, it cant be consumed or equipped:
-      } else if (item.type === 'questItem' || item.type === 'crafting') {
+      } else if (type === 'questItem' || type === 'crafting') {
         console.log("I can't use that");
       } else {
         // if it gets to here, it must be an equippable item.
@@ -100,22 +103,22 @@ export default class Inventory {
     this.add = function(gear = 0) {
 
       let stackQty = 0;
-
+      if (!gear.hasOwnProperty('getName')) return;
       // if space available in existing stack
-      const sameStacks = inventory.filter(stack => stack.name === gear.name)
+      const sameStacks = inventory.filter(stack => stack.getName() === gear.getName())
         .reduce((addedToExisting, stack) => {
 
-          if (stack.quantity + gear.quantity < stack.maxStack) {
-            stackQty = stack.quantity + gear.quantity;
+          if (stack.getQty() + gear.getQty() < stack.getMax()) {
+            stackQty = stack.getQty() + gear.getQty();
             return addedToExisting += 1;
           }
         }, 0);
 
-      // not added to stack, so give its own slot
       if (sameStacks) {
 
-        const filteredInventory = inventory.filter(item => item.name !== gear.name);
-        const newGear = Object.assign({}, gear, { quantity: stackQty });
+        const filteredInventory = inventory.filter(item => item.getName() !== gear.getName());
+        gear.setQty(stackQty);
+        const newGear = Object.assign({}, gear)
 
         this.setInventory(filteredInventory.concat([newGear]));
       } else {

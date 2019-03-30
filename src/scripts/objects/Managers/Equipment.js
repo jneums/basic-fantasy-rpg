@@ -33,13 +33,15 @@ export default class Equipment {
      * @returns {void}
      */
     this.equip = function(gear = {}) {
-      if (!character.skills.canUse(gear.skillType)) return;
+      if (!gear.hasOwnProperty('skillType')) return;
+      if (!character.skills.canUse(gear.skillType())) return;
       // add to specific slot
-      const slot = gear.slot;
+      const slot = gear.slot();
       const replacedGear = equipped[slot];
       equipped[slot] = gear;
       // if it replaced a piece, put that piece in inventory
-      if (replacedGear.name) {
+      if (!replacedGear.hasOwnProperty('getName')) return;
+      if (replacedGear.getName()) {
         character.inventory.add(replacedGear);
       }
     }
@@ -50,10 +52,9 @@ export default class Equipment {
      * @returns {type}  description
      */
     this.isDualWielding = function() {
-      const hasDualWield = character.ability.getAbilities().includes('dual-wield');
-      const hasWeaponInOffhand = this.equipped().offHand.damage;
-      if (hasDualWield && hasWeaponInOffhand) return true;
-      else return false;
+      if (!this.equipped().offhand) return false;
+      if (!character.ability.getAbilities().includes('dual-wield')) return false;
+      return false;
     }
 
     /**
@@ -63,11 +64,17 @@ export default class Equipment {
      * @returns {number} weapon skill
      */
     this.getCurrentWeaponSkill = function(hand = '') {
-      const mainHandType = this.equipped().mainHand.skillType;
-      const offHandType = this.equipped().offHand.skillType;
-      const weaponType = (hand === 'main')
-        ? mainHandType
-        : offHandType;
+      let weaponType = '';
+
+      if (hand === 'main') {
+        if (!this.equipped().mainHand.hasOwnProperty('skillType')) return;
+        weaponType = this.equipped().mainHand.skillType();
+
+      } else if (hand === 'off') {
+        if (!this.equipped().offHand.hasOwnProperty('skillType')) return;
+        weaponType = this.equipped().offHand.skillType();
+      }
+
       return character.skills.getWeaponSkills()[weaponType];
     }
 
@@ -79,12 +86,17 @@ export default class Equipment {
      * @returns {object} dmg object: { min: 1, max: 2 }
      */
     this.getWeaponDmg = function(hand = '') {
-      const mainHandWpnDmg = this.equipped().mainHand.damage;
-      const offHandWpnDmg= this.equipped().offHand.damage;
-      const weaponDamage = (hand === 'main')
-        ? mainHandWpnDmg
-        : offHandWpnDmg;
-      return weaponDamage;
+
+      if (hand === 'main') {
+        if (!this.equipped().mainHand.hasOwnProperty('dmg')) return { min: 1, max: 2 };
+        return this.equipped().mainHand.dmg();
+
+      } else if (hand === 'off') {
+        if (!this.equipped().offHand.hasOwnProperty('dmg')) return { min: 1, max: 2 };
+        return this.equipped().offHand.dmg();
+
+      }
+
     }
 
     /**
@@ -96,11 +108,14 @@ export default class Equipment {
     this.getWeaponSpeed = function(hand = '') {
       switch(hand) {
         case 'main':
-        return equipped.mainHand.speed;
+        if (!equipped.mainHand.hasOwnProperty('spd')) return;
+        return equipped.mainHand.spd();
         case 'off':
-        return equipped.offHand.speed;
+        if (!equipped.offHand.hasOwnProperty('spd')) return;
+        return equipped.offHand.spd();
         case 'ranged':
-        return equipped.ranged.speed;
+        if (!equipped.ranged.hasOwnProperty('spd')) return;
+        return equipped.ranged.spd();
       }
     }
 
@@ -110,10 +125,19 @@ export default class Equipment {
      * @returns {bool} true if using 2h
      */
     this.checkForTwoHandWeapon = function() {
-      const weaponType = this.equipped().mainHand.skillType.substr(0,9);
+      const weaponType = this.equipped().mainHand.skillType().substr(0,9);
       return weaponSlot === 'twoHanded';
     }
 
+    this.equippedAC = function() {
+      let total = 0;
+      for (let item in equipped) {
+        if (equipped[item].hasOwnProperty('armor')) {
+          total += equipped[item].armor();
+        }
+      }
+      return total;
+    }
     /**
      * statBonus - equipped
      *
@@ -125,9 +149,12 @@ export default class Equipment {
       let total = 0;
       const equipped = this.equipped();
       for (let item in equipped) {
-        if (equipped[item][stat]) {
-          total += equipped[item][stat];
-        }
+        if (equipped[item].hasOwnProperty('statBonus')) {
+          if (equipped[item].statBonus().hasOwnProperty(stat)) {
+            total += equipped[item].statBonus()[stat];
+          }
+        };
+
       }
       return total;
     }
