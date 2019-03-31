@@ -1,4 +1,6 @@
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
+
 
 /**
  * Conjure Food - Conjures 2 bottle of food, providing
@@ -16,7 +18,7 @@ export default function conjureFood() {
     beneficial: true,
     resourceAmount: 60,
     resource: 'mana',
-    range: this.CONST.MELEE_RANGE,
+    range: CONST.MELEE_RANGE,
     needsTarget: false
   }
 

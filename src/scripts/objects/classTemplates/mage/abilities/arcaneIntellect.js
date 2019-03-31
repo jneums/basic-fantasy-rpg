@@ -1,4 +1,5 @@
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
 
 
 /**
@@ -17,7 +18,7 @@ export default function arcaneIntellect() {
     beneficial: true,
     resourceAmount: 60,
     resource: 'mana',
-    range: this.CONST.CAST_RANGE,
+    range: CONST.CAST_RANGE,
     needsTarget: true
   }
 

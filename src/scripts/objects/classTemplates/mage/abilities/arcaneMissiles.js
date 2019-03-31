@@ -1,5 +1,7 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
+
 
 /**
  * Arcane Missiles -
@@ -16,7 +18,7 @@ export default function arcaneMissiles() {
     beneficial: false,
     resourceAmount: 85,
     resource: 'mana',
-    range: this.CONST.CAST_RANGE,
+    range: CONST.CAST_RANGE,
     needsTarget: true
   }
 

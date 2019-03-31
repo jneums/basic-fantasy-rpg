@@ -11,7 +11,7 @@ export default class Lvl {
     // xp, gain xp to level up
     let _lvl = 1;
     let _xp = 0;
-    let _nextLvl = 10;
+    let _nextLvl = 150;
     let _dirty = false;
 
     this.isDirty = function() {

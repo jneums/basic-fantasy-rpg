@@ -17,7 +17,7 @@ export default class Orc extends Character {
     this.animations = new Anims(this, 'orc-mask', 'orc-sword');
 
         //set starting texture and size:
-        this.setTexture('mage-run', 0).setSize(12, 12);
+        this.setTexture('mage-run', 0).setSize(22, 22).setOrigin(0.5);
     this.setTeam('mob');
     this.setName('orc');
     this.setCharacterClass('mob');
@@ -31,7 +31,7 @@ export default class Orc extends Character {
     this.skills.learnSkill('dagger');
 
     this.equipment.equip(getWeaponByName("Deadman Dagger"))
-    
+
 
 
     // starting hp

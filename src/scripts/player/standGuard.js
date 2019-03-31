@@ -1,3 +1,5 @@
+import CONST from '../objects/Managers/Const';
+
 /**
  * standGuard - idle state, awaiting player input
  * will attack if in melee range.
@@ -8,7 +10,7 @@
 export default function standGuard(character = {}) {
   const target = character.target.currentTarget();
   if (target) {
-    const inRange = character.target.rangeCheck(target, character.CONST.MELEE_RANGE);
+    const inRange = character.target.rangeCheck(target, CONST.MELEE_RANGE);
     const targetIsEnemy = (character.team() !== target.team());
     if (inRange && targetIsEnemy && !target.combat.isDead()) {
       if (character.combat.autoAttack()) {

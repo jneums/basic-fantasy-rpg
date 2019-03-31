@@ -12,15 +12,22 @@ import Marker from './Managers/Marker';
 /**
  *
  */
-export default class NPC extends Character {
-  constructor(scene = {}, x = 0, y = 0) {
+export default class Trainer extends Character {
+  constructor(scene = {}, x = 0, y = 0, type, ability) {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
     this.animations = new Anims(this, 'npc', 'npc-unarmed');
-    this.marker = new Marker(scene, 'quest');
+    this.marker = new Marker(scene, type);
 
-    this.quest = { id: 1 }
+    // which ability can he teach?
+    this.lesson = ability;
 
+    /*
+    {
+      name: 'rush',
+      instructions: ["This is how you use rush:"]
+    }
+    */
 
     //set starting texture and size:
     this.setTexture('mage-run', 0).setSize(22, 22).setOrigin(0.5);
@@ -28,7 +35,7 @@ export default class NPC extends Character {
 
     this.setTeam('alliance');
     this.setName('npc');
-    this.setCharacterClass('npc');
+    this.setCharacterClass('trainer');
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
     this.stat.setAgilityToCritRatio(20);
@@ -52,8 +59,8 @@ export default class NPC extends Character {
 
     this.AI = NPCAI();
     this.classUpdate = function() {
-      // keep quest sign overhead:
-      this.marker.update(this.x, this.y);
+      // block in case update runs extra tick before
+      this.marker.update(this.x, this.y)
     }
   }
 }

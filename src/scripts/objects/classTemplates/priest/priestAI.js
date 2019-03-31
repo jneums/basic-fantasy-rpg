@@ -1,4 +1,6 @@
 import moveToMoveTarget from '../../../player/moveToMoveTarget';
+import CONST from '../../Managers/Const';
+
 
 /**
  * MagicUserAI - npc magic user script
@@ -11,7 +13,7 @@ export default function PriestAI() {
     if (this.combat.isDead()) return;
 
     // scan for enemies for body pull
-    const enemies = this.target.scanForEnemies(this.CONST.BODY_PULL_RANGE);
+    const enemies = this.target.scanForEnemies(CONST.BODY_PULL_RANGE);
     // scan for enemies by threat table (pulled by attack)
     const target = this.threat.highestThreat()
       ? this.threat.highestThreat()
@@ -25,9 +27,9 @@ export default function PriestAI() {
     }
 
     //
-    const wandRange = this.target.rangeCheck(target, this.CONST.CAST_RANGE);
+    const wandRange = this.target.rangeCheck(target, CONST.CAST_RANGE);
     // if target, move close enough to attack
-    const canMelee = this.target.rangeCheck(target, this.CONST.MELEE_RANGE);
+    const canMelee = this.target.rangeCheck(target, CONST.MELEE_RANGE);
     if (canMelee) {
       this.movement.stop();
       this.combat.meleeAutoAttack(target);

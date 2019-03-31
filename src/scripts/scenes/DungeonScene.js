@@ -4,6 +4,7 @@ import Priest from '../objects/classTemplates/priest/Priest';
 import Orc from '../objects/mobTemplates/Orc';
 import OrcArcher from '../objects/mobTemplates/OrcArcher';
 import NPC from '../objects/NPC';
+import Trainer from '../objects/Trainer';
 import inputListeners from '../player/inputListeners';
 import playerUpdate from '../player/playerUpdate';
 import updateLiveCharacters from '../updates/updateLiveCharacters';
@@ -81,6 +82,24 @@ export default class DungeonScene extends Phaser.Scene {
     // is dialogue box open:
     this.dialogueBoxActive = false;
 
+    const abilities = {
+      rush: {
+        name: 'rush',
+        instructions: ['this is how you rush']
+      },
+      hobble: {
+        name: 'hobble',
+        instructions: ['this is how you hobble']
+      },
+      gore: {
+        name: 'gore',
+        instructions: ['this is how you gore']
+      },
+      savageBlow: {
+        name: 'savage-blow',
+        instructions: ['this is how you savage blow']
+      }
+    }
 
     // create map:
     const map = mapCreator(this);
@@ -91,6 +110,10 @@ export default class DungeonScene extends Phaser.Scene {
         npc = new Orc(this, spawnPoint.x, spawnPoint.y);
       } else if (spawnPoint.type === 'quest') {
         npc = new NPC(this, spawnPoint.x, spawnPoint.y);
+      } else if (spawnPoint.name === 'trainer') {
+
+
+        npc = new Trainer(this, spawnPoint.x, spawnPoint.y, spawnPoint.type + '-' + spawnPoint.name, abilities[spawnPoint.properties[0].value]);
       }
     })
 

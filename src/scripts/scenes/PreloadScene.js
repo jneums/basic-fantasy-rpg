@@ -268,6 +268,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('inventory', './assets/icons/backpack_icon.png');
     this.load.image('quest', './assets/icons/book_icon.png');
     this.load.image('equipment', './assets/icons/equip_icon.png');
+    this.load.image('quest-marker', './assets/icons/quest.png');
+    this.load.image('barbarian-trainer-marker', './assets/icons/barbarian_trainer.png');  
 
     // ui:
     this.load.image('ui', './assets/ui/ui.png');

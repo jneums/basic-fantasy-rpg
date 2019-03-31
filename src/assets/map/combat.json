@@ -81,10 +81,16 @@
                 {
                  "height":0,
                  "id":7,
-                 "name":"mob",
+                 "name":"trainer",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"ability",
+                         "type":"string",
+                         "value":"gore"
+                        }],
                  "rotation":0,
-                 "type":"orc",
+                 "type":"barbarian",
                  "visible":true,
                  "width":0,
                  "x":489.771,
@@ -117,10 +123,16 @@
                 {
                  "height":0,
                  "id":10,
-                 "name":"mob",
+                 "name":"trainer",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"ability",
+                         "type":"string",
+                         "value":"hobble"
+                        }],
                  "rotation":0,
-                 "type":"orc",
+                 "type":"barbarian",
                  "visible":true,
                  "width":0,
                  "x":910.868,
@@ -141,10 +153,16 @@
                 {
                  "height":0,
                  "id":12,
-                 "name":"mob",
+                 "name":"trainer",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"ability",
+                         "type":"string",
+                         "value":"savageBlow"
+                        }],
                  "rotation":0,
-                 "type":"orc",
+                 "type":"barbarian",
                  "visible":true,
                  "width":0,
                  "x":1177.69,
@@ -159,8 +177,26 @@
                  "type":"quest",
                  "visible":true,
                  "width":0,
-                 "x":125.668781883787,
-                 "y":89.0879681473186
+                 "x":125.669,
+                 "y":89.088
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"trainer",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"ability",
+                         "type":"string",
+                         "value":"rush"
+                        }],
+                 "rotation":0,
+                 "type":"barbarian",
+                 "visible":true,
+                 "width":0,
+                 "x":148.314,
+                 "y":88.8391
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -169,7 +205,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":14,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.3",

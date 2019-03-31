@@ -1,5 +1,6 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
 
 
 /**
@@ -18,7 +19,7 @@ export default function lesserHeal () {
     beneficial: true,
     resourceAmount: 25,
     resource: 'mana',
-    range: this.CONST.CAST_RANGE,
+    range: CONST.CAST_RANGE,
     needsTarget: true
   }
 

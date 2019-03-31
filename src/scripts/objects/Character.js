@@ -27,7 +27,8 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this)
     scene.physics.add.existing(this);
-
+    
+    this.knownAbilities = [];
 
     // working on this: keeps messing up the hit test though when they are circles.
     // this.setInteractive().setCircle(8)
@@ -42,7 +43,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     const humanStartingStats = {strength: 20, agility: 20, intellect: 20, stamina: 20, spirit: 20};
 
     // managers to track and change state:
-    this.CONST = new Const();
     this.stat = new Stat(this, humanStartingStats);
     this.skills = new Skills(this);
     this.equipment = new Equipment(this);

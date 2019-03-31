@@ -1,5 +1,6 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
 
 /**
  * gore - Wounds the target causing them to bleed for 15 damage
@@ -17,7 +18,7 @@ export default function gore() {
     beneficial: false,
     resourceAmount: 10,
     resource: 'rage',
-    range: this.CONST.MELEE_RANGE,
+    range: CONST.MELEE_RANGE,
     needsTarget: true
   }
 

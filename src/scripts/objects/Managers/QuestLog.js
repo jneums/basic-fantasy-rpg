@@ -101,9 +101,11 @@ export default class QuestLog {
 
     // get indvidual:
     this.getOne = function(questId) {
-      const quest = activeQuests.filter(quest => quest.getId() === questId)[0];
+      const completedQuest = completedQuests.find(quest => quest.getId() === questId);
+      if (completedQuest) return completedQuest;
+      const quest = activeQuests.find(quest => quest.getId() === questId);
       if (quest) return quest;
-      else return null;
+      return null;
     }
 
     this.completeQuest = function(questId) {

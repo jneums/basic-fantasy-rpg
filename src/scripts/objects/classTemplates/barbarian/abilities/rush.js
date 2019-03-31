@@ -1,5 +1,6 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
 
 /**
  * rush - rush an enemy, generate 9 rage, and stun it for 3 seconds.
@@ -16,7 +17,7 @@ export default function rush() {
   const reqConfig = {
     resourceAmount: 0,
     resourceType: 'rage',
-    range: this.CONST.CHARGE_MAX_DIST,
+    range: CONST.CHARGE_MAX_DIST,
     needsTarget: true
   }
   if (!abilityRequirements(this, reqConfig)) return;
@@ -37,5 +38,5 @@ export default function rush() {
 
   let offset = Math.sign(this.x - target.x) * 20;
   this.movement.setMoveTargetCoords([target.x + offset, target.y])
-  this.movement.setMovementSpeed(this.CONST.CHARGE_SPEED)
+  this.movement.setMovementSpeed(CONST.CHARGE_SPEED)
 }

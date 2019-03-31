@@ -1,4 +1,4 @@
-export default function Const() {
+export default (function Const() {
 
   const constants = {
     MOVEMENT_SPEED:    40,
@@ -11,9 +11,12 @@ export default function Const() {
     RAGE_DUMP_VALUE:   30,
     CHARGE_MIN_DIST:   50,
     CHARGE_MAX_DIST:  125,
-    CHARGE_SPEED:     500
+    CHARGE_SPEED:     500,
+
+    LOOTING_RANGE:     30,
+
   }
 
   return Object.freeze(constants);
 
-}
+})()

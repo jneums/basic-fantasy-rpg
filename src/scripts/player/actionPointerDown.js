@@ -1,4 +1,4 @@
-
+import CONST from '../objects/Managers/Const';
 /**
  * actionPointerDown - called when the inventory is closed,
  * e.g. the pointer has interacted with the game world, not the ui.
@@ -26,8 +26,9 @@ export default function actionPointerDown(pointer, player = {}) {
     const targetLootOwner = player.target.currentTarget().tapped();
     if (targetLootOwner.getName() !== player.getName()) return;
 
+
     // if click target was tapped, and tapper is in range:
-    if (targetLootOwner && target.target.rangeCheck(targetLootOwner, 70)) {
+    if (targetLootOwner && target.target.rangeCheck(targetLootOwner, CONST.LOOTING_RANGE)) {
       player.scene.lootBoxActive = true;
       player.scene.registry.set('openLootBox', target.loot());
 
@@ -42,7 +43,8 @@ export default function actionPointerDown(pointer, player = {}) {
       player.target.previousTarget().playerTarget = false;
     }
 
-    if (target.getCharacterClass() === 'npc' && player.target.rangeCheck(target, 25)) {
+
+    if (target.getCharacterClass() === 'npc' && player.target.rangeCheck(target, CONST.LOOTING_RANGE)) {
         let text = '';
         const questId = target.quest.id;
         const playerQuest = player.questLog.getOne(questId);
@@ -57,12 +59,30 @@ export default function actionPointerDown(pointer, player = {}) {
           text = player.questLog.getOne(questId).getText(2)
           // get reward, mark quest as complete:
           player.questLog.completeQuest(questId);
+          target.marker.hide()
         } else {
           text = "Thanks again brave person."
         }
 
         player.scene.dialogueBoxActive = true;
         player.scene.registry.set('openDialogueBox', text);
+    } else if (target.getCharacterClass() === 'trainer' && player.target.rangeCheck(target, CONST.LOOTING_RANGE)) {
+
+      let text = '';
+      const abilityName = target.lesson.name;
+      let status = player.knownAbilities.find(ability => ability === abilityName);
+
+      if (status) {
+        text = 'I can teach you no more about ' + abilityName;
+      } else {
+        text = target.lesson.instructions;
+        player.keyMap.setNextAvailable({ability: player.ability[abilityName], icon: abilityName})
+        player.knownAbilities.push(abilityName);
+        target.marker.hide()
+      }
+
+      player.scene.dialogueBoxActive = true;
+      player.scene.registry.set('openDialogueBox', text);
     }
   } else {
     // if no target was clicked, move to that spot instead

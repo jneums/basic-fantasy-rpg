@@ -30,14 +30,22 @@ export default class KeyMap {
         icon: null
       },
       seven: {
-        ability: character.consumables.drink,
-        icon: 'wine'
+        ability: null,
+        icon: null
       },
       eight: {
-        ability: character.consumables.eat,
-        icon: 'cheese'
+        ability: null,
+        icon: null
       },
       nine: {
+        ability: null,
+        icon: null
+      },
+      ten: {
+        ability: null,
+        icon: null
+      },
+      eleven: {
         ability: null,
         icon: 'inventory'
       },
@@ -51,42 +59,80 @@ export default class KeyMap {
       }
     }
 
+    this.setNextAvailable = function(ability) {
+      for (let number in keys) {
+        if (!keys[number].ability) {
+          keys[number] = ability;
+          character.scene.registry.set('reloadUI', character);
+          return;
+        }
+      }
+    }
+
     this.getIcons = function() {
       return Object.keys(keys).filter(key => key !== 'inventory').map(obj => keys[obj].icon);
     }
     this.executeOne = function() {
+      if (!keys.one.ability) return;
       keys.one.ability.call(character)
     }
 
     this.executeTwo = function() {
+      if (!keys.two.ability) return;
       keys.two.ability.call(character)
     }
 
     this.executeThree = function() {
+      if (!keys.three.ability) return;
+
       keys.three.ability.call(character)
     }
 
     this.executeFour = function() {
+      if (!keys.four.ability) return;
+
       keys.four.ability.call(character)
     }
 
     this.executeFive = function() {
+      if (!keys.five.ability) return;
+
       keys.five.ability.call(character)
     }
 
     this.executeSix = function() {
+      if (!keys.six.ability) return;
+
       keys.six.ability.call(character)
     }
 
     this.executeSeven = function() {
+      if (!keys.seven.ability) return;
+
       keys.seven.ability.call(character)
     }
 
     this.executeEight = function() {
+      if (!keys.eight.ability) return;
+
       keys.eight.ability.call(character)
     }
 
     this.executeNine = function() {
+      if (!keys.nine.ability) return;
+
+      keys.nine.ability.call(character);
+
+    }
+
+    this.executeTen = function() {
+      if (!keys.ten.ability) return;
+
+      keys.ten.ability.call(character);
+    }
+
+    this.executeEleven = function() {
+
       if (character.scene.inventoryActive) {
         character.scene.inventoryActive = false;
         character.scene.registry.set('closeInventory');
@@ -106,6 +152,7 @@ export default class KeyMap {
         character.scene.registry.set('openInventory', data);
 
       }
+
     }
 
     this.executeZero = function() {

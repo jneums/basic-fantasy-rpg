@@ -1,6 +1,9 @@
 import CombatObject from '../CombatSystem/CombatObject';
 import spellHitTable from '../../hitTables/spellHitTable';
 import abilityRequirements from './abilityRequirements';
+import CONST from '../Managers/Const';
+
+
 /**
  * wand - attack with an equipped wand
  *
@@ -17,7 +20,7 @@ export default function wand() {
     beneficial: false,
     resourceAmount: 0,
     resource: 'mana',
-    range: this.CONST.CAST_RANGE,
+    range: CONST.CAST_RANGE,
     needsTarget: true
   }
 

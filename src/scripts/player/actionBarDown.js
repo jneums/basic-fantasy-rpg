@@ -50,7 +50,7 @@ export default function actionBarDown(pointer = {}, player = {}) {
     } else if (pointer.downY > FOURTH_ROW_TOP && pointer.downY < FOURTH_ROW_BOT) {
       player.keyMap.executeSeven();
     } else if (pointer.downY > FIFTH_ROW_TOP && pointer.downY < FIFTH_ROW_BOT) {
-      player.keyMap.executeNine();
+      player.keyMap.executeEleven();
     } else if (pointer.downY > SIXTH_ROW_TOP && pointer.downY < SIXTH_ROW_BOT) {
       //
     } else if (pointer.downY > SEVENTH_ROW_TOP && pointer.downY < SEVENTH_ROW_BOT) {

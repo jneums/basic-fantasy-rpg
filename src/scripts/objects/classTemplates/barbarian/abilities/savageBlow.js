@@ -1,4 +1,7 @@
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
+
+
 /**
  * Savage Blow - A strong attack that increases weapon
  * damage by 11 and causes a hight amount (20 for lvl 1) of threat.
@@ -16,7 +19,7 @@ export default function savageBlow() {
     beneficial: false,
     resourceAmount: 0,
     resource: 'rage',
-    range: this.CONST.MELEE_RANGE,
+    range: CONST.MELEE_RANGE,
     needsTarget: true
   }
 

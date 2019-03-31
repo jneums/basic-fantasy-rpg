@@ -15,6 +15,7 @@ export default function lootBoxPointerDown(pointer, player) {
   // if pointer is on the loot:
   if (pointer.downX > LOOT_BOX_LEFT && pointer.downX < LOOT_BOX_RIGHT
         && pointer.downY > LOOT_BOX_TOP && pointer.downY < LOOT_BOX_BOTTOM) {
+          if (!player.target.currentTarget().loot()) return;
           const loot = player.target.currentTarget().loot();
           player.inventory.add(loot);
           player.target.currentTarget().setLoot(null);

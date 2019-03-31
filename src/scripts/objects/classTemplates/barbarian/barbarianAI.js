@@ -1,4 +1,7 @@
 import moveToMoveTarget from '../../../player/moveToMoveTarget';
+import CONST from '../../Managers/Const';
+
+
 /**
  * barbarianAI - barbarian script, used for
  * non player controlled barbarian characters.
@@ -13,7 +16,7 @@ export default function barbarianAI() {
     const rage = this.rage.rage();
 
     // scan for enemies for body pull
-    const enemies = this.target.scanForEnemies(this.CONST.BODY_PULL_RANGE);
+    const enemies = this.target.scanForEnemies(CONST.BODY_PULL_RANGE);
     // scan for enemies by threat table (pulled by attack)
     const target = this.threat.highestThreat()
       ? this.threat.highestThreat()
@@ -27,17 +30,17 @@ export default function barbarianAI() {
     }
 
     // if target, is he far enough to charge?
-    const isTooCloseToCharge = this.target.rangeCheck(target, this.CONST.CHARGE_MIN_DIST);
-    const canMelee = this.target.rangeCheck(target, this.CONST.MELEE_RANGE);
+    const isTooCloseToCharge = this.target.rangeCheck(target, CONST.CHARGE_MIN_DIST);
+    const canMelee = this.target.rangeCheck(target, CONST.MELEE_RANGE);
 
     if (canMelee) {
       // stop moving:
       this.movement.stop();
       // does target have gore? if not, give it to him!
-      if (!target.buffs.has("gore") && rage > this.CONST.RAGE_DUMP_VALUE) this.ability.gore();
+      if (!target.buffs.has("gore") && rage > CONST.RAGE_DUMP_VALUE) this.ability.gore();
 
       // do I have too much rage? spend it...
-      if (rage > this.CONST.RAGE_DUMP_VALUE) this.ability.savageBlow();
+      if (rage > CONST.RAGE_DUMP_VALUE) this.ability.savageBlow();
       this.combat.meleeAutoAttack(target);
       this.animations.combat();
     } else {

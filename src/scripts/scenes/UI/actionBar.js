@@ -15,24 +15,25 @@ function loadActionBar(scene, abilities) {
   actionBars.scaleY = CONST.SCALE;
 
   let x = 1124;
-  let y = 140;
+  let y = 60;
   abilities.forEach((ability, i) => {
-    if (!ability) ability = 'empty'
+
+    // if even, x = 1124, if odd, x = 1124 + 80;
+    // every two, increase y by 80.
+    if (i % 2 === 0) {
+      x = 1124;
+      y += 80
+    } else {
+      x = 1124 + 80;
+    }
+
+    if (!ability) return;
     let icon = scene.add.image(x, y, ability)
       .setOrigin(0)
 
     scene.icons.add(icon);
     icon.scaleX = 4
     icon.scaleY = 4
-    if (i === 7) {
-      x = 1124;
-      y += 160;
-    } else if (i % 2 === 0) {
-      x += 80;
-    } else {
-      x = 1124;
-      y += 80;
-    }
   })
 }
 

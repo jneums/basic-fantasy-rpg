@@ -21,7 +21,7 @@ export default class Priest extends Character {
 
 
         //set starting texture and size:
-        this.setTexture('mage-run', 0).setSize(12, 12)
+        this.setTexture('mage-run', 0).setSize(22, 22).setOrigin(0.5);
 
     // coordinate which animations to play:
     this.animations = new Anims(this, 'priest', 'priest-sword');

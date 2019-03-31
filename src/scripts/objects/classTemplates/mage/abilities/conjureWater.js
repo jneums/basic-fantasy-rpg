@@ -1,4 +1,5 @@
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
 
 /**
  * Conjure Water - Conjures 2 bottle of Water, providing
@@ -16,7 +17,7 @@ export default function conjureWater() {
     beneficial: true,
     resourceAmount: 60,
     resource: 'mana',
-    range: this.CONST.MELEE_RANGE,
+    range: CONST.MELEE_RANGE,
     needsTarget: false
   }
 

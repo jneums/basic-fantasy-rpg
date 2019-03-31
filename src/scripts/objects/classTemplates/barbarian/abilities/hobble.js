@@ -1,5 +1,6 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import CONST from '../../../Managers/Const';
 
 /**
  * hobble - Maims the enemy, causing 5 damage and slowing
@@ -18,7 +19,7 @@ import abilityRequirements from '../../abilityRequirements';
      beneficial: false,
      resourceAmount: 10,
      resource: 'rage',
-     range: this.CONST.MELEE_RANGE,
+     range: CONST.MELEE_RANGE,
      needsTarget: true
    }
 
