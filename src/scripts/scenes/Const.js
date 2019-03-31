@@ -18,7 +18,9 @@ export default (function Const() {
     SCALE: 4,
 
     // action bar size:
-    ACTION_BAR_WIDTH: 70,
+    ACTION_BAR_WIDTH: 43 * 4,
+
+    GAME_VIEW_WIDTH: 1280 - (43 * 4),
 
     // width - action bar, / 2.
     GAME_VIEW_CENTER_X: (1280 - (43 * 4)) / 2,

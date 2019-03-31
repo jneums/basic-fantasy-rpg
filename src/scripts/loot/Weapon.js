@@ -7,7 +7,15 @@ const COLORS = {
   3: 'blue',
   4: 'purple',
   5: 'red',
-  6: 'brown'
+}
+
+const TINTS = {
+  'grey': 0x88776f,
+  'yellow': 0xdbc244,
+  'green': 0x649154,
+  'blue': 0x5ba3c7,
+  'purple': 0x944a9c,
+  'red': 0xaa3333,
 }
 
 
@@ -65,6 +73,11 @@ export default class Weapon extends Item {
 
     // increase lvl:
     this.lvlUp = function() {
+      for (let stat in _statBonus) {
+        _statBonus[stat] += 2;
+      }
+      _dmg.min += 2;
+      _dmg.max += 2;
       _ilvl += 1;
       _sell *= 1.5;
       _colorIndex++
@@ -72,6 +85,10 @@ export default class Weapon extends Item {
 
     this.getColor = function() {
       return COLORS[_colorIndex]
+    }
+
+    this.getTint = function() {
+      return TINTS[COLORS[_colorIndex]]
     }
 
     let _colorIndex = 0;

@@ -237,6 +237,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('blue-bg', 'assets/items/blue_bg.png');
     this.load.image('purple-bg', 'assets/items/purple_bg.png');
     this.load.image('red-bg', 'assets/items/red_bg.png');
+    this.load.image('grey-bg', 'assets/items/grey_bg.png');
 
     // small item bg's:
     this.load.image('brown-sm-bg', 'assets/items/brown_small_bg.png');

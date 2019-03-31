@@ -14,7 +14,6 @@ function loadActionBar(scene, abilities) {
   actionBars.scaleX = CONST.SCALE;
   actionBars.scaleY = CONST.SCALE;
 
-
   let x = 1124;
   let y = 140;
   abilities.forEach((ability, i) => {

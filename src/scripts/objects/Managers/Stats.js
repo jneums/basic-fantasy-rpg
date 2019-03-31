@@ -44,6 +44,9 @@ export default class Stat {
     let strAPR = 0;
     let agilityToAttackPowerRatio = 0;
 
+    let primary = [];
+    let secondary = [];
+
     // place holder methods, will be replaced when
     // talents are races are implemented.
     this.statFromTalents = function() {
@@ -54,6 +57,42 @@ export default class Stat {
       return 0;
     }
 
+    this.setSecondary = function(newSec) {
+      secondary = newSec;
+    }
+
+    this.getSecondary = function() {
+      return secondary;
+    }
+
+    this.setPrimary = function(newPrimary){
+      primary = newPrimary;
+    }
+
+    this.getPrimary = function() {
+      return primary;
+    }
+
+    this.incStat = function(stat) {
+
+      switch (stat) {
+        case 'strength':
+        strength++;
+        break;
+        case 'agility':
+        agility++;
+        break;
+        case 'stamina':
+        stamina++;
+        break;
+        case 'intellect':
+        intellect++;
+        break;
+        case 'spirit':
+        spirit++;
+        break;
+      }
+    }
 
 
     this.displayStats = function() {

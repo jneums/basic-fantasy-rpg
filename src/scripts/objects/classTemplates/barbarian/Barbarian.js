@@ -55,6 +55,8 @@ export default class Barbarian extends Character {
     const baseStrength = this.stat.baseStrength();
     const barbarianStrengthBonus = 3;
     this.stat.setStrength(baseStrength + barbarianStrengthBonus);
+    this.stat.setPrimary(['strength', 'stamina']);
+    this.stat.setSecondary(['spirit', 'agility', 'intellect'])
 
     // and bonus to stamina:
     const baseStamina = this.stat.baseStamina();

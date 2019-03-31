@@ -29,7 +29,7 @@ const y5_T = CONST.GAME_VIEW_CENTER_Y + 39 * 4;
 const y5_B = CONST.GAME_VIEW_CENTER_Y + 54 * 4;
 
 const use_L = CONST.GAME_VIEW_CENTER_X - 25 * 4;
-const use_R = CONST.GAME_VIEW_CENTER_X + 1 * 4;
+const use_R = CONST.GAME_VIEW_CENTER_X + 10 * 4;
 
 const discard_L = CONST.GAME_VIEW_CENTER_X + 56 * 4;
 const discard_R = CONST.GAME_VIEW_CENTER_X + 85 * 4;
@@ -59,7 +59,11 @@ export default function inventoryPointerDown(pointer, character) {
       if (active.hasOwnProperty('getType') && active.getType() === 'consumable'
         || active.hasOwnProperty('skillType') && character.skills.canUse(active.skillType())) {
           character.inventory.useActive();
-          character.scene.registry.set('openInventory', character.inventory.getInventory())
+          const data = {
+            inventory: character.inventory.getInventory(),
+            crystals: character.inventory.getCrystals()
+          }
+          character.scene.registry.set('openInventory', data)
 
       }
     } else if (pointer.downX > discard_L && pointer.downX < discard_R) {
@@ -89,9 +93,6 @@ export default function inventoryPointerDown(pointer, character) {
       index = 12;
 
       // fifth row:
-    } else if (pointer.downY > y5_T && pointer.downY < y5_B) {
-      index = 16;
-
     }
 
   // second column:
@@ -116,10 +117,7 @@ export default function inventoryPointerDown(pointer, character) {
 
 
     // fifth row:
-  } else if (pointer.downY > y5_T && pointer.downY < y5_B) {
-      index = 17;
-
-    }
+  }
 
   // third column:
   } else if (pointer.downX > x3_L && pointer.downX < x3_R) {
@@ -144,10 +142,7 @@ export default function inventoryPointerDown(pointer, character) {
 
 
     // fifth row:
-  } else if (pointer.downY > y5_T && pointer.downY < y5_B) {
-      index = 18;
-
-    }
+  }
   // fourth column:
   } else if (pointer.downX > x4_L && pointer.downX < x4_R) {
     // first row:
@@ -170,10 +165,7 @@ export default function inventoryPointerDown(pointer, character) {
 
 
     // fifth row:
-  } else if (pointer.downY > y5_T && pointer.downY < y5_B) {
-      index = 19;
-
-    }
+  }
   }
 
   if (index < 0) return;
@@ -194,9 +186,13 @@ export default function inventoryPointerDown(pointer, character) {
 
 
   character.inventory.setActive(index);
-  character.scene.registry.set('openInventory', filteredInventory)
+  const data = {
+    inventory: filteredInventory,
+    crystals: character.inventory.getCrystals()
+  }
+  character.scene.registry.set('openInventory', data)
 
-  if (!character.inventory.getInventory()[index].hasOwnProperty('slot')) return;
+  if (!character.inventory.getInventory()[index] || !character.inventory.getInventory()[index].hasOwnProperty('slot')) return;
 
   const slot = character.inventory.getInventory()[index].slot();
   const equipped = character.equipment.equipped()[slot];

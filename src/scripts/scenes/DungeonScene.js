@@ -115,11 +115,20 @@ export default class DungeonScene extends Phaser.Scene {
     this.registry.set('selectItem');
     this.registry.set('showComparison');
     this.registry.set('selectQuest')
+    this.registry.set('selectEquipment')
 
     this.player.controller = 'player';
 
-
+    this.player.inventory.addCrystals(99)
     this.player.inventory.add(getConsumableByName('Spring Water'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
+    this.player.inventory.add(getConsumableByName('Tough Jerky'));
     this.player.inventory.add(getConsumableByName('Tough Jerky'));
     this.player.inventory.add(getConsumableByName('Tough Jerky'));
     this.player.inventory.add(getConsumableByName('Tough Jerky'));
@@ -150,7 +159,6 @@ export default class DungeonScene extends Phaser.Scene {
     this.player.equipment.equipped().mainHand.lvlUp()
     this.player.equipment.equipped().mainHand.lvlUp()
     this.player.equipment.equipped().mainHand.lvlUp()
-    console.log(this.player.equipment.equipped().mainHand.getColor())
 
     this.player.skills.levelUpSkill('twoHandSword')
     this.player.skills.levelUpSkill('twoHandSword')

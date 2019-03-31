@@ -99,7 +99,11 @@ export default class KeyMap {
           character.scene.registry.set('closeEquipment')
         }
         character.scene.inventoryActive = true;
-        character.scene.registry.set('openInventory', character.inventory.getInventory());
+        const data = {
+          inventory: character.inventory.getInventory(),
+          crystals: character.inventory.getCrystals()
+        }
+        character.scene.registry.set('openInventory', data);
 
       }
     }
@@ -139,7 +143,7 @@ export default class KeyMap {
 
         const data = {
           stats: character.stat.displayStats(),
-          equipment: character.equipment.equipped()
+          equipment: character.equipment.equipped(),
         }
         character.scene.equipmentActive = true;
         character.scene.registry.set('openEquipment', data)

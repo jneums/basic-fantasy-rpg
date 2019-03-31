@@ -37,6 +37,11 @@ export default class Item {
       return 'brown';
     }
 
+    this.getTint = function() {
+      // light brown;
+      return 0x8d6845;
+    }
+
     this.getIcon = function() {
       return _icon;
     }

@@ -20,7 +20,6 @@ export default function processCombatObject (attacker = {}, target = {}) {
 
   // update combat object based on status e.g. mitigation, resistances:
   // console.log(this.amount())
-
   statusMod(attacker, target, this);
   // console.log(this.amount())
 
@@ -42,5 +41,4 @@ export default function processCombatObject (attacker = {}, target = {}) {
   healthMod(attacker, target, this);
 
   resourceMod(attacker, target, this);
-
 }

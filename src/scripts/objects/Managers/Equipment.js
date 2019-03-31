@@ -24,6 +24,16 @@ export default class Equipment {
       feet: {},
     }
 
+    let _active = '';
+
+    this.getActive = function() {
+      return equipped[_active];
+    }
+
+    this.setActive = function(active) {
+      _active = active;
+    }
+
     /**
      * equip - take an item from character inventory
      * and put it into slot indicated on item's object.

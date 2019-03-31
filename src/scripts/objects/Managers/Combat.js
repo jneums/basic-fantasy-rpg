@@ -25,7 +25,7 @@ export default class Combat {
      * @returns {void}
      */
     this.meleeAttack  = function(target = {}, hand = '', type = '') {
-      
+
       if (character.casting()) return;
       // face enemy:
       character.movement.faceTarget(target);
@@ -44,7 +44,6 @@ export default class Combat {
       const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
       // random number between the above range
       let weaponDmg = Phaser.Math.Between(weaponsDamageRange.min, weaponsDamageRange.max);
-
       // offhand attacks hit for half as much:
       if (hand === 'off') weaponDmg /= 2;
       // formula for auto attack damage:

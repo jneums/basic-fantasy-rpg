@@ -11,7 +11,7 @@ export default class Lvl {
     // xp, gain xp to level up
     let _lvl = 1;
     let _xp = 0;
-    let _nextLvl = 150;
+    let _nextLvl = 10;
     let _dirty = false;
 
     this.isDirty = function() {
@@ -24,6 +24,17 @@ export default class Lvl {
 
     function _levelUp() {
       if (_xp < _nextLvl) return false;
+
+      const primary = character.stat.getPrimary();
+      primary.forEach(stat => {
+        character.stat.incStat(stat);
+        character.stat.incStat(stat);
+      })
+
+      const secondary = character.stat.getSecondary();
+      secondary.forEach(stat => {
+        character.stat.incStat(stat);
+      })
 
       _lvl++;
       _xp -= _nextLvl;

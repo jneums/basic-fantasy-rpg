@@ -1,15 +1,15 @@
 import { clearDialogue, loadDialogue } from './UI/dialogue';
 import { hideLoot, showLoot, buildLoot } from './UI/loot';
-import { clearInventory, showInventory, selectItem } from './UI/inventory';
+import { clearInventory, showInventory } from './UI/inventory';
 import { selectQuest, clearQuestLog, loadQuestLog } from './UI/quest';
 import { clearActionBar, loadActionBar } from './UI/actionBar';
+import itemTooltip from './UI/itemTooltip';
+import displayBuffs from './UI/displayBuffs';
 
 import XpBar from './UI/XpBar';
 
 
 import CONST from './Const';
-
-
 
 /**
  * UI:
@@ -18,12 +18,13 @@ export default class UIScene extends Phaser.Scene {
   constructor() {
     super({ key: 'UIScene' });
 
-
-
   }
 
   create() {
 
+    this.selfBuffs = this.add.container(0, 0);
+
+    this.targetBuffs = this.add.container(CONST.GAME_VIEW_WIDTH, 0);
     // xp bar:
     this.XpBar = new XpBar(this);
 
@@ -48,6 +49,10 @@ export default class UIScene extends Phaser.Scene {
     // events:
     this.registry.events.on('changedata', this.updateData, this);
 
+    // equipment item holder:
+    this.invTooltip = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
+    this.compTooltip = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y)
+    this.itemContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
   }
 
 
@@ -92,43 +97,31 @@ export default class UIScene extends Phaser.Scene {
       clearEquipment(this);
 
     } else if (key === 'selectItem') {
-      selectItem(this, data)
+      itemTooltip(this, data, 'inventory')
+
     } else if (key === 'showComparison') {
-      showComparison(this, data);
+      itemTooltip(this, data, 'compare');
+
+    } else if (key == 'selectEquipment') {
+      itemTooltip(this, data, 'equip');
 
     } else if (key === 'refreshXpBar') {
       this.XpBar.set(data);
+
+    } else if (key === 'playerBuffs') {
+      displayBuffs(this, data, 'player');
+
+    } else if (key === 'targetBuffs') {
+      displayBuffs(this, data, 'target');
+
     }
   }
 }
 
-function showComparison(scene, item) {
-  if (!item) return;
 
-  let name = item.name;
-  let stats = '';
-  let statKeys = '';
 
-  switch(item.type) {
-    case 'armor':
-    stats = [ `${item.armor}`, item.armorType, item.levelRequirement, item.sellPrice, item.slot ];
-    statKeys = ["AC: ", "Type: ", "Lvl: ", "$$$: ", "Slot: " ];
-    break;
-    case 'weapon':
-    stats = [ `${item.damage.min}-${item.damage.max}`, item.speed, item.levelRequirement, '$' + item.sellPrice, item.slot ];
-    statKeys = ["Dmg: ", "Spd: ", "Lvl: ", "$$$: ", "Slot: " ];
-    break;
-  }
 
-  const title = scene.add.bitmapText( (-16 * 4), (12 * 4), 'font', 'equipped: ', 16)
-  const itemName = scene.add.bitmapText( (-16 * 4), (18 * 4), 'font', name, 18);
-  const itemStats = scene.add.bitmapText( (38 * 4), (26 * 4), 'font', stats, 16).setOrigin(1, 0).setRightAlign();
-  const itemStatKeys = scene.add.bitmapText( (-16 * 4), (26 * 4), 'font', statKeys, 16);
-  scene.inventoryContainer.add([title, itemName, itemStats, itemStatKeys])
-
-}
-
-function showEquipment(scene, stats, equipment) {
+function showEquipment(scene, stats, equipment, crystals) {
   if (!stats) return;
 
   const equipmentBackground = scene.add.image(0, 0, 'equipment-background');
@@ -136,15 +129,16 @@ function showEquipment(scene, stats, equipment) {
   equipmentBackground.scaleY = CONST.SCALE;
 
 
-  const statsHeader = scene.add.bitmapText(-51 * 4, 12 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crt: ', 'POW: '], 18)
-  const statsInfo = scene.add.bitmapText(-12 * 4, 12 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 18)
+  const statsHeader = scene.add.bitmapText(-51 * 4, 12 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crt: ', 'POW: '], 19)
+  const statsInfo = scene.add.bitmapText(-12 * 4, 12 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 19)
   statsInfo.setRightAlign().setOrigin( 1, 0)
   // add equipped items:
-  scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo]);
+  scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo ]);
   buildCharacter(scene, equipment);
 
 
 }
+
 
 function buildCharacter(scene, equipment) {
   const _xLeft = -93 * 4;
@@ -154,8 +148,6 @@ function buildCharacter(scene, equipment) {
   const _y2 = -12 * 4;
   const _y3 = 8 * 4;
   const _y4 = 28 * 4;
-
-
 
 
   for (let item in equipment) {
@@ -183,7 +175,6 @@ function buildCharacter(scene, equipment) {
           bg.scaleX = 4;
           bg.scaleY = 4;
 
-
           scene.equipmentContainer.add([bg, chest]);
         break;
         case 'legs':
@@ -206,7 +197,6 @@ function buildCharacter(scene, equipment) {
           bg.scaleX = 4;
           bg.scaleY = 4;
 
-
           scene.equipmentContainer.add([bg, feet]);
         break;
         case 'mainHand':
@@ -217,7 +207,6 @@ function buildCharacter(scene, equipment) {
           bg = scene.add.image(_xLeft, _y3, equipment[item].getColor() + '-sm-bg');
           bg.scaleX = 4;
           bg.scaleY = 4;
-
 
           scene.equipmentContainer.add([bg, mainHand]);
         break;
@@ -255,16 +244,12 @@ function buildCharacter(scene, equipment) {
           scene.equipmentContainer.add([bg, ring]);
         break;
       }
-
     }
-
-
   }
-
-
 }
 
 function clearEquipment(scene) {
   scene.equipmentContainer.removeAll(true);
+  scene.itemContainer.removeAll(true);
 
 }

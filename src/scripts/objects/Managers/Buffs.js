@@ -1,3 +1,4 @@
+
 /**
  * Buff Manager: collects and updates temporary
  * changes to characters stats. sends combatObjects
@@ -26,6 +27,13 @@ export default class Buffs {
      */
     this.setBuffs = function(newBuffs) {
       buffs = newBuffs;
+      if (character.controller === 'player') {
+        character.scene.registry.set('playerBuffs', newBuffs);
+
+      }
+      if (character.playerTarget) {
+        character.scene.registry.set('targetBuffs', newBuffs);
+      }
     }
 
     /**
@@ -104,6 +112,7 @@ export default class Buffs {
             return newBuff;
         })
         this.setBuffs(newBuffs);
+
         newBuffs.forEach(buff => {
           // if buff is channeled
           if (buff.channel) {

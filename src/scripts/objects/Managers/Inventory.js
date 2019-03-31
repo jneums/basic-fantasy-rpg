@@ -7,10 +7,10 @@ export default class Inventory {
   constructor(character) {
 
     // how many spaces in bag:
-    let capacity = 20;
+    let capacity = 16;
 
     // how many copper pieces:
-    let money = 0;
+    let crystals = 0;
 
     // inventory, holds ${capacity} elements:
     let inventory = [];
@@ -20,6 +20,7 @@ export default class Inventory {
 
     this.useActive = function() {
       if (!inventory[_activeIndex]) return;
+      inventory[_activeIndex].active = false;
       this.use(_activeIndex);
     }
 
@@ -89,7 +90,13 @@ export default class Inventory {
         console.log("I can't use that");
       } else {
         // if it gets to here, it must be an equippable item.
+        //returns true if swapped:
         character.equipment.equip(item);
+
+        if (inventory.length) {
+          _activeIndex = inventory.length - 1;
+        }
+
         inventory.splice(index, 1);
       }
     }
@@ -117,8 +124,8 @@ export default class Inventory {
       if (sameStacks) {
 
         const filteredInventory = inventory.filter(item => item.getName() !== gear.getName());
-        gear.setQty(stackQty);
         const newGear = Object.assign({}, gear)
+        newGear.setQty(stackQty);
 
         this.setInventory(filteredInventory.concat([newGear]));
       } else {
@@ -133,8 +140,8 @@ export default class Inventory {
      *
      * @returns {number}  characters money
      */
-    this.getMoney = function() {
-      return money;
+    this.getCrystals = function() {
+      return crystals;
     }
 
     /**
@@ -152,8 +159,12 @@ export default class Inventory {
      * @param  {number} newMoney
      * @returns {void}
      */
-    this.setMoney = function(newMoney) {
-      money = newMoney;
+    this.addCrystals = function(newCrystals) {
+      crystals += newCrystals;
+    }
+
+    this.removeCrystals = function (amount) {
+      crystals -= amount;
     }
 
     /**
