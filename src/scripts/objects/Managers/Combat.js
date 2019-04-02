@@ -7,8 +7,6 @@ export default class Combat {
 
     // array of combat objects
     let combatLog = [];
-    // que an event to land on next auto attack
-    let onNextAttack = '';
     // should auto attack or not
     let autoAttackToggle = true;
     // should auto shoot or not
@@ -168,14 +166,6 @@ export default class Combat {
       return combatLog;
     }
 
-    /**
-     * getOnNextAttack - applied to next swing
-     *
-     * @returns {string} 'savageBlow'
-     */
-    this.getOnNextAttack = function() {
-      return onNextAttack;
-    }
 
     /**
      * getAutoAttackToggle
@@ -193,16 +183,6 @@ export default class Combat {
      */
     this.autoShoot = function() {
       return autoShootToggle;
-    }
-
-    /**
-     * setOnNextAttack - only one can be set
-     *
-     * @param  {string} newOnNextAttack
-     * @returns {void}
-     */
-    this.setOnNextAttack = function(newOnNextAttack) {
-      onNextAttack = newOnNextAttack;
     }
 
     /**

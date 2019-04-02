@@ -23,6 +23,7 @@ export default class Lvl {
     }
 
     function _levelUp() {
+
       if (_xp < _nextLvl) return false;
 
       const primary = character.stat.getPrimary();
@@ -39,6 +40,9 @@ export default class Lvl {
       _lvl++;
       _xp -= _nextLvl;
       _nextLvl *= 1.25;
+
+      character.scene.registry.set('reloadUI', character)
+
       return true;
 
     }

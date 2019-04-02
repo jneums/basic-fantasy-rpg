@@ -102,10 +102,18 @@ export default class CharacterSelectionScene extends Phaser.Scene {
     startButton.y = 198;
 
     startButton.setInteractive()
+
     startButton.on('pointerup', (pointer) => {
-      this.scene.start('UIScene')
-      this.scene.start('DungeonScene', { class: selectedClass });
+      this.cameras.main.fadeOut(500);
+      this.time.delayedCall(500, () => {
+
+        this.scene.start('UIScene')
+        this.scene.start('DungeonScene', { class: selectedClass });
+
+      });
     })
+
+
 
     selectionContainer.add(startButton);
   }

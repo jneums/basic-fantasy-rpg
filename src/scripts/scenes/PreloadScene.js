@@ -210,7 +210,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('auto-attack', './assets/icons/auto_attack_icon.png');
     this.load.image('rush', './assets/icons/fast_icon.png');
     this.load.image('gore', './assets/icons/gore_icon.png');
-    this.load.image('savage-blow', './assets/icons/strike_icon.png');
+    this.load.image('precision', './assets/icons/strike_icon.png');
     this.load.image('shout', './assets/icons/shout_icon.png');
     this.load.image('intimidate', './assets/icons/earth_column.png');
     this.load.image('hobble', './assets/icons/fire_sword_icon.png');
@@ -269,7 +269,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('quest', './assets/icons/book_icon.png');
     this.load.image('equipment', './assets/icons/equip_icon.png');
     this.load.image('quest-marker', './assets/icons/quest.png');
-    this.load.image('barbarian-trainer-marker', './assets/icons/barbarian_trainer.png');  
+    this.load.image('barbarian-trainer-marker', './assets/icons/barbarian_trainer.png');
 
     // ui:
     this.load.image('ui', './assets/ui/ui.png');

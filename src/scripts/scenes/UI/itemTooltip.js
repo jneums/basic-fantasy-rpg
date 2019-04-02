@@ -27,14 +27,14 @@ export default function itemTooltip(scene, item, type) {
     statBonusKey = Object.keys(item.statBonus())[0];;
     stats = [ item.statBonus()[statBonusKey], item.armor(), item.skillType(), item.lvl(), item.sellPrice(), item.slot() ];
     statKeys = [`${statBonusKey}: `, "Armor: ", "Type: ", "Level Req: ", "Value: ", "Slot: "];
-    onUse = item.canUse ? 'equip' : "dismantle";
+    onUse = item.canUse ? 'equip' : "";
 
     break;
     case 'weapon':
     statBonusKey = Object.keys(item.statBonus())[0];;
     stats = [ item.statBonus()[statBonusKey], `${item.dmg().min}-${item.dmg().max}`, item.spd(), item.lvl(), item.sellPrice(), item.slot() ];
     statKeys = [`${statBonusKey}: `, "Damage: ", "Speed: ", "Level Req: ", "Value: ", "Slot: "];
-    onUse = item.canUse ? 'equip' : "dismantle";
+    onUse = item.canUse ? 'equip' : "";
 
     break;
     case 'questItem':
@@ -48,7 +48,7 @@ export default function itemTooltip(scene, item, type) {
 
   let color = 0;
 
-  if (onUse === "(can't equip)") {
+  if (onUse === "") {
     color = 0xbf7b3f;
   } else {
     color = 0x649438;

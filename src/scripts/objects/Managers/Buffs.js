@@ -48,6 +48,12 @@ export default class Buffs {
       this.setBuffs(newBuffs);
     }
 
+    this.remove = function(buffName) {
+      const newBuffs = this.getBuffs().filter(buff => buff.name !== buffName);
+      this.setBuffs(newBuffs.concat([]));
+
+    }
+
     /**
      * replace - use instead of add,
      * refreshes buff

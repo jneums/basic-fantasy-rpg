@@ -12,7 +12,7 @@ export default function createLoot(name = '') {
       case (random < 51):
         return getItemByName('Large Candle');
       case (random < 85):
-        return getConsumableByName('Tough Jerky');
+        return getConsumableByName('Orc Jerky');
       case (random < 87):
         return getConsumableByName('Spring Water');
       case (random < 89):

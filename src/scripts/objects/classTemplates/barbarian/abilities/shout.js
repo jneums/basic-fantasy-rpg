@@ -11,7 +11,7 @@ import CONST from '../../../Managers/Const';
  *
  * @returns {void}
  */
-export default function battleCry() {
+export default function shout() {
 
   const reqConfig = {
     beneficial: 'true',
@@ -25,7 +25,7 @@ export default function battleCry() {
   const alliesInRange = this.target.scanForAllies(CONST.CAST_RANGE);
   // create a buff object.
   const buff = {
-    name: 'battleShout',
+    name: 'shout',
     duration: 120 * 60,
     statObject: {
       attackPower: 25
@@ -35,7 +35,7 @@ export default function battleCry() {
   // push it to each of the allies in 20 yards
   if (alliesInRange.length !== 0) {
     alliesInRange.forEach(ally => {
-      if (ally.buffs.has('battleShout'))
+      if (ally.buffs.has('shout'))
         ally.buffs.replace(buff);
       else
         ally.buffs.add(buff);

@@ -19,18 +19,13 @@ export default function attackerClassUpdate (attacker = {}, combatObject = {}) {
       // on each auto attack:
       if (combatObject.type() === 'autoAttack') {
 
-        // except if the next auto attack has a savage blow:
-        const onNextAttack = attacker.combat.getOnNextAttack();
 
-        if (onNextAttack === 'savageBlow') {
-          if(!attacker.rage.spendRage(15)) return;
+        if (attacker.buffs.has('precision') && attacker.rage.spendRage(15)) {
           // savage blow deals increased threat, and 11 extra damage:
           combatObject.setAmount(combatObject.amount() + 11);
           combatObject.setBonusThreat(combatObject.bonusThreat() + 20);
 
-          // reset, so nextAttack doenst trigger again:
-          const newOnNextAttack = '';
-          attacker.combat.setOnNextAttack(newOnNextAttack);
+          attacker.buffs.remove('precision');
           break;
 
         }

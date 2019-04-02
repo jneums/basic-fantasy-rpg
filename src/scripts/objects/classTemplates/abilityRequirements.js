@@ -12,6 +12,9 @@ function combatError(character, type) {
     case 'range':
       error = 'I need to get closer!';
       break;
+    case 'tooClose':
+      error = 'I am too close!'
+      break;
     case 'team':
       error = "Wrong team!"
       break;
@@ -45,6 +48,7 @@ export default function abilityRequirements(character = {}, config = {}) {
   const _resourceAmount = config.resourceAmount || 0;
   const _resource = config.resource || 'rage';
   const _range = config.range || 0;
+  const _tooCLose = config.tooClose || 0;
   const _needsTarget = config.needsTarget || false;
 
   if (_needsTarget) {
@@ -72,6 +76,11 @@ export default function abilityRequirements(character = {}, config = {}) {
 
     if (!character.target.rangeCheck(_target, _range)) {
       combatError(character, 'range');
+      return false;
+    }
+
+    if (character.target.rangeCheck(_target, _tooCLose)) {
+      combatError(character, 'tooClose');
       return false;
     }
 

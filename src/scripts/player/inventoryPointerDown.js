@@ -50,27 +50,31 @@ const buttons_B = CONST.GAME_VIEW_CENTER_Y + 7 * 4;
  */
 export default function inventoryPointerDown(pointer, character) {
   let index = -1;
+  const active = character.inventory.getActive();
 
   // use:
   if (pointer.downY > buttons_T && pointer.downY < buttons_B) {
     if (pointer.downX > use_L && pointer.downX < use_R) {
-      const active = character.inventory.getActive();
 
       if (active.hasOwnProperty('getType') && active.getType() === 'consumable'
         || active.hasOwnProperty('skillType') && character.skills.canUse(active.skillType())) {
           character.inventory.useActive();
-          const data = {
-            inventory: character.inventory.getInventory(),
-            crystals: character.inventory.getCrystals()
-          }
-          character.scene.registry.set('openInventory', data)
 
       }
     } else if (pointer.downX > discard_L && pointer.downX < discard_R) {
-      character.inventory.discardActive();
-      character.scene.registry.set('openInventory', character.inventory.getInventory())
+      if (active.hasOwnProperty('skillType')) {
+        character.inventory.dismantleActive();
+      } else {
+        character.inventory.discardActive();
+
+      }
 
     }
+    const data = {
+      inventory: character.inventory.getInventory(),
+      crystals: character.inventory.getCrystals()
+    }
+    character.scene.registry.set('openInventory', data)
   }
 
   // first column:

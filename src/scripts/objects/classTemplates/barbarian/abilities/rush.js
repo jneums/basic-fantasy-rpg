@@ -18,6 +18,7 @@ export default function rush() {
     resourceAmount: 0,
     resourceType: 'rage',
     range: CONST.CHARGE_MAX_DIST,
+    tooClose: CONST.CHARGE_MIN_DIST,
     needsTarget: true
   }
   if (!abilityRequirements(this, reqConfig)) return;

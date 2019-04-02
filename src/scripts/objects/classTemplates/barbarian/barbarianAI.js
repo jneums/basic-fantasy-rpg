@@ -40,7 +40,7 @@ export default function barbarianAI() {
       if (!target.buffs.has("gore") && rage > CONST.RAGE_DUMP_VALUE) this.ability.gore();
 
       // do I have too much rage? spend it...
-      if (rage > CONST.RAGE_DUMP_VALUE) this.ability.savageBlow();
+      if (rage > CONST.RAGE_DUMP_VALUE) this.ability.precision();
       this.combat.meleeAutoAttack(target);
       this.animations.combat();
     } else {

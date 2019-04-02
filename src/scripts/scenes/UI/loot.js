@@ -14,16 +14,16 @@ function buildLoot(scene, item, index) {
 
   // looting position:
   if (index > 15) {
-    _xOffset = 21 * 4;
-    _yOffset = 21 * 4;
+    _xOffset = 19 * 4;
+    _yOffset = 19 * 4;
     _x = -94 * 4 + (_xOffset * (index - 16));
     _y = -33 * 4 + (_yOffset * 4);
     _bg = '-sm-bg';
     _iconOffset = 0;
 
   } else if (index > 11) {
-    _xOffset = 21 * 4;
-    _yOffset = 21 * 4;
+    _xOffset = 19 * 4;
+    _yOffset = 19 * 4;
     _x = -94 * 4 + (_xOffset * (index - 12));
     _y = -33 * 4 + (_yOffset * 3);
     _bg = '-sm-bg';

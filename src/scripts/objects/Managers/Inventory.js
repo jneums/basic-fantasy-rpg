@@ -17,6 +17,11 @@ export default class Inventory {
 
     let _activeIndex = -1;
 
+    this.dismantleActive = function() {
+      if (!inventory[_activeIndex]) return;
+      inventory[_activeIndex].sell(character);
+    }
+
 
     this.useActive = function() {
       if (!inventory[_activeIndex]) return;

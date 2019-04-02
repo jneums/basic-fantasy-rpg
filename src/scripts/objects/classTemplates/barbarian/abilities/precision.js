@@ -3,8 +3,8 @@ import CONST from '../../../Managers/Const';
 
 
 /**
- * Savage Blow - A strong attack that increases weapon
- * damage by 11 and causes a hight amount (20 for lvl 1) of threat.
+ * Precision - carefully aim your next strike.
+ * Deals increased damage.
  *
  * level: 1
  *
@@ -12,7 +12,7 @@ import CONST from '../../../Managers/Const';
  *
  * @returns {void}
  */
-export default function savageBlow() {
+export default function precision() {
 
   // pre ability requirements:
   const config = {
@@ -25,10 +25,11 @@ export default function savageBlow() {
 
   if(!abilityRequirements(this, config)) return;
 
-  const onNextAttack = this.combat.getOnNextAttack();
-  // exit early if heroic strike is already to go
-  if (onNextAttack === 'savageBlow') return;
+  if (this.buffs.has('precision')) return;
 
-  const newOnNextAttack = 'savageBlow';
-  this.combat.setOnNextAttack(newOnNextAttack)
+  this.buffs.add({
+    name: 'precision',
+    duration: 10 * 60, //3 seconds
+    attacker: this
+  });
 }

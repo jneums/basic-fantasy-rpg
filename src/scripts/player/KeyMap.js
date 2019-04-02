@@ -191,6 +191,7 @@ export default class KeyMap {
         const data = {
           stats: character.stat.displayStats(),
           equipment: character.equipment.equipped(),
+          crystals: character.inventory.getCrystals()
         }
         character.scene.equipmentActive = true;
         character.scene.registry.set('openEquipment', data)

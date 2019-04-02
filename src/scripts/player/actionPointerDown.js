@@ -1,4 +1,17 @@
 import CONST from '../objects/Managers/Const';
+
+function _setTarget(player, target) {
+  player.movement.faceTarget(target);
+  player.target.setCurrentTarget(target);
+
+  const targetInfo = {
+    name: target.getName(),
+    level: target.lvl.getLevel()
+  }
+  player.scene.registry.set('targetChange', targetInfo);
+
+  target.playerTarget = true;
+}
 /**
  * actionPointerDown - called when the inventory is closed,
  * e.g. the pointer has interacted with the game world, not the ui.
@@ -8,8 +21,12 @@ import CONST from '../objects/Managers/Const';
  * @return {void}
  */
 export default function actionPointerDown(pointer, player = {}) {
+
+
   // is pointer on a character:
   let target = false;
+
+
   // loop through each character and check if the pointer
   // clicked on their body:
   player.scene.characters.getChildren().forEach(child => {
@@ -22,6 +39,8 @@ export default function actionPointerDown(pointer, player = {}) {
   // if a dead character with loot was clicked:
   if (target && target.combat.isDead() && target.loot()) {
 
+
+
     // tapped is whomever hit it first:
     const targetLootOwner = player.target.currentTarget().tapped();
     if (targetLootOwner.getName() !== player.getName()) return;
@@ -29,15 +48,15 @@ export default function actionPointerDown(pointer, player = {}) {
 
     // if click target was tapped, and tapper is in range:
     if (targetLootOwner && target.target.rangeCheck(targetLootOwner, CONST.LOOTING_RANGE)) {
+      _setTarget(player, target);
+
+
       player.scene.lootBoxActive = true;
       player.scene.registry.set('openLootBox', target.loot());
-
     }
 
   } else if (target) {
-    player.movement.faceTarget(target);
-    player.target.setCurrentTarget(target);
-    target.playerTarget = true;
+    _setTarget(player, target);
 
     if (player.target.previousTarget()) {
       player.target.previousTarget().playerTarget = false;

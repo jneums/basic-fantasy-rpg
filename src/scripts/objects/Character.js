@@ -27,7 +27,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this)
     scene.physics.add.existing(this);
-    
+
     this.knownAbilities = [];
 
     // working on this: keeps messing up the hit test though when they are circles.
@@ -115,10 +115,10 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // 'horder', 'alliance', 'monster'
     let team = '';
     // person the kill belongs to:
-    let tapped = undefined;
+    let tapped = null;
 
     // generate loot:
-    let loot = undefined;
+    let loot = null;
 
     /**
      * getName
@@ -172,6 +172,11 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
      */
     this.loot = function() {
       return loot;
+    }
+
+    this.takeLoot = function(character) {
+      character.inventory.add(Object.assign({}, loot));
+      loot = null;
     }
 
     /**

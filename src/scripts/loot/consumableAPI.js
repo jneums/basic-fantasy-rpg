@@ -8,7 +8,7 @@ import Item from './Item';
  */
 function getConsumableByName(name = '') {
   const toughJerky = new Item(
-    'Tough Jerky',
+    'Orc Jerky',
     ["not easy on the teeth.", "Restores 290 HP over", "30 seconds though."],
     1,
     25,

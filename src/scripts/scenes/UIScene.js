@@ -7,6 +7,7 @@ import itemTooltip from './UI/itemTooltip';
 import displayBuffs from './UI/displayBuffs';
 
 import XpBar from './UI/XpBar';
+import NameBar from './UI/NameBar';
 
 
 import CONST from './Const';
@@ -27,6 +28,9 @@ export default class UIScene extends Phaser.Scene {
     this.targetBuffs = this.add.container(CONST.GAME_VIEW_WIDTH, 0);
     // xp bar:
     this.XpBar = new XpBar(this);
+
+    this.playerName = new NameBar(this, 'player');
+    this.targetName = new NameBar(this, 'target');
 
     // lootBox:
     this.lootBoxContainer = this.add.container(CONST.GAME_VIEW_CENTER_X, CONST.GAME_VIEW_CENTER_Y);
@@ -62,6 +66,11 @@ export default class UIScene extends Phaser.Scene {
       clearActionBar(this);
       const icons = data.keyMap.getIcons();
       loadActionBar(this, icons)
+      const info = {
+        name: data.getName(),
+        level: data.lvl.getLevel()
+      }
+      this.playerName.set(info);
 
     } else if (key === 'openDialogueBox') {
       loadDialogue(this, data);
@@ -91,7 +100,9 @@ export default class UIScene extends Phaser.Scene {
       hideLoot(this);
 
     } else if (key === 'openEquipment') {
-      showEquipment(this, data.stats, data.equipment);
+
+
+      showEquipment(this, data);
 
     } else if (key === 'closeEquipment') {
       clearEquipment(this);
@@ -114,6 +125,9 @@ export default class UIScene extends Phaser.Scene {
     } else if (key === 'targetBuffs') {
       displayBuffs(this, data, 'target');
 
+    } else if (key === 'targetChange') {
+      this.targetName.set(data);
+
     }
   }
 }
@@ -121,19 +135,20 @@ export default class UIScene extends Phaser.Scene {
 
 
 
-function showEquipment(scene, stats, equipment, crystals) {
+function showEquipment(scene, {stats, equipment, crystals}) {
   if (!stats) return;
 
   const equipmentBackground = scene.add.image(0, 0, 'equipment-background');
   equipmentBackground.scaleX = CONST.SCALE;
   equipmentBackground.scaleY = CONST.SCALE;
 
+  const crystalsText = scene.add.bitmapText(-36 * 4, 46 * 4, 'font', crystals, 36).setOrigin(1, 0);
 
-  const statsHeader = scene.add.bitmapText(-51 * 4, 12 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crt: ', 'POW: '], 19)
-  const statsInfo = scene.add.bitmapText(-12 * 4, 12 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 19)
+  const statsHeader = scene.add.bitmapText(52 * 4, -40 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crt: ', 'POW: '], 16)
+  const statsInfo = scene.add.bitmapText(94 * 4, -40 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 16)
   statsInfo.setRightAlign().setOrigin( 1, 0)
   // add equipped items:
-  scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo ]);
+  scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo, crystalsText]);
   buildCharacter(scene, equipment);
 
 
