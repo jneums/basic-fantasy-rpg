@@ -26,6 +26,11 @@ export default class Equipment {
 
     let _active = '';
 
+
+    this.getActiveSlot = function() {
+      return _active;
+    }
+
     this.getActive = function() {
       return equipped[_active];
     }
@@ -33,6 +38,8 @@ export default class Equipment {
     this.setActive = function(active) {
       _active = active;
     }
+
+
 
     /**
      * equip - take an item from character inventory
@@ -53,6 +60,18 @@ export default class Equipment {
       if (!replacedGear.hasOwnProperty('getName')) return;
       if (replacedGear.getName()) {
         character.inventory.add(replacedGear);
+      }
+    }
+
+    this.unequipActive = function() {
+      if (!equipped[_active]) return;
+      if (character.inventory.isFull()) return;
+      character.inventory.add(equipped[_active]);
+      equipped[_active] = {};
+      _active = '';
+
+      if (character.stat.maxHp() < character.stat.hp()) {
+        character.stat.setHp(character.stat.maxHp())
       }
     }
 
@@ -160,14 +179,17 @@ export default class Equipment {
       const equipped = this.equipped();
       for (let item in equipped) {
         if (equipped[item].hasOwnProperty('statBonus')) {
-          if (equipped[item].statBonus().hasOwnProperty(stat)) {
-            total += equipped[item].statBonus()[stat];
+          if (equipped[item].statBonus().main.stat === stat) {
+            total += equipped[item].statBonus().main.val;
+          } else if (equipped[item].statBonus().secondary.stat === stat) {
+            total += equipped[item].statBonus().secondary.val;
           }
         };
 
       }
       return total;
     }
+
 
     /**
      * equipped

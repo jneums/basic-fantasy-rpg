@@ -13,6 +13,8 @@ export default (function Const() {
 
     // colors:
     BG_COLOR: 0x1c1117,
+    // offwhite:
+    TXT_COLOR: 0xccccaa,
 
     // amount the objects/camera is changed:
     SCALE: 4,

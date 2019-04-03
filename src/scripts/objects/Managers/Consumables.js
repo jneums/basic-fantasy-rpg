@@ -1,7 +1,7 @@
 
 import CombatObject from '../CombatSystem/CombatObject';
 
-const LEVEL_ONE_REGEN = -29;
+const LEVEL_ONE_REGEN = -39;
 /**
  * Consumables Manager - In charge of providing
  * each character with the eat and drink abilities.

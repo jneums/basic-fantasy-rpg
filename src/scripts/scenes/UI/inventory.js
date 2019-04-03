@@ -19,7 +19,9 @@ function showInventory(scene, {inventory, crystals}) {
   inventoryBackground.scaleX = CONST.SCALE;
   inventoryBackground.scaleY = CONST.SCALE;
 
-  const crystalsText = scene.add.bitmapText(-36 * 4, 46 * 4, 'font', crystals, 36).setOrigin(1, 0);
+  const crystalsText = scene.add.bitmapText(-36 * 4, 46 * 4, 'font', crystals, 36)
+    .setOrigin(1, 0)
+    .setTint(CONST.TXT_COLOR);
 
 
   scene.inventoryContainer.add([inventoryBackground, crystalsText]);

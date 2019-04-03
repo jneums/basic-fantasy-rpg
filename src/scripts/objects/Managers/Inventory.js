@@ -149,6 +149,12 @@ export default class Inventory {
       return crystals;
     }
 
+    this.isFull = function() {
+      if (inventory.length >= capacity) return true;
+      else return false;
+    }
+
+    
     /**
      * getInventory
      *
@@ -169,7 +175,11 @@ export default class Inventory {
     }
 
     this.removeCrystals = function (amount) {
-      crystals -= amount;
+      if (crystals - amount < 0) return false;
+      else {
+        crystals -= amount;
+        return true;
+      }
     }
 
     /**

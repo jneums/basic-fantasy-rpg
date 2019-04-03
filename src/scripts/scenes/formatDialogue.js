@@ -1,6 +1,9 @@
-const CHARS_PER_LINE = 40;
 
-export default function formatDialogue(dialogue) {
+export default function formatDialogue(dialogue, type) {
+  if (typeof dialogue !== 'string') return;
+
+  const charCount = type === 'quest' ? 20 : 40;
+
   let result = [''];
   let numArr = 0;
   // split up string into array of words:
@@ -8,7 +11,7 @@ export default function formatDialogue(dialogue) {
   // check if adding next word to string will overflow:
   dialogues.forEach((word, i) => {
     // if so, start new array.
-    if ((result[numArr] + dialogues[i]).length > CHARS_PER_LINE) {
+    if ((result[numArr] + dialogues[i]).length > charCount) {
       result[++numArr] = dialogues[i];
     } else {
       result[numArr] = result[numArr] + ' ' +dialogues[i];

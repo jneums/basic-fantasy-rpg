@@ -65,19 +65,19 @@ export default function actionPointerDown(pointer, player = {}) {
 
     if (target.getCharacterClass() === 'npc' && player.target.rangeCheck(target, CONST.LOOTING_RANGE)) {
         let text = '';
-        const questId = target.quest.id;
-        const playerQuest = player.questLog.getOne(questId);
-        const status = playerQuest ? playerQuest.getStatus() : 'not given';
+        const questName = target.quest || '';
 
+        const status = player.questLog.getOne(questName) ? playerQuest.getStatus() : 'not given';
+        console.log(status)
         if ( status === 'not given') {
-          player.questLog.add(questId);
-          text = player.questLog.getOne(questId).getText();
+          player.questLog.add(questName);
+          text = player.questLog.getOne(questName).getText();
         } else if (status === 'in progress') {
-          text = player.questLog.getOne(questId).getText(1);
+          text = player.questLog.getOne(questName).getText(1);
         } else if (status === 'ready for turn in'){
-          text = player.questLog.getOne(questId).getText(2)
+          text = player.questLog.getOne(questName).getText(2)
           // get reward, mark quest as complete:
-          player.questLog.completeQuest(questId);
+          player.questLog.completeQuest(questName);
           target.marker.hide()
         } else {
           text = "Thanks again brave person."

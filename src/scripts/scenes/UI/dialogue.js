@@ -11,7 +11,7 @@ function loadDialogue(scene, dialogue) {
   dialogueBoxBackground.scaleY = CONST.SCALE;
 
 
-  const dialogueText = scene.add.dynamicBitmapText( 0, -4 * 4, 'font', dialogue, CONST.TXT_S);
+  const dialogueText = scene.add.dynamicBitmapText( 0, -4 * 4, 'font', dialogue, CONST.TXT_S).setTint(CONST.TXT_COLOR);
 
   dialogueText.setOrigin(.5).setCenterAlign();
 

@@ -7,9 +7,16 @@ const COLORS = {
   3: 'blue',
   4: 'purple',
   5: 'red',
-  6: 'brown'
 }
 
+const TINTS = {
+  'grey': 0x88776f,
+  'yellow': 0xdbc244,
+  'green': 0x649154,
+  'blue': 0x5ba3c7,
+  'purple': 0x944a9c,
+  'red': 0xaa3333,
+}
 
 export default class Armor extends Item {
   constructor(
@@ -56,25 +63,72 @@ export default class Armor extends Item {
       return _skillType;
     }
 
-    // increase lvl:
-    this.lvlUp = function() {
-      _ilvl += 1;
-      _sell *= 1.5;
-      _color.inc();
+    this.upgrade = function(crystals) {
+      if (_colorIndex === 5) return;
+
+
+      // rand:
+      const rand = Phaser.Math.Between(0, 101);
+      const crystalCoEf = crystals * .01;
+
+      // each possible outcome:
+      const insaneChange = .05 + crystalCoEf;
+      const largeChange = insaneChange + 1.5 + crystalCoEf;
+      const mediumChange = largeChange + 2.5 + crystalCoEf;
+      const smallChange = mediumChange + 5 + crystalCoEf;
+
+      // hit table:
+      switch (true) {
+        case (rand < insaneChange):
+          _statBonus.main.val += 4;
+          _statBonus.secondary.val += 3;
+          _armor += 20;
+          _colorIndex++;
+          this.setSell(_sell += _colorIndex * 4);
+
+          break;
+        case (rand < largeChange):
+          _statBonus.main.val += 3;
+          _statBonus.secondary.val += 2;
+          _armor += 15;
+          _colorIndex++;
+          this.setSell(_sell += _colorIndex * 3);
+
+          break;
+        case (rand < mediumChange):
+          _statBonus.main.val += 2;
+          _statBonus.secondary.val += 1;
+          _armor += 10;
+          _colorIndex++;
+          this.setSell(_sell += _colorIndex * 2);
+
+          break;
+        case (rand < smallChange):
+          _statBonus.main.val += 1;
+          _armor += 5;
+          _colorIndex++;
+          this.setSell(_sell += _colorIndex * 1);
+
+          break;
+        default:
+          //
+          break;
+      }
+
     }
 
 
     this.getColor = function() {
-      return _color.current;
+      return COLORS[_colorIndex];
+    }
+
+    this.getTint = function() {
+      return TINTS[COLORS[_colorIndex]]
     }
 
 
     let _colorIndex = 0;
 
-    let _color = {
-      current: COLORS[_colorIndex],
-      inc: () => _colorIndex++
-    };
 
   }
 }

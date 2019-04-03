@@ -68,8 +68,7 @@ export default class Barbarian extends Character {
 
     // starting hp
     this.stat.setBaseHp(20);
-    const startingHp = (this.stat.baseStamina() * 10) + this.stat.baseHp();
-    this.stat.setHp(startingHp);
+    this.stat.setHp(this.stat.maxHp());
 
     // rage system
     this.rage = new RageMechanic(this);

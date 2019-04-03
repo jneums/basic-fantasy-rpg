@@ -101,6 +101,10 @@ export default class DungeonScene extends Phaser.Scene {
       shout: {
         name: 'shout',
         instructions: formatDialogue("In battle, the importance of fearlesness cannot be stated enough. I will teach you how to 'shout', letting out a fierce cry, motivating and encouraging not only you, but your close friends and allies as well! Do not underestimate its value.")
+      },
+      intimidate: {
+        name: 'intimidate',
+        instructions: formatDialogue("Exellent work. The next thing you must learn is the ability to strike fear into the hearts and minds of your enemy. When your enemy is afraid for it's life, he will be slow and clumsy. Use your rage and fury to 'intimidate' your opponents.")
       }
     }
 
@@ -118,22 +122,40 @@ export default class DungeonScene extends Phaser.Scene {
         npc = new Orc(this, spawnPoint.x, spawnPoint.y);
 
 
-      } else if (spawnPoint.type === 'quest') {
+      } else if (spawnPoint.name === 'quest') {
 
-        npc = new NPC(this, spawnPoint.x, spawnPoint.y);
+        npc = new NPC(this, spawnPoint.x, spawnPoint.y, spawnPoint.type);
 
 
       } else if (spawnPoint.name === 'trainer') {
 
         npc = new Trainer(this, spawnPoint.x, spawnPoint.y, spawnPoint.type + '-' + spawnPoint.name, abilities[spawnPoint.properties[0].value]);
 
-      } else if (spawnPoint.name === 'player') {
+      } else if (spawnPoint.name === 'entrance') {
 
-        this.player.x = spawnPoint.x;
-        this.player.y = spawnPoint.y;
+        this.player.x = spawnPoint.x + 10;
+        this.player.y = spawnPoint.y + 10;
         this.player.movement.setMoveTargetCoords([spawnPoint.x, spawnPoint.y])
 
+
+      } else if (spawnPoint.name === 'exit') {
+
+        // create rectangle with collider, trigger scene shutdown on collide:
+        const exit = this.add.rectangle(spawnPoint.x, spawnPoint.y, spawnPoint.width, spawnPoint.height, 0xffffff).setOrigin(0);
+
+        this.physics.add.existing(exit);
+        this.physics.add.collider(this.player, exit, (a, b) => {
+          this.cameras.main.fadeOut(500);
+          this.time.delayedCall(500, () => {
+
+            this.scene.stop('UIScene');
+            this.scene.stop('DungeonScene');
+            this.scene.start('CharacterSelectionScene')
+
+          });
+        });
       }
+
     })
 
 
@@ -159,6 +181,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.registry.set('selectQuest');
     this.registry.set('selectEquipment');
     this.registry.set('targetChange');
+    this.registry.set('error');
 
     this.player.controller = 'player';
 
@@ -168,31 +191,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.player.inventory.add(getWeaponByName('Shadow Wand'));
     this.player.inventory.add(getWeaponByName('Short Sword'));
 
-    const tarnishedSword = new Weapon(
-      'Tarnished Sword',
-      'Beat up training sword.',
-      { strength: 1 },
-      1,
-      1,
-      1,
-      'mainHand',
-      'twoHandSword',
-      3.2,
-      25,
-      20,
-      { min: 4, max: 6 },
-      'item-44'
-    )
-
-    tarnishedSword.lvlUp()
-    tarnishedSword.lvlUp();
-    tarnishedSword.lvlUp()
-    tarnishedSword.lvlUp()
-
-    this.player.inventory.add(tarnishedSword);
-
-    this.player.equipment.equipped().mainHand.lvlUp()
-    this.player.equipment.equipped().mainHand.lvlUp()
+    this.player.inventory.addCrystals(100);
 
     this.player.skills.levelUpSkill('twoHandSword')
     this.player.skills.levelUpSkill('twoHandSword')

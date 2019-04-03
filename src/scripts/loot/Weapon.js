@@ -71,17 +71,75 @@ export default class Weapon extends Item {
       return 'physical';
     }
 
-    // increase lvl:
-    this.lvlUp = function() {
-      for (let stat in _statBonus) {
-        _statBonus[stat] += 2;
+    this.upgrade = function(crystals) {
+      if (_colorIndex === 5) return;
+
+
+      // rand:
+      const rand = Phaser.Math.Between(0, 101);
+      const crystalCoEf = crystals * .01;
+
+      // each possible outcome:
+      const insaneChange = .05 + crystalCoEf;
+      const largeChange = insaneChange + 1.5 + crystalCoEf;
+      const mediumChange = largeChange + 2.5 + crystalCoEf;
+      const smallChange = mediumChange + 5 + crystalCoEf;
+
+      // hit table:
+      switch (true) {
+        case (rand < insaneChange):
+          _statBonus.main.val += 4;
+          _statBonus.secondary.val += 3;
+          _dmg.min += 4;
+          _dmg.max += 4;
+          _colorIndex++
+          this.setSell(_sell += _colorIndex * 4);
+
+          break;
+        case (rand < largeChange):
+          _statBonus.main.val += 3;
+          _statBonus.secondary.val += 2;
+          _sell += 5;
+          _dmg.min += 3;
+          _dmg.max += 3;
+          _colorIndex++
+
+          this.setSell(_sell += _colorIndex * 3);
+
+
+          break;
+        case (rand < mediumChange):
+          _statBonus.main.val += 2;
+          _statBonus.secondary.val += 1;
+          _sell += 3;
+          _dmg.min += 2;
+          _dmg.max += 2;
+          _colorIndex++
+
+          this.setSell(_sell += _colorIndex * 2);
+
+
+          break;
+        case (rand < smallChange):
+          _statBonus.main.val += 1;
+          _sell += 1;
+          _dmg.min += 1;
+          _dmg.max += 1;
+          _colorIndex++
+
+          this.setSell(_sell += _colorIndex * 1);
+
+
+          break;
+        default:
+          //
+          break;
       }
-      _dmg.min += 2;
-      _dmg.max += 2;
-      _ilvl += 1;
-      _sell *= 1.5;
-      _colorIndex++
+
+
+
     }
+
 
     this.getColor = function() {
       return COLORS[_colorIndex]

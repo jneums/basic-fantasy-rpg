@@ -14,10 +14,59 @@ const ROW_THREE_B = CONST.GAME_VIEW_CENTER_Y + 16 * 4;
 const ROW_FOUR_T = CONST.GAME_VIEW_CENTER_Y + 21 * 4 ;
 const ROW_FOUR_B = CONST.GAME_VIEW_CENTER_Y + 36 * 4;
 
+const BUTTON_T = CONST.GAME_VIEW_CENTER_Y - 2 * 4;
+const BUTTON_B = CONST.GAME_VIEW_CENTER_Y + 4 * 4;
+
+const UPGRADE_L = CONST.GAME_VIEW_CENTER_X - 52 * 4;
+const UPGRADE_R = CONST.GAME_VIEW_CENTER_X - 24 * 4;
+
+const UNEQUIP_L = CONST.GAME_VIEW_CENTER_X + 4 * 4;
+const UNEQUIP_R = CONST.GAME_VIEW_CENTER_X + 40 * 4;
 
 export default function equipmentPointerDown(pointer, player) {
-  let slot = ''
-  if (pointer.downX > COL_ONE_L && pointer.downX < COL_ONE_R) {
+
+  let slot = player.equipment.getActiveSlot();
+  let data = {};
+
+  if (pointer.downY > BUTTON_T && pointer.downY < BUTTON_B) {
+    if (pointer.downX > UPGRADE_L && pointer.downX < UPGRADE_R) {
+
+
+      if (!player.equipment.getActive()) {
+        player.scene.registry.set('error', 'select an item to upgrade');
+        return; // early
+      };
+
+      const success = player.inventory.removeCrystals(1);
+      if (!success) {
+        player.scene.registry.set('error', 'not enough crystals');
+        return // early
+      };
+
+      player.equipment.getActive().upgrade(1);
+
+      data = {
+        stats: player.stat.displayStats(),
+        equipment: player.equipment.equipped(),
+        crystals: player.inventory.getCrystals()
+      }
+
+      player.scene.registry.set('openEquipment', data);
+
+
+    } else if (pointer.downX > UNEQUIP_L && pointer.downX < UNEQUIP_R) {
+      player.equipment.unequipActive();
+
+      data = {
+        stats: player.stat.displayStats(),
+        equipment: player.equipment.equipped(),
+        crystals: player.inventory.getCrystals()
+      }
+
+      player.scene.registry.set('openEquipment', data);
+
+    }
+  } else if (pointer.downX > COL_ONE_L && pointer.downX < COL_ONE_R) {
     // left column:
     if (pointer.downY > ROW_ONE_T && pointer.downY < ROW_ONE_B) {
       slot = 'head'

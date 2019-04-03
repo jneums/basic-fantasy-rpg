@@ -11,7 +11,16 @@ function getArmorByName(name = '') {
     'Ring of Fury',
     'It tingles.',
     30,
-    { strength: 3 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     13,
     4,
@@ -27,7 +36,16 @@ function getArmorByName(name = '') {
     "Recruit's Vest",
     "Well used.",
     7,
-    { agility: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     13,
     4,
@@ -42,7 +60,16 @@ function getArmorByName(name = '') {
     "Recruit's Pants",
     "Not too great.",
     6,
-    { agility: 2 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     13,
     4,
@@ -57,7 +84,16 @@ function getArmorByName(name = '') {
     "Recruit's Boots",
     "Stained.",
     5,
-    { agility: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     9,
     1,
@@ -72,7 +108,16 @@ function getArmorByName(name = '') {
     "Footpad's Vest",
     "What's a footpad...",
     3,
-    { agility: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 3
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 2
+      }
+    },
     1,
     13,
     2,
@@ -87,7 +132,16 @@ function getArmorByName(name = '') {
     "Footpad's Pants",
     "Leathery.",
     3,
-    { agility: 2 },
+    {
+      main: {
+        stat: 'strength',
+        val: 3
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 2
+      }
+    },
     1,
     13,
     2,
@@ -102,7 +156,16 @@ function getArmorByName(name = '') {
     "Footpad's Shoes",
     "Really tight fit.",
     2,
-    { agility: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 3
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 2
+      }
+    },
     1,
     9,
     1,
@@ -117,7 +180,16 @@ function getArmorByName(name = '') {
     "Apprentice's Robe",
     "Fits like a sack.",
     2,
-    { intellect: 2 },
+    {
+      main: {
+        stat: 'strength',
+        val: 3
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 2
+      }
+    },
     1,
     13,
     2,
@@ -132,7 +204,16 @@ function getArmorByName(name = '') {
     "Apprentice's Pants",
     "Shabby and worn.",
     2,
-    { intellect: 2 },
+    {
+      main: {
+        stat: 'strength',
+        val: 3
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 2
+      }
+    },
     1,
     13,
     2,
@@ -147,7 +228,16 @@ function getArmorByName(name = '') {
     "Apprentice's Boots",
     "More like socks.",
     1,
-    { intellect: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 3
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 2
+      }
+    },
     1,
     10,
     1,

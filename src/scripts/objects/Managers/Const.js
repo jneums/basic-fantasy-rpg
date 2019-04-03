@@ -1,7 +1,7 @@
 export default (function Const() {
 
   const constants = {
-    MOVEMENT_SPEED:    40,
+    MOVEMENT_SPEED:    50,
     MELEE_RANGE:       25,
     BODY_PULL_RANGE:   75,
     CAST_RANGE:       150,
@@ -9,8 +9,8 @@ export default (function Const() {
 
     MAX_RAGE:         100,
     RAGE_DUMP_VALUE:   30,
-    CHARGE_MIN_DIST:   50,
-    CHARGE_MAX_DIST:  125,
+    CHARGE_MIN_DIST:   75,
+    CHARGE_MAX_DIST:  150,
     CHARGE_SPEED:     500,
 
     LOOTING_RANGE:     30,

@@ -190,16 +190,6 @@ export default class PreloadScene extends Phaser.Scene {
       { frameWidth: 16, frameHeight: 16 }
     );
 
-    // blood spray anim:
-    this.load.spritesheet('blood',
-      './assets/anims/blood_spritesheet.png',
-      { frameWidth: 32, frameHeight: 32 }
-    );
-    // snow? spell effect that kind of looks like snow...
-    this.load.spritesheet('snow',
-      './assets/anims/snow_spritesheet.png',
-      { frameWidth: 32, frameHeight: 32 }
-    );
 
     // map data:
     this.load.tilemapTiledJSON('map', './assets/map/combat.json');
@@ -207,24 +197,19 @@ export default class PreloadScene extends Phaser.Scene {
 
     // icons:
     // barbarian:
-    this.load.image('auto-attack', './assets/icons/auto_attack_icon.png');
     this.load.image('rush', './assets/icons/fast_icon.png');
     this.load.image('gore', './assets/icons/gore_icon.png');
     this.load.image('precision', './assets/icons/strike_icon.png');
     this.load.image('shout', './assets/icons/shout_icon.png');
     this.load.image('intimidate', './assets/icons/earth_column.png');
     this.load.image('hobble', './assets/icons/fire_sword_icon.png');
-    this.load.image('ruby', './assets/icons/ruby_icon.png');
 
     // mage:
     this.load.image('wand', './assets/icons/wand.png');
-    this.load.image('cheese', './assets/icons/cheese_icon.png');
-    this.load.image('wine', './assets/icons/wine_icon.png');
     this.load.image('intellect', './assets/icons/eye_icon.png');
     this.load.image('missiles', './assets/icons/frost_ball.png');
     this.load.image('frostbolt', './assets/icons/ice_arrow_icon.png');
     this.load.image('poly', './assets/icons/poly_icon.png');
-    this.load.image('empty', './assets/icons/empty_icon.png');
 
     //priest:
     this.load.image('heal', './assets/icons/heart_icon.png');
@@ -264,7 +249,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('shadow-ball', './assets/anims/shadow_ball.png');
 
 
-    this.load.image('hidden', './assets/anims/empty.png');
     this.load.image('inventory', './assets/icons/backpack_icon.png');
     this.load.image('quest', './assets/icons/book_icon.png');
     this.load.image('equipment', './assets/icons/equip_icon.png');
@@ -279,6 +263,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('equipment-background', './assets/ui/equipment.png');
     this.load.image('loot-box-background', './assets/ui/loot_box.png');
 
+    // duplicates:
     this.load.image('green-quest', './assets/ui/green_quest_background.png');
     this.load.image('yellow-quest', './assets/ui/yellow_quest_background.png');
     this.load.image('red-quest', './assets/ui/red_quest_background.png');

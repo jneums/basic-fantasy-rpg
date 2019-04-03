@@ -11,7 +11,16 @@ function getWeaponByName(name = '') {
   const swordOfTruth = new Weapon(
     'Sword of Truth',
     'Like, the best sword in the game!',
-    { agility: 100 },
+    {
+      main: {
+        stat: 'strength',
+        val: 20
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 10
+      }
+    },
     20,
     45,
     12,
@@ -29,7 +38,16 @@ function getWeaponByName(name = '') {
   const tarnishedSword = new Weapon(
     'Tarnished Sword',
     'Beat up training sword.',
-    { strength: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     1,
     1,
@@ -46,7 +64,16 @@ function getWeaponByName(name = '') {
   const shortSword = new Weapon(
     'Short Sword',
     'Kind of dull.',
-    { agility: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     1,
     10,
@@ -62,7 +89,16 @@ function getWeaponByName(name = '') {
   const deadmanDagger = new Weapon(
     'Deadman Dagger',
     'Found it on a dead body.',
-    { stamina: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     10,
     3,
@@ -78,7 +114,16 @@ function getWeaponByName(name = '') {
   const crookedStaff = new Weapon(
     'Crooked Staff',
     'Looks like a tree branch.',
-    { intellect: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     25,
     6,
@@ -94,7 +139,16 @@ function getWeaponByName(name = '') {
   const frostWand = new Weapon(
     'Frost Wand',
     'Icy cold to the touch.',
-    { intellect: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     32,
     8,
@@ -110,7 +164,16 @@ function getWeaponByName(name = '') {
   const shadowWand = new Weapon(
     'Shadow Wand',
     'It whispers to me...',
-    { intellect: 1 },
+    {
+      main: {
+        stat: 'strength',
+        val: 2
+      },
+      secondary: {
+        stat: 'stamina',
+        val: 1
+      }
+    },
     1,
     35,
     6,

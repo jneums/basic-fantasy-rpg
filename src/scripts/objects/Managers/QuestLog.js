@@ -5,46 +5,30 @@ import FloatingText from '../FloatingText/FloatingText';
 export default class QuestLog {
   constructor(character) {
 
-    // intital quest:
-    const startingQuest = new Quest(
-      0,
-      "Upgrade Your Weapon",
-      "hard",
-      "Find",
-      500,
-      "crystal",
-      [""],
-      [""],
-      [""],
-      ["Bring 500 crystals to", "the forge and unlock", "the hidden power", "of your weapon!"],
-      getArmorByName("Ring of Fury"),
-      2500
-    )
+
 
     // holds a list of quests:
     let activeQuests = [];
     let completedQuests = [];
 
-    startingQuest.advanceStatus();
-    activeQuests.push(startingQuest);
 
 
 
     // add quest:
-    this.add = function(questId) {
+    this.add = function(questName) {
 
       // needs a 'getQuestById' generator, possible on server side:
       const newQuest = new Quest(
         1,
-        "Orc Cleanup",
+        "orcs",
         "easy",
         "Kill",
         15,
         "orc",
-        ["Kind sir, these creatures called",  "orcs are flooding our dungeon!", "Can you help by killing fifteen orcs?", "I will give you a reward!"],
-        ["Did you murder them?"],
-        ["Thank you brave warrior!"],
-        ["The strange looking", "dude at the entrance", "wants me to kill", "some orcs for him."],
+        "We have little time my friend. The Labyrinth is attacking us, and our losses are increasing by the second! Prove your worth, and earn your place as a member of our proud clan. Talk to me again after you learn to fight, by killing 15 of these weak captured orcs.",
+        "What are you doing wasting my time?? Go kill them!",
+        "So you finished, I assumed you would. Here, take this ring. It is the only thing I have to offer you, I already gave everything else to the others who came before you.",
+        "The commander wants me to prove my worth or something, by killing 15 of these shabby orcs. He said he would give me a ring or something.",
         getArmorByName("Ring of Fury"),
         25
       )
@@ -100,16 +84,16 @@ export default class QuestLog {
     }
 
     // get indvidual:
-    this.getOne = function(questId) {
-      const completedQuest = completedQuests.find(quest => quest.getId() === questId);
+    this.getOne = function(questName) {
+      const completedQuest = completedQuests.find(quest => quest.getName() === questName);
       if (completedQuest) return completedQuest;
-      const quest = activeQuests.find(quest => quest.getId() === questId);
+      const quest = activeQuests.find(quest => quest.getName() === questName);
       if (quest) return quest;
       return null;
     }
 
-    this.completeQuest = function(questId) {
-      const quest = activeQuests.find(quest => quest.getId() === questId);
+    this.completeQuest = function(questName) {
+      const quest = activeQuests.find(quest => quest.getName() === questName);
       if (!quest) return null;
       quest.advanceStatus();
       quest.takeReward(character);

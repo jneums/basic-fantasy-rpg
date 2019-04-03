@@ -70,8 +70,8 @@ export default class Mage extends Character {
 
     // starting hp
     this.stat.setBaseHp(31);
-    const startingHp = (this.stat.baseStamina() * 10) + this.stat.baseHp();
-    this.stat.setHp(startingHp);
+    this.stat.setHp(this.stat.maxHp());
+
 
     // mana system
     this.mana = new ManaMechanic(this);

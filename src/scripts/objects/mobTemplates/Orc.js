@@ -36,8 +36,8 @@ export default class Orc extends Character {
 
     // starting hp
     this.stat.setBaseHp(10);
-    const startingHp = (this.stat.baseStamina() * 10) + this.stat.baseHp();
-    this.stat.setHp(startingHp);
+    this.stat.setHp(this.stat.maxHp());
+
 
     // starting loot
     this.setLoot(createLoot(this.getName()));

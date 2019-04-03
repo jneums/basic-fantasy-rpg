@@ -13,14 +13,13 @@ import Marker from './Managers/Marker';
  *
  */
 export default class NPC extends Character {
-  constructor(scene = {}, x = 0, y = 0) {
+  constructor(scene = {}, x = 0, y = 0, questName = '') {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
     this.animations = new Anims(this, 'npc', 'npc-unarmed');
     this.marker = new Marker(scene, 'quest');
 
-    this.quest = { id: 1 }
-
+    this.quest = questName;
 
     //set starting texture and size:
     this.setTexture('mage-run', 0).setSize(22, 22).setOrigin(0.5);

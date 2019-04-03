@@ -35,7 +35,8 @@ function combatError(character, type) {
     size: 2,
     animation: "fade",
     timeToLive: 2000,
-    fixedToCamera: true
+    fixedToCamera: true,
+    position: 'below'
   })
 
 

@@ -1,23 +1,28 @@
+import formatDialogue from '../../scenes/formatDialogue';
+
+
 export default class Quest {
   constructor(
-    id = 1,
-    title = "",
-    difficulty = "",
-    type = "", // kill or find
-    amount = 0,
-    target = "",
-    initText = [],
-    inProgressText = [],
-    finishText = [],
-    description = [],
-    reward = {},
-    xp = 0
+    _id = 1,
+    _name = "",
+    _difficulty = "",
+    _type = "", // kill or find
+    _amount = 0,
+    _target = "",
+    _initText = [],
+    _inProgressText = [],
+    _finishText = [],
+    _description = [],
+    _reward = {},
+    _xp = 0
   ) {
-
-    let _id = id;
 
     this.getId = function() {
       return _id;
+    }
+
+    this.getName = function() {
+      return _name;
     }
 
     let _active = false;
@@ -29,10 +34,6 @@ export default class Quest {
     this.isActive = function() {
       return _active;
     }
-
-    this.title = title;
-
-    this.description = description;
 
     // for UI elements:
     this.getColor = function() {
@@ -53,22 +54,20 @@ export default class Quest {
     };
 
     this.getText = function(phase = 0) {
-      if (phase === 0) return initText;
-      else if (phase === 1) return inProgressText;
-      else return finishText;
+      if (phase === 0) return formatDialogue(_initText);
+      else if (phase === 1) return formatDialogue(_inProgressText, 'quest');
+      else return  formatDialogue(_finishText, 'quest');
     }
 
     // used for UI:
     this.peekReward = function() {
-      return reward;
+      return _reward;
     }
 
     this.takeReward = function(character = {}) {
-      character.inventory.add(reward);
-      character.lvl.gainXP(xp)
+      character.inventory.add(_reward);
+      character.lvl.gainXP(_xp)
     }
-
-    let _type = type;
 
     this.getType = function() {
       return _type;
@@ -76,10 +75,9 @@ export default class Quest {
 
     // who to kill, or what to aquire:
     this.getTarget = function() {
-      return target;
+      return _target;
     }
 
-    let _amount = amount;
     this.getAmount = function() {
       return _amount;
 

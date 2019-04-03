@@ -8,6 +8,7 @@ import displayBuffs from './UI/displayBuffs';
 
 import XpBar from './UI/XpBar';
 import NameBar from './UI/NameBar';
+import ErrorLog from './UI/ErrorLog';
 
 
 import CONST from './Const';
@@ -22,6 +23,8 @@ export default class UIScene extends Phaser.Scene {
   }
 
   create() {
+
+    this.errorLog = new ErrorLog(this);
 
     this.selfBuffs = this.add.container(0, 0);
 
@@ -128,6 +131,8 @@ export default class UIScene extends Phaser.Scene {
     } else if (key === 'targetChange') {
       this.targetName.set(data);
 
+    } else if (key === 'error') {
+      this.errorLog(data);
     }
   }
 }
@@ -142,11 +147,45 @@ function showEquipment(scene, {stats, equipment, crystals}) {
   equipmentBackground.scaleX = CONST.SCALE;
   equipmentBackground.scaleY = CONST.SCALE;
 
-  const crystalsText = scene.add.bitmapText(-36 * 4, 46 * 4, 'font', crystals, 36).setOrigin(1, 0);
 
-  const statsHeader = scene.add.bitmapText(52 * 4, -40 * 4, 'font', ['Str: ', 'Agi: ', 'Sta: ', 'Int: ', 'Spi: ', 'Crt: ', 'POW: '], 16)
-  const statsInfo = scene.add.bitmapText(94 * 4, -40 * 4, 'font', [stats.str, stats.agi, stats.sta, stats.int, stats.spi, stats.crit * 100 + '%', stats.ap], 16)
-  statsInfo.setRightAlign().setOrigin( 1, 0)
+  const crystalsText = scene.add.bitmapText(-36 * 4, 46 * 4, 'font', crystals, 36)
+    .setOrigin(1, 0)
+    .setTint(CONST.TXT_COLOR);
+
+  const statKeyArr = [
+    'MaxHP: ',
+    'Armr: ',
+    'Ddge: ',
+    'Str: ',
+    'Agi: ',
+    'Stam: ',
+    'Int: ',
+    'Spir: ',
+    'Crit: ',
+    'Attk: '
+  ]
+
+
+  const statArr = [
+    stats.hp,
+    stats.armor,
+    stats.dodge * 100 + '%',
+    stats.str,
+    stats.agi,
+    stats.sta,
+    stats.int,
+    stats.spi,
+    stats.crit * 100 + '%',
+    stats.ap
+  ]
+
+  const statsHeader = scene.add.bitmapText(52 * 4, -40 * 4, 'font', statKeyArr, 16).setTint(CONST.TXT_COLOR)
+  const statsInfo = scene.add.bitmapText(94 * 4, -40 * 4, 'font', statArr, 16)
+    .setTint(CONST.TXT_COLOR)
+    .setRightAlign()
+    .setOrigin( 1, 0)
+
+
   // add equipped items:
   scene.equipmentContainer.add([equipmentBackground, statsHeader, statsInfo, crystalsText]);
   buildCharacter(scene, equipment);

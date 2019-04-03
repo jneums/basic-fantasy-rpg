@@ -21,6 +21,9 @@ export default class Item {
     this.lvl = function() {
       return _ilvl;
     }
+    this.setSell = function(sell) {
+      _sell = sell;
+    }
     this.sellPrice = function() {
       return _sell;
     }
@@ -54,6 +57,7 @@ export default class Item {
     this.getQty = function() {
       return _qty;
     }
+
     this.getMax = function() {
       return _max;
     }
@@ -65,6 +69,7 @@ export default class Item {
       buyer.inventory.add(this);
 
     }
+
     // sell:
     this.sell = function(seller) {
       seller.inventory.discardActive();
@@ -74,11 +79,11 @@ export default class Item {
     this.setQty = function(qty) {
       _qty = qty;
     }
+
     // inc:
     this.inc = function() {
       ++_qty;
     }
-
 
     // dec:
     this.dec = function() {

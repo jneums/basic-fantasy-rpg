@@ -15,8 +15,8 @@ function selectQuest(scene, quest) {
   questLogBackground.scaleX = CONST.SCALE;
   questLogBackground.scaleY = CONST.SCALE;
 
-  const questDescription = scene.add.bitmapText( 48,-178, 'font', quest.description, DESCRIPTION_SIZE);
-  const questStatus = scene.add.bitmapText( 48, 128, 'font', `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`, STATUS_SIZE);
+  const questDescription = scene.add.bitmapText( 48,-178, 'font', quest.description, DESCRIPTION_SIZE).setTint(CONST.TXT_COLOR);
+  const questStatus = scene.add.bitmapText( 48, 128, 'font', `${quest.getType()} ${quest.getCount()} ${quest.getUIName()}`, STATUS_SIZE).setTint(CONST.TXT_COLOR);
 
   scene.questLogContainer.add([questLogBackground, questDescription, questStatus])
 
@@ -58,10 +58,10 @@ function loadQuestLog(scene, quests) {
 
 
     // add text:
-    const title = scene.add.bitmapText(bg.x, bg.y - 10, 'font', quest.title, TITLE_SIZE)
+    const title = scene.add.bitmapText(bg.x, bg.y - 10, 'font', quest.title, TITLE_SIZE).setTint(CONST.TXT_COLOR)
       .setOrigin(0.5)
 
-    const progress = scene.add.bitmapText(bg.x, bg.y + 10, 'font', `(${quest.getStatus()})`, 16)
+    const progress = scene.add.bitmapText(bg.x, bg.y + 10, 'font', `(${quest.getStatus()})`, 16).setTint(CONST.TXT_COLOR)
       .setOrigin(0.5)
 
     scene.questLogContainer.add([bg, title, progress]);

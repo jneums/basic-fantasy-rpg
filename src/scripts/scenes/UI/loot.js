@@ -79,13 +79,21 @@ function buildLoot(scene, item, index) {
   // loot tooltip name:
 
   // qty:
-  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.getName(), 16);
+  const lootName = scene.add.bitmapText(_x - 100, _y - 18, 'font', item.getName(), 16)
+    .setTint(CONST.TXT_COLOR);
 
   // if building loot for inventory:
   if (index > -1) {
    const qty = item.getQty() > 1 ? item.getQty() : '';
-   const qtyText = scene.add.bitmapText(_x + 6 * 4, _y + 6 * 4, 'font', qty, 26).setOrigin(1, 1);
-   const qtyTextShadow = scene.add.bitmapText(_x + 7 * 4, _y + 7 * 4, 'font', qty, 26).setOrigin(1,1).setTint(CONST.BG_COLOR).setRightAlign();
+   const qtyText = scene.add.bitmapText(_x + 6 * 4, _y + 6 * 4, 'font', qty, 26)
+    .setOrigin(1, 1)
+    .setTint(CONST.TXT_COLOR);
+
+   const qtyTextShadow = scene.add.bitmapText(_x + 7 * 4, _y + 7 * 4, 'font', qty, 26)
+    .setOrigin(1,1)
+    .setTint(CONST.BG_COLOR)
+    .setRightAlign();
+
    scene.inventoryContainer.add([bg, lootIcon, qtyTextShadow, qtyText]);
 
   // if building loot for looting mob:

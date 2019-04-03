@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="80" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="38">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="80" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="42">
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16" tilecount="256" columns="16">
   <properties>
    <property name="collides" type="bool" value="false"/>
@@ -1387,7 +1387,7 @@
 0,0,0,38,39,0,38,39,0,38,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="3" name="walls" width="80" height="45">
+ <layer id="3" name="walls" width="80" height="45" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,1,55,49,2,2,2,2,49,55,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1436,7 +1436,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="specials" width="80" height="45">
+ <layer id="4" name="specials" width="80" height="45" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,123,124,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1519,10 +1519,10 @@
    </properties>
    <point/>
   </object>
-  <object id="13" name="npc" type="quest" x="68.3549" y="649.203">
+  <object id="13" name="quest" type="orcs" x="71.5493" y="594.899">
    <point/>
   </object>
-  <object id="14" name="trainer" type="barbarian" x="595.511" y="544.054">
+  <object id="14" name="trainer" type="barbarian" x="499.68" y="607.942">
    <properties>
     <property name="ability" value="precision"/>
    </properties>
@@ -1561,13 +1561,13 @@
   <object id="25" name="mob" type="orc" x="996.286" y="422.919">
    <point/>
   </object>
-  <object id="26" name="mob" type="orc" x="274.749" y="597.471">
+  <object id="26" name="mob" type="orc" x="256.381" y="601.464">
    <point/>
   </object>
-  <object id="27" name="mob" type="orc" x="409.943" y="580.026">
+  <object id="27" name="mob" type="orc" x="381.992" y="584.019">
    <point/>
   </object>
-  <object id="28" name="mob" type="orc" x="512.096" y="608.051">
+  <object id="28" name="mob" type="orc" x="608.726" y="579.302">
    <point/>
   </object>
   <object id="29" name="mob" type="orc" x="762.273" y="589.022">
@@ -1585,17 +1585,21 @@
    </properties>
    <point/>
   </object>
-  <object id="35" name="player" type="spawn" x="113.389" y="686.873">
+  <object id="35" name="entrance" type="training" x="111.514" y="676.563">
    <point/>
   </object>
   <object id="36" name="npc" type="quest" x="609.199" y="247.542">
    <point/>
   </object>
-  <object id="37" name="trainer" type="barbarian" x="647.823" y="247.542">
+  <object id="37" name="trainer" type="barbarian" x="1118.99" y="122.961">
    <properties>
     <property name="ability" value="intimidate"/>
    </properties>
    <point/>
   </object>
+  <object id="38" name="quest" type="intoTheLabyrinth" x="79.8594" y="95.8313">
+   <point/>
+  </object>
+  <object id="40" name="exit" type="labyrinth" x="33.0309" y="63.8838" width="31.5789" height="64.9728"/>
  </objectgroup>
 </map>

@@ -98,6 +98,8 @@ export default class Stat {
     this.displayStats = function() {
       const stats = {
         hp: this.maxHp(),
+        armor: this.totalArmor(),
+        dodge: this.dodge(),
         str: this.strength(),
         agi: this.agility(),
         sta: this.stamina(),

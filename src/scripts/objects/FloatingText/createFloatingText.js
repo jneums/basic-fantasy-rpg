@@ -1,4 +1,3 @@
-
 /**
  * createFloatingText - create text group
  *
@@ -12,10 +11,10 @@ export default function createFloatingText(scene = {}, options = {}) {
   const _text = options.text || "";
 
   // position:
-  const _x = options.x || "auto";
-  const _y = options.y || "auto";
+  const _x = options.x || null;
+  const _y = options.y || null;
 
-  const _posisition = options.position || "below";
+  const _position = options.position || null;
   // rotation:
   const _rotation = options.rotation || false;
   // parent object reference:
@@ -40,6 +39,9 @@ export default function createFloatingText(scene = {}, options = {}) {
   // create the element
   let _obj = scene.add.dynamicBitmapText(0, 0, 'font', _text, _size)
     .setTint(_color)
+    .setOrigin(0.5);
+
+  _obj.depth = 100000;
   //_obj.anchor.setTo(_spriteAnchor);
 
   // adjust rotation:
@@ -47,14 +49,27 @@ export default function createFloatingText(scene = {}, options = {}) {
       _obj.angle = _rotation;
   }
 
-  if (_parentObj) {
+  if (_x && _y) {
+    _obj.x = _x;
+    _obj.y = _y;
+  } else if (_parentObj) {
     // set position:
-    _obj.x = _parentObj.x - _obj.width / 2;
-    _obj.y = _parentObj.y - _obj.height / 2 - 20;
+    _obj.x = _parentObj.x;
+    _obj.y = _parentObj.y;
   } else {
-    const yOffset = (_posisition === "below") ? 40 : -40
-    _obj.x = (scene.cameras.main.midPoint.x) - _obj.width / 2;
-    _obj.y = (scene.cameras.main.midPoint.y + yOffset) - _obj.height / 2;
+
+    _obj.x = (scene.cameras.main.midPoint.x);
+    _obj.y = (scene.cameras.main.midPoint.y);
+  }
+
+  if (_position === 'above') {
+
+    _obj.y -= 40;
+
+  } else if (_position === 'below') {
+
+    _obj.y += 40;
+
   }
 
   if (_fixedToCamera) {
