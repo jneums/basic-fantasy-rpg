@@ -25,6 +25,10 @@ export default class Quest {
       return _name;
     }
 
+    this.getDescription = function() {
+      return formatDialogue(_description, 'quest');
+    }
+
     let _active = false;
 
     this.setActive = function(bool) {
@@ -37,8 +41,8 @@ export default class Quest {
 
     // for UI elements:
     this.getColor = function() {
-      if (difficulty === 'easy') return 'green';
-      else if (difficulty === 'medium') return 'yellow';
+      if (_difficulty === 'easy') return 'green';
+      else if (_difficulty === 'medium') return 'yellow';
       else return 'red';
     }
 
@@ -55,8 +59,8 @@ export default class Quest {
 
     this.getText = function(phase = 0) {
       if (phase === 0) return formatDialogue(_initText);
-      else if (phase === 1) return formatDialogue(_inProgressText, 'quest');
-      else return  formatDialogue(_finishText, 'quest');
+      else if (phase === 1) return formatDialogue(_inProgressText);
+      else return  formatDialogue(_finishText);
     }
 
     // used for UI:

@@ -49,7 +49,7 @@ export default function actionPointerDown(pointer, player = {}) {
     // if click target was tapped, and tapper is in range:
     if (targetLootOwner && target.target.rangeCheck(targetLootOwner, CONST.LOOTING_RANGE)) {
       _setTarget(player, target);
-
+      if (!target.loot()) return;
 
       player.scene.lootBoxActive = true;
       player.scene.registry.set('openLootBox', target.loot());
@@ -66,9 +66,9 @@ export default function actionPointerDown(pointer, player = {}) {
     if (target.getCharacterClass() === 'npc' && player.target.rangeCheck(target, CONST.LOOTING_RANGE)) {
         let text = '';
         const questName = target.quest || '';
+        const playerQuest = player.questLog.getOne(questName);
+        const status =  playerQuest ? playerQuest.getStatus() : 'not given';
 
-        const status = player.questLog.getOne(questName) ? playerQuest.getStatus() : 'not given';
-        console.log(status)
         if ( status === 'not given') {
           player.questLog.add(questName);
           text = player.questLog.getOne(questName).getText();

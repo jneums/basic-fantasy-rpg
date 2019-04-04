@@ -2,7 +2,15 @@
 export default function formatDialogue(dialogue, type) {
   if (typeof dialogue !== 'string') return;
 
-  const charCount = type === 'quest' ? 20 : 40;
+  let charCount;
+
+  if (type === 'quest') {
+    charCount = 20;
+  } else if (type === 'characterSelection') {
+    charCount = 48;
+  } else {
+    charCount = 40;
+  }
 
   let result = [''];
   let numArr = 0;
@@ -12,9 +20,9 @@ export default function formatDialogue(dialogue, type) {
   dialogues.forEach((word, i) => {
     // if so, start new array.
     if ((result[numArr] + dialogues[i]).length > charCount) {
-      result[++numArr] = dialogues[i];
+      result[++numArr] = dialogues[i] + ' ';
     } else {
-      result[numArr] = result[numArr] + ' ' +dialogues[i];
+      result[numArr] += dialogues[i] + ' ';
     }
 
   })

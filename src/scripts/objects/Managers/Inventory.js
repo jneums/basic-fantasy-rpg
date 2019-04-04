@@ -29,10 +29,16 @@ export default class Inventory {
       this.use(_activeIndex);
     }
 
-    this.discardActive = function() {
+    this.discardActive = function(amt) {
       if (!inventory[_activeIndex]) return;
-      inventory[_activeIndex].active = false;
-      inventory = inventory.filter((item, i) => i !== _activeIndex);
+      if (inventory[_activeIndex].getQty() > amt) {
+        while (amt--) {
+          inventory[_activeIndex].dec()
+        }
+      } else {
+        inventory[_activeIndex].active = false;
+        inventory = inventory.filter((item, i) => i !== _activeIndex);
+      }
     }
 
     this.setActive = function(index) {
@@ -154,7 +160,7 @@ export default class Inventory {
       else return false;
     }
 
-    
+
     /**
      * getInventory
      *

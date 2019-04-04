@@ -1,10 +1,10 @@
 import spellHitTable from '../../../hitTables/spellHitTable';
 import { getConsumableByName } from '../../../loot/consumableAPI';
 import wand from '../wand';
-import arcaneIntellect from './abilities/arcaneIntellect';
+import focus from './abilities/focus';
 import conjureWater from './abilities/conjureWater';
 import conjureFood from './abilities/conjureFood';
-import arcaneMissiles from './abilities/arcaneMissiles';
+import bomb from './abilities/bomb';
 import polymorph from './abilities/polymorph';
 import fireball from './abilities/fireball';
 import fireBlast from './abilities/fireBlast';
@@ -17,9 +17,9 @@ export default class MageAbilities {
     let abilities = ['wand'];
 
     this.wand = wand.bind(character);
-    this.arcaneIntellect = arcaneIntellect.bind(character);
-    this.arcaneMissiles = arcaneMissiles.bind(character);
-    this.polymorph = polymorph.bind(character);
+    this.focus = focus.bind(character);
+    this.bomb = bomb.bind(character);
+    this.poly = polymorph.bind(character);
     this.fireball = fireball.bind(character);
     this.fireBlast = fireBlast.bind(character);
     this.frostArmor = frostArmor.bind(character);

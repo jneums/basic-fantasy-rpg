@@ -33,6 +33,7 @@ export default class Weapon extends Item {
     _durability,
     _repairCost,
     _dmg,
+    _damageType,
     _icon
   ) {
     super(
@@ -68,7 +69,7 @@ export default class Weapon extends Item {
 
 
     this.damageType = function() {
-      return 'physical';
+      return _damageType;
     }
 
     this.upgrade = function(crystals) {
@@ -88,46 +89,43 @@ export default class Weapon extends Item {
       // hit table:
       switch (true) {
         case (rand < insaneChange):
-          _statBonus.main.val += 4;
-          _statBonus.secondary.val += 3;
-          _dmg.min += 4;
-          _dmg.max += 4;
-          _colorIndex++
-          this.setSell(_sell += _colorIndex * 4);
-
-          break;
-        case (rand < largeChange):
-          _statBonus.main.val += 3;
-          _statBonus.secondary.val += 2;
-          _sell += 5;
-          _dmg.min += 3;
-          _dmg.max += 3;
-          _colorIndex++
-
-          this.setSell(_sell += _colorIndex * 3);
-
-
-          break;
-        case (rand < mediumChange):
           _statBonus.main.val += 2;
           _statBonus.secondary.val += 1;
-          _sell += 3;
-          _dmg.min += 2;
-          _dmg.max += 2;
-          _colorIndex++
-
-          this.setSell(_sell += _colorIndex * 2);
-
-
-          break;
-        case (rand < smallChange):
-          _statBonus.main.val += 1;
-          _sell += 1;
           _dmg.min += 1;
           _dmg.max += 1;
           _colorIndex++
 
-          this.setSell(_sell += _colorIndex * 1);
+          this.setSell(_sell += 4);
+
+          break;
+        case (rand < largeChange):
+          _statBonus.main.val += 1;
+          _statBonus.secondary.val += 1;
+          _dmg.min += 1;
+          _dmg.max += 1;
+          _colorIndex++
+
+          this.setSell(_sell += 3);
+
+
+          break;
+        case (rand < mediumChange):
+          _statBonus.main.val += 1;
+
+          _dmg.min += 1;
+          _dmg.max += 1;
+          _colorIndex++
+
+          this.setSell(_sell += 2);
+
+
+          break;
+        case (rand < smallChange):
+          _dmg.min += 1;
+          _dmg.max += 1;
+          _colorIndex++
+
+          this.setSell(_sell += 1);
 
 
           break;

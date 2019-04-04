@@ -51,6 +51,7 @@ export default class Equipment {
      */
     this.equip = function(gear = {}) {
       if (!gear.hasOwnProperty('skillType')) return;
+
       if (!character.skills.canUse(gear.skillType())) return;
       // add to specific slot
       const slot = gear.slot();

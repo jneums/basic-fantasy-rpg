@@ -62,7 +62,7 @@ export default function inventoryPointerDown(pointer, character) {
 
       }
     } else if (pointer.downX > discard_L && pointer.downX < discard_R) {
-      if (active.hasOwnProperty('skillType')) {
+      if (active.hasOwnProperty('skillType') || active.getType() == 'vendor') {
         character.inventory.dismantleActive();
       } else {
         character.inventory.discardActive();

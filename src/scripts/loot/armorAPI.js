@@ -23,12 +23,12 @@ function getArmorByName(name = '') {
     },
     1,
     13,
-    4,
+    3,
     'ring',
     'cloth',
     55,
     44,
-    'item-29'
+    'ring_01'
 
   )
 
@@ -53,7 +53,7 @@ function getArmorByName(name = '') {
     'mail',
     55,
     44,
-    'item-04'
+    'mail_chest'
   )
 
   const recruitsPants = new Armor(
@@ -77,7 +77,7 @@ function getArmorByName(name = '') {
     'mail',
     40,
     32,
-    'item-02'
+    'leather'
   )
 
   const recruitsBoots = new Armor(
@@ -101,7 +101,7 @@ function getArmorByName(name = '') {
     'mail',
     25,
     40,
-    'item-24'
+    'mail_boots'
   )
 
   const footpadsVest = new Armor(
@@ -125,7 +125,7 @@ function getArmorByName(name = '') {
     'leather',
     55,
     44,
-    'item-02'
+    'brown_cloak'
   )
 
   const footpadsPants = new Armor(
@@ -149,7 +149,7 @@ function getArmorByName(name = '') {
     'leather',
     40,
     32,
-    'item-05'
+    'leather'
   )
 
   const footpadsShoes = new Armor(
@@ -173,8 +173,10 @@ function getArmorByName(name = '') {
     'leather',
     25,
     20,
-    'item-02'
+    'shoes'
   )
+
+
 
   const apprenticesRobe = new Armor(
     "Apprentice's Robe",
@@ -182,12 +184,12 @@ function getArmorByName(name = '') {
     2,
     {
       main: {
-        stat: 'strength',
-        val: 3
+        stat: 'intellect',
+        val: 2
       },
       secondary: {
-        stat: 'stamina',
-        val: 2
+        stat: 'spirit',
+        val: 1
       }
     },
     1,
@@ -197,7 +199,7 @@ function getArmorByName(name = '') {
     'cloth',
     55,
     44,
-    'item-05'
+    'white_shirt'
   )
 
   const apprenticesPants = new Armor(
@@ -206,12 +208,12 @@ function getArmorByName(name = '') {
     2,
     {
       main: {
-        stat: 'strength',
-        val: 3
+        stat: 'intellect',
+        val: 2
       },
       secondary: {
-        stat: 'stamina',
-        val: 2
+        stat: 'spirit',
+        val: 1
       }
     },
     1,
@@ -221,7 +223,7 @@ function getArmorByName(name = '') {
     'cloth',
     40,
     32,
-    'item-03'
+    'cloth'
   )
 
   const apprenticesBoots = new Armor(
@@ -230,12 +232,12 @@ function getArmorByName(name = '') {
     1,
     {
       main: {
-        stat: 'strength',
-        val: 3
+        stat: 'intellect',
+        val: 2
       },
       secondary: {
-        stat: 'stamina',
-        val: 2
+        stat: 'spirit',
+        val: 1
       }
     },
     1,
@@ -245,7 +247,7 @@ function getArmorByName(name = '') {
     'cloth',
     25,
     20,
-    'item-01'
+    'slippers'
   )
 
   const armor = [
@@ -256,10 +258,13 @@ function getArmorByName(name = '') {
     footpadsVest,
     footpadsPants,
     footpadsShoes,
+    apprenticesRobe,
+    apprenticesPants,
+    apprenticesBoots
   ]
 
 
-  return armor.filter(armor => armor.getName() === name)[0];
+  return armor.find(armor => armor.getName() === name);
 }
 
 export { getArmorByName };

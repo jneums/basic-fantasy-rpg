@@ -72,7 +72,7 @@ export default class Item {
 
     // sell:
     this.sell = function(seller) {
-      seller.inventory.discardActive();
+      seller.inventory.discardActive(1);
       seller.inventory.addCrystals(_sell);
     }
 

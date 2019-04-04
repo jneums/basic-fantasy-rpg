@@ -2,8 +2,8 @@ export default class Marker {
 
     constructor (scene, type)
     {
-        this.icon = scene.add.image(0, 0, type + '-marker');
-        this.icon.depth;
+        this.icon = scene.add.image(0, 0, type);
+        this.icon.depth = this.icon.y;
 
 
     }
@@ -23,6 +23,7 @@ export default class Marker {
     {
       this.icon.x = x;
       this.icon.y = y   - 20;
+      this.icon.depth = this.icon.y + 16;
     }
 
 }

@@ -15,7 +15,6 @@ export default function playAnims(attacker = {}, target = {}, combatObject = {})
 
     // animations is based on spell school:
     const damageType = combatObject.damageType();
-
     // create 'damageType' image:
     const spellImage = attacker.scene.add.image(attacker.x, attacker.y, damageType + '-ball');
 

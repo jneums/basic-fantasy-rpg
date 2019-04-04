@@ -66,6 +66,8 @@ export default class UIScene extends Phaser.Scene {
   updateData(parent, key, data) {
 
     if (key === 'reloadUI') {
+      if (!data) return;
+
       clearActionBar(this);
       const icons = data.keyMap.getIcons();
       loadActionBar(this, icons)
@@ -142,6 +144,7 @@ export default class UIScene extends Phaser.Scene {
 
 function showEquipment(scene, {stats, equipment, crystals}) {
   if (!stats) return;
+  clearEquipment(scene)
 
   const equipmentBackground = scene.add.image(0, 0, 'equipment-background');
   equipmentBackground.scaleX = CONST.SCALE;
@@ -156,6 +159,7 @@ function showEquipment(scene, {stats, equipment, crystals}) {
     'MaxHP: ',
     'Armr: ',
     'Ddge: ',
+    'Prry: ',
     'Str: ',
     'Agi: ',
     'Stam: ',
@@ -169,13 +173,14 @@ function showEquipment(scene, {stats, equipment, crystals}) {
   const statArr = [
     stats.hp,
     stats.armor,
-    stats.dodge * 100 + '%',
+    Math.floor(stats.dodge * 100) + '%',
+    Math.floor(stats.parry * 100) + '%',
     stats.str,
     stats.agi,
     stats.sta,
     stats.int,
     stats.spi,
-    stats.crit * 100 + '%',
+    Math.floor(stats.crit * 100) + '%',
     stats.ap
   ]
 

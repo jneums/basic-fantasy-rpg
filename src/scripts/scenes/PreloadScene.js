@@ -59,10 +59,27 @@ export default class PreloadScene extends Phaser.Scene {
       { frameWidth: 24, frameHeight: 36 }
     );
 
+    // npc anims:
+    this.load.spritesheet('guard-idle',
+      './assets/anims/guard_idle_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    );
+
+    this.load.spritesheet('guard-sword-idle',
+      './assets/anims/guard_sword_idle_spritesheet.png',
+      { frameWidth: 24, frameHeight: 24 }
+    );
+
 
     // priest anims:
     this.load.spritesheet('priest-idle',
       './assets/anims/priest_idle_spritesheet.png',
+      { frameWidth: 16, frameHeight: 16 }
+    );
+
+    // red mage:
+    this.load.spritesheet('archmage-idle',
+      './assets/anims/red_mage_idle_spritesheet.png',
       { frameWidth: 16, frameHeight: 16 }
     );
 
@@ -197,50 +214,62 @@ export default class PreloadScene extends Phaser.Scene {
 
     // icons:
     // barbarian:
-    this.load.image('rush', './assets/icons/fast_icon.png');
-    this.load.image('gore', './assets/icons/gore_icon.png');
-    this.load.image('precision', './assets/icons/strike_icon.png');
-    this.load.image('shout', './assets/icons/shout_icon.png');
-    this.load.image('intimidate', './assets/icons/earth_column.png');
-    this.load.image('hobble', './assets/icons/fire_sword_icon.png');
+    this.load.image('rush', './assets/icons/rush.png');
+    this.load.image('gore', './assets/icons/gore.png');
+    this.load.image('precision', './assets/icons/precision.png');
+    this.load.image('shout', './assets/icons/shout.png');
+    this.load.image('intimidate', './assets/icons/intimidate.png');
+    this.load.image('hobble', './assets/icons/hobble.png');
 
     // mage:
     this.load.image('wand', './assets/icons/wand.png');
-    this.load.image('intellect', './assets/icons/eye_icon.png');
-    this.load.image('missiles', './assets/icons/frost_ball.png');
-    this.load.image('frostbolt', './assets/icons/ice_arrow_icon.png');
-    this.load.image('poly', './assets/icons/poly_icon.png');
+    this.load.image('focus', './assets/icons/focus.png');
+    this.load.image('bomb', './assets/icons/bomb.png');
+    this.load.image('frostbolt', './assets/icons/frostbolt.png');
+    this.load.image('poly', './assets/icons/poly.png');
 
     //priest:
-    this.load.image('heal', './assets/icons/heart_icon.png');
-    this.load.image('renew', './assets/icons/renew_icon.png');
+    this.load.image('heal', './assets/icons/heal.png');
+    this.load.image('renew', './assets/icons/renew.png');
 
     // large item bg's:
-    this.load.image('brown-bg', 'assets/items/brown_bg.png');
-    this.load.image('green-bg', 'assets/items/green_bg.png');
-    this.load.image('yellow-bg', 'assets/items/yellow_bg.png');
-    this.load.image('blue-bg', 'assets/items/blue_bg.png');
-    this.load.image('purple-bg', 'assets/items/purple_bg.png');
-    this.load.image('red-bg', 'assets/items/red_bg.png');
-    this.load.image('grey-bg', 'assets/items/grey_bg.png');
+    this.load.image('brown-bg', 'assets/icons/brown_bg.png');
+    this.load.image('green-bg', 'assets/icons/green_bg.png');
+    this.load.image('yellow-bg', 'assets/icons/yellow_bg.png');
+    this.load.image('blue-bg', 'assets/icons/blue_bg.png');
+    this.load.image('purple-bg', 'assets/icons/purple_bg.png');
+    this.load.image('red-bg', 'assets/icons/red_bg.png');
+    this.load.image('grey-bg', 'assets/icons/grey_bg.png');
 
     // small item bg's:
-    this.load.image('brown-sm-bg', 'assets/items/brown_small_bg.png');
-    this.load.image('green-sm-bg', 'assets/items/green_small_bg.png');
-    this.load.image('yellow-sm-bg', 'assets/items/yellow_small_bg.png');
-    this.load.image('blue-sm-bg', 'assets/items/blue_small_bg.png');
-    this.load.image('purple-sm-bg', 'assets/items/purple_small_bg.png');
-    this.load.image('red-sm-bg', 'assets/items/red_small_bg.png');
-    this.load.image('grey-sm-bg', 'assets/items/grey_small_bg.png');
+    this.load.image('brown-sm-bg', 'assets/icons/brown_small_bg.png');
+    this.load.image('green-sm-bg', 'assets/icons/green_small_bg.png');
+    this.load.image('yellow-sm-bg', 'assets/icons/yellow_small_bg.png');
+    this.load.image('blue-sm-bg', 'assets/icons/blue_small_bg.png');
+    this.load.image('purple-sm-bg', 'assets/icons/purple_small_bg.png');
+    this.load.image('red-sm-bg', 'assets/icons/red_small_bg.png');
+    this.load.image('grey-sm-bg', 'assets/icons/grey_small_bg.png');
 
     // items:
-    for (let i = 1; i < 109; i++) {
-      if (i < 10) {
-        this.load.image('item-0' + i, './assets/items/icon_0' + i + '.png');
-      } else {
-        this.load.image('item-' + i, './assets/items/icon_' + i + '.png');
-      }
-    }
+    this.load.image('leather_scraps', './assets/icons/leather_scraps.png');
+    this.load.image('ichor', './assets/icons/ichor.png');
+    this.load.image('ore', './assets/icons/ore.png');
+
+    this.load.image('white_shirt', './assets/icons/white_shirt.png');
+    this.load.image('shadow_staff', './assets/icons/shadow_staff.png');
+    this.load.image('ring_01', './assets/icons/ring_01.png');
+    this.load.image('slippers', './assets/icons/slippers.png');
+    this.load.image('cloth', './assets/icons/cloth.png');
+    this.load.image('water', './assets/icons/water.png');
+    this.load.image('cheese', './assets/icons/cheese.png');
+    this.load.image('frost_wand', './assets/icons/frost_wand.png');
+    this.load.image('shadow_wand', './assets/icons/shadow_wand.png');
+    this.load.image('short_sword', './assets/icons/short_sword.png');
+    this.load.image('mail_chest', './assets/icons/mail_chest.png');
+    this.load.image('mail_boots', './assets/icons/mail_boots.png');
+    this.load.image('leather', './assets/icons/leather.png');
+    this.load.image('tarnished_sword', './assets/icons/tarnished_sword.png');
+    this.load.image('gold_dagger', './assets/icons/gold_dagger.png');
 
     this.load.image('nature-ball', './assets/anims/nature_ball.png');
     this.load.image('frost-ball', './assets/anims/frost_ball.png');
@@ -249,11 +278,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('shadow-ball', './assets/anims/shadow_ball.png');
 
 
-    this.load.image('inventory', './assets/icons/backpack_icon.png');
-    this.load.image('quest', './assets/icons/book_icon.png');
-    this.load.image('equipment', './assets/icons/equip_icon.png');
-    this.load.image('quest-marker', './assets/icons/quest.png');
-    this.load.image('barbarian-trainer-marker', './assets/icons/barbarian_trainer.png');
+    this.load.image('inventory', './assets/icons/inventory.png');
+    this.load.image('quest', './assets/icons/quest.png');
+    this.load.image('equipment', './assets/icons/equipment.png');
 
     // ui:
     this.load.image('ui', './assets/ui/ui.png');
@@ -263,10 +290,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('equipment-background', './assets/ui/equipment.png');
     this.load.image('loot-box-background', './assets/ui/loot_box.png');
 
-    // duplicates:
-    this.load.image('green-quest', './assets/ui/green_quest_background.png');
-    this.load.image('yellow-quest', './assets/ui/yellow_quest_background.png');
-    this.load.image('red-quest', './assets/ui/red_quest_background.png');
 
     // character selection screen:
     this.load.image('character-select', './assets/ui/character_selection.png');
@@ -276,6 +299,32 @@ export default class PreloadScene extends Phaser.Scene {
       progressBar.fillStyle(0xbf7b3f, 1);
       progressBar.fillRect(390, 280, 500 * value, 30);
     });
+
+
+    this.registry.set('reloadUI');
+    this.registry.set('refreshXpBar');
+
+    this.registry.set('openEquipment');
+    this.registry.set('closeEquipment');
+
+    this.registry.set('openLootBox');
+    this.registry.set('closeLootBox');
+
+    this.registry.set('openInventory');
+    this.registry.set('closeInventory');
+
+    this.registry.set('openDialogueBox');
+    this.registry.set('closeDialogueBox');
+
+    this.registry.set('openQuestLog');
+    this.registry.set('closeQuestLog');
+
+    this.registry.set('selectItem');
+    this.registry.set('showComparison');
+    this.registry.set('selectQuest');
+    this.registry.set('selectEquipment');
+    this.registry.set('targetChange');
+    this.registry.set('error');
 
 
     // load event:

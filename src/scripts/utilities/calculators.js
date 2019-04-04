@@ -28,11 +28,8 @@ function calculateDodgeChance(attacker = {}, target = {}, hand = '') {
 function calculateParryChance(attacker = {}, target = {}, hand = '') {
   const characterClass = target.getCharacterClass();
   switch(characterClass) {
-    case 'druid':
     case 'mage':
     case 'priest':
-    case 'shaman':
-    case 'warlock':
       return 0;
   }
   const tarbaseParry = target.stat.baseParry();

@@ -6,6 +6,8 @@ import threatMod from './threatMod';
 import healthMod from './healthMod';
 import resourceMod from './resourceMod';
 import playAnims from './playAnims';
+import skillMod from './skillMod';
+
 /**
  * processCombatObject - take dmg, add to log, add rage,
  * modify threat table, create scrolling text, etc.
@@ -22,6 +24,7 @@ export default function processCombatObject (attacker = {}, target = {}) {
   // console.log(this.amount())
   statusMod(attacker, target, this);
   // console.log(this.amount())
+  skillMod(attacker, target, this);
 
   // give combatants a chance to modify the combat object
   classMod(attacker, target, this);
@@ -41,4 +44,5 @@ export default function processCombatObject (attacker = {}, target = {}) {
   healthMod(attacker, target, this);
 
   resourceMod(attacker, target, this);
+
 }

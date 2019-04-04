@@ -7,49 +7,49 @@ import Item from './Item';
  * @returns {object} item
  */
 function getItemByName(name = '') {
-  const malachite = new Item(
-    'Malachite',
+  const emerald = new Item(
+    'Emerald',
     'Green gem.',
     7,
     20,
-    50,
-    'crafting',
+    5,
+    'vendor',
     1,
     99,
-    'item-105',
+    'emerald',
     6
   );
 
 
-  const largeCandle = new Item(
-    'Large Candle',
-    'Mostly melted.',
+  const ichor = new Item(
+    'Green Ichor',
+    'Large glob of greenish goo.',
     1,
     5,
-    null,
-    'questItem',
+    1,
+    'vendor',
     1,
     20,
-    'item-100',
+    'ichor',
     6
   );
 
-  const goldDust = new Item(
-    'Gold Dust',
-    'Not worth anything.',
+  const ore = new Item(
+    'Raw Iron Ore',
+    'Not worth much.',
     230,
     24,
-    6,
-    'crafting',
+    3,
+    'vendor',
     1,
     20,
-    'item-105',
+    'ore',
     6
   );
 
-  const items = [ malachite, largeCandle, goldDust ]
+  const items = [ emerald, ichor, ore ]
 
-  return items.filter(item => item.getName() === name)[0];
+  return items.find(item => item.getName() === name);
 }
 
 export { getItemByName };

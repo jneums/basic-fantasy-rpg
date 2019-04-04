@@ -16,6 +16,10 @@ export default (function Const() {
     // offwhite:
     TXT_COLOR: 0xccccaa,
 
+    BARBARIAN_COLOR: 0xaa3333,
+    MAGE_COLOR: 0x337799,
+    PRIEST_COLOR: 0xccaa44,
+
     // amount the objects/camera is changed:
     SCALE: 4,
 

@@ -2,6 +2,8 @@ import FloatingText from '../FloatingText/FloatingText';
 
 export default function textMod(attacker = {}, target = {}, combatObject = {}) {
 
+
+
   let text = '';
 
   switch (combatObject.status()) {
@@ -22,6 +24,11 @@ export default function textMod(attacker = {}, target = {}, combatObject = {}) {
       break;
 
   }
+
+  if (combatObject.skillLvlUp) {
+    text += combatObject.skillLvlUp;
+  }
+  
   // create floating text:
   const floatingText = new FloatingText(attacker.scene, {
       text: text,

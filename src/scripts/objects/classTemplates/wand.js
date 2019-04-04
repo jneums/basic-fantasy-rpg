@@ -28,7 +28,7 @@ export default function wand() {
 
   // check for wand
   const wand = this.equipment.equipped().ranged;
-  if (!wand.damage && wand.type !== 'wand') return console.log("I dont have a wand")
+  if (!wand && wand.skillType() !== 'wand') return console.log("I dont have a wand")
 
   // check for cooldown
   const canRanged = this.timer.checkSwingTimer('ranged');
@@ -41,14 +41,14 @@ export default function wand() {
 
 
   // get weapon dmg roll
-  const amount = Phaser.Math.Between(wand.damage.min, wand.damage.max);
+  const amount = Phaser.Math.Between(wand.dmg().min, wand.dmg().max);
   // build spell combat object
   const attackStatus = spellHitTable(this, target);
   // process combat object
   const combatObject = new CombatObject(this, target);
   combatObject.setStatus(attackStatus);
   combatObject.setType('wand');
-  combatObject.setDamageType(wand.damageType);
+  combatObject.setDamageType(wand.damageType());
   combatObject.setRange('ranged');
   combatObject.setAmount(amount);
 

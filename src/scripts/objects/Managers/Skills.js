@@ -15,7 +15,7 @@ export default class Skills {
       crossbow: -1,
       gun: -1,
       thrown: -1,
-      wands: -1,
+      wand: -1,
       unarmed: 0,
 
       cloth: 0,
@@ -44,6 +44,9 @@ export default class Skills {
     }
 
     this.levelUpSkill = function(skill) {
+      if (!this.lvl) return;
+      if (!skills[skill]) return;
+      if (skills[skill] >= this.lvl.getLevel() * 5) return;
       skills[skill]++
     }
 

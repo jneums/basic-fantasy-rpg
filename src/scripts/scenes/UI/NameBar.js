@@ -25,8 +25,8 @@ export default function NameBar(scene, type) {
 
   let _name = 'Barbarian';
   let _lvl = '34';
-  const _nameTxt = scene.add.bitmapText(_x, _y, 'font', '', 24).setTint(MOB_CLR);
-  const _lvlTxt = scene.add.bitmapText(_x, _y + 24, 'font', '', 16).setTint(LVL_CLR);;
+  const _nameTxt = scene.add.bitmapText(_x, _y, 'font', '', 26).setTint(MOB_CLR);
+  const _lvlTxt = scene.add.bitmapText(_x, _y + 26, 'font', '', 20).setTint(LVL_CLR);;
 
   if (type === 'target') {
     _nameTxt.setOrigin(1, 0).setRightAlign()

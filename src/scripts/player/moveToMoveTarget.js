@@ -1,3 +1,5 @@
+import CONST from '../objects/Managers/Const';
+
 /**
  * moveToMoveTarget - used in update()
  *
@@ -14,7 +16,7 @@ export default function moveToMoveTarget(character = {}) {
     moveTargetCoords[0], moveTargetCoords[1]
   ) < 5;
   if (isMoveTargetWithinDistance) {
-    character.movement.setMovementSpeed(40);
+    character.movement.setMovementSpeed(CONST.MOVEMENT_SPEED);
     character.movement.stop();
     return false;
   } else {

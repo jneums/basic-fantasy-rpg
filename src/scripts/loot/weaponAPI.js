@@ -30,7 +30,8 @@ function getWeaponByName(name = '') {
     25,
     20,
     { min: 40, max: 60 },
-    'item-44'
+    'physical',
+    'flame_sword'
   )
 
 
@@ -57,7 +58,8 @@ function getWeaponByName(name = '') {
     25,
     20,
     { min: 4, max: 6 },
-    'item-44'
+    'physical',
+    'tarnished_sword'
   )
 
 
@@ -83,7 +85,8 @@ function getWeaponByName(name = '') {
     18,
     20,
     { min: 2, max: 6 },
-    'item-51'
+    'physical',
+    'short_sword'
   )
 
   const deadmanDagger = new Weapon(
@@ -108,7 +111,8 @@ function getWeaponByName(name = '') {
     18,
     20,
     { min: 1, max: 2 },
-    'item-47'
+    'physical',
+    'gold_dagger'
   )
 
   const crookedStaff = new Weapon(
@@ -116,11 +120,11 @@ function getWeaponByName(name = '') {
     'Looks like a tree branch.',
     {
       main: {
-        stat: 'strength',
+        stat: 'intellect',
         val: 2
       },
       secondary: {
-        stat: 'stamina',
+        stat: 'spirit',
         val: 1
       }
     },
@@ -133,7 +137,8 @@ function getWeaponByName(name = '') {
     25,
     20,
     { min: 3, max: 6 },
-    'item-59'
+    'physical',
+    'shadow_staff'
   )
 
   const frostWand = new Weapon(
@@ -141,11 +146,11 @@ function getWeaponByName(name = '') {
     'Icy cold to the touch.',
     {
       main: {
-        stat: 'strength',
+        stat: 'intellect',
         val: 2
       },
       secondary: {
-        stat: 'stamina',
+        stat: 'spirit',
         val: 1
       }
     },
@@ -158,7 +163,8 @@ function getWeaponByName(name = '') {
     30,
     60,
     { min: 3, max: 9 },
-    'item-65'
+    'frost',
+    'frost_wand'
   )
 
   const shadowWand = new Weapon(
@@ -166,11 +172,11 @@ function getWeaponByName(name = '') {
     'It whispers to me...',
     {
       main: {
-        stat: 'strength',
+        stat: 'intellect',
         val: 2
       },
       secondary: {
-        stat: 'stamina',
+        stat: 'spirit',
         val: 1
       }
     },
@@ -183,7 +189,8 @@ function getWeaponByName(name = '') {
     30,
     60,
     { min: 3, max: 9 },
-    'item-63'
+    'shadow',
+    'shadow_wand'
   )
 
   const weapons = [
@@ -197,7 +204,7 @@ function getWeaponByName(name = '') {
   ];
 
 
-  return weapons.filter(weapon => weapon.getName() === name)[0];
+  return weapons.find(weapon => weapon.getName() === name);
 }
 
 export { getWeaponByName };

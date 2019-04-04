@@ -16,7 +16,7 @@ function getConsumableByName(name = '') {
     'consumable',
     1,
     20,
-    'item-97',
+    'leather_scraps',
     'eat'
   )
 
@@ -29,7 +29,7 @@ function getConsumableByName(name = '') {
     'consumable',
     1,
     20,
-    'item-88',
+    'water',
     'drink'
   )
 

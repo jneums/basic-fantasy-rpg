@@ -14,6 +14,7 @@ export default function statusMod(attacker = {}, target = {}, combatObject = {})
       combatObject.setMitigationAmount(amount);
       break;
     case 'parry':
+      target.timer.setSwingTimerMainHand(0);
       combatObject.setAmount(0);
       combatObject.setMitigationAmount(amount);
       break;

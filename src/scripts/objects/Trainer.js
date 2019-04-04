@@ -16,8 +16,15 @@ export default class Trainer extends Character {
   constructor(scene = {}, x = 0, y = 0, type, ability) {
     super(scene, x, y)
     this.ability = new MobAbilities(this);
-    this.animations = new Anims(this, 'npc', 'npc-unarmed');
-    this.marker = new Marker(scene, type);
+
+    if (type === 'barbarian-trainer') {
+      this.animations = new Anims(this, 'guard', 'guard-sword');
+
+    } else if (type === 'mage-trainer') {
+      this.animations = new Anims(this, 'archmage', 'archmage-staff');
+    }
+
+    this.marker = new Marker(scene, ability.name)
 
     // which ability can he teach?
     this.lesson = ability;

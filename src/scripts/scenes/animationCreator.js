@@ -14,7 +14,59 @@
  */
 export default function animationCreator(scene = {}) {
 
+  // guard animations:
+  scene.anims.create({
+    key: 'guard-idle',
+    frames: scene.anims.generateFrameNumbers('guard-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 2900
+  })
+  scene.anims.create({
+    key: 'guard-run',
+    frames: scene.anims.generateFrameNumbers('guard-idle', {start: 0, end: 4}),
+    duration: 500,
+    yoyo: false,
+    repeat: -1
+  })
+  scene.anims.create({
+    key: 'guard-combat',
+    frames: scene.anims.generateFrameNumbers('guard-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'guard-die',
+    frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
+  })
 
+  scene.anims.create({
+    key: 'guard-sword-idle',
+    frames: scene.anims.generateFrameNumbers('guard-sword-idle', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3500
+  })
+  scene.anims.create({
+    key: 'guard-sword-run',
+    frames: scene.anims.generateFrameNumbers('guard-sword-idle', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'guard-sword-stab',
+    frames: scene.anims.generateFrameNumbers('guard-sword-idle', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
 
   // npc animations:
   scene.anims.create({
@@ -193,6 +245,63 @@ export default function animationCreator(scene = {}) {
   })
   scene.anims.create({
     key: 'mage-sword-stab',
+    frames: scene.anims.generateFrameNumbers('mage-sword-stab', {frames: [0, 1, 2]}),
+    frameRate: 9,
+    yoyo: true,
+    repeat: 0,
+  })
+
+  // red mage animations:
+  // change from barabrian anims as you import mage anims:
+  // (barbarian anim are placeholders atm for mage)
+  scene.anims.create({
+    key: 'archmage-idle',
+    frames: scene.anims.generateFrameNumbers('archmage-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 2900
+  })
+  scene.anims.create({
+    key: 'archmage-run',
+    frames: scene.anims.generateFrameNumbers('archmage-idle', {start: 0, end: 4}),
+    duration: 500,
+    yoyo: false,
+    repeat: -1
+  })
+  scene.anims.create({
+    key: 'archmage-combat',
+    frames: scene.anims.generateFrameNumbers('archmage-idle', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'archmage-die',
+    frames: scene.anims.generateFrameNumbers('barbarian-die', {start: 0, end: 4}),
+    frameRate: 6,
+    yoyo: false,
+    repeat: 0,
+  })
+
+  // mage sword (hand) anims:
+  scene.anims.create({
+    key: 'archmage-staff-idle',
+    frames: scene.anims.generateFrameNumbers('mage-sword-idle', {start: 0, end: 3}),
+    frameRate: 8,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 3000
+  })
+  scene.anims.create({
+    key: 'archmage-staff-run',
+    frames: scene.anims.generateFrameNumbers('mage-sword-run', {start: 0, end: 3}),
+    frameRate: 5,
+    yoyo: true,
+    repeat: -1,
+  })
+  scene.anims.create({
+    key: 'archmage-staff-stab',
     frames: scene.anims.generateFrameNumbers('mage-sword-stab', {frames: [0, 1, 2]}),
     frameRate: 9,
     yoyo: true,

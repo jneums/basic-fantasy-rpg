@@ -27,7 +27,7 @@ export default function frostbolt () {
   if(!abilityRequirements(this, config)) return;
 
   const castTime = 1.5 * 60; // 1.5 seconds
-  const dmg = Phaser.Math.Between(18, 20);
+  const dmg = (Phaser.Math.Between(2, 3) * .1) * this.stat.spellPower();
 
   const target = this.target.currentTarget();
 

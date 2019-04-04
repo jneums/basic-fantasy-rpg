@@ -1,4 +1,4 @@
-
+import CONST from './Const';
 /**
  * Stat Manager - Handles all of the stats
  * relevant for a RPG Character. The stat manager
@@ -20,9 +20,9 @@ export default class Stat {
     let crit = 0;
     let hitChance = 0;
     // determines how hard spells hit.
-    let spellPower = 100;
+    let spellPower = 0;
     // determines how hard healing spells heal.
-    let healingPower = 100;
+    let healingPower = 0;
     let spellCrit = 0;
     let spellHit = 0;
     let manaPer5 = 0;
@@ -99,6 +99,7 @@ export default class Stat {
       const stats = {
         hp: this.maxHp(),
         armor: this.totalArmor(),
+        parry: this.baseParry(),
         dodge: this.dodge(),
         str: this.strength(),
         agi: this.agility(),
@@ -118,7 +119,7 @@ export default class Stat {
      * @returns {number}
      */
     this.maxHp = function() {
-      const hpFromStam = this.stamina() * 10;
+      const hpFromStam = this.stamina() * CONST.STAM_PER_HP;
       return baseHp + hpFromStam;
     }
 
@@ -412,8 +413,9 @@ export default class Stat {
       const base = spellPower;
       const gear = character.equipment.statBonus('spellPower');
       const buff = character.buffs.statBonus('spellPower');
+      const fromInt = this.intellect() * 2;
       // talents
-      return base + gear + buff;
+      return base + gear + buff + fromInt;
     }
 
 

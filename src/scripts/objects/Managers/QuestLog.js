@@ -1,6 +1,6 @@
-import Quest from './Quest';
 import { getArmorByName } from '../../loot/armorAPI';
 import FloatingText from '../FloatingText/FloatingText';
+import getQuestByName from '../../QuestAPI';
 
 export default class QuestLog {
   constructor(character) {
@@ -17,21 +17,8 @@ export default class QuestLog {
     // add quest:
     this.add = function(questName) {
 
-      // needs a 'getQuestById' generator, possible on server side:
-      const newQuest = new Quest(
-        1,
-        "orcs",
-        "easy",
-        "Kill",
-        15,
-        "orc",
-        "We have little time my friend. The Labyrinth is attacking us, and our losses are increasing by the second! Prove your worth, and earn your place as a member of our proud clan. Talk to me again after you learn to fight, by killing 15 of these weak captured orcs.",
-        "What are you doing wasting my time?? Go kill them!",
-        "So you finished, I assumed you would. Here, take this ring. It is the only thing I have to offer you, I already gave everything else to the others who came before you.",
-        "The commander wants me to prove my worth or something, by killing 15 of these shabby orcs. He said he would give me a ring or something.",
-        getArmorByName("Ring of Fury"),
-        25
-      )
+      // needs a 'getQuestByName' generator:
+      const newQuest = getQuestByName(questName);
 
       // initialize quest:
       newQuest.advanceStatus();

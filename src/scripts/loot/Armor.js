@@ -80,34 +80,32 @@ export default class Armor extends Item {
       // hit table:
       switch (true) {
         case (rand < insaneChange):
-          _statBonus.main.val += 4;
-          _statBonus.secondary.val += 3;
-          _armor += 20;
+          _statBonus.main.val += 2;
+          _statBonus.secondary.val += 1;
+          _armor += 5;
           _colorIndex++;
-          this.setSell(_sell += _colorIndex * 4);
+          this.setSell(_sell += 4);
 
           break;
         case (rand < largeChange):
-          _statBonus.main.val += 3;
-          _statBonus.secondary.val += 2;
-          _armor += 15;
+          _statBonus.main.val += 1;
+          _statBonus.secondary.val += 1;
+          _armor += 5;
           _colorIndex++;
-          this.setSell(_sell += _colorIndex * 3);
+          this.setSell(_sell += 3);
 
           break;
         case (rand < mediumChange):
-          _statBonus.main.val += 2;
-          _statBonus.secondary.val += 1;
-          _armor += 10;
-          _colorIndex++;
-          this.setSell(_sell += _colorIndex * 2);
-
-          break;
-        case (rand < smallChange):
           _statBonus.main.val += 1;
           _armor += 5;
           _colorIndex++;
-          this.setSell(_sell += _colorIndex * 1);
+          this.setSell(_sell += 2);
+
+          break;
+        case (rand < smallChange):
+          _armor += 5;
+          _colorIndex++;
+          this.setSell(_sell += 1);
 
           break;
         default:

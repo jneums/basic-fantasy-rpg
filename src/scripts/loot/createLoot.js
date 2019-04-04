@@ -8,15 +8,15 @@ export default function createLoot(name = '') {
     const random = Phaser.Math.Between(0, 101);
     switch (true) {
       case (random < 35):
-        return getItemByName('Gold Dust');
+        return getItemByName('Raw Iron Ore');
       case (random < 51):
-        return getItemByName('Large Candle');
+        return getItemByName('Green Ichor');
       case (random < 85):
         return getConsumableByName('Orc Jerky');
       case (random < 87):
         return getConsumableByName('Spring Water');
       case (random < 89):
-        return getItemByName('Malachite');
+        return getItemByName('Emerald');
       case (random < 93):
         return getWeaponByName('Short Sword');
       case (random < 99):
