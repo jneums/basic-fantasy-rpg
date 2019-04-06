@@ -73,7 +73,15 @@ export default class Weapon extends Item {
     }
 
     this.upgrade = function(crystals) {
-      if (_colorIndex === 5) return;
+      let result = {
+        data: '',
+        success: false
+      }
+
+      if (_colorIndex === 5) {
+        result.data = 'no more upgrades';
+        return result;
+      };
 
 
       // rand:
@@ -96,8 +104,10 @@ export default class Weapon extends Item {
           _colorIndex++
 
           this.setSell(_sell += 4);
+          result.data = `damage + 1, ${_statBonus.main.stat} + 2, ${_statBonus.secondary.stat} + 1.`
+          result.success = true;
+          return result;
 
-          break;
         case (rand < largeChange):
           _statBonus.main.val += 1;
           _statBonus.secondary.val += 1;
@@ -108,7 +118,10 @@ export default class Weapon extends Item {
           this.setSell(_sell += 3);
 
 
-          break;
+          result.data = `damage + 1, ${_statBonus.main.stat} + 1, ${_statBonus.secondary.stat} + 1.`
+          result.success = true;
+          return result;
+
         case (rand < mediumChange):
           _statBonus.main.val += 1;
 
@@ -119,7 +132,10 @@ export default class Weapon extends Item {
           this.setSell(_sell += 2);
 
 
-          break;
+          result.data = `damage + 1, ${_statBonus.main.stat} + 1.`
+          result.success = true;
+          return result;
+
         case (rand < smallChange):
           _dmg.min += 1;
           _dmg.max += 1;
@@ -128,13 +144,14 @@ export default class Weapon extends Item {
           this.setSell(_sell += 1);
 
 
-          break;
-        default:
-          //
-          break;
-      }
+          result.data = `damage + 1.`
+          result.success = true;
+          return result;
 
-
+          default:
+          result.data = `failed.`
+          return result;
+        }
 
     }
 

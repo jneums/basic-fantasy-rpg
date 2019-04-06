@@ -41,6 +41,9 @@ export default class Lvl {
       _xp -= _nextLvl;
       _nextLvl *= 1.25;
 
+      character.stat.setHp(character.stat.maxHp());
+      if (character.mana) character.mana.setMana(character.mana.maxMana());
+      
       character.scene.registry.set('reloadUI', character)
 
       return true;

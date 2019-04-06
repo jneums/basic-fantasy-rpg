@@ -29,7 +29,6 @@ function clearQuestLog(scene) {
 
 function loadQuestLog(scene, quests) {
 
-
   const questLogBackground = scene.add.image( 0, 0, 'questLog');
   questLogBackground.scaleX = CONST.SCALE;
   questLogBackground.scaleY = CONST.SCALE;

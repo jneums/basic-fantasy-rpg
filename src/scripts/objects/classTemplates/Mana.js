@@ -15,7 +15,7 @@ export default class ManaMechanic {
     this.maxMana = function() {
       // get total intellect
       const totalInt = character.stat.intellect();
-      return totalInt * 15;
+      return totalInt * 10;
     }
 
     /**

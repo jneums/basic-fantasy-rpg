@@ -7,6 +7,9 @@ export default function textMod(attacker = {}, target = {}, combatObject = {}) {
   let text = '';
 
   switch (combatObject.status()) {
+    case 'crit':
+      text = 'crit: ' + -1 * Math.round(combatObject.amount());
+      break;
     case 'miss':
       text = 'miss';
       break;
@@ -28,11 +31,11 @@ export default function textMod(attacker = {}, target = {}, combatObject = {}) {
   if (combatObject.skillLvlUp) {
     text += combatObject.skillLvlUp;
   }
-  
+
   // create floating text:
   const floatingText = new FloatingText(attacker.scene, {
       text: text,
-      size: Math.abs(Math.round(combatObject.amount())) / 10,
+      size: Math.abs(Math.round(combatObject.amount())) / (attacker.lvl.getLevel() * 20),
       timeToLive: 10000,
       animation: "up",
       parentObj: target,

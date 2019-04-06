@@ -56,9 +56,9 @@ export default class CharacterSelectionScene extends Phaser.Scene {
     className.setOrigin(.5)
 
     const text = {
-      barbarian: formatDialogue("You have spent all your days building your strength and ability to wield weapons. As the strongest, you are the first one into battle, terrifying your foes and inspiring your allies. Because of your strength and weapons skills, you are able to use any armor and can learn to use any weapon.", 'characterSelection'),
-      mage: formatDialogue("While your friends were all working out and practicing their weapon abilities, you chose instead to read books and experiment with the elements. As a result, your body is weak and fragile, you sometimes tremble when you have to lift a heavy book off the shelf. You make up for this weakness by casting incredibly powerful spells.", 'characterSelection'),
-      priest: formatDialogue("Like your mage friends, you also were uncomfortable with physical exertion. However, you chose instead to devote yourself to spirituality. Through years of pious studies and worship of the old gods, you have gained their favor. They have chosen to grant you powers otherwise unattainable.", 'characterSelection'),
+      barbarian: formatDialogue("You have spent your life deep within the Labyrinth, fighting off assault after assault, trying in vain to protect your waning group of family and friends. Now you are the only one left from your clan, and you have nothing left to lose. You use your anguish and your fury to fuel you in your reckless desire for revenge.", 'characterSelection'),
+      mage: formatDialogue("Early in your childhood you watched the Labyrinth take everythin dear to you. You immersed yourself in the study of magic. Choosing the razor sharp and unforgiving discipline of an Ice mage. Through the years, your mind has become sharp and cold, your body broken and reinforced with ice, as time blurs into an endless cycle of battles.", 'characterSelection'),
+      priest: formatDialogue("You were chosen at an early age, hearing the whispers of the Mad God when you were just a child. He has chosen you to lead his people from the Labyrinth, and his constant precense in your mind has driven you to the edge of insanity. Your wrecked body and mind are the tool of the Old God, and your unwavering devotion makes you a deadly opponent.", 'characterSelection'),
       thief: ["Locked"],
       necro: ["Locked"],
       huntress: ["Locked"],

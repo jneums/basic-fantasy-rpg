@@ -31,7 +31,7 @@ const y5_B = CONST.GAME_VIEW_CENTER_Y + 54 * 4;
 const use_L = CONST.GAME_VIEW_CENTER_X - 25 * 4;
 const use_R = CONST.GAME_VIEW_CENTER_X + 10 * 4;
 
-const discard_L = CONST.GAME_VIEW_CENTER_X + 56 * 4;
+const discard_L = CONST.GAME_VIEW_CENTER_X + 42 * 4;
 const discard_R = CONST.GAME_VIEW_CENTER_X + 85 * 4;
 
 const buttons_T = CONST.GAME_VIEW_CENTER_Y;

@@ -43,7 +43,15 @@ export default function equipmentPointerDown(pointer, player) {
         return // early
       };
 
-      player.equipment.getActive().upgrade(1);
+      const result = player.equipment.getActive().upgrade(1);
+
+      if (result.success) {
+        player.scene.registry.set('upgradeSuccess', result.data);
+
+      } else {
+        player.scene.registry.set('upgradeFailure', result.data);
+
+      }
 
       data = {
         stats: player.stat.displayStats(),

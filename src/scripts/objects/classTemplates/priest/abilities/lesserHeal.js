@@ -1,5 +1,7 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import spellHitTable from '../../../../hitTables/spellHitTable';
+
 import CONST from '../../../Managers/Const';
 
 
@@ -40,6 +42,9 @@ export default function lesserHeal () {
       // spell effect here:
       // create combat object ot deal 18 - 20 frost dmg:
       const combatObject = new CombatObject(this, target);
+      const status = spellHitTable(this, target);
+
+      combatObject.setStatus(status);
       combatObject.setType('heal');
       combatObject.setRange('ranged');
       combatObject.setDamageType('holy');

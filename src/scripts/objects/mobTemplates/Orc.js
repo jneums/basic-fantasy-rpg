@@ -23,8 +23,8 @@ export default class Orc extends Character {
     this.setCharacterClass('mob');
     this.stat.setDodgeRating(0);
     this.stat.setAgilityToDodgeRatio(20);
-    this.stat.setAgilityToCritRatio(20);
-    this.stat.setStrAPR(.5)
+    this.stat.setAgilityToCritRatio(10);
+    this.stat.setStrAPR(1)
 
 
     // starting equipment

@@ -5,10 +5,11 @@ import { selectQuest, clearQuestLog, loadQuestLog } from './UI/quest';
 import { clearActionBar, loadActionBar } from './UI/actionBar';
 import itemTooltip from './UI/itemTooltip';
 import displayBuffs from './UI/displayBuffs';
+import Tabs from './UI/Tabs';
 
 import XpBar from './UI/XpBar';
 import NameBar from './UI/NameBar';
-import ErrorLog from './UI/ErrorLog';
+import PrintToScrn from './UI/PrintToScrn';
 
 
 import CONST from './Const';
@@ -24,7 +25,8 @@ export default class UIScene extends Phaser.Scene {
 
   create() {
 
-    this.errorLog = new ErrorLog(this);
+    this.tabs = new Tabs(this);
+    this.printer = new PrintToScrn(this);
 
     this.selfBuffs = this.add.container(0, 0);
 
@@ -85,18 +87,23 @@ export default class UIScene extends Phaser.Scene {
 
     } else if (key === 'openQuestLog') {
       loadQuestLog(this, data);
+      this.tabs.init('quest');
 
     } else if (key === 'closeQuestLog') {
       clearQuestLog(this);
+      this.tabs.destroy();
 
     } else if (key === 'selectQuest') {
       selectQuest(scene, data);
+      this.tabs.init('quest');
 
     } else if (key === 'openInventory') {
       showInventory(this, data);
+      this.tabs.init('inventory');
 
     } else if (key === 'closeInventory') {
       clearInventory(this);
+      this.tabs.destroy();
 
     } else if (key === 'openLootBox') {
       showLoot(this, data);
@@ -105,15 +112,16 @@ export default class UIScene extends Phaser.Scene {
       hideLoot(this);
 
     } else if (key === 'openEquipment') {
-
-
       showEquipment(this, data);
+      this.tabs.init('equipment');
 
     } else if (key === 'closeEquipment') {
       clearEquipment(this);
+      this.tabs.destroy();
 
     } else if (key === 'selectItem') {
       itemTooltip(this, data, 'inventory')
+      this.tabs.init('inventory');
 
     } else if (key === 'showComparison') {
       itemTooltip(this, data, 'compare');
@@ -134,7 +142,15 @@ export default class UIScene extends Phaser.Scene {
       this.targetName.set(data);
 
     } else if (key === 'error') {
-      this.errorLog(data);
+      this.printer(data);
+
+
+    } else if (key === 'upgradeSuccess') {
+      this.printer(data, 'success');
+
+    } else if (key === 'upgradeFailure') {
+      this.printer(data, 'failure');
+
     }
   }
 }
@@ -156,36 +172,61 @@ function showEquipment(scene, {stats, equipment, crystals}) {
     .setTint(CONST.TXT_COLOR);
 
   const statKeyArr = [
-    'MaxHP: ',
-    'Armr: ',
-    'Ddge: ',
-    'Prry: ',
+    'base stats',
+    '',
     'Str: ',
     'Agi: ',
     'Stam: ',
     'Int: ',
     'Spir: ',
+    '',
+    'physical: ',
+    '',
+    'MaxHP: ',
+    'Armr: ',
+    'Attk: ',
     'Crit: ',
-    'Attk: '
+    'Ddge: ',
+    'Prry: ',
+    'Blck: ',
+    '',
+    'magical: ',
+    '',
+    'PWR: ',
+    'Crit: ',
+    'Mana: ',
   ]
 
 
   const statArr = [
-    stats.hp,
-    stats.armor,
-    Math.floor(stats.dodge * 100) + '%',
-    Math.floor(stats.parry * 100) + '%',
+    '',
+    '',
     stats.str,
     stats.agi,
     stats.sta,
     stats.int,
     stats.spi,
+    '',
+    '',
+    '',
+    stats.hp,
+    stats.armor,
+    stats.ap,
     Math.floor(stats.crit * 100) + '%',
-    stats.ap
+    Math.floor(stats.dodge * 100) + '%',
+    Math.floor(stats.parry * 100) + '%',
+    Math.floor(stats.block * 100) + '%',
+    '',
+    '',
+    '',
+    stats.sPwr,
+    Math.floor(stats.sCrit * 100) + '%',
+    stats.mMana
+
   ]
 
-  const statsHeader = scene.add.bitmapText(52 * 4, -40 * 4, 'font', statKeyArr, 16).setTint(CONST.TXT_COLOR)
-  const statsInfo = scene.add.bitmapText(94 * 4, -40 * 4, 'font', statArr, 16)
+  const statsHeader = scene.add.bitmapText(52 * 4, -42 * 4, 'font', statKeyArr, 16).setTint(CONST.TXT_COLOR)
+  const statsInfo = scene.add.bitmapText(94 * 4, -42 * 4, 'font', statArr, 16)
     .setTint(CONST.TXT_COLOR)
     .setRightAlign()
     .setOrigin( 1, 0)

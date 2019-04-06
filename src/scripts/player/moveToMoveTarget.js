@@ -21,6 +21,7 @@ export default function moveToMoveTarget(character = {}) {
     return false;
   } else {
     character.setCasting(false);
+    character.movement.faceTarget({x: moveTargetCoords[0], y: moveTargetCoords[1]});
     character.scene.physics.moveTo(character, moveTargetCoords[0], moveTargetCoords[1], speed);
     return true;
   }

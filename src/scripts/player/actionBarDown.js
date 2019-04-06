@@ -35,26 +35,32 @@ const SEVENTH_ROW_BOT  = 170 * 4;
  * @return {void}
  */
 export default function actionBarDown(pointer = {}, player = {}) {
-
+  let index = '';
   // is the pointer in the left column:
   if (pointer.downX > FIRST_COL_LEFT && pointer.downX < FIRST_COL_RIGHT) {
 
 
     // position vertically:
     if (pointer.downY > FIRST_ROW_TOP && pointer.downY < FIRST_ROW_BOT) {
-      player.keyMap.executeOne();
+      index = 'one';
+
     } else if (pointer.downY > SECOND_ROW_TOP && pointer.downY < SECOND_ROW_BOT) {
-      player.keyMap.executeThree();
+      index = 'three';
+
     } else if (pointer.downY > THIRD_ROW_TOP && pointer.downY < THIRD_ROW_BOT) {
-      player.keyMap.executeFive();
+      index = 'five';
+
     } else if (pointer.downY > FOURTH_ROW_TOP && pointer.downY < FOURTH_ROW_BOT) {
-      player.keyMap.executeSeven();
+      index = 'seven';
+
     } else if (pointer.downY > FIFTH_ROW_TOP && pointer.downY < FIFTH_ROW_BOT) {
-      player.keyMap.executeEleven();
+      index = 'inventory';
+
     } else if (pointer.downY > SIXTH_ROW_TOP && pointer.downY < SIXTH_ROW_BOT) {
       //
     } else if (pointer.downY > SEVENTH_ROW_TOP && pointer.downY < SEVENTH_ROW_BOT) {
-      player.keyMap.executeMinus();
+      index = 'equipment';
+
     }
   // or right column:
   } else if (pointer.downX > SECOND_COL_LEFT && pointer.downX < SECOND_COL_RIGHT){
@@ -62,19 +68,26 @@ export default function actionBarDown(pointer = {}, player = {}) {
 
     // vertically in the right column:
     if (pointer.downY > FIRST_ROW_TOP && pointer.downY < FIRST_ROW_BOT) {
-      player.keyMap.executeTwo();
+      index = 'two'
+
     } else if (pointer.downY > SECOND_ROW_TOP && pointer.downY < SECOND_ROW_BOT) {
-      player.keyMap.executeFour();
+      index = 'four';
+
     } else if (pointer.downY > THIRD_ROW_TOP && pointer.downY < THIRD_ROW_BOT) {
-      player.keyMap.executeSix();
+      index = 'six';
+
     } else if (pointer.downY > FOURTH_ROW_TOP && pointer.downY < FOURTH_ROW_BOT) {
-      player.keyMap.executeEight();
+      index = 'eight';
+
     } else if (pointer.downY > FIFTH_ROW_TOP && pointer.downY < FIFTH_ROW_BOT) {
-      player.keyMap.executeZero();
+      index = 'questLog';
+
     } else if (pointer.downY > SIXTH_ROW_TOP && pointer.downY < SIXTH_ROW_BOT) {
       //
     } else if (pointer.downY > SEVENTH_ROW_TOP && pointer.downY < SEVENTH_ROW_BOT) {
-      player.keyMap.executePlus();
+      //
     }
   }
+
+  player.keyMap.execute(index);
 }

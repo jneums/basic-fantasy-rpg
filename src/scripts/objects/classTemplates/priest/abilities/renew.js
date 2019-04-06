@@ -1,5 +1,7 @@
 import CombatObject from '../../../CombatSystem/CombatObject';
 import abilityRequirements from '../../abilityRequirements';
+import spellHitTable from '../../../../hitTables/spellHitTable';
+
 import CONST from '../../../Managers/Const';
 
 
@@ -37,6 +39,9 @@ export default function renew() {
     cast: () => {
       if (target.combat.isDead()) return;
       const combatObject = new CombatObject(this, target);
+      const status = spellHitTable(this, target);
+
+      combatObject.setStatus(status);
       combatObject.setType('heal');
       combatObject.setStatus(null);
       combatObject.setRange('ranged');

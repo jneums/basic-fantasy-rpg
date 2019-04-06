@@ -37,7 +37,11 @@ export default class Combat {
       meleeCombatObject.setHand(hand);
       meleeCombatObject.setType(type);
       // get the attack status roll, e.g. 'hit', 'miss', 'crit'...
-      meleeCombatObject.setStatus(meleeAutoAttackHitTable(character, target, hand));
+      const status = meleeAutoAttackHitTable(character, target, hand);
+      if (status === 'parry') {
+        target.timer.parried(hand);
+      }
+      meleeCombatObject.setStatus(status);
       // get the range for the random roll, e.g. { min: 2, max: 5 }
       const weaponsDamageRange = character.equipment.getWeaponDmg(hand);
       // random number between the above range

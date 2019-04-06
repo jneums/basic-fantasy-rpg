@@ -112,7 +112,7 @@ function getWeaponByName(name = '') {
     20,
     { min: 1, max: 2 },
     'physical',
-    'gold_dagger'
+    'black_dagger'
   )
 
   const crookedStaff = new Weapon(

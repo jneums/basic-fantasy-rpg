@@ -28,12 +28,9 @@ export default class Priest extends Character {
 
     // config keymap for mage abilities
     this.keyMap = new KeyMap(this);
-    this.keyMap.setOne({ ability: this.ability.wand, icon: 'wand' });
-    this.keyMap.setTwo({ ability:this.ability.lesserHeal, icon: 'heal' });
-    this.keyMap.setThree({ ability: this.ability.renew, icon: 'renew' });
-    this.keyMap.setFour({ ability: this.ability, icon: null });
-    this.keyMap.setFive({ ability: this.ability, icon: null });
-    this.keyMap.setSix({ ability: this.ability, icon: null });
+    this.keyMap.set('one', { ability: this.ability.wand, icon: 'wand' });
+    this.keyMap.set('two', { ability:this.ability.lesserHeal, icon: 'heal' });
+    this.keyMap.set('three', { ability: this.ability.renew, icon: 'renew' });
 
     // set faction, default 'alliance'
     this.setTeam('alliance');
@@ -44,7 +41,8 @@ export default class Priest extends Character {
     // name and class specific stats
     this.setName(name);
     this.setCharacterClass('priest');
-    this.stat.setCrit(.05);
+    this.stat.setCrit(5);
+    this.stat.setSpellCrit(10);
     this.stat.setDodgeRating(.032);
     this.stat.setAgilityToDodgeRatio(19.444);
 

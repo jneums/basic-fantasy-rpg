@@ -64,17 +64,7 @@ export default function inputListeners(player = {}) {
   })
 
 
-  /**
-   * toggle characters
-   */
 
-   /*
-  player.scene.input.keyboard.on('keyup_SPACE', (event) => {
-    // switch players control:
-    toggleControl(player.scene);
-
-  })
-  */
 
   player.scene.input.keyboard.on('keydown_SHIFT', (event) => {
     // enables shift combo keys to register.

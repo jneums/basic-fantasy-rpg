@@ -168,6 +168,29 @@ export default class Timer {
       }
     }
 
+    this.parried = function(hand = '') {
+      if (hand === 'main') {
+        // reduce mainhand swing by 40%;
+        const mainTime = this.getSwingTimerMainHand();
+        const mainWpnSpd = character.equipment.getWeaponSpeed('main')
+        if (mainTime - (mainWpnSpd * 60 * .4) > 0) {
+
+          this.setSwingTimerMainHand(mainTime - (mainWpnSpd * 60 * .4));
+        } else {
+          this.setSwingTimerMainHand(0);
+        }
+      } else if (hand === 'off') {
+        // reduce offhand swing by 40%;
+        const offTime = this.getSwingTimerOffHand();
+        const offWpnSpd = character.equipment.getWeaponSpeed('off');
+        if (offTime - (offWpnSpd * 60 * .4) > 0) {
+          this.setSwingTimerOffHand(offTime - (offWpnSpd * 60 * .4));
+        } else {
+          this.setSwingTimerOffHand(0);
+        }
+      }
+    }
+
     /**
     * getSwingTimerMainHand
     *

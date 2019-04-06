@@ -72,7 +72,7 @@ export default class Consumables {
       const buff = {
         name: 'drinking',
         duration: 30 * 60,
-        interval: 3 * 60,
+        interval: 2 * 60,
         channel: true,
         combatObject,
         attacker: character

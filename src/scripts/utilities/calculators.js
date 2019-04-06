@@ -51,7 +51,8 @@ function calculateParryChance(attacker = {}, target = {}, hand = '') {
 function calculateBlockChance(attacker = {}, target = {}, hand = '') {
   // cant block from behind
   // cant block without Shield
-  if (!target.equipment.equipped().offHand.hasOwnProperty('skillType')) return;
+  if (!target.equipment.equipped().offHand) return 0;
+  if (!target.equipment.equipped().offHand.hasOwnProperty('skillType')) return 0;
   const targetOffHandType = target.equipment.equipped().offHand.skillType();
   if (targetOffHandType !== 'shield') return 0;
   // amount blocked determined by blockValue
@@ -76,12 +77,9 @@ function calculateBlockChance(attacker = {}, target = {}, hand = '') {
  */
 function calculateCritChance(attacker = {}) {
   // characters crit chance
-  const critChance = attacker.stat.crit();
-  const totalAgility = attacker.stat.agility();
-  const agiCritRatio = attacker.stat.agiCritR();
-  if (agiCritRatio) return critChance;
-  const total = (totalAgility / agiCritRatio) * .01;
-  return Math.round(total * 1000);
+  const critChance = attacker.stat.crit() * 100;
+
+  return Math.round(critChance * 100);
 }
 
 /**

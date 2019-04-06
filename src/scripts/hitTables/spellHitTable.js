@@ -33,7 +33,7 @@ export default function spellHitTable(attacker = {}, target = {}) {
   // if not a miss:
   // roll again and see if its a crit:
   const critRoll = Phaser.Math.Between(0, 100);
-  if (critRoll < attacker.stat.spellCrit()) return 'crit';
+  if (critRoll < attacker.stat.spellCrit() * 100) return 'crit';
   else return 'hit';
 
 }

@@ -39,11 +39,11 @@ export default class Barbarian extends Character {
     // name and class specific stats
     this.setName(name);
     this.setCharacterClass('barbarian');
-    this.stat.setCrit(.05);
+    this.stat.setCrit(5);
     this.stat.setDodgeRating(0);
-    this.stat.setAgilityToDodgeRatio(20);
-    this.stat.setAgilityToCritRatio(20);
-    this.stat.setStrAPR(.5)
+    this.stat.setAgilityToDodgeRatio(10);
+    this.stat.setAgilityToCritRatio(10);
+    this.stat.setStrAPR(1)
 
     // barbarians start with bonus to strength:
     const baseStrength = this.stat.baseStrength();

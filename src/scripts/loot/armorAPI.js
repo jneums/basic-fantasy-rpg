@@ -42,8 +42,8 @@ function getArmorByName(name = '') {
         val: 2
       },
       secondary: {
-        stat: 'stamina',
-        val: 1
+        stat: 'crit',
+        val: 3
       }
     },
     1,
@@ -188,7 +188,7 @@ function getArmorByName(name = '') {
         val: 2
       },
       secondary: {
-        stat: 'spirit',
+        stat: 'spellCrit',
         val: 1
       }
     },

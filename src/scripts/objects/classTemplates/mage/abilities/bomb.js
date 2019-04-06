@@ -39,7 +39,7 @@ export default function bomb() {
         const combatObject = new CombatObject(this, target);
         combatObject.setType('magic');
         combatObject.setRange('ranged');
-        combatObject.setDamageType('arcane');
+        combatObject.setDamageType('frost');
         combatObject.setAmount(dmgTick);
 
 

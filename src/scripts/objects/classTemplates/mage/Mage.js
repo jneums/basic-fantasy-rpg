@@ -39,7 +39,8 @@ export default class Mage extends Character {
     // name and class specific stats
     this.setName(name);
     this.setCharacterClass('mage');
-    this.stat.setCrit(.05);
+    this.stat.setCrit(5);
+    this.stat.setSpellCrit(5);
     this.stat.setDodgeRating(.032);
     this.stat.setAgilityToDodgeRatio(19.444);
 

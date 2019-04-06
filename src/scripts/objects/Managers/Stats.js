@@ -107,7 +107,11 @@ export default class Stat {
         int: this.intellect(),
         spi: this.spirit(),
         crit: this.crit(),
-        ap: this.attackPower()
+        ap: this.attackPower(),
+        block: this.baseBlockR(),
+        sPwr: this.spellPower(),
+        sCrit: this.spellCrit(),
+        mMana: (character.mana) ? character.mana.maxMana() : 0
       };
 
       return stats;
@@ -376,10 +380,11 @@ export default class Stat {
      */
     this.crit = function() {
       const baseCrit = crit;
+      const agiCrit = (this.agiCritR()) ? this.agility() / this.agiCritR() * .01 : 0;
       const gearCrit = character.equipment.statBonus('crit');
       const buffCrit = character.buffs.statBonus('crit');
       // talents
-      return baseCrit + gearCrit + buffCrit;
+      return (agiCrit + baseCrit + gearCrit + buffCrit) * .01;
     }
 
     /**
@@ -438,17 +443,10 @@ export default class Stat {
       const gear = character.equipment.statBonus('spellCrit');
       const buff = character.buffs.statBonus('spellCrit');
       // talents too
-      return base + gear + buff;
+      return (base + gear + buff) * .01;
     }
 
-    /**
-     * getSpellcrit - base spell crit
-     *
-     * @returns {number}
-     */
-    this.getSpellcrit = function() {
-      return spellcrit;
-    }
+
 
 
     /**

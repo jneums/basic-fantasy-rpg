@@ -15,7 +15,7 @@ export default (function Const() {
     CHARGE_MAX_DIST:  150,
     CHARGE_SPEED:     500,
 
-    LOOTING_RANGE:     30,
+    LOOTING_RANGE:     40,
 
   }
 

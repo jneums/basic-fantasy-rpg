@@ -104,15 +104,15 @@ export default class DungeonScene extends Phaser.Scene {
       },
       bomb: {
         name: 'bomb',
-        instructions: formatDialogue("The arcane bomb is one of the mages most powerful spells. Place an unstable mass of arcane energy onto your opponent, where it will detonate three times over a short amount of time, dealing high arcane damage and threat. Go ahead and try it out now.")
+        instructions: formatDialogue("The frost bomb is one of the mages most powerful spells. Place an unstable mass of icy energy onto your opponent, where it will detonate three times over a short amount of time, dealing high frost damage. Go ahead and try it out now.")
       },
       frostbolt: {
         name: 'frostbolt',
-        instructions: formatDialogue("The mage is a wielder of natural and arcane forces. One of the most popular has been the study of frost and ice, especially amongst combat mages. The 'frostbolt' will cause a moderate amount of damage, but will also slow the target, giving you extra time.")
+        instructions: formatDialogue("As a battle mage trained in the icy arts, you are no doubt familiar with this next ability. The 'frostbolt' will cause a moderate amount of damage, but will also slow the target, giving you extra time. The 'frostbolt' uses little mana, so it is one of your most used spells.")
       },
       focus: {
         name: 'focus',
-        instructions: formatDialogue("The primary attribute of the combat mage is a high intellect. High intellect means the mage can not only cast more powerful spells, but can also cast more spells before running out of mana. Use 'focus' on yourself and your allies to grant a temporary intellect boost.")
+        instructions: formatDialogue("The primary attribute of the battle mage is a high intellect. High intellect means the mage can not only cast more powerful spells, but can also cast more spells before running out of mana. Use 'focus' on yourself and your allies to grant a temporary intellect boost.")
       },
       wand: {
         name: 'wand',

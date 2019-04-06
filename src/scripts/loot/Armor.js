@@ -64,8 +64,17 @@ export default class Armor extends Item {
     }
 
     this.upgrade = function(crystals) {
-      if (_colorIndex === 5) return;
+      let result = {
+        data: '',
+        success: false
+      }
+      
+      if (_colorIndex === 5) {
+        result.data = 'no more upgrades';
+        return result;
+      };
 
+      if (_colorIndex === 5) return;
 
       // rand:
       const rand = Phaser.Math.Between(0, 101);
@@ -86,7 +95,11 @@ export default class Armor extends Item {
           _colorIndex++;
           this.setSell(_sell += 4);
 
-          break;
+          result.data = `armor + 5, ${_statBonus.main.stat} + 2, ${_statBonus.secondary.stat} + 1.`
+          result.success = true;
+          return result;
+
+
         case (rand < largeChange):
           _statBonus.main.val += 1;
           _statBonus.secondary.val += 1;
@@ -94,23 +107,34 @@ export default class Armor extends Item {
           _colorIndex++;
           this.setSell(_sell += 3);
 
-          break;
+          result.data = `armor + 1, ${_statBonus.main.stat} + 1, ${_statBonus.secondary.stat} + 1.`
+          result.success = true;
+          return result;
+
+
         case (rand < mediumChange):
           _statBonus.main.val += 1;
           _armor += 5;
           _colorIndex++;
           this.setSell(_sell += 2);
 
-          break;
+          result.data = `armor + 1, ${_statBonus.main.stat} + 1.`
+          result.success = true;
+          return result;
+
         case (rand < smallChange):
           _armor += 5;
           _colorIndex++;
           this.setSell(_sell += 1);
 
-          break;
+          result.data = `armor + 1.`
+          result.success = true;
+          return result;
+
         default:
           //
-          break;
+          result.data = `failed.`
+          return result;
       }
 
     }

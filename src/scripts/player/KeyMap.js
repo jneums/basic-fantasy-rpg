@@ -1,10 +1,6 @@
 export default class KeyMap {
   constructor(character) {
     let keys = {
-      inventory: {
-        ability: character.inventory.use,
-        icon: null
-      },
       one: {
         ability: null,
         icon: null
@@ -45,16 +41,16 @@ export default class KeyMap {
         ability: null,
         icon: null
       },
-      eleven: {
-        ability: null,
+      inventory: {
+        ability: this.toggleInventory,
         icon: 'inventory'
       },
-      zero: {
-        ability: null,
+      questLog: {
+        ability: this.toggleQuestLog,
         icon: 'quest'
       },
-      minus: {
-        ability: null,
+      equipment: {
+        ability: this.toggleEquipment,
         icon: 'equipment'
       }
     }
@@ -70,241 +66,106 @@ export default class KeyMap {
     }
 
     this.getIcons = function() {
-      return Object.keys(keys).filter(key => key !== 'inventory').map(obj => keys[obj].icon);
-    }
-    this.executeOne = function() {
-      if (!keys.one.ability) return;
-      keys.one.ability.call(character)
+      return Object.keys(keys).map(obj => keys[obj].icon);
     }
 
-    this.executeTwo = function() {
-      if (!keys.two.ability) return;
-      keys.two.ability.call(character)
+
+    this.execute = function(num) {
+      if (!keys[num].ability) return;
+      keys[num].ability.call(character);
     }
 
-    this.executeThree = function() {
-      if (!keys.three.ability) return;
-
-      keys.three.ability.call(character)
+    this.set = function(num, newKey) {
+      keys[num] = newKey;
     }
 
-    this.executeFour = function() {
-      if (!keys.four.ability) return;
+  }
 
-      keys.four.ability.call(character)
-    }
 
-    this.executeFive = function() {
-      if (!keys.five.ability) return;
+  toggleInventory() {
+    if (this.scene.inventoryActive) {
+      closeInventory(this);
+    } else {
 
-      keys.five.ability.call(character)
-    }
+      if (this.scene.questLogActive) closeQuestLog(this);
+      if (this.scene.equipmentActive) closeEquipment(this);
 
-    this.executeSix = function() {
-      if (!keys.six.ability) return;
-
-      keys.six.ability.call(character)
-    }
-
-    this.executeSeven = function() {
-      if (!keys.seven.ability) return;
-
-      keys.seven.ability.call(character)
-    }
-
-    this.executeEight = function() {
-      if (!keys.eight.ability) return;
-
-      keys.eight.ability.call(character)
-    }
-
-    this.executeNine = function() {
-      if (!keys.nine.ability) return;
-
-      keys.nine.ability.call(character);
-
-    }
-
-    this.executeTen = function() {
-      if (!keys.ten.ability) return;
-
-      keys.ten.ability.call(character);
-    }
-
-    this.executeEleven = function() {
-
-      if (character.scene.inventoryActive) {
-        character.scene.inventoryActive = false;
-        character.scene.registry.set('closeInventory');
-      } else {
-        if (character.scene.questLogActive) {
-          character.scene.questLogActive = false;
-          character.scene.registry.set('closeQuestLog')
-        } else if (character.scene.equipmentActive) {
-          character.scene.equipmentActive = false;
-          character.scene.registry.set('closeEquipment')
-        }
-        character.scene.inventoryActive = true;
-        const data = {
-          inventory: character.inventory.getInventory(),
-          crystals: character.inventory.getCrystals()
-        }
-        character.scene.registry.set('openInventory', data);
-
-      }
-
-    }
-
-    this.executeZero = function() {
-      if (character.scene.questLogActive) {
-        character.scene.questLogActive = false;
-        character.scene.registry.set('closeQuestLog')
-
-      } else {
-        if (character.scene.inventoryActive) {
-          character.scene.inventoryActive = false;
-          character.scene.registry.set('closeInventory')
-        } else if (character.scene.equipmentActive) {
-          character.scene.equipmentActive = false;
-          character.scene.registry.set('closeEquipment')
-        }
-        character.scene.questLogActive = true;
-        character.scene.registry.set('openQuestLog', character.questLog.getActive())
-
-      }
-    }
-
-    this.executeMinus = function() {
-      if (character.scene.equipmentActive) {
-        character.scene.equipmentActive = false;
-        character.scene.registry.set('closeEquipment')
-
-      } else {
-        if (character.scene.inventoryActive) {
-          character.scene.inventoryActive = false;
-          character.scene.registry.set('closeInventory')
-        } else if (character.scene.questLogActive) {
-          character.scene.questLogActive = false;
-          character.scene.registry.set('closeQuestLog');
-        }
-
-        const data = {
-          stats: character.stat.displayStats(),
-          equipment: character.equipment.equipped(),
-          crystals: character.inventory.getCrystals()
-        }
-        character.scene.equipmentActive = true;
-        character.scene.registry.set('openEquipment', data)
-
-      }
-    }
-
-    this.executeInventoryOne = function() {
-      keys.inventory.abilitycall(character.inventory, 0)
-    }
-
-    this.executeInventoryTwo = function() {
-      keys.inventory.abilitycall(character, 1)
-    }
-
-    this.executeInventoryThree = function() {
-      keys.inventory.abilitycall(character.inventory, 2)
-    }
-
-    this.executeInventoryFour = function() {
-      keys.inventory.abilitycall(character.inventory, 3)
-    }
-
-    this.executeInventoryFive = function() {
-      keys.inventory.abilitycall(character.inventory, 4)
-    }
-
-    this.executeInventorySix = function() {
-      keys.inventory.abilitycall(character.inventory, 5)
-    }
-
-    this.executeInventorySeven = function() {
-      keys.inventory.abilitycall(character.inventory, 6)
-    }
-
-    this.executeInventoryEight = function() {
-      keys.inventory.abilitycall(character.inventory, 7)
-    }
-
-    this.executeInventoryNine = function() {
-      keys.inventory.abilitycall(character.inventory, 8)
-    }
-
-    this.getOne = function() {
-      return one;
-    }
-
-    this.getTwo = function() {
-      return two;
-    }
-
-    this.getThree = function() {
-      return three;
-    }
-
-    this.getFour = function() {
-      return four;
-    }
-
-    this.getFive = function() {
-      return five;
-    }
-
-    this.getSix = function() {
-      return six;
-    }
-
-    this.getSeven = function() {
-      return seven;
-    }
-
-    this.getEight = function() {
-      return eight;
-    }
-
-    this.getNine = function() {
-      return nine;
-    }
-
-    this.setOne = function(newKey) {
-      keys.one = newKey;
-    }
-
-    this.setTwo = function(newKey) {
-      keys.two = newKey;
-    }
-
-    this.setThree = function(newKey) {
-      keys.three = newKey;
-    }
-
-    this.setFour = function(newKey) {
-      keys.four = newKey;
-    }
-
-    this.setFive = function(newKey) {
-      keys.five = newKey;
-    }
-
-    this.setSix = function(newKey) {
-      keys.six = newKey;
-    }
-
-    this.setSeven = function(newKey) {
-      keys.seven = newKey;
-    }
-
-    this.setEight = function(newKey) {
-      keys.eight = newKey;
-    }
-
-    this.setNine = function(newKey) {
-      keys.nine = newKey;
+      openInventory(this);
     }
   }
+
+
+  toggleQuestLog() {
+    if (this.scene.questLogActive) {
+      closeQuestLog(this);
+
+    } else {
+      if (this.scene.inventoryActive) closeInventory(this);
+      if (this.scene.equipmentActive) closeEquipment(this);
+
+      openQuestLog(this);
+
+    }
+  }
+
+
+  toggleEquipment() {
+    if (this.scene.equipmentActive) {
+      closeEquipment(this);
+
+    } else {
+      if (this.scene.inventoryActive) closeInventory(this);
+      if (this.scene.questLogActive) closeQuestLog(this);
+
+      openEquipment(this);
+
+    }
+  }
+
+}
+
+
+function openQuestLog(character) {
+  character.scene.questLogActive = true;
+  character.scene.registry.set('openQuestLog', character.questLog.getActive())
+
+}
+
+
+function closeQuestLog(character) {
+  character.scene.questLogActive = false;
+  character.scene.registry.set('closeQuestLog');
+}
+
+function openEquipment(character) {
+const data = {
+  stats: character.stat.displayStats(),
+  equipment: character.equipment.equipped(),
+  crystals: character.inventory.getCrystals()
+}
+
+  character.scene.equipmentActive = true;
+  character.scene.registry.set('openEquipment', data)
+}
+
+
+function closeEquipment(character) {
+  character.scene.equipmentActive = false;
+  character.scene.registry.set('closeEquipment')
+}
+
+
+function openInventory(character) {
+  character.scene.inventoryActive = true;
+  const data = {
+    inventory: character.inventory.getInventory(),
+    crystals: character.inventory.getCrystals()
+  }
+  character.scene.registry.set('openInventory', data);
+}
+
+
+function closeInventory(character) {
+  character.scene.inventoryActive = false;
+  character.scene.registry.set('closeInventory')
 }

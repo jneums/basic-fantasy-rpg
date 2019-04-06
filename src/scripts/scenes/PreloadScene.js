@@ -269,7 +269,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('mail_boots', './assets/icons/mail_boots.png');
     this.load.image('leather', './assets/icons/leather.png');
     this.load.image('tarnished_sword', './assets/icons/tarnished_sword.png');
-    this.load.image('gold_dagger', './assets/icons/gold_dagger.png');
+    this.load.image('black_dagger', './assets/icons/black_dagger.png');
+    this.load.image('emerald', './assets/icons/emerald.png');
+    this.load.image('flame_sword', './assets/icons/flame_sword.png');
 
     this.load.image('nature-ball', './assets/anims/nature_ball.png');
     this.load.image('frost-ball', './assets/anims/frost_ball.png');
@@ -289,6 +291,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('inventory-background', './assets/ui/inventory.png');
     this.load.image('equipment-background', './assets/ui/equipment.png');
     this.load.image('loot-box-background', './assets/ui/loot_box.png');
+
+    this.load.image('hidden', './assets/anims/empty.png');
 
 
     // character selection screen:

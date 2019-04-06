@@ -14,7 +14,6 @@ export default function statusMod(attacker = {}, target = {}, combatObject = {})
       combatObject.setMitigationAmount(amount);
       break;
     case 'parry':
-      target.timer.setSwingTimerMainHand(0);
       combatObject.setAmount(0);
       combatObject.setMitigationAmount(amount);
       break;
@@ -27,7 +26,7 @@ export default function statusMod(attacker = {}, target = {}, combatObject = {})
       combatObject.setAmount(amount - blockValue);
       break;
     case 'crit':
-      if (combatObject.type() === 'wand') {
+      if (combatObject.type() === 'wand' || combatObject.type() === 'magic') {
         combatObject.setAmount(amount * 2);
       } else {
         combatObject.setAmount((amount * 2) - mitigatedByArmor);
